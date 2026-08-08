@@ -11,585 +11,1336 @@
 *{box-sizing:border-box}
 
 :root{
---pink:#d97899;
---dark:#49363e;
---cream:#fff8f5;
---line:#ead9df;
+  --pink:#d97899;
+  --dark:#49363e;
+  --cream:#fff8f5;
+  --line:#ead9df;
+}
+
+html{
+  scroll-behavior:smooth;
 }
 
 body{
-margin:0;
-font-family:Georgia,serif;
-background:
-radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
-radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
-#fff8fa;
-background-size:90px 90px;
-color:var(--dark);
+  margin:0;
+  font-family:Georgia,serif;
+  color:var(--dark);
+  background:
+    radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
+    radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
+    #fff8fa;
+  background-size:90px 90px;
 }
 
-button,input,textarea{font:inherit}
-button{cursor:pointer}
+button,input,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
 
 .page{
-display:none;
-min-height:100vh;
-padding:12px;
+  display:none;
+  min-height:100vh;
+  padding:12px;
 }
 
-.page.active{display:block}
+.page.active{
+  display:block;
+}
 
 .card{
-width:min(600px,100%);
-margin:5vh auto;
-padding:38px 28px;
-background:#fffdfd;
-border:1px solid var(--line);
-border-radius:35px;
-text-align:center;
-box-shadow:0 25px 70px #68445220;
+  width:min(600px,100%);
+  margin:5vh auto;
+  padding:38px 28px;
+  background:#fffdfd;
+  border:1px solid var(--line);
+  border-radius:35px;
+  text-align:center;
+  box-shadow:0 25px 70px #68445220;
 }
 
 .logo{
-font-size:60px;
-color:var(--pink);
+  font-size:60px;
+  color:var(--pink);
 }
 
 .mini{
-font-family:Arial,sans-serif;
-font-size:10px;
-letter-spacing:3px;
-text-transform:uppercase;
-color:#ad7084;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#ad7084;
 }
 
 h1{
-font-size:58px;
-line-height:.9;
-margin:12px 0 18px;
+  font-size:58px;
+  line-height:.9;
+  margin:12px 0 18px;
 }
 
-h1 span,h2 span{color:var(--pink)}
+h1 span,
+h2 span{
+  color:var(--pink);
+}
 
-.desc,.muted{
-font-family:Arial,sans-serif;
-line-height:1.6;
-color:#88747c;
+.desc,
+.muted{
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+  color:#88747c;
 }
 
 .field{
-text-align:left;
-margin:16px 0;
+  text-align:left;
+  margin:16px 0;
 }
 
 .field label{
-font-family:Arial,sans-serif;
-font-size:12px;
-font-weight:bold;
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  font-weight:bold;
 }
 
 .field input{
-width:100%;
-padding:14px;
-margin-top:7px;
-border:1px solid var(--line);
-border-radius:15px;
-background:#fffafa;
-outline:none;
+  width:100%;
+  padding:14px;
+  margin-top:7px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#fffafa;
+  outline:none;
 }
 
 .primary{
-width:100%;
-padding:15px;
-border:0;
-border-radius:16px;
-background:linear-gradient(135deg,#c96d8b,#b85d7e);
-color:white;
-font-family:Arial,sans-serif;
-font-weight:bold;
-box-shadow:0 10px 25px #b85d7e25;
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(135deg,#c96d8b,#b85d7e);
+  color:white;
+  font-family:Arial,sans-serif;
+  font-weight:bold;
+  box-shadow:0 10px 25px #b85d7e25;
 }
 
 .secondary{
-padding:12px 18px;
-border:1px solid #dfd0d7;
-border-radius:14px;
-background:white;
-color:#654e57;
+  padding:12px 18px;
+  border:1px solid #dfd0d7;
+  border-radius:14px;
+  background:white;
+  color:#654e57;
 }
 
 .topbar{
-height:58px;
-max-width:1100px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:space-between;
-font-family:Arial,sans-serif;
+  height:58px;
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:Arial,sans-serif;
 }
 
 .back{
-width:42px;
-height:42px;
-border:1px solid #e5d7dd;
-border-radius:50%;
-background:white;
+  width:42px;
+  height:42px;
+  border:1px solid #e5d7dd;
+  border-radius:50%;
+  background:white;
 }
 
 .content{
-max-width:1100px;
-margin:20px auto;
-padding:28px;
-background:#fffdfd;
-border:1px solid var(--line);
-border-radius:30px;
-box-shadow:0 20px 60px #533b4614;
+  max-width:1100px;
+  margin:20px auto;
+  padding:28px;
+  background:#fffdfd;
+  border:1px solid var(--line);
+  border-radius:30px;
+  box-shadow:0 20px 60px #533b4614;
 }
 
-.step{display:none}
-.step.active{display:block}
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+}
 
 .step h2{
-font-size:40px;
-margin:8px 0;
+  font-size:40px;
+  margin:8px 0;
 }
 
+
+/* =====================================================
+PHOTO COUNT
+===================================================== */
+
 .strip-options{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-margin:28px 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:28px 0;
 }
 
 .strip-option{
-padding:22px 12px;
-border:2px solid var(--line);
-border-radius:22px;
-background:white;
+  padding:22px 12px;
+  border:2px solid var(--line);
+  border-radius:22px;
+  background:white;
 }
 
 .strip-option.selected{
-border-color:var(--pink);
-background:#fff0f5;
+  border-color:var(--pink);
+  background:#fff0f5;
 }
 
 .strip-option strong{
-display:block;
-font-size:42px;
-color:var(--pink);
+  display:block;
+  font-size:42px;
+  color:var(--pink);
 }
 
 
-/* CAMERA */
+/* =====================================================
+CAMERA
+===================================================== */
 
 .camera{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-background:#211b1e;
-padding:10px;
-border-radius:28px;
-overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  background:#211b1e;
+  padding:10px;
+  border-radius:28px;
+  overflow:hidden;
 }
 
 .video-box{
-position:relative;
-background:#30262b;
-min-height:320px;
-border-radius:20px;
-overflow:hidden;
+  position:relative;
+  background:#30262b;
+  min-height:320px;
+  border-radius:20px;
+  overflow:hidden;
 }
 
 .video-box video{
-width:100%;
-height:320px;
-object-fit:cover;
-display:block;
-background:#30262b;
-transform:scaleX(-1);
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  display:block;
+  background:#30262b;
+  transform:scaleX(-1);
 }
 
 .video-label{
-position:absolute;
-bottom:10px;
-left:10px;
-padding:7px 12px;
-border-radius:20px;
-background:#0009;
-color:white;
-font-family:Arial,sans-serif;
-font-size:11px;
-z-index:5;
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  padding:7px 12px;
+  border-radius:20px;
+  background:#0009;
+  color:white;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  z-index:5;
 }
 
 .waiting{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-color:white;
-background:#3d3037;
-font-family:Arial,sans-serif;
-text-align:center;
-padding:20px;
-z-index:4;
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:white;
+  background:#3d3037;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding:20px;
+  z-index:4;
 }
 
 .waiting .heart{
-font-size:55px;
+  font-size:55px;
 }
 
 .camera-buttons{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:16px;
-margin:20px 0;
-flex-wrap:wrap;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin:20px 0;
+  flex-wrap:wrap;
 }
 
 .shutter{
-width:70px;
-height:70px;
-border-radius:50%;
-border:7px solid #e3b3c2;
-background:white;
-font-size:22px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  border:7px solid #e3b3c2;
+  background:white;
+  font-size:22px;
 }
 
 #photoPreview{
-text-align:center;
+  text-align:center;
 }
 
 #photoPreview img{
-width:75px;
-height:95px;
-object-fit:cover;
-margin:5px;
-border-radius:8px;
+  width:75px;
+  height:95px;
+  object-fit:cover;
+  margin:5px;
+  border-radius:8px;
 }
 
 
-/* DESIGN PICKER */
+/* =====================================================
+DESIGN PICKER
+===================================================== */
+
+.design-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.design-counter{
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  color:#a27887;
+  white-space:nowrap;
+}
 
 .design-grid{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:13px;
-margin:25px 0;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:15px;
+  margin:25px 0;
 }
 
 .design-card{
-border:2px solid transparent;
-background:white;
-border-radius:18px;
-padding:8px;
-transition:.2s;
-box-shadow:0 8px 20px #51363f12;
+  border:2px solid transparent;
+  background:white;
+  border-radius:20px;
+  padding:8px;
+  transition:.25s ease;
+  box-shadow:0 8px 25px #51363f12;
+  text-align:left;
 }
 
 .design-card:hover,
 .design-card.selected{
-transform:translateY(-4px);
-border-color:var(--pink);
+  transform:translateY(-5px);
+  border-color:var(--pink);
+  box-shadow:0 15px 30px #b85d7e25;
 }
 
 .design-preview{
-height:240px;
-display:flex;
-flex-direction:column;
-gap:4px;
-padding:8px;
-overflow:hidden;
+  position:relative;
+  height:265px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:9px;
+  overflow:hidden;
+}
+
+.design-preview::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
 }
 
 .design-preview img{
-width:100%;
-flex:1;
-min-height:0;
-object-fit:cover;
-display:block;
+  position:relative;
+  z-index:2;
+  width:100%;
+  flex:1;
+  min-height:0;
+  object-fit:cover;
+  display:block;
 }
 
 .design-name{
-font-size:12px;
-font-weight:bold;
-padding:8px 2px 4px;
+  font-size:12px;
+  font-weight:bold;
+  padding:9px 3px 4px;
+}
+
+.design-sub{
+  font-family:Arial,sans-serif;
+  font-size:9px;
+  color:#9c858d;
+  padding:0 3px 7px;
 }
 
 
-/* DESIGN THEMES */
+/* =====================================================
+COMMON DESIGN DETAILS
+===================================================== */
+
+.theme{
+  position:relative;
+}
+
+.theme .photo-date{
+  font-family:Arial,sans-serif;
+  font-size:7px;
+  letter-spacing:1px;
+  text-align:center;
+  opacity:.65;
+  padding:2px;
+}
+
+.theme .photo-title{
+  font-size:11px;
+  text-align:center;
+  padding:7px 2px 3px;
+}
+
+.theme .corner{
+  position:absolute;
+  z-index:8;
+  font-size:15px;
+  pointer-events:none;
+}
+
+
+/* =====================================================
+01 COQUETTE
+===================================================== */
 
 .theme-coquette{
-background:#fff0f6;
-border:3px solid #d889a3;
+  background:#fff0f6;
+  border:4px solid #d889a3;
+  box-shadow:inset 0 0 0 4px #fff;
 }
 
 .theme-coquette img{
-border:2px solid #efb6c9;
+  border:2px solid #efb6c9;
 }
 
-.theme-retro{
-background:#c89470;
-border:7px solid #76503e;
+.theme-coquette .corner{
+  color:#c56888;
 }
 
-.theme-retro img{
-filter:sepia(.45) contrast(1.05);
-border:2px solid #f0d1a8;
+
+/* =====================================================
+02 BALLET
+===================================================== */
+
+.theme-ballet{
+  background:#f8e9ed;
+  border:5px solid #c999a9;
+  padding:13px;
 }
 
-.theme-scrapbook{
-background:#ead8c0;
-border:7px dashed #a98267;
+.theme-ballet img{
+  border:2px solid #fff;
 }
 
-.theme-scrapbook img{
-border:4px solid white;
-box-shadow:2px 3px 0 #9c765d;
+.theme-ballet .photo-title{
+  font-style:italic;
+  letter-spacing:2px;
+  color:#815e6a;
 }
 
-.theme-y2k{
-background:linear-gradient(135deg,#a8d6ed,#d9c8f0,#f2b9d7);
-border:5px solid white;
+.theme-ballet .corner{
+  color:#a96f83;
 }
 
-.theme-y2k img{
-border:2px solid white;
-box-shadow:0 0 10px #fff;
+
+/* =====================================================
+03 CHERRY BLOSSOM
+===================================================== */
+
+.theme-cherry{
+  background:#fff5f4;
+  border:6px solid #dca0aa;
+  padding:10px;
 }
+
+.theme-cherry img{
+  border:2px solid #efc1c5;
+}
+
+.theme-cherry .corner{
+  color:#dc8395;
+}
+
+
+/* =====================================================
+04 LOVE LETTER
+===================================================== */
+
+.theme-letter{
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 22px,
+      #d8b8b04d 23px
+    ),
+    #f8eadc;
+  border:8px solid #b88b73;
+  padding:10px;
+}
+
+.theme-letter img{
+  border:3px solid #fffaf0;
+  box-shadow:2px 3px 0 #aa806d;
+}
+
+.theme-letter .photo-title{
+  font-family:cursive;
+  color:#795848;
+}
+
+.theme-letter .corner{
+  color:#a56e59;
+}
+
+
+/* =====================================================
+05 TEDDY
+===================================================== */
+
+.theme-teddy{
+  background:#e9d3bd;
+  border:8px solid #8d654c;
+  padding:10px;
+}
+
+.theme-teddy img{
+  border:4px solid #fff6e9;
+}
+
+.theme-teddy .photo-title{
+  color:#6c4937;
+}
+
+.theme-teddy .corner{
+  color:#7d5641;
+}
+
+
+/* =====================================================
+06 STRAWBERRY
+===================================================== */
 
 .theme-strawberry{
-background:#fff0e9;
-border:5px solid #e76572;
+  background:#fff0e9;
+  border:6px solid #e76572;
+  padding:9px;
 }
 
 .theme-strawberry img{
-border:2px solid #e76572;
+  border:2px solid #e76572;
 }
 
-.theme-lace{
-background:#ead8e3;
-border:7px double #a87b96;
+.theme-strawberry .photo-title{
+  color:#d44f61;
+  font-weight:bold;
 }
 
-.theme-lace img{
-border:3px solid white;
+.theme-strawberry .corner{
+  color:#e14e63;
 }
+
+
+/* =====================================================
+07 CLOUD
+===================================================== */
+
+.theme-cloud{
+  background:linear-gradient(180deg,#dbe9fa,#f4e9f6);
+  border:6px solid white;
+  padding:10px;
+  box-shadow:0 0 0 2px #b9c8e0;
+}
+
+.theme-cloud img{
+  border:3px solid white;
+  box-shadow:0 4px 12px #7890b430;
+}
+
+.theme-cloud .photo-title{
+  color:#687d9f;
+}
+
+.theme-cloud .corner{
+  color:#8299bb;
+}
+
+
+/* =====================================================
+08 Y2K
+===================================================== */
+
+.theme-y2k{
+  background:
+    radial-gradient(circle at 20% 20%,#fff 0 2px,transparent 3px),
+    linear-gradient(135deg,#9edaf0,#d8c3ef,#f2b5d3);
+  border:6px solid white;
+  padding:9px;
+  box-shadow:0 0 20px #fff;
+}
+
+.theme-y2k img{
+  border:3px solid white;
+  box-shadow:0 0 10px #fff;
+}
+
+.theme-y2k .photo-title{
+  font-family:Arial,sans-serif;
+  font-weight:900;
+  letter-spacing:2px;
+  color:white;
+  text-shadow:1px 1px #a46a9e;
+}
+
+
+/* =====================================================
+09 GLITTER
+===================================================== */
+
+.theme-glitter{
+  background:
+    radial-gradient(circle,#fff 0 1px,transparent 2px) 0 0/14px 14px,
+    linear-gradient(135deg,#f3a8ca,#d9a9e7);
+  border:6px solid white;
+  padding:9px;
+}
+
+.theme-glitter img{
+  border:3px solid white;
+}
+
+.theme-glitter .photo-title{
+  color:white;
+  text-shadow:0 1px 3px #75436c;
+  letter-spacing:2px;
+}
+
+
+/* =====================================================
+10 BUTTERFLY
+===================================================== */
+
+.theme-butterfly{
+  background:#eee5f4;
+  border:6px double #a982b7;
+  padding:10px;
+}
+
+.theme-butterfly img{
+  border:3px solid white;
+}
+
+.theme-butterfly .photo-title{
+  color:#7d638c;
+  font-style:italic;
+}
+
+
+/* =====================================================
+11 FILM
+===================================================== */
+
+.theme-film{
+  background:#191719;
+  border:8px solid #111;
+  padding:7px;
+}
+
+.theme-film img{
+  border:2px solid #ddd;
+  filter:contrast(1.08) saturate(.75);
+}
+
+.theme-film .photo-title{
+  color:#eee;
+  font-family:Arial,sans-serif;
+  font-size:9px;
+  letter-spacing:2px;
+}
+
+
+/* =====================================================
+12 CLASSIC PHOTOBOOTH
+===================================================== */
+
+.theme-classic{
+  background:#fff;
+  border:8px solid #222;
+  padding:7px;
+}
+
+.theme-classic img{
+  border:1px solid #222;
+}
+
+.theme-classic .photo-title{
+  font-family:Arial,sans-serif;
+  font-weight:bold;
+  letter-spacing:2px;
+  color:#222;
+}
+
+
+/* =====================================================
+13 MAGAZINE
+===================================================== */
+
+.theme-magazine{
+  background:#f3e9dd;
+  border:8px solid #171717;
+  padding:8px;
+}
+
+.theme-magazine img{
+  border:1px solid #171717;
+}
+
+.theme-magazine .photo-title{
+  font-family:Arial,sans-serif;
+  text-transform:uppercase;
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+
+/* =====================================================
+14 90s DOODLE
+===================================================== */
+
+.theme-doodle{
+  background:#fff7a8;
+  border:6px solid #2b2830;
+  padding:9px;
+}
+
+.theme-doodle img{
+  border:3px solid #2b2830;
+}
+
+.theme-doodle .photo-title{
+  font-family:"Comic Sans MS",cursive;
+  color:#30282d;
+}
+
+
+/* =====================================================
+15 BLUE DIARY
+===================================================== */
+
+.theme-diary{
+  background:#c9e2f1;
+  border:7px solid #6689a3;
+  padding:10px;
+}
+
+.theme-diary img{
+  border:3px solid white;
+}
+
+.theme-diary .photo-title{
+  color:#496a82;
+  font-style:italic;
+}
+
+
+/* =====================================================
+16 CUTE PASTEL
+===================================================== */
+
+.theme-pastel{
+  background:linear-gradient(135deg,#ffdce9,#d9eaff,#e9ddff);
+  border:5px solid white;
+  padding:10px;
+}
+
+.theme-pastel img{
+  border:3px solid white;
+  border-radius:10px;
+}
+
+.theme-pastel .photo-title{
+  color:#9b718c;
+}
+
+
+/* =====================================================
+17 VINTAGE FLORAL
+===================================================== */
+
+.theme-vintagefloral{
+  background:#e6d2bb;
+  border:9px solid #80624f;
+  padding:9px;
+}
+
+.theme-vintagefloral img{
+  border:3px solid #f7ead6;
+  filter:sepia(.25) saturate(.75);
+}
+
+.theme-vintagefloral .photo-title{
+  color:#725440;
+  font-style:italic;
+}
+
+
+/* =====================================================
+18 CHERRY BOMB
+===================================================== */
+
+.theme-cherrybomb{
+  background:#ead0c4;
+  border:8px solid #8e2631;
+  padding:9px;
+}
+
+.theme-cherrybomb img{
+  border:3px solid #fff1e8;
+  filter:saturate(.8) contrast(1.05);
+}
+
+.theme-cherrybomb .photo-title{
+  background:#8e2631;
+  color:white;
+  padding:7px;
+  letter-spacing:2px;
+}
+
+
+/* =====================================================
+19 SWEET TREATS
+===================================================== */
+
+.theme-sweets{
+  background:#ffd9e5;
+  border:7px solid #e5a6b9;
+  padding:9px;
+}
+
+.theme-sweets img{
+  border:3px solid #fff;
+  border-radius:7px;
+}
+
+.theme-sweets .photo-title{
+  color:#c77a91;
+  font-weight:bold;
+}
+
+
+/* =====================================================
+20 MOON
+===================================================== */
+
+.theme-moon{
+  background:linear-gradient(160deg,#20213e,#38395e);
+  border:7px solid #b9b2d2;
+  padding:9px;
+}
+
+.theme-moon img{
+  border:2px solid #d7d2e9;
+  filter:brightness(.9) saturate(.75);
+}
+
+.theme-moon .photo-title{
+  color:#e9e4ff;
+  letter-spacing:3px;
+}
+
+
+/* =====================================================
+21 OLD MONEY
+===================================================== */
+
+.theme-oldmoney{
+  background:#eee4d4;
+  border:9px double #74473f;
+  padding:9px;
+}
+
+.theme-oldmoney img{
+  border:2px solid #a17868;
+  filter:sepia(.2) saturate(.75);
+}
+
+.theme-oldmoney .photo-title{
+  color:#633e37;
+  font-family:Georgia,serif;
+  font-style:italic;
+}
+
+
+/* =====================================================
+22 DISCO
+===================================================== */
+
+.theme-disco{
+  background:
+    radial-gradient(circle at 20% 20%,#fff 0 3px,transparent 4px),
+    linear-gradient(135deg,#d6c7df,#edb5cf,#c5d7e8);
+  border:6px solid #fff;
+  padding:9px;
+}
+
+.theme-disco img{
+  border:3px solid white;
+  box-shadow:0 0 12px #fff;
+}
+
+.theme-disco .photo-title{
+  color:white;
+  text-shadow:0 2px 4px #71546e;
+  letter-spacing:3px;
+}
+
+
+/* =====================================================
+23 PLUSHIE DIARY
+===================================================== */
+
+.theme-plush{
+  background:#e4d5c9;
+  border:7px dashed #987d70;
+  padding:10px;
+}
+
+.theme-plush img{
+  border:5px solid #fffaf4;
+  box-shadow:3px 4px 0 #a78a7d;
+}
+
+.theme-plush .photo-title{
+  color:#806659;
+}
+
+
+/* =====================================================
+24 ROM COM
+===================================================== */
+
+.theme-romcom{
+  background:#f6ddd8;
+  border:7px solid #8f4e5b;
+  padding:9px;
+}
+
+.theme-romcom img{
+  border:2px solid #8f4e5b;
+}
+
+.theme-romcom .photo-title{
+  color:#813f4d;
+  font-family:Georgia,serif;
+  font-style:italic;
+  font-size:16px;
+}
+
+
+/* =====================================================
+25 MUSIC DIARY
+===================================================== */
+
+.theme-music{
+  background:#ddd1e8;
+  border:7px solid #57475e;
+  padding:9px;
+}
+
+.theme-music img{
+  border:3px solid #fff;
+}
+
+.theme-music .photo-title{
+  background:#57475e;
+  color:white;
+  padding:7px;
+  font-family:Arial,sans-serif;
+  letter-spacing:1px;
+}
+
+
+/* =====================================================
+26 SHOPPING
+===================================================== */
+
+.theme-shopping{
+  background:#f4dfd7;
+  border:8px solid #a76668;
+  padding:10px;
+}
+
+.theme-shopping img{
+  border:2px solid #fff;
+}
+
+.theme-shopping .photo-title{
+  color:#96565b;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-family:Arial,sans-serif;
+}
+
+
+/* =====================================================
+27 POSTCARD
+===================================================== */
 
 .theme-postcard{
-background:#e6cdb5;
-border:8px solid #956c52;
+  background:#e6cdb5;
+  border:9px solid #956c52;
+  padding:9px;
 }
 
 .theme-postcard img{
-border:2px solid #704b39;
+  border:2px solid #704b39;
 }
 
-.theme-floral{
-background:#f7e7dc;
-border:7px solid #d19aaa;
+.theme-postcard .photo-title{
+  color:#704b39;
+  font-family:cursive;
 }
 
-.theme-floral img{
-border:2px solid #d19aaa;
+
+/* =====================================================
+28 MIRROR
+===================================================== */
+
+.theme-mirror{
+  background:linear-gradient(135deg,#d6dbe3,#f7e8ed);
+  border:7px solid #8c8d9b;
+  padding:9px;
 }
 
-.theme-dreamy{
-background:linear-gradient(#bfcce7,#ead8ee);
-border:5px solid white;
+.theme-mirror img{
+  border:4px solid white;
+  border-radius:8px;
+  box-shadow:inset 0 0 20px #fff;
 }
 
-.theme-dreamy img{
-border-radius:8px;
+.theme-mirror .photo-title{
+  color:#777888;
+  letter-spacing:2px;
 }
+
+
+/* =====================================================
+29 BIRTHDAY
+===================================================== */
+
+.theme-birthday{
+  background:#f9d5df;
+  border:7px solid #c56b87;
+  padding:9px;
+}
+
+.theme-birthday img{
+  border:3px solid white;
+}
+
+.theme-birthday .photo-title{
+  color:#b45d77;
+  font-weight:bold;
+}
+
+
+/* =====================================================
+30 VINTAGE — EXTRA DETAILED
+===================================================== */
 
 .theme-vintage{
-background:repeating-linear-gradient(
-45deg,
-#d6bdab 0 8px,
-#c2a48d 8px 16px
-);
-border:8px solid #806351;
+  background:
+    radial-gradient(circle at 20% 20%,#fff7df55 0 1px,transparent 2px),
+    radial-gradient(circle at 80% 70%,#4c362622 0 1px,transparent 2px),
+    #d5b99c;
+  background-size:13px 13px;
+  border:10px solid #765a49;
+  padding:9px;
+  box-shadow:
+    inset 0 0 0 3px #c3a487,
+    0 8px 25px #4d392d35;
+}
+
+.theme-vintage::before{
+  content:"";
+  position:absolute;
+  inset:4px;
+  border:1px solid #80634f;
+  pointer-events:none;
+  z-index:10;
 }
 
 .theme-vintage img{
-filter:sepia(.55) saturate(.75);
-border:2px solid #f0dfca;
+  border:3px solid #f1dfc3;
+  filter:
+    sepia(.42)
+    saturate(.72)
+    contrast(.92)
+    brightness(.96);
+}
+
+.theme-vintage .photo-title{
+  font-family:Georgia,serif;
+  font-style:italic;
+  color:#604939;
+  letter-spacing:1px;
+}
+
+.theme-vintage .corner{
+  color:#705140;
 }
 
 
-/* LARGE PREVIEW */
+/* =====================================================
+FINAL PREVIEW
+===================================================== */
 
 .final-preview-wrap{
-display:flex;
-justify-content:center;
-padding:25px;
-background:#f7edf1;
-border-radius:25px;
+  display:flex;
+  justify-content:center;
+  padding:25px;
+  background:#f7edf1;
+  border-radius:25px;
+  overflow:auto;
 }
 
 .final-strip{
-position:relative;
-width:310px;
-padding:13px;
-box-shadow:0 20px 50px #51363f35;
+  position:relative;
+  width:310px;
+  padding:13px;
+  box-shadow:0 20px 50px #51363f35;
+  overflow:hidden;
 }
 
 .final-strip img{
-display:block;
-width:100%;
-aspect-ratio:4/5;
-object-fit:cover;
-margin-bottom:8px;
+  display:block;
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  margin-bottom:8px;
 }
 
 .final-strip-title{
-text-align:center;
-padding:12px 3px 7px;
-font-size:17px;
+  text-align:center;
+  padding:12px 3px 7px;
+  font-size:17px;
 }
 
 
-/* STICKERS */
+/* =====================================================
+STICKERS
+===================================================== */
 
 .sticker-bar{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding:8px 3px 16px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:8px 3px 16px;
 }
 
 .sticker-choice{
-flex:0 0 auto;
-width:52px;
-height:52px;
-border:1px solid #eadde2;
-border-radius:15px;
-background:#fff8fa;
-font-size:26px;
+  flex:0 0 auto;
+  width:52px;
+  height:52px;
+  border:1px solid #eadde2;
+  border-radius:15px;
+  background:#fff8fa;
+  font-size:26px;
 }
 
 .decor{
-position:absolute;
-z-index:50;
-font-size:32px;
-cursor:grab;
-user-select:none;
-touch-action:none;
-transform:translate(-50%,-50%);
+  position:absolute;
+  z-index:50;
+  font-size:32px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
 }
 
 .decor:active{
-cursor:grabbing;
+  cursor:grabbing;
 }
 
 .text-decor{
-font-size:17px;
-padding:5px 9px;
-background:#fff9;
-border-radius:8px;
+  font-size:17px;
+  padding:5px 9px;
+  background:#fff9;
+  border-radius:8px;
 }
 
 
-/* TEXT */
+/* =====================================================
+TEXT
+===================================================== */
 
 .text-row{
-display:flex;
-gap:8px;
-margin-top:10px;
+  display:flex;
+  gap:8px;
+  margin-top:10px;
 }
 
 .text-row input{
-flex:1;
-padding:12px;
-border:1px solid var(--line);
-border-radius:12px;
+  flex:1;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:12px;
 }
 
 
-/* RESPONSIVE */
+/* =====================================================
+RESPONSIVE
+===================================================== */
 
-@media(max-width:850px){
+@media(max-width:950px){
 
-.design-grid{
-grid-template-columns:repeat(3,1fr);
+  .design-grid{
+    grid-template-columns:repeat(4,1fr);
+  }
+
 }
+
+@media(max-width:750px){
+
+  .design-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
 
 }
 
 @media(max-width:600px){
 
-.page{
-padding:8px;
-}
+  .page{
+    padding:8px;
+  }
 
-.content{
-padding:18px;
-}
+  .content{
+    padding:18px;
+  }
 
-.step h2{
-font-size:31px;
-}
+  .step h2{
+    font-size:31px;
+  }
 
-.strip-options{
-grid-template-columns:1fr 1fr;
-}
+  .strip-options{
+    grid-template-columns:1fr 1fr;
+  }
 
-.camera{
-grid-template-columns:1fr 1fr;
-}
+  .camera{
+    grid-template-columns:1fr 1fr;
+  }
 
-.video-box,
-.video-box video,
-.waiting{
-height:230px;
-min-height:230px;
-}
+  .video-box,
+  .video-box video,
+  .waiting{
+    height:230px;
+    min-height:230px;
+  }
 
-.design-grid{
-grid-template-columns:repeat(2,1fr);
-}
+  .design-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
 
-.design-preview{
-height:210px;
-}
+  .design-preview{
+    height:220px;
+  }
 
-.final-strip{
-width:270px;
-}
+  .final-strip{
+    width:270px;
+  }
 
-.text-row{
-flex-direction:column;
-}
+  .text-row{
+    flex-direction:column;
+  }
+
+  .design-header{
+    align-items:start;
+    flex-direction:column;
+    gap:5px;
+  }
 
 }
 
 @media(max-width:400px){
 
-.camera{
-gap:5px;
-padding:5px;
+  .camera{
+    gap:5px;
+    padding:5px;
+  }
+
+  .video-box video{
+    height:205px;
+  }
+
+  .design-preview{
+    height:195px;
+  }
+
+  .design-name{
+    font-size:11px;
+  }
+
 }
 
-.video-box video{
-height:205px;
+
+/* =====================================================
+CAMERA COUNTDOWN
+===================================================== */
+
+.countdown-overlay{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  background:#0009;
+  color:white;
+  font:bold 100px Georgia;
 }
 
-.design-preview{
-height:190px;
+
+/* =====================================================
+DESIGN FILTER LABEL
+===================================================== */
+
+.design-category{
+  display:inline-block;
+  margin-bottom:8px;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#fff0f5;
+  color:#a95d77;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:1px;
 }
 
-}
 </style>
 </head>
 
 <body>
 
 
-<!-- WELCOME -->
+<!-- =====================================================
+WELCOME
+===================================================== -->
 
 <section id="welcome" class="page active">
 
@@ -636,16 +1387,21 @@ Enter Our World ♡
 <p id="connectionMessage"></p>
 
 </div>
+
 </section>
 
 
-<!-- HOME -->
+<!-- =====================================================
+HOME
+===================================================== -->
 
 <section id="home" class="page">
 
 <div class="topbar">
 
-<button class="back" onclick="showPage('welcome')">←</button>
+<button class="back" onclick="showPage('welcome')">
+←
+</button>
 
 <div>our little ♡ world</div>
 
@@ -693,16 +1449,21 @@ ROOM:
 </div>
 
 </div>
+
 </section>
 
 
-<!-- PHOTOBOOTH -->
+<!-- =====================================================
+PHOTOBOOTH
+===================================================== -->
 
 <section id="photobooth" class="page">
 
 <div class="topbar">
 
-<button class="back" onclick="showPage('home')">←</button>
+<button class="back" onclick="showPage('home')">
+←
+</button>
 
 <div>photobooth ♡</div>
 
@@ -713,7 +1474,9 @@ ROOM:
 <div class="content">
 
 
-<!-- STEP 1 -->
+<!-- =====================================================
+STEP 1
+===================================================== -->
 
 <div id="step1" class="step active">
 
@@ -760,7 +1523,9 @@ Take Photos →
 </div>
 
 
-<!-- STEP 2 -->
+<!-- =====================================================
+STEP 2
+===================================================== -->
 
 <div id="step2" class="step">
 
@@ -776,10 +1541,12 @@ Your cameras are side-by-side. Smile!
 
 <div class="video-box">
 
-<video id="myCamera"
+<video
+id="myCamera"
 autoplay
 playsinline
-muted></video>
+muted>
+</video>
 
 <div class="video-label">
 You · <span id="cameraYouName">You</span>
@@ -789,9 +1556,11 @@ You · <span id="cameraYouName">You</span>
 
 <div class="video-box">
 
-<video id="partnerVideo"
+<video
+id="partnerVideo"
 autoplay
-playsinline></video>
+playsinline>
+</video>
 
 <div id="partnerWaiting"
 class="waiting">
@@ -836,7 +1605,8 @@ onclick="takePhoto()">
 
 <div id="photoPreview"></div>
 
-<button id="photosDoneButton"
+<button
+id="photosDoneButton"
 class="primary"
 onclick="nextStep(3)"
 disabled>
@@ -846,35 +1616,60 @@ Choose Design →
 </div>
 
 
-<!-- STEP 3 -->
+<!-- =====================================================
+STEP 3
+===================================================== -->
 
 <div id="step3" class="step">
 
-<div class="mini">03 · choose your design</div>
+<div class="design-header">
 
-<h2>Which one feels like you? ✨</h2>
+<div>
+
+<div class="mini">
+03 · choose your design
+</div>
+
+<h2>
+Find your vibe ✨
+</h2>
 
 <p class="muted">
-Tap a design — or hover over it on a computer — to preview your actual photos.
+Tap any design to preview your actual photos.
 </p>
+
+</div>
+
+<div class="design-counter">
+30 DESIGNS ♡
+</div>
+
+</div>
+
+<div class="design-category">
+✦ TAP A DESIGN TO PREVIEW
+</div>
 
 <div id="designGrid" class="design-grid"></div>
 
 <div class="final-preview-wrap">
 
 <div id="designPreview"
-class="final-strip"></div>
+class="final-strip">
+</div>
 
 </div>
 
 <div style="margin-top:18px">
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="nextStep(2)">
 ← Retake
 </button>
 
-<button class="primary"
+<button
+class="primary"
 onclick="chooseDesign()"
 style="margin-top:10px">
 ♡ Use This Design
@@ -885,13 +1680,17 @@ style="margin-top:10px">
 </div>
 
 
-<!-- STEP 4 -->
+<!-- =====================================================
+STEP 4
+===================================================== -->
 
 <div id="step4" class="step">
 
 <div class="mini">04 · make it yours</div>
 
-<h2>Add your little details ✨</h2>
+<h2>
+Add your little details ✨
+</h2>
 
 <p class="muted">
 Tap a sticker, then drag it anywhere on your strip.
@@ -899,54 +1698,32 @@ Tap a sticker, then drag it anywhere on your strip.
 
 <div class="sticker-bar">
 
-<button class="sticker-choice"
-onclick="addSticker('🎀')">🎀</button>
-
-<button class="sticker-choice"
-onclick="addSticker('♡')">♡</button>
-
-<button class="sticker-choice"
-onclick="addSticker('♥')">♥</button>
-
-<button class="sticker-choice"
-onclick="addSticker('✦')">✦</button>
-
-<button class="sticker-choice"
-onclick="addSticker('☆')">☆</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🌷')">🌷</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🌸')">🌸</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🍓')">🍓</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🧸')">🧸</button>
-
-<button class="sticker-choice"
-onclick="addSticker('☁️')">☁️</button>
-
-<button class="sticker-choice"
-onclick="addSticker('💌')">💌</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🦋')">🦋</button>
-
-<button class="sticker-choice"
-onclick="addSticker('✿')">✿</button>
-
-<button class="sticker-choice"
-onclick="addSticker('୨୧')">୨୧</button>
+<button class="sticker-choice" onclick="addSticker('🎀')">🎀</button>
+<button class="sticker-choice" onclick="addSticker('♡')">♡</button>
+<button class="sticker-choice" onclick="addSticker('♥')">♥</button>
+<button class="sticker-choice" onclick="addSticker('✦')">✦</button>
+<button class="sticker-choice" onclick="addSticker('☆')">☆</button>
+<button class="sticker-choice" onclick="addSticker('🌷')">🌷</button>
+<button class="sticker-choice" onclick="addSticker('🌸')">🌸</button>
+<button class="sticker-choice" onclick="addSticker('🍓')">🍓</button>
+<button class="sticker-choice" onclick="addSticker('🧸')">🧸</button>
+<button class="sticker-choice" onclick="addSticker('☁️')">☁️</button>
+<button class="sticker-choice" onclick="addSticker('💌')">💌</button>
+<button class="sticker-choice" onclick="addSticker('🦋')">🦋</button>
+<button class="sticker-choice" onclick="addSticker('✿')">✿</button>
+<button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
+<button class="sticker-choice" onclick="addSticker('🍒')">🍒</button>
+<button class="sticker-choice" onclick="addSticker('⭐')">⭐</button>
+<button class="sticker-choice" onclick="addSticker('🌙')">🌙</button>
+<button class="sticker-choice" onclick="addSticker('🪽')">🪽</button>
 
 </div>
 
 <div class="final-preview-wrap">
 
 <div id="photoStrip"
-class="final-strip"></div>
+class="final-strip">
+</div>
 
 </div>
 
@@ -956,14 +1733,16 @@ class="final-strip"></div>
 id="customText"
 placeholder="our little moment ♡">
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="addText()">
 Add
 </button>
 
 </div>
 
-<button class="primary"
+<button
+class="primary"
 onclick="nextStep(5)"
 style="margin-top:18px">
 See Final Strip →
@@ -972,13 +1751,17 @@ See Final Strip →
 </div>
 
 
-<!-- STEP 5 -->
+<!-- =====================================================
+STEP 5
+===================================================== -->
 
 <div id="step5" class="step">
 
 <div class="mini">05 · your memory</div>
 
-<h2>It's ready. ♡</h2>
+<h2>
+It's ready. ♡
+</h2>
 
 <p class="muted">
 Your little photobooth memory is finished.
@@ -987,17 +1770,20 @@ Your little photobooth memory is finished.
 <div class="final-preview-wrap">
 
 <div id="savedPreview"
-class="final-strip"></div>
+class="final-strip">
+</div>
 
 </div>
 
-<button class="primary"
+<button
+class="primary"
 onclick="saveStrip()"
 style="margin-top:18px">
 💾 Save Photo
 </button>
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="nextStep(4)"
 style="margin-top:10px;width:100%">
 ← Add More
@@ -1005,8 +1791,8 @@ style="margin-top:10px;width:100%">
 
 </div>
 
-
 </div>
+
 </section>
 
 
@@ -1038,39 +1824,248 @@ let partnerName="";
 let roomCode="";
 
 let selectedStrip=2;
+
 let selectedDesign="coquette";
 
 let photos=[];
 
 let cameraStream=null;
+
 let peerConnection=null;
+
 let signalingChannel=null;
 
 const currentUserId =
 crypto.randomUUID();
 
 const rtcConfig={
-iceServers:[
-{
-urls:"stun:stun.l.google.com:19302"
-},
-{
-urls:"stun:stun1.l.google.com:19302"
-}
-]
+  iceServers:[
+    {
+      urls:"stun:stun.l.google.com:19302"
+    },
+    {
+      urls:"stun:stun1.l.google.com:19302"
+    }
+  ]
 };
 
+
+/* =====================================================
+30 DESIGNS
+===================================================== */
+
 const designs=[
-"coquette",
-"retro",
-"scrapbook",
-"y2k",
-"strawberry",
-"lace",
-"postcard",
-"floral",
-"dreamy",
-"vintage"
+
+{
+ id:"coquette",
+ name:"🎀 Pink Coquette",
+ sub:"bows · pearls · blush",
+ emoji:"🎀"
+},
+
+{
+ id:"ballet",
+ name:"🩰 Balletcore",
+ sub:"lace · ribbons · soft pink",
+ emoji:"🩰"
+},
+
+{
+ id:"cherry",
+ name:"🌸 Cherry Blossom",
+ sub:"spring · petals · romance",
+ emoji:"🌸"
+},
+
+{
+ id:"letter",
+ name:"💌 Love Letter",
+ sub:"paper · stamps · handwritten",
+ emoji:"💌"
+},
+
+{
+ id:"teddy",
+ name:"🧸 Teddy Diary",
+ sub:"warm · cozy · cute",
+ emoji:"🧸"
+},
+
+{
+ id:"strawberry",
+ name:"🍓 Strawberry Milk",
+ sub:"sweet · pink · fruity",
+ emoji:"🍓"
+},
+
+{
+ id:"cloud",
+ name:"☁️ Cloudy Dream",
+ sub:"baby blue · clouds · dreamy",
+ emoji:"☁️"
+},
+
+{
+ id:"y2k",
+ name:"💿 Y2K Pink",
+ sub:"glossy · chrome · 2000s",
+ emoji:"💿"
+},
+
+{
+ id:"glitter",
+ name:"💎 Pink Glitter",
+ sub:"sparkles · glossy · glam",
+ emoji:"💎"
+},
+
+{
+ id:"butterfly",
+ name:"🦋 Butterfly Garden",
+ sub:"pastel · butterflies · flowers",
+ emoji:"🦋"
+},
+
+{
+ id:"film",
+ name:"🎞️ Film Camera",
+ sub:"analog · grain · film",
+ emoji:"🎞️"
+},
+
+{
+ id:"classic",
+ name:"📸 Classic Booth",
+ sub:"simple · timeless · clean",
+ emoji:"📸"
+},
+
+{
+ id:"magazine",
+ name:"📰 Cute Magazine",
+ sub:"editorial · fashion · bold",
+ emoji:"📰"
+},
+
+{
+ id:"doodle",
+ name:"✏️ 90s Doodle",
+ sub:"scribbles · yellow · fun",
+ emoji:"✏️"
+},
+
+{
+ id:"diary",
+ name:"💙 Blue Diary",
+ sub:"notebook · blue · memories",
+ emoji:"💙"
+},
+
+{
+ id:"pastel",
+ name:"🌈 Pastel Cute",
+ sub:"soft · colorful · dreamy",
+ emoji:"🌈"
+},
+
+{
+ id:"vintagefloral",
+ name:"🌷 Vintage Floral",
+ sub:"flowers · paper · old photo",
+ emoji:"🌷"
+},
+
+{
+ id:"cherrybomb",
+ name:"🍒 Cherry Bomb",
+ sub:"red · retro · bold",
+ emoji:"🍒"
+},
+
+{
+ id:"sweets",
+ name:"🧁 Sweet Treats",
+ sub:"cake · pastel · sugar",
+ emoji:"🧁"
+},
+
+{
+ id:"moon",
+ name:"🌙 Moon & Stars",
+ sub:"night · stars · celestial",
+ emoji:"🌙"
+},
+
+{
+ id:"oldmoney",
+ name:"🕯️ Old Money",
+ sub:"classic · elegant · romantic",
+ emoji:"🕯️"
+},
+
+{
+ id:"disco",
+ name:"🪩 Disco Love",
+ sub:"sparkle · party · glossy",
+ emoji:"🪩"
+},
+
+{
+ id:"plush",
+ name:"🧸 Plushie Scrapbook",
+ sub:"scrapbook · cozy · handmade",
+ emoji:"🧸"
+},
+
+{
+ id:"romcom",
+ name:"🎬 Rom-Com",
+ sub:"movie · romance · pink",
+ emoji:"🎬"
+},
+
+{
+ id:"music",
+ name:"🎧 Music Diary",
+ sub:"playlist · headphones · memories",
+ emoji:"🎧"
+},
+
+{
+ id:"shopping",
+ name:"🛍️ Pink Shopping",
+ sub:"fashion · cute · girly",
+ emoji:"🛍️"
+},
+
+{
+ id:"postcard",
+ name:"📮 Postcard",
+ sub:"travel · stamps · memories",
+ emoji:"📮"
+},
+
+{
+ id:"mirror",
+ name:"🪞 Mirror Selfie",
+ sub:"glass · reflection · soft",
+ emoji:"🪞"
+},
+
+{
+ id:"birthday",
+ name:"🎂 Birthday",
+ sub:"cake · ribbons · celebration",
+ emoji:"🎂"
+},
+
+{
+ id:"vintage",
+ name:"📷 Vintage Film",
+ sub:"sepia · paper · old camera",
+ emoji:"📷"
+}
+
 ];
 
 
@@ -1080,111 +2075,114 @@ PAGE
 
 function showPage(id){
 
-document
-.querySelectorAll(".page")
-.forEach(page=>{
-page.classList.remove("active");
-});
+  document
+  .querySelectorAll(".page")
+  .forEach(page=>{
+    page.classList.remove("active");
+  });
 
-document
-.getElementById(id)
-.classList.add("active");
+  document
+  .getElementById(id)
+  .classList.add("active");
 
-window.scrollTo(0,0);
-
+  window.scrollTo(0,0);
 }
 
 
 /* =====================================================
-ENTER
+ENTER WORLD
 ===================================================== */
 
 async function enterWorld(){
 
-yourName=
-document
-.getElementById("yourName")
-.value
-.trim();
+  yourName=
+  document
+  .getElementById("yourName")
+  .value
+  .trim();
 
-partnerName=
-document
-.getElementById("partnerName")
-.value
-.trim();
+  partnerName=
+  document
+  .getElementById("partnerName")
+  .value
+  .trim();
 
-roomCode=
-document
-.getElementById("roomCode")
-.value
-.trim()
-.toUpperCase();
+  roomCode=
+  document
+  .getElementById("roomCode")
+  .value
+  .trim()
+  .toUpperCase();
 
-if(!yourName){
+  if(!yourName){
 
-alert("Please enter your name ♡");
-return;
+    alert("Please enter your name ♡");
+    return;
 
-}
+  }
 
-if(!roomCode){
+  if(!roomCode){
 
-alert("Please enter a room code ♡");
-return;
+    alert("Please enter a room code ♡");
+    return;
 
-}
+  }
 
-document
-.getElementById("connectionMessage")
-.textContent="Connecting...";
+  document
+  .getElementById("connectionMessage")
+  .textContent="Connecting...";
 
-const {data,error}=
-await supabaseClient
-.from("rooms")
-.insert({
-room_code:roomCode,
-user_name:yourName
-})
-.select()
-.single();
 
-if(error){
+  const {data,error}=
+  await supabaseClient
+  .from("rooms")
+  .insert({
+    room_code:roomCode,
+    user_name:yourName
+  })
+  .select()
+  .single();
 
-console.error(error);
 
-alert(
-"Could not join the room. Check your Supabase rooms table and permissions."
-);
+  if(error){
 
-return;
+    console.error(error);
 
-}
+    alert(
+      "Could not join the room. Check your Supabase rooms table and permissions."
+    );
 
-document
-.getElementById("displayYou")
-.textContent=yourName;
+    return;
 
-document
-.getElementById("displayPartner")
-.textContent=
-partnerName||"Them";
+  }
 
-document
-.getElementById("displayRoom")
-.textContent=roomCode;
 
-document
-.getElementById("cameraYouName")
-.textContent=yourName;
+  document
+  .getElementById("displayYou")
+  .textContent=yourName;
 
-document
-.getElementById("cameraPartnerName")
-.textContent=
-partnerName||"Them";
+  document
+  .getElementById("displayPartner")
+  .textContent=
+  partnerName||"Them";
 
-showPage("home");
+  document
+  .getElementById("displayRoom")
+  .textContent=roomCode;
 
-startRoomListener();
+  document
+  .getElementById("cameraYouName")
+  .textContent=yourName;
+
+  document
+  .getElementById("cameraPartnerName")
+  .textContent=
+  partnerName||"Them";
+
+
+  showPage("home");
+
+  startRoomListener();
 
 }
 
@@ -1195,71 +2193,75 @@ ROOM LISTENER
 
 function startRoomListener(){
 
-supabaseClient
-.channel("room-"+roomCode)
+  supabaseClient
+  .channel("room-"+roomCode)
 
-.on(
-"postgres_changes",
-{
-event:"INSERT",
-schema:"public",
-table:"rooms",
-filter:"room_code=eq."+roomCode
-},
-async()=>{
-await checkRoom();
-}
-)
+  .on(
+    "postgres_changes",
+    {
+      event:"INSERT",
+      schema:"public",
+      table:"rooms",
+      filter:"room_code=eq."+roomCode
+    },
+    async()=>{
+      await checkRoom();
+    }
+  )
 
-.subscribe();
+  .subscribe();
 
-checkRoom();
+
+  checkRoom();
 
 }
 
 
 async function checkRoom(){
 
-const {data,error}=
-await supabaseClient
-.from("rooms")
-.select("*")
-.eq("room_code",roomCode);
+  const {data,error}=
+  await supabaseClient
+  .from("rooms")
+  .select("*")
+  .eq("room_code",roomCode);
 
-if(error){
 
-console.error(error);
-return;
+  if(error){
 
-}
+    console.error(error);
+    return;
 
-const others=(data||[])
-.filter(
-row=>row.user_name!==yourName
-);
+  }
 
-if(others.length){
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"🟢 "+others[0].user_name+" is here ♡";
+  const others=(data||[])
+  .filter(
+    row=>row.user_name!==yourName
+  );
 
-document
-.getElementById("partnerCameraText")
-.textContent=
-"Connecting...";
 
-startSignaling();
+  if(others.length){
 
-}else{
+    document
+    .getElementById("partnerStatus")
+    .textContent=
+    "🟢 "+others[0].user_name+" is here ♡";
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"⚪ Waiting for partner...";
+    document
+    .getElementById("partnerCameraText")
+    .textContent=
+    "Connecting...";
 
-}
+    startSignaling();
+
+  }else{
+
+    document
+    .getElementById("partnerStatus")
+    .textContent=
+    "⚪ Waiting for partner...";
+
+  }
 
 }
 
@@ -1270,276 +2272,288 @@ WEBRTC
 
 function startSignaling(){
 
-if(signalingChannel)return;
+  if(signalingChannel)return;
 
-signalingChannel=
-supabaseClient
-.channel(
-"webrtc-"+roomCode+"-"+currentUserId
-)
 
-.on(
-"postgres_changes",
-{
-event:"INSERT",
-schema:"public",
-table:"call_signals",
-filter:"room_code=eq."+roomCode
-},
-async payload=>{
+  signalingChannel=
+  supabaseClient
+  .channel(
+    "webrtc-"+roomCode+"-"+currentUserId
+  )
 
-const signal=payload.new;
+  .on(
+    "postgres_changes",
+    {
+      event:"INSERT",
+      schema:"public",
+      table:"call_signals",
+      filter:"room_code=eq."+roomCode
+    },
+    async payload=>{
 
-if(
-signal.sender===currentUserId
-)return;
+      const signal=payload.new;
 
-await handleSignal(signal);
+      if(
+        signal.sender===currentUserId
+      )return;
 
-}
-)
+      await handleSignal(signal);
 
-.subscribe(
-async status=>{
+    }
+  )
 
-if(status==="SUBSCRIBED"){
+  .subscribe(
+    async status=>{
 
-await createPeerConnection();
+      if(status==="SUBSCRIBED"){
 
-await decideCaller();
+        await createPeerConnection();
 
-}
+        await decideCaller();
 
-}
-);
+      }
+
+    }
+  );
 
 }
 
 
 async function decideCaller(){
 
-const {data,error}=
-await supabaseClient
-.from("rooms")
-.select("id,user_name")
-.eq("room_code",roomCode)
-.order("id",{ascending:true});
+  const {data,error}=
+  await supabaseClient
+  .from("rooms")
+  .select("id,user_name")
+  .eq("room_code",roomCode)
+  .order("id",{ascending:true});
 
-if(
-error||
-!data||
-data.length<2
-)return;
 
-if(
-data[0].user_name===yourName
-){
+  if(
+    error||
+    !data||
+    data.length<2
+  )return;
 
-await createOffer();
 
-}
+  if(
+    data[0].user_name===yourName
+  ){
+
+    await createOffer();
+
+  }
 
 }
 
 
 async function createPeerConnection(){
 
-if(peerConnection)return;
+  if(peerConnection)return;
 
-peerConnection=
-new RTCPeerConnection(
-rtcConfig
-);
 
-if(cameraStream){
+  peerConnection=
+  new RTCPeerConnection(
+    rtcConfig
+  );
 
-cameraStream
-.getTracks()
-.forEach(track=>{
 
-peerConnection.addTrack(
-track,
-cameraStream
-);
+  if(cameraStream){
 
-});
+    cameraStream
+    .getTracks()
+    .forEach(track=>{
 
-}
+      peerConnection.addTrack(
+        track,
+        cameraStream
+      );
 
-peerConnection.ontrack=
-event=>{
+    });
 
-const video=
-document.getElementById(
-"partnerVideo"
-);
+  }
 
-video.srcObject=
-event.streams[0];
 
-document
-.getElementById("partnerWaiting")
-.style.display="none";
+  peerConnection.ontrack=
+  event=>{
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"🟢 Live together ♡";
+    const video=
+    document.getElementById(
+      "partnerVideo"
+    );
 
-};
+    video.srcObject=
+    event.streams[0];
 
-peerConnection.onicecandidate=
-async event=>{
+    document
+    .getElementById("partnerWaiting")
+    .style.display="none";
 
-if(event.candidate){
+    document
+    .getElementById("partnerStatus")
+    .textContent=
+    "🟢 Live together ♡";
 
-await sendSignal(
-"candidate",
-event.candidate.toJSON()
-);
+  };
 
-}
 
-};
+  peerConnection.onicecandidate=
+  async event=>{
 
-peerConnection.onconnectionstatechange=
-()=>{
+    if(event.candidate){
 
-if(
-peerConnection.connectionState===
-"connected"
-){
+      await sendSignal(
+        "candidate",
+        event.candidate.toJSON()
+      );
 
-document
-.getElementById("partnerWaiting")
-.style.display="none";
+    }
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"🟢 Live together ♡";
+  };
 
-}
 
-};
+  peerConnection.onconnectionstatechange=
+  ()=>{
+
+    if(
+      peerConnection.connectionState===
+      "connected"
+    ){
+
+      document
+      .getElementById("partnerWaiting")
+      .style.display="none";
+
+      document
+      .getElementById("partnerStatus")
+      .textContent=
+      "🟢 Live together ♡";
+
+    }
+
+  };
 
 }
 
 
 async function createOffer(){
 
-if(!peerConnection)
-await createPeerConnection();
+  if(!peerConnection)
+  await createPeerConnection();
 
-const offer=
-await peerConnection
-.createOffer();
 
-await peerConnection
-.setLocalDescription(offer);
+  const offer=
+  await peerConnection
+  .createOffer();
 
-await sendSignal(
-"offer",
-{
-type:offer.type,
-sdp:offer.sdp
-}
-);
+
+  await peerConnection
+  .setLocalDescription(offer);
+
+
+  await sendSignal(
+    "offer",
+    {
+      type:offer.type,
+      sdp:offer.sdp
+    }
+  );
 
 }
 
 
 async function handleSignal(signal){
 
-if(!peerConnection)
-await createPeerConnection();
+  if(!peerConnection)
+  await createPeerConnection();
 
-try{
 
-if(signal.type==="offer"){
+  try{
 
-await peerConnection
-.setRemoteDescription(
-new RTCSessionDescription(
-signal.data
-)
-);
+    if(signal.type==="offer"){
 
-const answer=
-await peerConnection
-.createAnswer();
+      await peerConnection
+      .setRemoteDescription(
+        new RTCSessionDescription(
+          signal.data
+        )
+      );
 
-await peerConnection
-.setLocalDescription(answer);
 
-await sendSignal(
-"answer",
-{
-type:answer.type,
-sdp:answer.sdp
-}
-);
+      const answer=
+      await peerConnection
+      .createAnswer();
 
-}
 
-else if(
-signal.type==="answer"
-){
+      await peerConnection
+      .setLocalDescription(answer);
 
-await peerConnection
-.setRemoteDescription(
-new RTCSessionDescription(
-signal.data
-)
-);
 
-}
+      await sendSignal(
+        "answer",
+        {
+          type:answer.type,
+          sdp:answer.sdp
+        }
+      );
 
-else if(
-signal.type==="candidate"
-){
+    }
 
-await peerConnection
-.addIceCandidate(
-new RTCIceCandidate(
-signal.data
-)
-);
+    else if(signal.type==="answer"){
 
-}
+      await peerConnection
+      .setRemoteDescription(
+        new RTCSessionDescription(
+          signal.data
+        )
+      );
 
-}catch(error){
+    }
 
-console.error(
-"WebRTC error:",
-error
-);
+    else if(signal.type==="candidate"){
 
-}
+      await peerConnection
+      .addIceCandidate(
+        new RTCIceCandidate(
+          signal.data
+        )
+      );
+
+    }
+
+  }catch(error){
+
+    console.error(
+      "WebRTC error:",
+      error
+    );
+
+  }
 
 }
 
 
 async function sendSignal(
-type,
-data
+  type,
+  data
 ){
 
-const {error}=
-await supabaseClient
-.from("call_signals")
-.insert({
-room_code:roomCode,
-sender:currentUserId,
-type:type,
-data:data
-});
+  const {error}=
+  await supabaseClient
+  .from("call_signals")
+  .insert({
+    room_code:roomCode,
+    sender:currentUserId,
+    type:type,
+    data:data
+  });
 
-if(error)
-console.error(
-"SIGNAL ERROR:",
-error
-);
+
+  if(error)
+  console.error(
+    "SIGNAL ERROR:",
+    error
+  );
 
 }
 
@@ -1550,70 +2564,76 @@ CAMERA
 
 async function startCamera(){
 
-try{
+  try{
 
-cameraStream=
-await navigator
-.mediaDevices
-.getUserMedia({
+    cameraStream=
+    await navigator
+    .mediaDevices
+    .getUserMedia({
 
-video:{
-facingMode:"user"
-},
+      video:{
+        facingMode:"user"
+      },
 
-audio:false
+      audio:false
 
-});
+    });
 
-const video=
-document.getElementById(
-"myCamera"
-);
 
-video.srcObject=
-cameraStream;
+    const video=
+    document.getElementById(
+      "myCamera"
+    );
 
-if(peerConnection){
+    video.srcObject=
+    cameraStream;
 
-const track=
-cameraStream
-.getVideoTracks()[0];
 
-const sender=
-peerConnection
-.getSenders()
-.find(
-s=>s.track?.kind==="video"
-);
+    if(peerConnection){
 
-if(sender){
+      const track=
+      cameraStream
+      .getVideoTracks()[0];
 
-await sender
-.replaceTrack(track);
 
-}else{
+      const sender=
+      peerConnection
+      .getSenders()
+      .find(
+        s=>s.track?.kind==="video"
+      );
 
-peerConnection
-.addTrack(
-track,
-cameraStream
-);
 
-}
+      if(sender){
 
-}
+        await sender
+        .replaceTrack(track);
 
-startSignaling();
+      }else{
 
-}catch(error){
+        peerConnection
+        .addTrack(
+          track,
+          cameraStream
+        );
 
-console.error(error);
+      }
 
-alert(
-"Please allow camera access in your browser."
-);
+    }
 
-}
+
+    startSignaling();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Please allow camera access in your browser."
+    );
+
+  }
 
 }
 
@@ -1624,104 +2644,116 @@ PHOTOBOOTH
 
 function openPhotobooth(){
 
-photos=[];
+  photos=[];
 
-document
-.getElementById("photoCount")
-.textContent=
-"0 / "+selectedStrip;
+  document
+  .getElementById("photoCount")
+  .textContent=
+  "0 / "+selectedStrip;
 
-document
-.getElementById("photoPreview")
-.innerHTML="";
 
-document
-.getElementById("photosDoneButton")
-.disabled=true;
+  document
+  .getElementById("photoPreview")
+  .innerHTML="";
 
-showPage("photobooth");
 
-nextStep(1);
+  document
+  .getElementById("photosDoneButton")
+  .disabled=true;
+
+
+  showPage("photobooth");
+
+  nextStep(1);
 
 }
 
 
 function selectStrip(
-number,
-button
+  number,
+  button
 ){
 
-selectedStrip=number;
+  selectedStrip=number;
 
-document
-.querySelectorAll(".strip-option")
-.forEach(x=>{
-x.classList.remove(
-"selected"
-);
-});
 
-button.classList.add(
-"selected"
-);
+  document
+  .querySelectorAll(".strip-option")
+  .forEach(x=>{
+    x.classList.remove(
+      "selected"
+    );
+  });
 
-document
-.getElementById("photoCount")
-.textContent=
-photos.length+
-" / "+
-selectedStrip;
+
+  button.classList.add(
+    "selected"
+  );
+
+
+  document
+  .getElementById("photoCount")
+  .textContent=
+  photos.length+
+  " / "+
+  selectedStrip;
 
 }
 
 
 function nextStep(number){
 
-document
-.querySelectorAll(".step")
-.forEach(x=>{
-x.classList.remove(
-"active"
-);
-});
+  document
+  .querySelectorAll(".step")
+  .forEach(x=>{
+    x.classList.remove(
+      "active"
+    );
+  });
 
-document
-.getElementById(
-"step"+number
-)
-.classList.add("active");
 
-document
-.getElementById("stepNumber")
-.textContent=
-number+" / 5";
+  document
+  .getElementById(
+    "step"+number
+  )
+  .classList.add("active");
 
-if(number===2){
 
-if(!cameraStream)
-startCamera();
+  document
+  .getElementById("stepNumber")
+  .textContent=
+  number+" / 5";
 
-startSignaling();
 
-}
+  if(number===2){
 
-if(number===3){
+    if(!cameraStream)
+    startCamera();
 
-buildDesignPicker();
+    startSignaling();
 
-}
+  }
 
-if(number===4){
 
-buildFinalStrip();
+  if(number===3){
 
-}
+    buildDesignPicker();
 
-if(number===5){
+  }
 
-copyFinalPreview();
 
-}
+  if(number===4){
+
+    buildFinalStrip();
+
+  }
+
+
+  if(number===5){
+
+    copyFinalPreview();
+
+  }
 
 }
 
@@ -1732,68 +2764,68 @@ TAKE PHOTO
 
 function takePhoto(){
 
-if(!cameraStream){
+  if(!cameraStream){
 
-alert(
-"Start your camera first."
-);
+    alert(
+      "Start your camera first."
+    );
 
-return;
+    return;
 
-}
+  }
 
-if(
-photos.length>=selectedStrip
-){
 
-alert(
-"Your strip is already full!"
-);
+  if(
+    photos.length>=selectedStrip
+  ){
 
-return;
+    alert(
+      "Your strip is already full!"
+    );
 
-}
+    return;
 
-let count=3;
+  }
 
-const overlay=
-document.createElement("div");
 
-overlay.style.position="fixed";
-overlay.style.inset="0";
-overlay.style.zIndex="9999";
-overlay.style.display="grid";
-overlay.style.placeItems="center";
-overlay.style.background="#0009";
-overlay.style.color="white";
-overlay.style.font="bold 100px Georgia";
+  let count=3;
 
-document.body.appendChild(
-overlay
-);
 
-overlay.textContent=count;
+  const overlay=
+  document.createElement("div");
 
-const timer=
-setInterval(()=>{
+  overlay.className=
+  "countdown-overlay";
 
-count--;
 
-if(count>0){
+  document.body
+  .appendChild(overlay);
 
-overlay.textContent=count;
 
-}else{
+  overlay.textContent=count;
 
-clearInterval(timer);
 
-overlay.remove();
+  const timer=
+  setInterval(()=>{
 
-capturePhoto();
+    count--;
 
-}
 
-},700);
+    if(count>0){
+
+      overlay.textContent=count;
+
+    }else{
+
+      clearInterval(timer);
+
+      overlay.remove();
+
+      capturePhoto();
+
+    }
+
+  },700);
 
 }
 
@@ -1804,88 +2836,102 @@ CAPTURE
 
 function capturePhoto(){
 
-const video=
-document.getElementById(
-"myCamera"
-);
+  const video=
+  document.getElementById(
+    "myCamera"
+  );
 
-const canvas=
-document.createElement(
-"canvas"
-);
 
-canvas.width=800;
-canvas.height=1000;
+  const canvas=
+  document.createElement(
+    "canvas"
+  );
 
-const ctx=
-canvas.getContext("2d");
 
-ctx.save();
+  canvas.width=800;
+  canvas.height=1000;
 
-ctx.translate(800,0);
-ctx.scale(-1,1);
 
-ctx.drawImage(
-video,
-0,
-0,
-800,
-1000
-);
+  const ctx=
+  canvas.getContext("2d");
 
-ctx.restore();
 
-const image=
-canvas.toDataURL(
-"image/jpeg",
-.92
-);
+  ctx.save();
 
-photos.push(image);
+  ctx.translate(800,0);
 
-document
-.getElementById("photoCount")
-.textContent=
-photos.length+
-" / "+
-selectedStrip;
+  ctx.scale(-1,1);
 
-updatePhotoThumbnails();
 
-if(
-photos.length>=selectedStrip
-){
+  ctx.drawImage(
+    video,
+    0,
+    0,
+    800,
+    1000
+  );
 
-document
-.getElementById(
-"photosDoneButton"
-)
-.disabled=false;
 
-}
+  ctx.restore();
+
+
+  const image=
+  canvas.toDataURL(
+    "image/jpeg",
+    .92
+  );
+
+
+  photos.push(image);
+
+
+  document
+  .getElementById("photoCount")
+  .textContent=
+  photos.length+
+  " / "+
+  selectedStrip;
+
+
+  updatePhotoThumbnails();
+
+
+  if(
+    photos.length>=selectedStrip
+  ){
+
+    document
+    .getElementById(
+      "photosDoneButton"
+    )
+    .disabled=false;
+
+  }
 
 }
 
 
 function updatePhotoThumbnails(){
 
-const preview=
-document.getElementById(
-"photoPreview"
-);
+  const preview=
+  document.getElementById(
+    "photoPreview"
+  );
 
-preview.innerHTML="";
 
-photos.forEach(image=>{
+  preview.innerHTML="";
 
-const img=
-document.createElement("img");
 
-img.src=image;
+  photos.forEach(image=>{
 
-preview.appendChild(img);
+    const img=
+    document.createElement("img");
 
-});
+    img.src=image;
+
+    preview.appendChild(img);
+
+  });
 
 }
 
@@ -1896,152 +2942,229 @@ DESIGN PICKER
 
 function buildDesignPicker(){
 
-const grid=
-document.getElementById(
-"designGrid"
-);
-
-grid.innerHTML="";
-
-designs.forEach(name=>{
-
-const card=
-document.createElement("button");
-
-card.className=
-"design-card"+
-(name===selectedDesign
-?" selected":"");
-
-const preview=
-document.createElement("div");
-
-preview.className=
-"design-preview theme-"+name;
-
-photos.forEach(image=>{
-
-const img=
-document.createElement("img");
-
-img.src=image;
-
-preview.appendChild(img);
-
-});
-
-const label=
-document.createElement("div");
-
-label.className="design-name";
-
-label.textContent=
-getDesignName(name);
-
-card.appendChild(preview);
-card.appendChild(label);
-
-card.onclick=()=>{
-
-selectedDesign=name;
-
-document
-.querySelectorAll(".design-card")
-.forEach(x=>{
-x.classList.remove(
-"selected"
-);
-});
-
-card.classList.add(
-"selected"
-);
-
-renderDesignPreview();
-
-};
-
-card.onmouseenter=()=>{
-
-if(window.innerWidth>600){
-
-selectedDesign=name;
-
-renderDesignPreview();
-
-}
-
-};
-
-grid.appendChild(card);
-
-});
-
-renderDesignPreview();
-
-}
+  const grid=
+  document.getElementById(
+    "designGrid"
+  );
 
 
-function getDesignName(name){
+  grid.innerHTML="";
 
-const names={
-coquette:"🎀 Coquette",
-retro:"📻 Retro Film",
-scrapbook:"📒 Scrapbook",
-y2k:"💿 Y2K",
-strawberry:"🍓 Strawberry",
-lace:"🕊️ Lace",
-postcard:"💌 Postcard",
-floral:"🌸 Floral",
-dreamy:"☁️ Dreamy",
-vintage:"🌷 Vintage"
-};
 
-return names[name]||name;
+  designs.forEach(design=>{
+
+    const card=
+    document.createElement("button");
+
+
+    card.className=
+    "design-card"+
+    (
+      design.id===selectedDesign
+      ? " selected"
+      : ""
+    );
+
+
+    const preview=
+    document.createElement("div");
+
+
+    preview.className=
+    "design-preview theme-"+design.id;
+
+
+    /* ADD PHOTOS */
+
+    photos.forEach(image=>{
+
+      const img=
+      document.createElement("img");
+
+      img.src=image;
+
+      preview.appendChild(img);
+
+    });
+
+
+    /* DESIGN CORNER DECOR */
+
+    const corner=
+    document.createElement("div");
+
+    corner.className="corner";
+
+    corner.style.top="7px";
+    corner.style.right="9px";
+
+    corner.textContent=
+    design.emoji;
+
+    preview.appendChild(corner);
+
+
+    const title=
+    document.createElement("div");
+
+    title.className="photo-title";
+
+    title.textContent=
+    yourName+
+    " ♡ "+
+    (partnerName||"Them");
+
+
+    preview.appendChild(title);
+
+
+    const date=
+    document.createElement("div");
+
+    date.className="photo-date";
+
+    date.textContent=
+    new Date()
+    .toLocaleDateString(
+      undefined,
+      {
+        month:"short",
+        day:"numeric",
+        year:"numeric"
+      }
+    );
+
+
+    preview.appendChild(date);
+
+
+    const label=
+    document.createElement("div");
+
+    label.className="design-name";
+
+    label.textContent=
+    design.name;
+
+
+    const sub=
+    document.createElement("div");
+
+    sub.className="design-sub";
+
+    sub.textContent=
+    design.sub;
+
+
+    card.appendChild(preview);
+
+    card.appendChild(label);
+
+    card.appendChild(sub);
+
+
+    card.onclick=()=>{
+
+      selectedDesign=
+      design.id;
+
+
+      document
+      .querySelectorAll(".design-card")
+      .forEach(x=>{
+        x.classList.remove(
+          "selected"
+        );
+      });
+
+
+      card.classList.add(
+        "selected"
+      );
+
+
+      renderDesignPreview();
+
+    };
+
+
+    grid.appendChild(card);
+
+  });
+
+
+  renderDesignPreview();
 
 }
 
 
 /* =====================================================
-LIVE DESIGN PREVIEW
+DESIGN PREVIEW
 ===================================================== */
 
 function renderDesignPreview(){
 
-const preview=
-document.getElementById(
-"designPreview"
-);
+  const preview=
+  document.getElementById(
+    "designPreview"
+  );
 
-preview.className=
-"final-strip theme-"+
-selectedDesign;
 
-preview.innerHTML="";
+  preview.className=
+  "final-strip theme-"+
+  selectedDesign;
 
-photos.forEach(image=>{
 
-const img=
-document.createElement("img");
+  preview.innerHTML="";
 
-img.src=image;
 
-preview.appendChild(img);
+  photos.forEach(image=>{
 
-});
+    const img=
+    document.createElement("img");
 
-const title=
-document.createElement("div");
+    img.src=image;
 
-title.className=
-"final-strip-title";
+    preview.appendChild(img);
 
-title.textContent=
-yourName+
-" ♡ "+
-(partnerName||"Them");
+  });
 
-preview.appendChild(title);
+
+  const corner=
+  document.createElement("div");
+
+  corner.className="corner";
+
+  corner.style.top="10px";
+  corner.style.right="12px";
+
+  const design=
+  designs.find(
+    d=>d.id===selectedDesign
+  );
+
+
+  corner.textContent=
+  design?.emoji||"♡";
+
+
+  preview.appendChild(corner);
+
+
+  const title=
+  document.createElement("div");
+
+  title.className=
+  "final-strip-title";
+
+
+  title.textContent=
+  yourName+
+  " ♡ "+
+  (partnerName||"Them");
+
+
+  preview.appendChild(title);
 
 }
 
@@ -2052,9 +3175,9 @@ CHOOSE DESIGN
 
 function chooseDesign(){
 
-buildFinalStrip();
+  buildFinalStrip();
 
-nextStep(4);
+  nextStep(4);
 
 }
 
@@ -2065,186 +3188,256 @@ FINAL STRIP
 
 function buildFinalStrip(){
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
+  const strip=
+  document.getElementById(
+    "photoStrip"
+  );
 
-strip.className=
-"final-strip theme-"+
-selectedDesign;
 
-strip.innerHTML="";
+  strip.className=
+  "final-strip theme-"+
+  selectedDesign;
 
-photos.forEach(image=>{
 
-const img=
-document.createElement("img");
+  strip.innerHTML="";
 
-img.src=image;
 
-strip.appendChild(img);
+  photos.forEach(image=>{
 
-});
+    const img=
+    document.createElement("img");
 
-const title=
-document.createElement("div");
+    img.src=image;
 
-title.className=
-"final-strip-title";
+    strip.appendChild(img);
 
-title.textContent=
-yourName+
-" ♡ "+
-(partnerName||"Them");
+  });
 
-strip.appendChild(title);
+
+  const corner=
+  document.createElement("div");
+
+  corner.className="corner";
+
+  corner.style.top="12px";
+  corner.style.right="14px";
+
+
+  const design=
+  designs.find(
+    d=>d.id===selectedDesign
+  );
+
+
+  corner.textContent=
+  design?.emoji||"♡";
+
+
+  strip.appendChild(corner);
+
+
+  const title=
+  document.createElement("div");
+
+  title.className=
+  "final-strip-title";
+
+
+  title.textContent=
+  yourName+
+  " ♡ "+
+  (partnerName||"Them");
+
+
+  strip.appendChild(title);
 
 }
 
 
 /* =====================================================
-MOVABLE STICKERS
+STICKERS
 ===================================================== */
 
 function addSticker(symbol){
 
-const sticker=
-document.createElement("div");
+  const sticker=
+  document.createElement("div");
 
-sticker.className="decor";
 
-sticker.textContent=symbol;
+  sticker.className="decor";
 
-sticker.style.left=
-(15+Math.random()*70)+"%";
+  sticker.textContent=symbol;
 
-sticker.style.top=
-(10+Math.random()*80)+"%";
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
+  sticker.style.left=
+  (15+Math.random()*70)+"%";
 
-strip.appendChild(sticker);
 
-let dragging=false;
+  sticker.style.top=
+  (10+Math.random()*80)+"%";
 
-function moveSticker(
-clientX,
-clientY
+
+  const strip=
+  document.getElementById(
+    "photoStrip"
+  );
+
+
+  strip.appendChild(sticker);
+
+
+  makeMovable(
+    sticker,
+    strip
+  );
+
+}
+
+
+/* =====================================================
+MOVABLE ELEMENTS
+===================================================== */
+
+function makeMovable(
+  element,
+  container
 ){
 
-const rect=
-strip.getBoundingClientRect();
-
-let x=
-((clientX-rect.left)/
-rect.width)*100;
-
-let y=
-((clientY-rect.top)/
-rect.height)*100;
-
-x=Math.max(
-5,
-Math.min(95,x)
-);
-
-y=Math.max(
-3,
-Math.min(97,y)
-);
-
-sticker.style.left=
-x+"%";
-
-sticker.style.top=
-y+"%";
-
-}
+  let dragging=false;
 
 
-/* TOUCH */
+  function move(
+    clientX,
+    clientY
+  ){
 
-sticker.addEventListener(
-"touchstart",
-e=>{
-
-dragging=true;
-
-e.preventDefault();
-
-},
-{passive:false}
-);
-
-sticker.addEventListener(
-"touchmove",
-e=>{
-
-if(!dragging)return;
-
-e.preventDefault();
-
-const touch=
-e.touches[0];
-
-moveSticker(
-touch.clientX,
-touch.clientY
-);
-
-},
-{passive:false}
-);
-
-sticker.addEventListener(
-"touchend",
-()=>{
-
-dragging=false;
-
-}
-);
+    const rect=
+    container.getBoundingClientRect();
 
 
-/* MOUSE */
+    let x=
+    (
+      (clientX-rect.left)/
+      rect.width
+    )*100;
 
-sticker.addEventListener(
-"mousedown",
-e=>{
 
-dragging=true;
+    let y=
+    (
+      (clientY-rect.top)/
+      rect.height
+    )*100;
 
-e.preventDefault();
 
-}
-);
+    x=Math.max(
+      5,
+      Math.min(95,x)
+    );
 
-document.addEventListener(
-"mousemove",
-e=>{
 
-if(!dragging)return;
+    y=Math.max(
+      3,
+      Math.min(97,y)
+    );
 
-moveSticker(
-e.clientX,
-e.clientY
-);
 
-}
-);
+    element.style.left=
+    x+"%";
 
-document.addEventListener(
-"mouseup",
-()=>{
 
-dragging=false;
+    element.style.top=
+    y+"%";
 
-}
-);
+  }
+
+
+  element.addEventListener(
+    "touchstart",
+    e=>{
+
+      dragging=true;
+
+      e.preventDefault();
+
+    },
+    {passive:false}
+  );
+
+
+  element.addEventListener(
+    "touchmove",
+    e=>{
+
+      if(!dragging)return;
+
+      e.preventDefault();
+
+
+      const touch=
+      e.touches[0];
+
+
+      move(
+        touch.clientX,
+        touch.clientY
+      );
+
+    },
+    {passive:false}
+  );
+
+
+  element.addEventListener(
+    "touchend",
+    ()=>{
+
+      dragging=false;
+
+    }
+  );
+
+
+  element.addEventListener(
+    "mousedown",
+    e=>{
+
+      dragging=true;
+
+      e.preventDefault();
+
+    }
+  );
+
+
+  const mouseMove=e=>{
+
+    if(!dragging)return;
+
+    move(
+      e.clientX,
+      e.clientY
+    );
+
+  };
+
+
+  const mouseUp=()=>{
+
+    dragging=false;
+
+  };
+
+
+  document.addEventListener(
+    "mousemove",
+    mouseMove
+  );
+
+
+  document.addEventListener(
+    "mouseup",
+    mouseUp
+  );
 
 }
 
@@ -2255,281 +3448,25 @@ TEXT
 
 function addText(){
 
-const input=
-document.getElementById(
-"customText"
-);
+  const input=
+  document.getElementById(
+    "customText"
+  );
 
-const value=
-input.value.trim();
 
-if(!value)return;
+  const value=
+  input.value.trim();
 
-const text=
-document.createElement("div");
 
-text.className=
-"decor text-decor";
+  if(!value)return;
 
-text.textContent=value;
 
-text.style.left="50%";
-text.style.top="50%";
+  const text=
+  document.createElement("div");
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
 
-strip.appendChild(text);
+  text.className=
+  "decor text-decor";
 
-input.value="";
 
-makeMovable(text,strip);
-
-}
-
-
-function makeMovable(
-element,
-container
-){
-
-let dragging=false;
-
-function move(
-clientX,
-clientY
-){
-
-const rect=
-container.getBoundingClientRect();
-
-let x=
-((clientX-rect.left)/
-rect.width)*100;
-
-let y=
-((clientY-rect.top)/
-rect.height)*100;
-
-x=Math.max(
-5,
-Math.min(95,x)
-);
-
-y=Math.max(
-3,
-Math.min(97,y)
-);
-
-element.style.left=x+"%";
-element.style.top=y+"%";
-
-}
-
-element.addEventListener(
-"touchstart",
-e=>{
-
-dragging=true;
-e.preventDefault();
-
-},
-{passive:false}
-);
-
-element.addEventListener(
-"touchmove",
-e=>{
-
-if(!dragging)return;
-
-e.preventDefault();
-
-const t=e.touches[0];
-
-move(
-t.clientX,
-t.clientY
-);
-
-},
-{passive:false}
-);
-
-element.addEventListener(
-"touchend",
-()=>dragging=false
-);
-
-element.addEventListener(
-"mousedown",
-e=>{
-
-dragging=true;
-e.preventDefault();
-
-}
-);
-
-document.addEventListener(
-"mousemove",
-e=>{
-
-if(dragging)
-move(
-e.clientX,
-e.clientY
-);
-
-}
-);
-
-document.addEventListener(
-"mouseup",
-()=>dragging=false
-);
-
-}
-
-
-/* =====================================================
-FINAL PREVIEW
-===================================================== */
-
-function copyFinalPreview(){
-
-const source=
-document.getElementById(
-"photoStrip"
-);
-
-const target=
-document.getElementById(
-"savedPreview"
-);
-
-target.innerHTML=
-source.innerHTML;
-
-target.className=
-source.className;
-
-}
-
-
-/* =====================================================
-SAVE
-===================================================== */
-
-async function saveStrip(){
-
-const strip=
-document.getElementById(
-"photoStrip"
-);
-
-if(!strip){
-
-alert(
-"Photo strip not found."
-);
-
-return;
-
-}
-
-
-/*
-Use browser screenshot library if available.
-*/
-
-if(
-typeof html2canvas==="undefined"
-){
-
-const script=
-document.createElement("script");
-
-script.src=
-"https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
-
-script.onload=async()=>{
-await actuallySaveStrip();
-};
-
-document.head.appendChild(
-script
-);
-
-}else{
-
-await actuallySaveStrip();
-
-}
-
-}
-
-
-async function actuallySaveStrip(){
-
-const strip=
-document.getElementById(
-"photoStrip"
-);
-
-const canvas=
-await html2canvas(
-strip,
-{
-scale:3,
-backgroundColor:null,
-useCORS:true
-}
-);
-
-const link=
-document.createElement("a");
-
-link.download=
-"our-little-photobooth.png";
-
-link.href=
-canvas.toDataURL(
-"image/png"
-);
-
-link.click();
-
-}
-
-
-/* =====================================================
-CLEANUP
-===================================================== */
-
-window.addEventListener(
-"beforeunload",
-()=>{
-
-if(cameraStream){
-
-cameraStream
-.getTracks()
-.forEach(track=>{
-track.stop();
-});
-
-}
-
-if(peerConnection)
-peerConnection.close();
-
-}
-);
-
-</script>
-
-</body>
-</html>
+  text.textContent=value;
