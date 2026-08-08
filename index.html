@@ -205,6 +205,8 @@ h2 span{
   color:var(--pink);
 }
 
+/* CAMERA */
+
 .camera{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -213,6 +215,35 @@ h2 span{
   padding:10px;
   border-radius:28px;
   overflow:hidden;
+}
+
+/*
+  IMPORTANT:
+  The two boxes are positioned dynamically by JavaScript.
+
+  Left-side user:
+  local = LEFT
+  partner = RIGHT
+
+  Right-side user:
+  partner = LEFT
+  local = RIGHT
+*/
+
+.camera.my-side-left #myCameraBox{
+  grid-column:1;
+}
+
+.camera.my-side-left #partnerCameraBox{
+  grid-column:2;
+}
+
+.camera.my-side-right #partnerCameraBox{
+  grid-column:1;
+}
+
+.camera.my-side-right #myCameraBox{
+  grid-column:2;
 }
 
 .video-box{
@@ -229,10 +260,16 @@ h2 span{
   object-fit:cover;
   display:block;
   background:#30262b;
-  transform:scaleX(-1);
 }
 
-.video-box.partner video{
+/*
+  Both live videos are mirrored.
+
+  This means the actual camera frame is rendered the
+  same way the person sees themselves in a normal
+  selfie preview.
+*/
+.video-box video{
   transform:scaleX(-1);
 }
 
@@ -739,15 +776,21 @@ h2 span{
 <p class="desc">Take pictures together even when you're far apart.</p>
 
 <div class="field">
-<label>Your name<input id="yourName" placeholder="Your name" autocomplete="off"></label>
+<label>Your name
+<input id="yourName" placeholder="Your name" autocomplete="off">
+</label>
 </div>
 
 <div class="field">
-<label>Partner's name<input id="partnerName" placeholder="Their name" autocomplete="off"></label>
+<label>Partner's name
+<input id="partnerName" placeholder="Their name" autocomplete="off">
+</label>
 </div>
 
 <div class="field">
-<label>Shared room code<input id="roomCode" placeholder="OURWORLD" autocomplete="off"></label>
+<label>Shared room code
+<input id="roomCode" placeholder="OURWORLD" autocomplete="off">
+</label>
 </div>
 
 <button class="primary" onclick="enterWorld()">Enter Our World ♡</button>
@@ -767,16 +810,22 @@ h2 span{
 <div class="mini">welcome home</div>
 <h2><span id="displayYou">You</span> ♡ <span id="displayPartner">Them</span></h2>
 <p class="desc">Same love. Different places. One little photobooth.</p>
+
 <div style="display:inline-block;padding:10px 18px;background:#fff;border:1px solid var(--line);border-radius:30px;font-family:Arial,sans-serif;font-size:11px">
 ROOM: <b id="displayRoom">---</b>
 </div>
+
 <p id="partnerStatus" class="muted">⚪ Waiting for partner...</p>
-<button class="primary" onclick="openPhotobooth()">📸 Open Photobooth</button>
+
+<button class="primary" onclick="openPhotobooth()">
+📸 Open Photobooth
+</button>
 </div>
 </div>
 </section>
 
 <section id="photobooth" class="page">
+
 <div class="topbar">
 <button class="back" onclick="showPage('home')">←</button>
 <div>photobooth ♡</div>
@@ -786,81 +835,207 @@ ROOM: <b id="displayRoom">---</b>
 <div class="content">
 
 <div id="step1" class="step active">
+
 <div class="mini">01 · choose</div>
 <h2>How many photos?</h2>
-<p class="muted">Choose the size of your photobooth strip.</p>
+
+<p class="muted">
+Choose the size of your photobooth strip.
+</p>
 
 <div class="strip-options">
-<button class="strip-option selected" onclick="selectStrip(2,this)"><strong>2</strong>classic</button>
-<button class="strip-option" onclick="selectStrip(3,this)"><strong>3</strong>sweet</button>
-<button class="strip-option" onclick="selectStrip(4,this)"><strong>4</strong>classic +</button>
-<button class="strip-option" onclick="selectStrip(5,this)"><strong>5</strong>deluxe</button>
-<button class="strip-option" onclick="selectStrip(6,this)"><strong>6</strong>long</button>
+
+<button class="strip-option selected"
+onclick="selectStrip(2,this)">
+<strong>2</strong>classic
+</button>
+
+<button class="strip-option"
+onclick="selectStrip(3,this)">
+<strong>3</strong>sweet
+</button>
+
+<button class="strip-option"
+onclick="selectStrip(4,this)">
+<strong>4</strong>classic +
+</button>
+
+<button class="strip-option"
+onclick="selectStrip(5,this)">
+<strong>5</strong>deluxe
+</button>
+
+<button class="strip-option"
+onclick="selectStrip(6,this)">
+<strong>6</strong>long
+</button>
+
 </div>
 
-<button class="primary" onclick="nextStep(2)">Take Photos →</button>
+<button class="primary" onclick="nextStep(2)">
+Take Photos →
+</button>
+
 </div>
+
 
 <div id="step2" class="step">
+
 <div class="mini">02 · camera</div>
+
 <h2>Let's take pictures 📸</h2>
-<p class="muted">Start your camera on both phones. Once both cameras are ready, you will be able to see each other live.</p>
 
-<div class="camera">
-<div class="video-box">
-<video id="myCamera" autoplay playsinline muted></video>
-<div class="video-label">You · <span id="cameraYouName">You</span></div>
+<p class="muted">
+Your position stays consistent:
+you are on your assigned side and your partner is on the other side.
+</p>
+
+<div id="cameraContainer" class="camera my-side-left">
+
+<div id="myCameraBox" class="video-box">
+
+<video id="myCamera"
+autoplay
+playsinline
+muted></video>
+
+<div class="video-label">
+You · <span id="cameraYouName">You</span>
 </div>
 
-<div class="video-box partner">
-<video id="partnerVideo" autoplay playsinline muted></video>
+</div>
+
+
+<div id="partnerCameraBox" class="video-box partner">
+
+<video id="partnerVideo"
+autoplay
+playsinline
+muted></video>
+
 <div id="partnerWaiting" class="waiting">
+
 <div class="heart">♡</div>
-<b id="partnerCameraText">Waiting for partner...</b>
-<p>Keep the same room code open.</p>
+
+<b id="partnerCameraText">
+Waiting for partner...
+</b>
+
+<p>
+Keep the same room code open.
+</p>
+
 </div>
-<div class="video-label">Partner · <span id="cameraPartnerName">Them</span></div>
+
+<div class="video-label">
+Partner · <span id="cameraPartnerName">Them</span>
 </div>
+
 </div>
+
+</div>
+
 
 <div style="text-align:center">
-<div id="connectionPill" class="connection-pill">🔴 Not connected</div>
+
+<div id="connectionPill"
+class="connection-pill">
+🔴 Not connected
 </div>
 
+</div>
+
+
 <div class="camera-buttons">
-<button class="secondary" onclick="startCamera()">Start Camera</button>
-<button id="shutterButton" class="shutter" onclick="takePhoto()" disabled>●</button>
-<span id="photoCount">0 / 2</span>
+
+<button class="secondary"
+onclick="startCamera()">
+Start Camera
+</button>
+
+<button id="shutterButton"
+class="shutter"
+onclick="takePhoto()"
+disabled>
+●
+</button>
+
+<span id="photoCount">
+0 / 2
+</span>
+
 </div>
 
 <div id="photoPreview"></div>
 
-<button id="photosDoneButton" class="primary" onclick="nextStep(3)" disabled>Choose Design →</button>
+<button id="photosDoneButton"
+class="primary"
+onclick="nextStep(3)"
+disabled>
+Choose Design →
+</button>
+
 </div>
 
+
 <div id="step3" class="step">
-<div class="mini">03 · choose your design</div>
-<h2>Which one feels like you? ✨</h2>
-<p class="muted">Tap a design, or hover over one to preview your actual photos.</p>
+
+<div class="mini">
+03 · choose your design
+</div>
+
+<h2>
+Which one feels like you? ✨
+</h2>
+
+<p class="muted">
+Tap a design, or hover over one to preview your actual photos.
+</p>
 
 <div id="designGrid" class="design-grid"></div>
 
 <div class="final-preview-wrap">
-<div id="designPreview" class="final-strip"></div>
+
+<div id="designPreview"
+class="final-strip">
+</div>
+
 </div>
 
 <div style="margin-top:18px">
-<button class="secondary" onclick="nextStep(2)">← Retake</button>
-<button class="primary" onclick="chooseDesign()" style="margin-top:10px">♡ Use This Design</button>
+
+<button class="secondary"
+onclick="nextStep(2)">
+← Retake
+</button>
+
+<button class="primary"
+onclick="chooseDesign()"
+style="margin-top:10px">
+♡ Use This Design
+</button>
+
 </div>
+
 </div>
+
 
 <div id="step4" class="step">
-<div class="mini">04 · make it yours</div>
-<h2>Add your little details ✨</h2>
-<p class="muted">Tap a sticker, then drag it anywhere on your strip.</p>
+
+<div class="mini">
+04 · make it yours
+</div>
+
+<h2>
+Add your little details ✨
+</h2>
+
+<p class="muted">
+Tap a sticker, then drag it anywhere on your strip.
+</p>
 
 <div class="sticker-bar">
+
 <button class="sticker-choice" onclick="addSticker('🎀')">🎀</button>
 <button class="sticker-choice" onclick="addSticker('♡')">♡</button>
 <button class="sticker-choice" onclick="addSticker('♥')">♥</button>
@@ -875,103 +1050,243 @@ ROOM: <b id="displayRoom">---</b>
 <button class="sticker-choice" onclick="addSticker('🦋')">🦋</button>
 <button class="sticker-choice" onclick="addSticker('✿')">✿</button>
 <button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
+
 </div>
 
 <div class="final-preview-wrap">
-<div id="photoStrip" class="final-strip"></div>
+
+<div id="photoStrip"
+class="final-strip">
+</div>
+
 </div>
 
 <div class="edit-buttons">
-<button class="secondary" onclick="undoLastEdit()">↩ Undo</button>
-<button class="secondary" onclick="resetEdits()">↻ Reset</button>
+
+<button class="secondary"
+onclick="undoLastEdit()">
+↩ Undo
+</button>
+
+<button class="secondary"
+onclick="resetEdits()">
+↻ Reset
+</button>
+
 </div>
 
 <div class="text-row">
-<input id="customText" placeholder="our little moment ♡">
-<button class="secondary" onclick="addText()">Add</button>
+
+<input
+id="customText"
+placeholder="our little moment ♡">
+
+<button
+class="secondary"
+onclick="addText()">
+Add
+</button>
+
 </div>
 
-<button class="primary" onclick="nextStep(5)" style="margin-top:18px">Finish & Auto Save →</button>
+<button
+class="primary"
+onclick="nextStep(5)"
+style="margin-top:18px">
+
+Finish & Auto Save →
+
+</button>
+
 </div>
+
 
 <div id="step5" class="step">
-<div class="mini">05 · your memory</div>
-<h2>It's ready. ♡</h2>
-<p class="muted">Your photobooth strip is automatically downloading below!</p>
+
+<div class="mini">
+05 · your memory
+</div>
+
+<h2>
+It's ready. ♡
+</h2>
+
+<p class="muted">
+Your photobooth strip is automatically downloading below!
+</p>
 
 <div class="final-preview-wrap">
-<div id="savedPreview" class="final-strip"></div>
+
+<div id="savedPreview"
+class="final-strip">
 </div>
 
-<div id="saveStatusMessage" style="text-align:center;font-weight:bold;margin-top:15px;color:var(--pink)">Generating photo... ♡</div>
+</div>
+
+<div id="saveStatusMessage"
+style="text-align:center;font-weight:bold;margin-top:15px;color:var(--pink)">
+Generating photo... ♡
+</div>
 
 <div id="saveFallback">
-<p class="save-note">If your browser blocks automatic downloads, press and hold or right-click the image below to save it.</p>
-<img id="saveImage" alt="Your photobooth strip">
+
+<p class="save-note">
+If your browser blocks automatic downloads,
+press and hold or right-click the image below to save it.
+</p>
+
+<img id="saveImage"
+alt="Your photobooth strip">
+
 </div>
 
-<button class="secondary" onclick="nextStep(4)" style="margin-top:15px;width:100%">← Edit More</button>
+<button
+class="secondary"
+onclick="nextStep(4)"
+style="margin-top:15px;width:100%">
+← Edit More
+</button>
+
 </div>
 
 </div>
 </section>
 
-<script>
-const SUPABASE_URL = "https://pqmnwuwkdgvlmsxbizmp.supabase.co";
-const SUPABASE_KEY = "sb_publishable_WO2CxWE1bkqiQ928ppJZ-w_Xm2zRyqI";
 
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+<script>
+
+const SUPABASE_URL =
+"https://pqmnwuwkdgvlmsxbizmp.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_WO2CxWE1bkqiQ928ppJZ-w_Xm2zRyqI";
+
+const supabaseClient =
+window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
+
 
 let yourName="";
 let partnerName="";
 let roomCode="";
+
 let selectedStrip=2;
 let selectedDesign="coquette";
+
 let photos=[];
+
 let cameraStream=null;
+
 let roomChannel=null;
 let signalChannel=null;
 let peerConnection=null;
+
 let localCameraReady=false;
 let partnerCameraReady=false;
+
 let partnerClientId=null;
+
 let isCaller=false;
+
+/*
+  NEW SIDE SYSTEM
+
+  The first person who enters the room becomes LEFT.
+
+  The second person becomes RIGHT.
+
+  Therefore:
+
+  FIRST PERSON:
+  local = LEFT
+  partner = RIGHT
+
+  SECOND PERSON:
+  partner = LEFT
+  local = RIGHT
+
+  This makes the same two people stay in the
+  same physical positions from their own POV.
+*/
+let mySide="left";
+let partnerSide="right";
+
 let remoteDescriptionSet=false;
 let pendingCandidates=[];
+
 let makingOffer=false;
+
 let connectionRetryTimer=null;
 let readinessTimer=null;
+
 let shotRecords=new Map();
+
 let shutterBusy=false;
+
 let editHistory=[];
+
 let finalBlobUrl=null;
 
-const clientId = crypto.randomUUID();
+
+const clientId =
+crypto.randomUUID();
+
 
 const rtcConfig={
   iceServers:[
-    { urls:"stun:stun.l.google.com:19302" },
-    { urls:"stun:stun1.l.google.com:19302" },
-    { urls:"stun:stun2.l.google.com:19302" },
-    { urls:"stun:stun3.l.google.com:19302" }
+    {urls:"stun:stun.l.google.com:19302"},
+    {urls:"stun:stun1.l.google.com:19302"},
+    {urls:"stun:stun2.l.google.com:19302"},
+    {urls:"stun:stun3.l.google.com:19302"}
   ]
 };
 
+
 const designs=[
-  "coquette","retro","scrapbook","y2k","strawberry",
-  "lace","postcard","floral","dreamy","vintage"
+  "coquette",
+  "retro",
+  "scrapbook",
+  "y2k",
+  "strawberry",
+  "lace",
+  "postcard",
+  "floral",
+  "dreamy",
+  "vintage"
 ];
 
+
 function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+
+  document
+  .querySelectorAll(".page")
+  .forEach(p=>p.classList.remove("active"));
+
+  document
+  .getElementById(id)
+  .classList.add("active");
+
   window.scrollTo(0,0);
 }
 
+
 async function enterWorld(){
-  yourName=document.getElementById("yourName").value.trim();
-  partnerName=document.getElementById("partnerName").value.trim();
-  roomCode=document.getElementById("roomCode").value.trim().toUpperCase();
+
+  yourName =
+  document.getElementById("yourName")
+  .value.trim();
+
+  partnerName =
+  document.getElementById("partnerName")
+  .value.trim();
+
+  roomCode =
+  document.getElementById("roomCode")
+  .value.trim()
+  .toUpperCase();
+
 
   if(!yourName){
     alert("Please enter your name ♡");
@@ -983,50 +1298,109 @@ async function enterWorld(){
     return;
   }
 
-  document.getElementById("connectionMessage").textContent=
-    "Connecting to your little room...";
+
+  document
+  .getElementById("connectionMessage")
+  .textContent =
+  "Connecting to your little room...";
+
 
   try{
+
     await setupRoom();
 
-    document.getElementById("displayYou").textContent=yourName;
-    document.getElementById("displayPartner").textContent=
-      partnerName || "Them";
+    document
+    .getElementById("displayYou")
+    .textContent=yourName;
 
-    document.getElementById("displayRoom").textContent=roomCode;
-    document.getElementById("cameraYouName").textContent=yourName;
-    document.getElementById("cameraPartnerName").textContent=
-      partnerName || "Them";
+    document
+    .getElementById("displayPartner")
+    .textContent=
+    partnerName || "Them";
 
-    document.getElementById("connectionMessage").textContent=
-      "Connected ♡";
+    document
+    .getElementById("displayRoom")
+    .textContent=roomCode;
+
+    document
+    .getElementById("cameraYouName")
+    .textContent=yourName;
+
+    document
+    .getElementById("cameraPartnerName")
+    .textContent=
+    partnerName || "Them";
+
+
+    document
+    .getElementById("connectionMessage")
+    .textContent=
+    "Connected ♡";
+
 
     showPage("home");
 
   }catch(error){
+
     console.error(error);
-    document.getElementById("connectionMessage").textContent=
-      "Could not connect. Try again.";
+
+    document
+    .getElementById("connectionMessage")
+    .textContent=
+    "Could not connect. Try again.";
+
   }
+
 }
 
+
 async function setupRoom(){
+
   if(roomChannel) return;
 
-  roomChannel=supabaseClient.channel(
+
+  roomChannel =
+  supabaseClient.channel(
     "presence-"+roomCode,
-    {config:{presence:{key:clientId}}}
+    {
+      config:{
+        presence:{
+          key:clientId
+        }
+      }
+    }
   );
 
+
   roomChannel
-    .on("presence",{event:"sync"},()=>updatePresence())
-    .on("presence",{event:"join"},()=>updatePresence())
-    .on("presence",{event:"leave"},()=>updatePresence());
+
+  .on(
+    "presence",
+    {event:"sync"},
+    ()=>updatePresence()
+  )
+
+  .on(
+    "presence",
+    {event:"join"},
+    ()=>updatePresence()
+  )
+
+  .on(
+    "presence",
+    {event:"leave"},
+    ()=>updatePresence()
+  );
+
 
   await new Promise((resolve,reject)=>{
+
     roomChannel.subscribe(async status=>{
+
       if(status==="SUBSCRIBED"){
+
         try{
+
           await roomChannel.track({
             id:clientId,
             name:yourName,
@@ -1035,201 +1409,436 @@ async function setupRoom(){
           });
 
           resolve();
+
         }catch(e){
+
           reject(e);
+
         }
+
       }
+
     });
+
   });
 
+
   await setupSignalChannel();
+
   await updatePresence();
+
 }
 
+
 async function setupSignalChannel(){
+
   if(signalChannel) return;
 
-  signalChannel=supabaseClient.channel(
+
+  signalChannel =
+  supabaseClient.channel(
     "photobooth-signal-"+roomCode,
-    {config:{broadcast:{ack:true,self:false}}}
+    {
+      config:{
+        broadcast:{
+          ack:true,
+          self:false
+        }
+      }
+    }
   );
+
 
   signalChannel.on(
     "broadcast",
     {event:"signal"},
     async payload=>{
+
       const msg=payload.payload;
 
-      if(!msg || msg.sender===clientId) return;
+      if(!msg || msg.sender===clientId)
+        return;
 
       await handleSignal(msg);
+
     }
   );
 
+
   await new Promise(resolve=>{
+
     signalChannel.subscribe(status=>{
-      if(status==="SUBSCRIBED") resolve();
+
+      if(status==="SUBSCRIBED")
+        resolve();
+
     });
+
   });
 
+
   for(let i=0;i<5;i++){
+
     setTimeout(
       ()=>sendSignal("hello",{}),
       i*700
     );
+
   }
+
 }
 
-async function updatePresence(){
-  if(!roomChannel) return;
 
-  const state=roomChannel.presenceState();
+async function updatePresence(){
+
+  if(!roomChannel)
+    return;
+
+
+  const state =
+  roomChannel.presenceState();
+
+
   let others=[];
 
-  Object.values(state).forEach(entries=>{
+
+  Object
+  .values(state)
+  .forEach(entries=>{
+
     entries.forEach(e=>{
-      if(e.id!==clientId) others.push(e);
+
+      if(e.id!==clientId)
+        others.push(e);
+
     });
+
   });
 
+
+  /*
+    No partner yet.
+
+    We don't assign a permanent side until
+    another person is actually in the room.
+  */
+
   if(!others.length){
+
     partnerClientId=null;
+
     partnerCameraReady=false;
 
-    document.getElementById("partnerStatus").textContent=
-      "⚪ Waiting for partner...";
+    document
+    .getElementById("partnerStatus")
+    .textContent=
+    "⚪ Waiting for partner...";
 
-    document.getElementById("partnerCameraText").textContent=
-      "Waiting for partner...";
+    document
+    .getElementById("partnerCameraText")
+    .textContent=
+    "Waiting for partner...";
 
     return;
   }
 
-  others.sort((a,b)=>
-    String(a.id).localeCompare(String(b.id))
-  );
 
-  const partner=others[0];
+  /*
+    SORT BY CLIENT ID.
 
-  partnerClientId=partner.id;
+    The first client in the room is ALWAYS LEFT.
+    The second client is ALWAYS RIGHT.
 
-  document.getElementById("partnerStatus").textContent=
-    "🟢 "+(partner.name || partnerName || "Partner")+" is here ♡";
-
-  partnerCameraReady=partner.camera===true;
-
-  document.getElementById("partnerCameraText").textContent=
-    partnerCameraReady
-      ? "🟢 Camera ready"
-      : "Waiting for partner camera...";
-
-  await ensurePeer();
-  await sendSignal("hello",{});
+    This is the important part that prevents
+    the sides from changing between devices.
+  */
 
   const all=[];
 
-  Object.values(state).forEach(entries=>{
-    entries.forEach(e=>all.push(e));
+  Object
+  .values(state)
+  .forEach(entries=>{
+
+    entries.forEach(e=>{
+      all.push(e);
+    });
+
   });
 
-  all.sort((a,b)=>
-    String(a.id).localeCompare(String(b.id))
+
+  all.sort(
+    (a,b)=>
+      String(a.id)
+      .localeCompare(String(b.id))
   );
 
-  isCaller=
+
+  const leftClient=all[0];
+
+  const rightClient=all[1];
+
+
+  if(leftClient && leftClient.id===clientId){
+
+    mySide="left";
+    partnerSide="right";
+
+  }else{
+
+    mySide="right";
+    partnerSide="left";
+
+  }
+
+
+  /*
+    Apply the same positions to the live camera.
+  */
+
+  applyCameraSides();
+
+
+  const partner =
+  others.sort(
+    (a,b)=>
+      String(a.id)
+      .localeCompare(String(b.id))
+  )[0];
+
+
+  partnerClientId=partner.id;
+
+
+  document
+  .getElementById("partnerStatus")
+  .textContent=
+  "🟢 "+
+  (partner.name ||
+   partnerName ||
+   "Partner")+
+  " is here ♡";
+
+
+  partnerCameraReady =
+  partner.camera===true;
+
+
+  document
+  .getElementById("partnerCameraText")
+  .textContent=
+  partnerCameraReady
+  ? "🟢 Camera ready"
+  : "Waiting for partner camera...";
+
+
+  await ensurePeer();
+
+  await sendSignal(
+    "hello",
+    {}
+  );
+
+
+  isCaller =
     all.length>=2 &&
     all[0].id===clientId;
 
+
   maybeOffer();
+
 }
 
+
+function applyCameraSides(){
+
+  const camera=
+  document.getElementById(
+    "cameraContainer"
+  );
+
+  if(!camera) return;
+
+
+  camera.classList.remove(
+    "my-side-left",
+    "my-side-right"
+  );
+
+
+  if(mySide==="left"){
+
+    camera.classList.add(
+      "my-side-left"
+    );
+
+  }else{
+
+    camera.classList.add(
+      "my-side-right"
+    );
+
+  }
+
+}
+
+
 async function updateMyCameraPresence(){
+
   if(!roomChannel) return;
 
   try{
+
     await roomChannel.track({
       id:clientId,
       name:yourName,
       camera:localCameraReady,
       time:Date.now()
     });
+
   }catch(e){
-    console.warn("Presence error:",e);
+
+    console.warn(
+      "Presence error:",
+      e
+    );
+
   }
+
 }
 
+
 async function ensurePeer(){
+
   if(peerConnection) return;
 
-  peerConnection=new RTCPeerConnection(rtcConfig);
+
+  peerConnection =
+  new RTCPeerConnection(
+    rtcConfig
+  );
+
 
   if(cameraStream){
-    cameraStream.getTracks().forEach(track=>{
-      peerConnection.addTrack(track,cameraStream);
+
+    cameraStream
+    .getTracks()
+    .forEach(track=>{
+
+      peerConnection.addTrack(
+        track,
+        cameraStream
+      );
+
     });
+
   }
 
-  peerConnection.onicecandidate=event=>{
+
+  peerConnection.onicecandidate =
+  event=>{
+
     if(event.candidate){
-      sendSignal("candidate",{
-        candidate:event.candidate.toJSON()
-      });
+
+      sendSignal(
+        "candidate",
+        {
+          candidate:
+          event.candidate.toJSON()
+        }
+      );
+
     }
+
   };
 
-  peerConnection.ontrack=event=>{
-    const video=document.getElementById("partnerVideo");
 
-    let stream=
-      event.streams &&
-      event.streams[0];
+  peerConnection.ontrack =
+  event=>{
+
+    const video=
+    document.getElementById(
+      "partnerVideo"
+    );
+
+
+    let stream =
+    event.streams &&
+    event.streams[0];
+
 
     if(!stream){
+
       stream=
-        video.srcObject ||
-        new MediaStream();
+      video.srcObject ||
+      new MediaStream();
+
 
       if(
         event.track &&
-        !stream.getTracks().includes(event.track)
+        !stream
+        .getTracks()
+        .includes(event.track)
       ){
-        stream.addTrack(event.track);
+
+        stream.addTrack(
+          event.track
+        );
+
       }
+
     }
 
+
     video.srcObject=stream;
+
     video.muted=true;
 
-    video.play().catch(e=>
+    video.play()
+    .catch(e=>
       console.warn(e)
     );
 
-    document.getElementById(
+
+    document
+    .getElementById(
       "partnerWaiting"
-    ).style.display="none";
+    )
+    .style.display="none";
+
 
     setConnectionStatus(
       "🟢 You can see each other!",
       true
     );
+
   };
 
-  peerConnection.onconnectionstatechange=()=>{
-    if(!peerConnection) return;
+
+  peerConnection.onconnectionstatechange =
+  ()=>{
+
+    if(!peerConnection)
+      return;
+
 
     const state=
-      peerConnection.connectionState;
+    peerConnection.connectionState;
+
 
     if(state==="connected"){
 
-      document.getElementById(
+      document
+      .getElementById(
         "partnerWaiting"
-      ).style.display="none";
+      )
+      .style.display="none";
+
 
       setConnectionStatus(
         "🟢 You can see each other!",
         true
       );
+
 
       stopConnectionRetry();
 
@@ -1252,111 +1861,171 @@ async function ensurePeer(){
       );
 
       scheduleReconnect();
+
     }
+
   };
+
 }
 
-async function sendSignal(type,data={}){
-  if(!signalChannel) return;
+
+async function sendSignal(
+  type,
+  data={}
+){
+
+  if(!signalChannel)
+    return;
+
 
   try{
+
     await signalChannel.send({
+
       type:"broadcast",
+
       event:"signal",
+
       payload:{
         sender:clientId,
         senderName:yourName,
         type:type,
         ...data
       }
+
     });
+
   }catch(e){
+
     console.warn(
       "Signal failed:",
       type,
       e
     );
+
   }
+
 }
 
+
 async function handleSignal(message){
+
   await ensurePeer();
+
 
   if(message.type==="hello"){
 
     if(localCameraReady){
+
       await sendSignal(
         "camera-ready",
         {}
       );
+
     }
 
-    if(partnerClientId===null){
-      partnerClientId=message.sender;
-    }
+
+    if(partnerClientId===null)
+      partnerClientId=
+      message.sender;
+
 
     maybeOffer();
+
     return;
   }
+
 
   if(message.type==="camera-ready"){
 
-    partnerClientId=message.sender;
+    partnerClientId=
+    message.sender;
+
     partnerCameraReady=true;
 
-    document.getElementById(
+
+    document
+    .getElementById(
       "partnerCameraText"
-    ).textContent="🟢 Camera ready";
+    )
+    .textContent=
+    "🟢 Camera ready";
+
 
     maybeOffer();
+
     return;
   }
+
 
   if(message.type==="offer"){
 
     if(
       peerConnection.signalingState!=="stable"
     ){
+
       await rebuildPeer();
+
     }
+
 
     await ensurePeer();
 
+
     try{
-      await peerConnection.setRemoteDescription(
+
+      await peerConnection
+      .setRemoteDescription(
         new RTCSessionDescription(
           message.description
         )
       );
+
     }catch(e){
+
       return;
+
     }
+
 
     remoteDescriptionSet=true;
 
     await flushCandidates();
 
-    const answer=
-      await peerConnection.createAnswer();
 
-    await peerConnection.setLocalDescription(
+    const answer =
+    await peerConnection
+    .createAnswer();
+
+
+    await peerConnection
+    .setLocalDescription(
       answer
     );
+
 
     await sendSignal(
       "answer",
       {
         description:{
           type:
-            peerConnection.localDescription.type,
+          peerConnection
+          .localDescription
+          .type,
+
           sdp:
-            peerConnection.localDescription.sdp
+          peerConnection
+          .localDescription
+          .sdp
         }
       }
     );
 
+
     return;
+
   }
+
 
   if(message.type==="answer"){
 
@@ -1365,26 +2034,32 @@ async function handleSignal(message){
       "have-local-offer"
     ){
 
-      await peerConnection.setRemoteDescription(
+      await peerConnection
+      .setRemoteDescription(
         new RTCSessionDescription(
           message.description
         )
       );
 
+
       remoteDescriptionSet=true;
 
       await flushCandidates();
+
     }
 
     return;
+
   }
+
 
   if(message.type==="candidate"){
 
-    const candidate=
-      new RTCIceCandidate(
-        message.candidate
-      );
+    const candidate =
+    new RTCIceCandidate(
+      message.candidate
+    );
+
 
     if(
       remoteDescriptionSet &&
@@ -1392,29 +2067,49 @@ async function handleSignal(message){
     ){
 
       try{
-        await peerConnection.addIceCandidate(
+
+        await peerConnection
+        .addIceCandidate(
           candidate
         );
+
       }catch(e){}
 
     }else{
 
-      pendingCandidates.push(candidate);
+      pendingCandidates
+      .push(candidate);
+
     }
 
     return;
+
   }
+
 
   if(message.type==="shutter"){
-    await receiveShutter(message);
+
+    await receiveShutter(
+      message
+    );
+
     return;
+
   }
 
+
   if(message.type==="photo"){
-    receiveRemotePhoto(message);
+
+    receiveRemotePhoto(
+      message
+    );
+
     return;
+
   }
+
 }
+
 
 async function maybeOffer(){
 
@@ -1424,35 +2119,45 @@ async function maybeOffer(){
     !partnerCameraReady ||
     !peerConnection ||
     makingOffer
-  ){
+  )
     return;
-  }
+
 
   if(
     peerConnection.signalingState!=="stable"
-  ){
+  )
     return;
-  }
+
 
   try{
 
     makingOffer=true;
 
-    const offer=
-      await peerConnection.createOffer();
 
-    await peerConnection.setLocalDescription(
+    const offer=
+    await peerConnection
+    .createOffer();
+
+
+    await peerConnection
+    .setLocalDescription(
       offer
     );
+
 
     await sendSignal(
       "offer",
       {
         description:{
           type:
-            peerConnection.localDescription.type,
+          peerConnection
+          .localDescription
+          .type,
+
           sdp:
-            peerConnection.localDescription.sdp
+          peerConnection
+          .localDescription
+          .sdp
         }
       }
     );
@@ -1467,24 +2172,35 @@ async function maybeOffer(){
   }finally{
 
     makingOffer=false;
+
   }
+
 }
+
 
 async function flushCandidates(){
 
-  if(!peerConnection) return;
+  if(!peerConnection)
+    return;
 
-  while(pendingCandidates.length){
+
+  while(
+    pendingCandidates.length
+  ){
 
     try{
 
-      await peerConnection.addIceCandidate(
+      await peerConnection
+      .addIceCandidate(
         pendingCandidates.shift()
       );
 
     }catch(e){}
+
   }
+
 }
+
 
 async function rebuildPeer(){
 
@@ -1496,46 +2212,58 @@ async function rebuildPeer(){
       peerConnection.onicecandidate=null;
 
       peerConnection.close();
+
     }
 
   }catch(e){}
 
+
   peerConnection=null;
+
   remoteDescriptionSet=false;
+
   pendingCandidates=[];
+
   makingOffer=false;
 
+
   await ensurePeer();
+
 }
+
 
 function scheduleReconnect(){
 
-  if(connectionRetryTimer) return;
+  if(connectionRetryTimer)
+    return;
+
 
   connectionRetryTimer=
-    setTimeout(async()=>{
+  setTimeout(async()=>{
 
-      connectionRetryTimer=null;
+    connectionRetryTimer=null;
 
-      await rebuildPeer();
+    await rebuildPeer();
 
-      await sendSignal(
-        "hello",
-        {}
-      );
+    await sendSignal(
+      "hello",
+      {}
+    );
 
-      await sendSignal(
-        "camera-ready",
-        {}
-      );
+    await sendSignal(
+      "camera-ready",
+      {}
+    );
 
-      setTimeout(
-        maybeOffer,
-        500
-      );
+    setTimeout(
+      maybeOffer,
+      500
+    );
 
-    },1500);
+  },1500);
+
 }
+
 
 function stopConnectionRetry(){
 
@@ -1546,8 +2274,11 @@ function stopConnectionRetry(){
     );
 
     connectionRetryTimer=null;
+
   }
+
 }
+
 
 function setConnectionStatus(
   text,
@@ -1555,17 +2286,20 @@ function setConnectionStatus(
 ){
 
   const pill=
-    document.getElementById(
-      "connectionPill"
-    );
+  document.getElementById(
+    "connectionPill"
+  );
+
 
   pill.textContent=text;
 
   pill.style.background=
-    connected
-      ? "#e8f8ed"
-      : "#fff4f7";
+  connected
+  ? "#e8f8ed"
+  : "#fff4f7";
+
 }
+
 
 async function startCamera(){
 
@@ -1574,96 +2308,123 @@ async function startCamera(){
     if(cameraStream){
 
       cameraStream
-        .getTracks()
-        .forEach(track=>track.stop());
-    }
-
-    cameraStream=
-      await navigator.mediaDevices.getUserMedia({
-        video:{
-          facingMode:"user",
-          width:{ideal:1280},
-          height:{ideal:720}
-        },
-        audio:false
-      });
-
-    const video=
-      document.getElementById(
-        "myCamera"
+      .getTracks()
+      .forEach(track=>
+        track.stop()
       );
 
-    video.srcObject=cameraStream;
+    }
+
+
+    cameraStream=
+    await navigator.mediaDevices
+    .getUserMedia({
+
+      video:{
+        facingMode:"user",
+        width:{ideal:1280},
+        height:{ideal:720}
+      },
+
+      audio:false
+
+    });
+
+
+    const video=
+    document.getElementById(
+      "myCamera"
+    );
+
+
+    video.srcObject=
+    cameraStream;
+
 
     await video.play();
 
+
     localCameraReady=true;
 
-    document.getElementById(
+
+    document
+    .getElementById(
       "shutterButton"
-    ).disabled=false;
+    )
+    .disabled=false;
+
 
     setConnectionStatus(
       "🟡 Camera ready — connecting...",
       false
     );
 
+
     await ensurePeer();
 
+
     const senders=
-      peerConnection.getSenders();
+    peerConnection.getSenders();
+
 
     cameraStream
-      .getTracks()
-      .forEach(track=>{
+    .getTracks()
+    .forEach(track=>{
 
-        if(
-          !senders.some(
-            s=>s.track===track
-          )
-        ){
+      if(
+        !senders.some(
+          s=>s.track===track
+        )
+      ){
 
-          peerConnection.addTrack(
-            track,
-            cameraStream
-          );
-        }
+        peerConnection.addTrack(
+          track,
+          cameraStream
+        );
 
-      });
+      }
+
+    });
+
 
     await updateMyCameraPresence();
+
 
     await sendSignal(
       "camera-ready",
       {}
     );
 
-    if(readinessTimer){
+
+    if(readinessTimer)
       clearInterval(
         readinessTimer
       );
-    }
+
 
     readinessTimer=
-      setInterval(()=>{
+    setInterval(()=>{
 
-        if(localCameraReady){
+      if(localCameraReady){
 
-          updateMyCameraPresence();
+        updateMyCameraPresence();
 
-          sendSignal(
-            "camera-ready",
-            {}
-          );
+        sendSignal(
+          "camera-ready",
+          {}
+        );
 
-          maybeOffer();
-        }
+        maybeOffer();
 
-      },2000);
+      }
+
+    },2000);
+
 
     await updatePresence();
 
     maybeOffer();
+
 
   }catch(e){
 
@@ -1671,15 +2432,22 @@ async function startCamera(){
 
     localCameraReady=false;
 
-    document.getElementById(
+
+    document
+    .getElementById(
       "shutterButton"
-    ).disabled=true;
+    )
+    .disabled=true;
+
 
     alert(
       "Camera access was blocked. Please allow camera permissions and try again."
     );
+
   }
+
 }
+
 
 function openPhotobooth(){
 
@@ -1689,28 +2457,39 @@ function openPhotobooth(){
 
   shutterBusy=false;
 
-  document.getElementById(
-    "photoCount"
-  ).textContent=
-    "0 / "+selectedStrip;
 
-  document.getElementById(
-    "photoPreview"
-  ).innerHTML="";
+  document
+  .getElementById("photoCount")
+  .textContent=
+  "0 / "+selectedStrip;
 
-  document.getElementById(
+
+  document
+  .getElementById("photoPreview")
+  .innerHTML="";
+
+
+  document
+  .getElementById(
     "photosDoneButton"
-  ).disabled=true;
+  )
+  .disabled=true;
 
-  document.getElementById(
+
+  document
+  .getElementById(
     "shutterButton"
-  ).disabled=
-    !localCameraReady;
+  )
+  .disabled=
+  !localCameraReady;
+
 
   showPage("photobooth");
 
   nextStep(1);
+
 }
+
 
 function selectStrip(
   number,
@@ -1719,70 +2498,101 @@ function selectStrip(
 
   selectedStrip=number;
 
+
   document
-    .querySelectorAll(".strip-option")
-    .forEach(x=>
-      x.classList.remove("selected")
-    );
+  .querySelectorAll(
+    ".strip-option"
+  )
+  .forEach(x=>
+    x.classList.remove(
+      "selected"
+    )
+  );
 
-  button.classList.add("selected");
 
-  document.getElementById(
+  button.classList.add(
+    "selected"
+  );
+
+
+  document
+  .getElementById(
     "photoCount"
-  ).textContent=
-    photos.length+
-    " / "+
-    selectedStrip;
+  )
+  .textContent=
+  photos.length+
+  " / "+
+  selectedStrip;
+
 }
+
 
 function nextStep(number){
 
   document
-    .querySelectorAll(".step")
-    .forEach(x=>
-      x.classList.remove("active")
-    );
+  .querySelectorAll(".step")
+  .forEach(x=>
+    x.classList.remove("active")
+  );
+
 
   document
-    .getElementById("step"+number)
-    .classList.add("active");
+  .getElementById(
+    "step"+number
+  )
+  .classList.add("active");
 
-  document.getElementById(
+
+  document
+  .getElementById(
     "stepNumber"
-  ).textContent=
-    number+" / 5";
+  )
+  .textContent=
+  number+" / 5";
+
 
   if(number===2){
 
-    if(!cameraStream){
+    applyCameraSides();
+
+
+    if(!cameraStream)
       startCamera();
-    }
+
 
     setupSignalChannel()
-      .then(()=>{
-        ensurePeer();
-        sendSignal(
-          "hello",
-          {}
-        );
-      });
+    .then(()=>{
+
+      ensurePeer();
+
+      sendSignal(
+        "hello",
+        {}
+      );
+
+    });
+
   }
 
-  if(number===3){
+
+  if(number===3)
     buildDesignPicker();
-  }
 
-  if(number===4){
+
+  if(number===4)
     buildFinalStrip();
-  }
+
 
   if(number===5){
 
     copyFinalPreview();
 
     autoSaveStrip();
+
   }
+
 }
+
 
 async function takePhoto(){
 
@@ -1796,9 +2606,13 @@ async function takePhoto(){
     );
 
     return;
+
   }
 
-  if(shutterBusy) return;
+
+  if(shutterBusy)
+    return;
+
 
   if(
     photos.length>=selectedStrip
@@ -1809,21 +2623,26 @@ async function takePhoto(){
     );
 
     return;
+
   }
+
 
   shutterBusy=true;
 
+
   const shotIndex=
-    photos.length+1;
+  photos.length+1;
+
 
   const shotId=
-    clientId+
-    "-"+
-    Date.now()+
-    "-"+
-    Math.random()
-      .toString(36)
-      .slice(2,7);
+  clientId+
+  "-"+
+  Date.now()+
+  "-"+
+  Math.random()
+  .toString(36)
+  .slice(2,7);
+
 
   shotRecords.set(
     shotId,
@@ -1836,9 +2655,11 @@ async function takePhoto(){
     }
   );
 
+
   updatePhotoCounter(
     shotIndex
   );
+
 
   await sendSignal(
     "shutter",
@@ -1848,11 +2669,14 @@ async function takePhoto(){
     }
   );
 
+
   await countdownAndCapture(
     shotId,
     shotIndex
   );
+
 }
+
 
 async function receiveShutter(
   message
@@ -1860,10 +2684,12 @@ async function receiveShutter(
 
   if(
     !message.shotId ||
-    shotRecords.has(message.shotId)
-  ){
+    shotRecords.has(
+      message.shotId
+    )
+  )
     return;
-  }
+
 
   shotRecords.set(
     message.shotId,
@@ -1876,9 +2702,11 @@ async function receiveShutter(
     }
   );
 
+
   updatePhotoCounter(
     message.shotIndex
   );
+
 
   if(!cameraStream){
 
@@ -1887,13 +2715,17 @@ async function receiveShutter(
     );
 
     return;
+
   }
+
 
   await countdownAndCapture(
     message.shotId,
     message.shotIndex
   );
+
 }
+
 
 function countdownAndCapture(
   shotId,
@@ -1904,8 +2736,12 @@ function countdownAndCapture(
 
     let count=3;
 
+
     const overlay=
-      document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
     overlay.style.cssText=`
       position:fixed;
@@ -1918,44 +2754,58 @@ function countdownAndCapture(
       font:bold 100px Georgia;
     `;
 
-    document.body.appendChild(
+
+    document.body
+    .appendChild(
       overlay
     );
 
-    overlay.textContent=count;
+
+    overlay.textContent=
+    count;
+
 
     const timer=
-      setInterval(async()=>{
+    setInterval(async()=>{
 
-        count--;
+      count--;
 
-        if(count>0){
 
-          overlay.textContent=count;
+      if(count>0){
 
-        }else{
+        overlay.textContent=
+        count;
 
-          clearInterval(timer);
+      }else{
 
-          overlay.textContent="♡";
+        clearInterval(timer);
 
-          setTimeout(async()=>{
+        overlay.textContent="♡";
 
-            overlay.remove();
 
-            await captureLocalForShot(
-              shotId,
-              shotIndex
-            );
+        setTimeout(async()=>{
 
-            resolve();
+          overlay.remove();
 
-          },180);
-        }
 
-      },550);
+          await captureLocalForShot(
+            shotId,
+            shotIndex
+          );
+
+
+          resolve();
+
+        },180);
+
+      }
+
+    },550);
+
   });
+
 }
+
 
 async function captureLocalForShot(
   shotId,
@@ -1963,9 +2813,10 @@ async function captureLocalForShot(
 ){
 
   const video=
-    document.getElementById(
-      "myCamera"
-    );
+  document.getElementById(
+    "myCamera"
+  );
+
 
   if(
     !video.videoWidth ||
@@ -1975,66 +2826,105 @@ async function captureLocalForShot(
     shutterBusy=false;
 
     return;
+
   }
 
+
   const canvas=
-    document.createElement(
-      "canvas"
-    );
+  document.createElement(
+    "canvas"
+  );
+
 
   const videoBox=
-    video.parentElement;
+  video.parentElement;
+
 
   const rect=
-    videoBox.getBoundingClientRect();
+  videoBox.getBoundingClientRect();
+
 
   const width=500;
 
   const height=
-    Math.round(
-      500*
-      (rect.height/rect.width)
-    );
+  Math.round(
+    500*
+    (rect.height/
+     rect.width)
+  );
+
 
   canvas.width=width;
   canvas.height=height;
 
-  const ctx=
-    canvas.getContext("2d");
 
-  const vw=video.videoWidth;
-  const vh=video.videoHeight;
+  const ctx=
+  canvas.getContext("2d");
+
+
+  const vw=
+  video.videoWidth;
+
+  const vh=
+  video.videoHeight;
+
 
   const targetRatio=
-    width/height;
+  width/height;
 
   const videoRatio=
-    vw/vh;
+  vw/vh;
+
 
   let sx=0;
   let sy=0;
   let sw=vw;
   let sh=vh;
 
+
   if(videoRatio>targetRatio){
 
-    sw=vh*targetRatio;
-    sx=(vw-sw)/2;
+    sw=
+    vh*targetRatio;
+
+    sx=
+    (vw-sw)/2;
 
   }else{
 
-    sh=vw/targetRatio;
-    sy=(vh-sh)/2;
+    sh=
+    vw/targetRatio;
+
+    sy=
+    (vh-sh)/2;
+
   }
 
+
   /*
-    Capture the raw camera image.
+    IMPORTANT:
 
-    We intentionally do NOT mirror it here.
+    The saved camera image is MIRRORED.
 
-    The final rendering function below mirrors it
-    so it matches the live camera preview.
+    This matches the live selfie preview.
+
+    So if you see your face one way in
+    the live camera, the final image uses
+    that same orientation.
   */
+
+  ctx.save();
+
+  ctx.translate(
+    width,
+    0
+  );
+
+  ctx.scale(
+    -1,
+    1
+  );
+
 
   ctx.drawImage(
     video,
@@ -2048,23 +2938,31 @@ async function captureLocalForShot(
     height
   );
 
+
+  ctx.restore();
+
+
   const image=
-    canvas.toDataURL(
-      "image/jpeg",
-      .85
-    );
+  canvas.toDataURL(
+    "image/jpeg",
+    .85
+  );
+
 
   const record=
-    shotRecords.get(
-      shotId
-    );
+  shotRecords.get(
+    shotId
+  );
+
 
   if(!record){
 
     shutterBusy=false;
 
     return;
+
   }
+
 
   record.local=image;
 
@@ -2072,6 +2970,7 @@ async function captureLocalForShot(
     shotId,
     record
   );
+
 
   await sendSignal(
     "photo",
@@ -2082,9 +2981,11 @@ async function captureLocalForShot(
     }
   );
 
+
   tryCompleteShot(
     shotId
   );
+
 
   setTimeout(
     ()=>{
@@ -2092,18 +2993,23 @@ async function captureLocalForShot(
     },
     400
   );
+
 }
+
 
 function receiveRemotePhoto(
   message
 ){
 
-  if(!message.shotId) return;
+  if(!message.shotId)
+    return;
+
 
   let record=
-    shotRecords.get(
-      message.shotId
-    );
+  shotRecords.get(
+    message.shotId
+  );
+
 
   if(!record){
 
@@ -2114,112 +3020,114 @@ function receiveRemotePhoto(
       remote:null,
       completed:false
     };
+
   }
 
+
   record.remote=
-    message.image;
+  message.image;
 
-  /*
-    Keep track of which client sent
-    the partner image.
-
-    This is useful for communication,
-    but we DO NOT use clientId sorting
-    to change the left/right positions.
-
-    The local camera always stays LEFT.
-    The remote camera always stays RIGHT.
-  */
 
   record.remoteSender=
-    message.sender;
+  message.sender;
+
 
   shotRecords.set(
     message.shotId,
     record
   );
 
+
   tryCompleteShot(
     message.shotId
   );
+
 }
+
 
 async function tryCompleteShot(
   shotId
 ){
 
   const record=
-    shotRecords.get(
-      shotId
-    );
+  shotRecords.get(
+    shotId
+  );
+
 
   if(
     !record ||
     !record.local ||
     !record.remote ||
     record.completed
-  ){
+  )
     return;
-  }
+
 
   record.completed=true;
 
-  const combined=
-    await createCombinedPhoto(
-      record.local,
-      record.remote,
-      record
-    );
 
-  if(!combined) return;
+  /*
+    createCombinedPhoto now uses mySide.
+
+    LEFT SIDE = the person assigned LEFT.
+
+    RIGHT SIDE = the person assigned RIGHT.
+
+    It no longer sorts based on remoteSender.
+    That old sorting was the reason the sides
+    could swap.
+  */
+
+  const combined=
+  await createCombinedPhoto(
+    record.local,
+    record.remote,
+    record
+  );
+
+
+  if(!combined)
+    return;
+
 
   photos[
     record.index-1
   ]=combined;
 
+
   updatePhotoThumbnails();
 
-  const completeCount=
-    photos.filter(Boolean).length;
 
-  document.getElementById(
+  const completeCount=
+  photos.filter(Boolean).length;
+
+
+  document
+  .getElementById(
     "photoCount"
-  ).textContent=
-    completeCount+
-    " / "+
-    selectedStrip;
+  )
+  .textContent=
+  completeCount+
+  " / "+
+  selectedStrip;
+
 
   if(
-    completeCount>=selectedStrip
+    completeCount>=
+    selectedStrip
   ){
 
-    document.getElementById(
+    document
+    .getElementById(
       "photosDoneButton"
-    ).disabled=false;
+    )
+    .disabled=false;
+
   }
+
 }
 
-
-/* =========================================================
-   FIXED COMBINED PHOTO
-   =========================================================
-
-   The old function used clientId sorting:
-
-     if(remoteSender < clientId){
-       leftImage=remote;
-       rightImage=local;
-     }
-
-   That caused the final image to swap people.
-
-   This version NEVER sorts the images.
-
-   LOCAL = LEFT
-   REMOTE/PARTNER = RIGHT
-
-   Both are mirrored exactly like the live camera.
-========================================================= */
 
 function createCombinedPhoto(
   localImage,
@@ -2230,34 +3138,46 @@ function createCombinedPhoto(
   return new Promise(resolve=>{
 
     const local=
-      new Image();
+    new Image();
 
     const remote=
-      new Image();
+    new Image();
+
 
     let loaded=0;
+
 
     function done(){
 
       loaded++;
 
-      if(loaded<2) return;
+
+      if(loaded<2)
+        return;
+
 
       const canvas=
-        document.createElement(
-          "canvas"
-        );
+      document.createElement(
+        "canvas"
+      );
+
 
       const W=1000;
+
       const H=500;
 
+
       canvas.width=W;
+
       canvas.height=H;
 
-      const ctx=
-        canvas.getContext("2d");
 
-      ctx.fillStyle="#211b1e";
+      const ctx=
+      canvas.getContext("2d");
+
+
+      ctx.fillStyle=
+      "#211b1e";
 
       ctx.fillRect(
         0,
@@ -2266,48 +3186,87 @@ function createCombinedPhoto(
         H
       );
 
+
       const gap=10;
 
       const cardW=
-        (W-gap*3)/2;
+      (W-gap*3)/2;
 
       const cardH=
-        H-gap*2;
+      H-gap*2;
 
 
       /*
-        IMPORTANT:
+        FIXED IDENTITY POSITION
 
-        LOCAL CAMERA = LEFT
+        If I am LEFT:
+          local -> left
+          remote -> right
 
-        PARTNER CAMERA = RIGHT
+        If I am RIGHT:
+          remote -> left
+          local -> right
 
-        There is deliberately NO clientId
-        comparison here.
+        Therefore:
 
-        This means whoever is looking at
-        their own live camera sees themselves
-        on the left, and their final photo
-        also places themselves on the left.
+        YOUR SCREEN:
+          YOU = LEFT
+          PARTNER = RIGHT
+
+        PARTNER SCREEN:
+          PARTNER = RIGHT
+          YOU = LEFT
       */
 
-      drawLiveStyleImage(
+      let leftImage;
+      let rightImage;
+
+
+      if(mySide==="left"){
+
+        leftImage=local;
+        rightImage=remote;
+
+      }else{
+
+        leftImage=remote;
+        rightImage=local;
+
+      }
+
+
+      /*
+        The images were already mirrored
+        when captured, so DON'T mirror them
+        again here.
+
+        This is what keeps the final photo
+        looking exactly like the live preview.
+      */
+
+      drawRoundedImage(
         ctx,
-        local,
+        leftImage,
         gap,
         gap,
         cardW,
-        cardH
+        cardH,
+        20,
+        false
       );
 
-      drawLiveStyleImage(
+
+      drawRoundedImage(
         ctx,
-        remote,
+        rightImage,
         gap*2+cardW,
         gap,
         cardW,
-        cardH
+        cardH,
+        20,
+        false
       );
+
 
       resolve(
         canvas.toDataURL(
@@ -2315,53 +3274,39 @@ function createCombinedPhoto(
           .9
         )
       );
+
     }
 
+
     local.onload=done;
+
     remote.onload=done;
 
-    local.onerror=()=>{
-      console.error(
-        "Could not load local photo."
-      );
 
-      resolve(null);
-    };
+    local.src=
+    localImage;
 
-    remote.onerror=()=>{
-      console.error(
-        "Could not load partner photo."
-      );
+    remote.src=
+    remoteImage;
 
-      resolve(null);
-    };
-
-    local.src=localImage;
-    remote.src=remoteImage;
   });
+
 }
 
 
-/* =========================================================
-   LIVE-STYLE PHOTO RENDERING
-========================================================= */
-
-function drawLiveStyleImage(
+function drawRoundedImage(
   ctx,
   img,
   x,
   y,
   w,
-  h
+  h,
+  radius,
+  mirror=false
 ){
 
   ctx.save();
 
-  const radius=20;
-
-  /*
-    Rounded clipping area
-  */
 
   ctx.beginPath();
 
@@ -2423,173 +3368,182 @@ function drawLiveStyleImage(
   ctx.clip();
 
 
-  /*
-    This matches CSS:
+  const ratio=
+  Math.max(
+    w/img.width,
+    h/img.height
+  );
 
-      object-fit:cover
 
-    The image completely fills the
-    camera box with no black bars.
-  */
+  const nw=
+  img.width*ratio;
 
-  const imageRatio=
-    img.width/img.height;
+  const nh=
+  img.height*ratio;
 
-  const boxRatio=
-    w/h;
 
-  let drawW;
-  let drawH;
+  const dx=
+  x+(w-nw)/2;
 
-  if(imageRatio>boxRatio){
+  const dy=
+  y+(h-nh)/2;
 
-    drawH=h;
-    drawW=
-      h*imageRatio;
+
+  if(mirror){
+
+    ctx.translate(
+      x+w/2,
+      y+h/2
+    );
+
+    ctx.scale(
+      -1,
+      1
+    );
+
+    ctx.drawImage(
+      img,
+      -nw/2,
+      -nh/2,
+      nw,
+      nh
+    );
 
   }else{
 
-    drawW=w;
-    drawH=
-      w/imageRatio;
+    ctx.drawImage(
+      img,
+      dx,
+      dy,
+      nw,
+      nh
+    );
+
   }
 
-  /*
-    Center the crop exactly like object-fit:cover.
-  */
-
-  const drawX=
-    x+(w-drawW)/2;
-
-  const drawY=
-    y+(h-drawH)/2;
-
-
-  /*
-    Mirror horizontally.
-
-    This is exactly what the live video does:
-
-      transform:scaleX(-1)
-  */
-
-  ctx.translate(
-    x+w/2,
-    y+h/2
-  );
-
-  ctx.scale(
-    -1,
-    1
-  );
-
-  ctx.drawImage(
-    img,
-    -drawW/2,
-    -drawH/2,
-    drawW,
-    drawH
-  );
 
   ctx.restore();
+
 }
+
 
 function updatePhotoCounter(
   number
 ){
 
-  document.getElementById(
+  document
+  .getElementById(
     "photoCount"
-  ).textContent=
-    number+
-    " / "+
-    selectedStrip;
+  )
+  .textContent=
+  number+
+  " / "+
+  selectedStrip;
+
 }
+
 
 function updatePhotoThumbnails(){
 
   const preview=
-    document.getElementById(
-      "photoPreview"
-    );
+  document.getElementById(
+    "photoPreview"
+  );
+
 
   preview.innerHTML="";
 
+
   photos
+  .filter(Boolean)
+  .forEach(image=>{
+
+    const img=
+    document.createElement(
+      "img"
+    );
+
+    img.src=image;
+
+    preview.appendChild(
+      img
+    );
+
+  });
+
+}
+
+
+function buildDesignPicker(){
+
+  const grid=
+  document.getElementById(
+    "designGrid"
+  );
+
+
+  grid.innerHTML="";
+
+
+  designs.forEach(name=>{
+
+    const card=
+    document.createElement(
+      "button"
+    );
+
+
+    card.className=
+    "design-card"+
+    (
+      name===selectedDesign
+      ?" selected"
+      :""
+    );
+
+
+    const preview=
+    document.createElement(
+      "div"
+    );
+
+
+    preview.className=
+    "design-preview theme-"+
+    name;
+
+
+    photos
     .filter(Boolean)
     .forEach(image=>{
 
       const img=
-        document.createElement(
-          "img"
-        );
+      document.createElement(
+        "img"
+      );
 
       img.src=image;
 
       preview.appendChild(
         img
       );
+
     });
-}
 
-function buildDesignPicker(){
-
-  const grid=
-    document.getElementById(
-      "designGrid"
-    );
-
-  grid.innerHTML="";
-
-  designs.forEach(name=>{
-
-    const card=
-      document.createElement(
-        "button"
-      );
-
-    card.className=
-      "design-card"+
-      (
-        name===selectedDesign
-          ? " selected"
-          : ""
-      );
-
-    const preview=
-      document.createElement(
-        "div"
-      );
-
-    preview.className=
-      "design-preview theme-"+name;
-
-    photos
-      .filter(Boolean)
-      .forEach(image=>{
-
-        const img=
-          document.createElement(
-            "img"
-          );
-
-        img.src=image;
-
-        preview.appendChild(
-          img
-        );
-      });
 
     const label=
-      document.createElement(
-        "div"
-      );
+    document.createElement(
+      "div"
+    );
+
 
     label.className=
-      "design-name";
+    "design-name";
+
 
     label.textContent=
-      getDesignName(name);
+    getDesignName(name);
+
 
     card.appendChild(
       preview
@@ -2599,26 +3553,32 @@ function buildDesignPicker(){
       label
     );
 
+
     card.onclick=()=>{
 
       selectedDesign=name;
 
+
       document
-        .querySelectorAll(
-          ".design-card"
+      .querySelectorAll(
+        ".design-card"
+      )
+      .forEach(x=>
+        x.classList.remove(
+          "selected"
         )
-        .forEach(x=>
-          x.classList.remove(
-            "selected"
-          )
-        );
+      );
+
 
       card.classList.add(
         "selected"
       );
 
+
       renderDesignPreview();
+
     };
+
 
     if(window.innerWidth>600){
 
@@ -2627,237 +3587,308 @@ function buildDesignPicker(){
         selectedDesign=name;
 
         renderDesignPreview();
+
       };
+
     }
+
 
     grid.appendChild(
       card
     );
+
   });
 
+
   renderDesignPreview();
+
 }
+
 
 function getDesignName(name){
 
   const names={
 
     coquette:"🎀 Coquette",
+
     retro:"📻 Retro Film",
+
     scrapbook:"📒 Scrapbook",
+
     y2k:"💿 Y2K",
+
     strawberry:"🍓 Strawberry",
+
     lace:"🕊️ Lace",
+
     postcard:"💌 Postcard",
+
     floral:"🌸 Floral",
+
     dreamy:"☁️ Dreamy",
+
     vintage:"🌷 Vintage"
+
   };
 
+
   return names[name];
+
 }
+
 
 function renderDesignPreview(){
 
   const preview=
-    document.getElementById(
-      "designPreview"
-    );
+  document.getElementById(
+    "designPreview"
+  );
+
 
   preview.className=
-    "final-strip theme-"+
-    selectedDesign;
+  "final-strip theme-"+
+  selectedDesign;
+
 
   preview.innerHTML="";
 
+
   photos
-    .filter(Boolean)
-    .forEach(image=>{
+  .filter(Boolean)
+  .forEach(image=>{
 
-      const img=
-        document.createElement(
-          "img"
-        );
-
-      img.src=image;
-
-      preview.appendChild(
-        img
-      );
-    });
-
-  const title=
+    const img=
     document.createElement(
-      "div"
+      "img"
     );
 
+    img.src=image;
+
+    preview.appendChild(
+      img
+    );
+
+  });
+
+
+  const title=
+  document.createElement(
+    "div"
+  );
+
+
   title.className=
-    "final-strip-title";
+  "final-strip-title";
+
 
   title.textContent=
-    yourName+
-    " ♡ "+
-    (partnerName||"Them");
+  yourName+
+  " ♡ "+
+  (partnerName||"Them");
+
 
   preview.appendChild(
     title
   );
+
 }
+
 
 function chooseDesign(){
 
   buildFinalStrip();
 
   nextStep(4);
+
 }
+
 
 function buildFinalStrip(){
 
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   strip.className=
-    "final-strip theme-"+
-    selectedDesign;
+  "final-strip theme-"+
+  selectedDesign;
+
 
   strip.innerHTML="";
 
+
   photos
-    .filter(Boolean)
-    .forEach(image=>{
+  .filter(Boolean)
+  .forEach(image=>{
 
-      const img=
-        document.createElement(
-          "img"
-        );
-
-      img.src=image;
-
-      strip.appendChild(
-        img
-      );
-    });
-
-  const title=
+    const img=
     document.createElement(
-      "div"
+      "img"
     );
 
+    img.src=image;
+
+    strip.appendChild(
+      img
+    );
+
+  });
+
+
+  const title=
+  document.createElement(
+    "div"
+  );
+
+
   title.className=
-    "final-strip-title";
+  "final-strip-title";
+
 
   title.textContent=
-    yourName+
-    " ♡ "+
-    (partnerName||"Them");
+  yourName+
+  " ♡ "+
+  (partnerName||"Them");
+
 
   strip.appendChild(
     title
   );
 
+
   editHistory=[];
+
 }
+
 
 function saveEditState(){
 
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   editHistory.push(
     strip.innerHTML
   );
 
-  if(
-    editHistory.length>30
-  ){
 
+  if(editHistory.length>30)
     editHistory.shift();
-  }
+
 }
+
 
 function addSticker(symbol){
 
   saveEditState();
 
+
   const sticker=
-    document.createElement(
-      "div"
-    );
+  document.createElement(
+    "div"
+  );
 
-  sticker.className="decor";
 
-  sticker.textContent=symbol;
+  sticker.className=
+  "decor";
+
+
+  sticker.textContent=
+  symbol;
+
 
   sticker.style.left=
-    (15+Math.random()*70)+
-    "%";
+  (15+Math.random()*70)+
+  "%";
+
 
   sticker.style.top=
-    (10+Math.random()*80)+
-    "%";
+  (10+Math.random()*80)+
+  "%";
+
 
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   strip.appendChild(
     sticker
   );
 
+
   makeMovable(
     sticker,
     strip
   );
+
 }
+
 
 function addText(){
 
   const input=
-    document.getElementById(
-      "customText"
-    );
+  document.getElementById(
+    "customText"
+  );
+
 
   const value=
-    input.value.trim();
+  input.value.trim();
 
-  if(!value) return;
+
+  if(!value)
+    return;
+
 
   saveEditState();
 
+
   const text=
-    document.createElement(
-      "div"
-    );
+  document.createElement(
+    "div"
+  );
+
 
   text.className=
-    "decor text-decor";
+  "decor text-decor";
 
-  text.textContent=value;
+
+  text.textContent=
+  value;
+
 
   text.style.left="50%";
+
   text.style.top="50%";
 
+
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   strip.appendChild(
     text
   );
 
+
   input.value="";
+
 
   makeMovable(
     text,
     strip
   );
+
 }
+
 
 function makeMovable(
   element,
@@ -2866,63 +3897,72 @@ function makeMovable(
 
   let dragging=false;
 
+
   function move(
     clientX,
     clientY
   ){
 
     const rect=
-      container.getBoundingClientRect();
+    container.getBoundingClientRect();
+
 
     let x=
-      ((clientX-rect.left)/
-      rect.width)*100;
+    ((clientX-rect.left)/
+    rect.width)*100;
+
 
     let y=
-      ((clientY-rect.top)/
-      rect.height)*100;
+    ((clientY-rect.top)/
+    rect.height)*100;
+
 
     x=
-      Math.max(
-        5,
-        Math.min(
-          95,
-          x
-        )
-      );
+    Math.max(
+      5,
+      Math.min(95,x)
+    );
+
 
     y=
-      Math.max(
-        3,
-        Math.min(
-          97,
-          y
-        )
-      );
+    Math.max(
+      3,
+      Math.min(97,y)
+    );
+
 
     element.style.left=
-      x+"%";
+    x+"%";
+
 
     element.style.top=
-      y+"%";
+    y+"%";
+
   }
+
 
   element.addEventListener(
     "touchstart",
     e=>{
+
       dragging=true;
+
       e.preventDefault();
+
     },
     {passive:false}
   );
+
 
   element.addEventListener(
     "touchmove",
     e=>{
 
-      if(!dragging) return;
+      if(!dragging)
+        return;
 
       e.preventDefault();
+
 
       move(
         e.touches[0].clientX,
@@ -2933,6 +3973,7 @@ function makeMovable(
     {passive:false}
   );
 
+
   element.addEventListener(
     "touchend",
     ()=>{
@@ -2940,27 +3981,32 @@ function makeMovable(
     }
   );
 
+
   element.addEventListener(
     "mousedown",
     e=>{
+
       dragging=true;
+
       e.preventDefault();
+
     }
   );
+
 
   document.addEventListener(
     "mousemove",
     e=>{
 
-      if(dragging){
-
+      if(dragging)
         move(
           e.clientX,
           e.clientY
         );
-      }
+
     }
   );
+
 
   document.addEventListener(
     "mouseup",
@@ -2968,7 +4014,9 @@ function makeMovable(
       dragging=false;
     }
   );
+
 }
+
 
 function undoLastEdit(){
 
@@ -2979,35 +4027,46 @@ function undoLastEdit(){
     );
 
     return;
+
   }
 
+
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   strip.innerHTML=
-    editHistory.pop();
+  editHistory.pop();
+
 
   restoreMovableElements();
+
 }
+
 
 function restoreMovableElements(){
 
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   strip
-    .querySelectorAll(".decor")
-    .forEach(element=>
-      makeMovable(
-        element,
-        strip
-      )
-    );
+  .querySelectorAll(
+    ".decor"
+  )
+  .forEach(element=>
+    makeMovable(
+      element,
+      strip
+    )
+  );
+
 }
+
 
 function resetEdits(){
 
@@ -3015,97 +4074,119 @@ function resetEdits(){
     !confirm(
       "Remove all stickers and text?"
     )
-  ){
+  )
     return;
-  }
+
 
   buildFinalStrip();
+
 }
+
 
 function copyFinalPreview(){
 
   const source=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   const target=
-    document.getElementById(
-      "savedPreview"
-    );
+  document.getElementById(
+    "savedPreview"
+  );
+
 
   target.innerHTML=
-    source.innerHTML;
+  source.innerHTML;
+
 
   target.className=
-    source.className;
+  source.className;
+
 }
+
 
 async function autoSaveStrip(){
 
   const msg=
-    document.getElementById(
-      "saveStatusMessage"
-    );
+  document.getElementById(
+    "saveStatusMessage"
+  );
+
 
   msg.textContent=
-    "Saving your photo strip automatically... ♡";
+  "Saving your photo strip automatically... ♡";
+
 
   try{
 
     const blob=
-      await renderFinalCanvas();
+    await renderFinalCanvas();
 
-    if(!blob){
 
+    if(!blob)
       throw new Error(
         "Could not create image."
       );
-    }
 
-    if(finalBlobUrl){
 
+    if(finalBlobUrl)
       URL.revokeObjectURL(
         finalBlobUrl
       );
-    }
+
 
     finalBlobUrl=
-      URL.createObjectURL(
-        blob
-      );
+    URL.createObjectURL(
+      blob
+    );
+
 
     const link=
-      document.createElement(
-        "a"
-      );
+    document.createElement(
+      "a"
+    );
+
 
     link.href=
-      finalBlobUrl;
+    finalBlobUrl;
+
 
     link.download=
-      "our-little-photobooth.png";
+    "our-little-photobooth.png";
+
 
     document.body.appendChild(
       link
     );
 
+
     link.click();
+
 
     link.remove();
 
+
     msg.textContent=
-      "✓ Automatically Downloaded / Saved ♡";
+    "✓ Automatically Downloaded / Saved ♡";
 
-    document.getElementById(
+
+    document
+    .getElementById(
       "saveImage"
-    ).src=
-      finalBlobUrl;
+    )
+    .src=
+    finalBlobUrl;
 
-    document.getElementById(
+
+    document
+    .getElementById(
       "saveFallback"
-    ).style.display=
-      "block";
+    )
+    .style.display=
+    "block";
+
 
   }catch(error){
 
@@ -3114,23 +4195,34 @@ async function autoSaveStrip(){
       error
     );
 
+
     msg.textContent=
-      "✓ Photo Ready Below";
+    "✓ Photo Ready Below";
+
 
     if(finalBlobUrl){
 
-      document.getElementById(
+      document
+      .getElementById(
         "saveImage"
-      ).src=
-        finalBlobUrl;
+      )
+      .src=
+      finalBlobUrl;
 
-      document.getElementById(
+
+      document
+      .getElementById(
         "saveFallback"
-      ).style.display=
-        "block";
+      )
+      .style.display=
+      "block";
+
     }
+
   }
+
 }
+
 
 async function renderFinalCanvas(){
 
@@ -3138,13 +4230,8 @@ async function renderFinalCanvas(){
 
   const PHOTO_W=820;
 
-  /*
-    Keep the same 2:1 ratio as
-    the captured two-person photo.
-  */
-
   const PHOTO_H=
-    PHOTO_W/2;
+  PHOTO_W/2;
 
   const TOP=75;
 
@@ -3152,28 +4239,33 @@ async function renderFinalCanvas(){
 
   const CAPTION_H=120;
 
+
   const count=
-    photos.length;
+  photos.length;
+
 
   const H=
-    TOP+
-    count*PHOTO_H+
-    (count-1)*GAP+
-    CAPTION_H+
-    45;
+  TOP+
+  count*PHOTO_H+
+  (count-1)*GAP+
+  CAPTION_H+
+  45;
+
 
   const canvas=
-    document.createElement(
-      "canvas"
-    );
+  document.createElement(
+    "canvas"
+  );
+
 
   canvas.width=W;
+
   canvas.height=H;
 
+
   const ctx=
-    canvas.getContext(
-      "2d"
-    );
+  canvas.getContext("2d");
+
 
   drawThemeBackground(
     ctx,
@@ -3182,11 +4274,13 @@ async function renderFinalCanvas(){
     selectedDesign
   );
 
+
   drawThemeHeader(
     ctx,
     W,
     selectedDesign
   );
+
 
   for(
     let i=0;
@@ -3195,16 +4289,19 @@ async function renderFinalCanvas(){
   ){
 
     const image=
-      await loadImage(
-        photos[i]
-      );
+    await loadImage(
+      photos[i]
+    );
+
 
     const x=
-      (W-PHOTO_W)/2;
+    (W-PHOTO_W)/2;
+
 
     const y=
-      TOP+
-      i*(PHOTO_H+GAP);
+    TOP+
+    i*(PHOTO_H+GAP);
+
 
     drawPhotoToCanvas(
       ctx,
@@ -3215,134 +4312,165 @@ async function renderFinalCanvas(){
       PHOTO_H,
       selectedDesign
     );
+
   }
 
+
   const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  document.getElementById(
+    "photoStrip"
+  );
+
 
   const stripRect=
-    strip.getBoundingClientRect();
+  strip.getBoundingClientRect();
+
 
   strip
-    .querySelectorAll(".decor")
-    .forEach(element=>{
+  .querySelectorAll(
+    ".decor"
+  )
+  .forEach(element=>{
 
-      const rect=
-        element.getBoundingClientRect();
+    const rect=
+    element.getBoundingClientRect();
 
-      const centerX=
-        rect.left+
-        rect.width/2;
 
-      const centerY=
-        rect.top+
-        rect.height/2;
+    const centerX=
+    rect.left+
+    rect.width/2;
 
-      const percentX=
-        (
-          centerX-
-          stripRect.left
-        )/
-        stripRect.width;
 
-      const percentY=
-        (
-          centerY-
-          stripRect.top
-        )/
-        stripRect.height;
+    const centerY=
+    rect.top+
+    rect.height/2;
 
-      const canvasX=
-        percentX*W;
 
-      const canvasY=
-        percentY*H;
+    const percentX=
+    (centerX-
+     stripRect.left)/
+    stripRect.width;
 
-      ctx.save();
 
-      ctx.textAlign="center";
-      ctx.textBaseline="middle";
+    const percentY=
+    (centerY-
+     stripRect.top)/
+    stripRect.height;
 
-      let fontSize=38;
 
-      if(
-        element.classList.contains(
-          "text-decor"
-        )
-      ){
+    const canvasX=
+    percentX*W;
 
-        fontSize=25;
-      }
 
-      ctx.font=
-        fontSize+
-        "px Georgia";
+    const canvasY=
+    percentY*H;
 
-      if(
-        element.classList.contains(
-          "text-decor"
-        )
-      ){
 
-        const padding=9;
+    ctx.save();
 
-        const metrics=
-          ctx.measureText(
-            element.textContent
-          );
 
-        const bw=
-          metrics.width+
-          padding*2;
+    ctx.textAlign="center";
 
-        const bh=
-          fontSize+
-          padding;
+    ctx.textBaseline="middle";
 
-        ctx.fillStyle=
-          "rgba(255,255,255,.88)";
 
-        roundRect(
-          ctx,
-          canvasX-bw/2,
-          canvasY-bh/2,
-          bw,
-          bh,
-          10
-        );
+    let fontSize=38;
 
-        ctx.fill();
-      }
 
-      ctx.fillStyle=
-        "#49363e";
+    if(
+      element.classList
+      .contains("text-decor")
+    ){
 
-      ctx.fillText(
-        element.textContent,
-        canvasX,
-        canvasY
+      fontSize=25;
+
+    }
+
+
+    ctx.font=
+    fontSize+
+    "px Georgia";
+
+
+    if(
+      element.classList
+      .contains("text-decor")
+    ){
+
+      const padding=9;
+
+      const metrics=
+      ctx.measureText(
+        element.textContent
       );
 
-      ctx.restore();
-    });
+
+      const bw=
+      metrics.width+
+      padding*2;
+
+
+      const bh=
+      fontSize+
+      padding;
+
+
+      ctx.fillStyle=
+      "rgba(255,255,255,.88)";
+
+
+      roundRect(
+        ctx,
+        canvasX-bw/2,
+        canvasY-bh/2,
+        bw,
+        bh,
+        10
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.fillStyle=
+    "#49363e";
+
+
+    ctx.fillText(
+      element.textContent,
+      canvasX,
+      canvasY
+    );
+
+
+    ctx.restore();
+
+  });
+
 
   const captionY=
-    H-55;
+  H-55;
+
 
   ctx.save();
 
+
   ctx.textAlign="center";
+
   ctx.textBaseline="middle";
 
+
   ctx.fillStyle=
-    getThemeTextColor(
-      selectedDesign
-    );
+  getThemeTextColor(
+    selectedDesign
+  );
+
 
   ctx.font=
-    "bold 42px Georgia";
+  "bold 42px Georgia";
+
 
   ctx.fillText(
     yourName+
@@ -3352,19 +4480,21 @@ async function renderFinalCanvas(){
     captionY
   );
 
+
   ctx.restore();
 
-  return new Promise(
-    resolve=>{
 
-      canvas.toBlob(
-        blob=>
-          resolve(blob),
-        "image/png"
-      );
-    }
-  );
+  return new Promise(resolve=>{
+
+    canvas.toBlob(
+      blob=>resolve(blob),
+      "image/png"
+    );
+
+  });
+
 }
+
 
 function loadImage(src){
 
@@ -3372,19 +4502,24 @@ function loadImage(src){
     (resolve,reject)=>{
 
       const image=
-        new Image();
+      new Image();
 
-      image.onload=()=>{
-        resolve(image);
-      };
+
+      image.onload=
+      ()=>resolve(image);
+
 
       image.onerror=
-        reject;
+      reject;
+
 
       image.src=src;
+
     }
   );
+
 }
+
 
 function drawPhotoToCanvas(
   ctx,
@@ -3398,15 +4533,16 @@ function drawPhotoToCanvas(
 
   ctx.save();
 
+
   const border=
-    getThemeBorder(
-      theme
-    );
+  getThemeBorder(theme);
+
 
   if(border){
 
     ctx.fillStyle=
-      border;
+    border;
+
 
     roundRect(
       ctx,
@@ -3417,8 +4553,11 @@ function drawPhotoToCanvas(
       18
     );
 
+
     ctx.fill();
+
   }
+
 
   roundRect(
     ctx,
@@ -3429,25 +4568,32 @@ function drawPhotoToCanvas(
     14
   );
 
+
   ctx.clip();
 
+
   const ratio=
-    Math.max(
-      w/img.width,
-      h/img.height
-    );
+  Math.max(
+    w/img.width,
+    h/img.height
+  );
+
 
   const nw=
-    img.width*ratio;
+  img.width*ratio;
+
 
   const nh=
-    img.height*ratio;
+  img.height*ratio;
+
 
   const dx=
-    x+(w-nw)/2;
+  x+(w-nw)/2;
+
 
   const dy=
-    y+(h-nh)/2;
+  y+(h-nh)/2;
+
 
   if(
     theme==="retro" ||
@@ -3455,8 +4601,10 @@ function drawPhotoToCanvas(
   ){
 
     ctx.filter=
-      "sepia(.4) saturate(.8)";
+    "sepia(.4) saturate(.8)";
+
   }
+
 
   ctx.drawImage(
     img,
@@ -3466,10 +4614,14 @@ function drawPhotoToCanvas(
     nh
   );
 
+
   ctx.filter="none";
 
+
   ctx.restore();
+
 }
+
 
 function drawThemeBackground(
   ctx,
@@ -3478,81 +4630,96 @@ function drawThemeBackground(
   theme
 ){
 
-  let bg="#fff0f6";
+  let bg=
+  "#fff0f6";
+
 
   if(theme==="retro")
     bg="#c89470";
 
+
   if(theme==="scrapbook")
     bg="#ead8c0";
+
 
   if(theme==="y2k"){
 
     const gradient=
-      ctx.createLinearGradient(
-        0,
-        0,
-        W,
-        H
-      );
+    ctx.createLinearGradient(
+      0,0,W,H
+    );
+
 
     gradient.addColorStop(
       0,
       "#a8d6ed"
     );
 
+
     gradient.addColorStop(
       .5,
       "#d9c8f0"
     );
+
 
     gradient.addColorStop(
       1,
       "#f2b9d7"
     );
 
+
     bg=gradient;
+
   }
+
 
   if(theme==="strawberry")
     bg="#fff0e9";
 
+
   if(theme==="lace")
     bg="#ead8e3";
+
 
   if(theme==="postcard")
     bg="#e6cdb5";
 
+
   if(theme==="floral")
     bg="#f7e7dc";
+
 
   if(theme==="dreamy"){
 
     const gradient=
-      ctx.createLinearGradient(
-        0,
-        0,
-        0,
-        H
-      );
+    ctx.createLinearGradient(
+      0,0,0,H
+    );
+
 
     gradient.addColorStop(
       0,
       "#bfcce7"
     );
 
+
     gradient.addColorStop(
       1,
       "#ead8ee"
     );
 
+
     bg=gradient;
+
   }
+
 
   if(theme==="vintage")
     bg="#d0b39f";
 
+
   ctx.fillStyle=bg;
+
 
   ctx.fillRect(
     0,
@@ -3560,7 +4727,9 @@ function drawThemeBackground(
     W,
     H
   );
+
 }
+
 
 function drawThemeHeader(
   ctx,
@@ -3570,15 +4739,19 @@ function drawThemeHeader(
 
   ctx.save();
 
+
   ctx.textAlign="center";
 
+
   ctx.fillStyle=
-    getThemeTextColor(
-      theme
-    );
+  getThemeTextColor(
+    theme
+  );
+
 
   ctx.font=
-    "22px Georgia";
+  "22px Georgia";
+
 
   ctx.fillText(
     getThemeHeader(theme),
@@ -3586,98 +4759,117 @@ function drawThemeHeader(
     40
   );
 
+
   ctx.restore();
+
 }
 
-function getThemeHeader(
-  theme
-){
+
+function getThemeHeader(theme){
 
   const headers={
 
     coquette:
-      "♡ ୨୧ 🎀 ୨୧ ♡",
+    "♡ ୨୧ 🎀 ୨୧ ♡",
 
     retro:
-      "MEMORIES • 1990s • LOVE",
+    "MEMORIES • 1990s • LOVE",
 
     scrapbook:
-      "♡ OUR LITTLE MOMENTS ♡",
+    "♡ OUR LITTLE MOMENTS ♡",
 
     y2k:
-      "★ BABY ★ ANGEL ★ 2000 ★",
+    "★ BABY ★ ANGEL ★ 2000 ★",
 
     strawberry:
-      "🍓 strawberry kisses 🍓",
+    "🍓 strawberry kisses 🍓",
 
     lace:
-      "୨୧ love letter ୨୧",
+    "୨୧ love letter ୨୧",
 
     postcard:
-      "POSTCARD FROM US ♡",
+    "POSTCARD FROM US ♡",
 
     floral:
-      "✿ 🌸 love grows here 🌸 ✿",
+    "✿ 🌸 love grows here 🌸 ✿",
 
     dreamy:
-      "☁︎ DREAMING OF YOU ☁︎",
+    "☁︎ DREAMING OF YOU ☁︎",
 
     vintage:
-      "♡ VINTAGE LOVE ♡"
+    "♡ VINTAGE LOVE ♡"
+
   };
 
+
   return headers[theme] ||
-    "♡ OUR LITTLE MOMENTS ♡";
+  "♡ OUR LITTLE MOMENTS ♡";
+
 }
 
-function getThemeTextColor(
-  theme
-){
+
+function getThemeTextColor(theme){
 
   if(
     theme==="dreamy" ||
     theme==="y2k"
-  ){
-
+  )
     return "#ffffff";
-  }
+
 
   if(theme==="retro")
     return "#5c3d30";
 
+
   if(theme==="scrapbook")
     return "#785b4c";
+
 
   if(theme==="postcard")
     return "#704b39";
 
+
   if(theme==="vintage")
     return "#654b3d";
 
+
   return "#49363e";
+
 }
 
-function getThemeBorder(
-  theme
-){
+
+function getThemeBorder(theme){
 
   const borders={
 
     coquette:"#efb6c9",
+
     retro:"#76503e",
+
     scrapbook:"#a98267",
+
     y2k:"#ffffff",
+
     strawberry:"#e76572",
+
     lace:"#a87b96",
+
     postcard:"#956c52",
+
     floral:"#d19aaa",
+
     dreamy:"#ffffff",
+
     vintage:"#806351"
+
   };
 
+
   return borders[theme] ||
-    "#efb6c9";
+  "#efb6c9";
+
 }
+
 
 function roundRect(
   ctx,
@@ -3690,15 +4882,18 @@ function roundRect(
 
   ctx.beginPath();
 
+
   ctx.moveTo(
     x+r,
     y
   );
 
+
   ctx.lineTo(
     x+w-r,
     y
   );
+
 
   ctx.quadraticCurveTo(
     x+w,
@@ -3707,10 +4902,12 @@ function roundRect(
     y+r
   );
 
+
   ctx.lineTo(
     x+w,
     y+h-r
   );
+
 
   ctx.quadraticCurveTo(
     x+w,
@@ -3719,10 +4916,12 @@ function roundRect(
     y+h
   );
 
+
   ctx.lineTo(
     x+r,
     y+h
   );
+
 
   ctx.quadraticCurveTo(
     x,
@@ -3731,10 +4930,12 @@ function roundRect(
     y+h-r
   );
 
+
   ctx.lineTo(
     x,
     y+r
   );
+
 
   ctx.quadraticCurveTo(
     x,
@@ -3742,9 +4943,12 @@ function roundRect(
     x+r,
     y
   );
+
 
   ctx.closePath();
+
 }
+
 
 window.addEventListener(
   "beforeunload",
@@ -3755,35 +4959,44 @@ window.addEventListener(
         readinessTimer
       );
 
+
     if(connectionRetryTimer)
       clearTimeout(
         connectionRetryTimer
       );
 
+
     if(cameraStream){
 
       cameraStream
-        .getTracks()
-        .forEach(
-          t=>t.stop()
-        );
+      .getTracks()
+      .forEach(
+        t=>t.stop()
+      );
+
     }
+
 
     if(peerConnection)
       peerConnection.close();
 
+
     if(roomChannel)
       roomChannel.unsubscribe();
 
+
     if(signalChannel)
       signalChannel.unsubscribe();
+
 
     if(finalBlobUrl)
       URL.revokeObjectURL(
         finalBlobUrl
       );
+
   }
 );
+
 </script>
 
 </body>
