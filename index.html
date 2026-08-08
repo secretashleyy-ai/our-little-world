@@ -1382,7 +1382,6 @@ async function captureLocalForShot(shotId, shotIndex){
   const videoBox = video.parentElement;
   const rect = videoBox.getBoundingClientRect();
   
-  // Use actual rendering aspect ratio of video boxes
   const width=500;
   const height=Math.round(500 * (rect.height / rect.width));
   canvas.width=width;
@@ -1401,12 +1400,8 @@ async function captureLocalForShot(shotId, shotIndex){
     sh=vw/targetRatio; sy=(vh-sh)/2;
   }
 
-  // Mirror local video image horizontally so captured photo matches mirror camera preview
-  ctx.save();
-  ctx.translate(width, 0);
-  ctx.scale(-1, 1);
+  // Draw unmirrored frame to maintain raw pixels; createCombinedPhoto handles uniform mirroring
   ctx.drawImage(video, sx, sy, sw, sh, 0, 0, width, height);
-  ctx.restore();
 
   const image=canvas.toDataURL("image/jpeg", .85);
   const record=shotRecords.get(shotId);
@@ -1464,12 +1459,12 @@ function createCombinedPhoto(localImage, remoteImage, record){
 
       const canvas=document.createElement("canvas");
       const W=1000;
-      const H=500; // Match 2:1 side-by-side aspect ratio
+      const H=500;
       canvas.width=W;
       canvas.height=H;
 
       const ctx=canvas.getContext("2d");
-      ctx.fillStyle="#211b1e"; // Camera background tint
+      ctx.fillStyle="#211b1e";
       ctx.fillRect(0, 0, W, H);
 
       const gap=10;
@@ -1478,21 +1473,16 @@ function createCombinedPhoto(localImage, remoteImage, record){
 
       let leftImage=local;
       let rightImage=remote;
-      let mirrorLeft = false;
-      let mirrorRight = true;
 
-      // Keep positions consistent between both users (Deterministically assign Left/Right based on clientId)
+      // Deterministically place clients side-by-side based on unique IDs
       if(record.remoteSender && String(record.remoteSender).localeCompare(String(clientId))<0){
         leftImage=remote;
         rightImage=local;
-        mirrorLeft = true;
-        mirrorRight = false;
       }
 
-      // Draw left stream (mirrored)
-      drawRoundedImage(ctx, leftImage, gap, gap, cardW, cardH, 20, mirrorLeft);
-      // Draw right stream (mirrored)
-      drawRoundedImage(ctx, rightImage, gap*2 + cardW, gap, cardW, cardH, 20, mirrorRight);
+      // Mirror both streams (mirror = true) so faces match live video previews exactly
+      drawRoundedImage(ctx, leftImage, gap, gap, cardW, cardH, 20, true);
+      drawRoundedImage(ctx, rightImage, gap*2 + cardW, gap, cardW, cardH, 20, true);
 
       resolve(canvas.toDataURL("image/jpeg", .9));
     }
@@ -1767,7 +1757,7 @@ async function autoSaveStrip(){
 async function renderFinalCanvas(){
   const W = 900;
   const PHOTO_W = 820;
-  const PHOTO_H = PHOTO_W / 2; // Match exact 2:1 ratio from camera layout
+  const PHOTO_H = PHOTO_W / 2;
 
   const TOP = 75;
   const GAP = 18;
