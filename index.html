@@ -958,8 +958,8 @@ const rtcConfig={
 };
 
 const designs=[
-  "coquette", "retro", "scrapbook", "y2k", "strawberry", 
-  "lace", "postcard", "floral", "dreamy", "vintage"
+  "coquette","retro","scrapbook","y2k","strawberry",
+  "lace","postcard","floral","dreamy","vintage"
 ];
 
 function showPage(id){
@@ -973,42 +973,71 @@ async function enterWorld(){
   partnerName=document.getElementById("partnerName").value.trim();
   roomCode=document.getElementById("roomCode").value.trim().toUpperCase();
 
-  if(!yourName){ alert("Please enter your name ♡"); return; }
-  if(!roomCode){ alert("Please enter a room code ♡"); return; }
+  if(!yourName){
+    alert("Please enter your name ♡");
+    return;
+  }
 
-  document.getElementById("connectionMessage").textContent="Connecting to your little room...";
+  if(!roomCode){
+    alert("Please enter a room code ♡");
+    return;
+  }
+
+  document.getElementById("connectionMessage").textContent=
+    "Connecting to your little room...";
 
   try{
     await setupRoom();
+
     document.getElementById("displayYou").textContent=yourName;
-    document.getElementById("displayPartner").textContent=partnerName || "Them";
+    document.getElementById("displayPartner").textContent=
+      partnerName || "Them";
+
     document.getElementById("displayRoom").textContent=roomCode;
     document.getElementById("cameraYouName").textContent=yourName;
-    document.getElementById("cameraPartnerName").textContent=partnerName || "Them";
-    document.getElementById("connectionMessage").textContent="Connected ♡";
+    document.getElementById("cameraPartnerName").textContent=
+      partnerName || "Them";
+
+    document.getElementById("connectionMessage").textContent=
+      "Connected ♡";
+
     showPage("home");
+
   }catch(error){
     console.error(error);
-    document.getElementById("connectionMessage").textContent="Could not connect. Try again.";
+    document.getElementById("connectionMessage").textContent=
+      "Could not connect. Try again.";
   }
 }
 
 async function setupRoom(){
   if(roomChannel) return;
-  roomChannel=supabaseClient.channel("presence-"+roomCode, { config:{ presence:{ key:clientId } } });
+
+  roomChannel=supabaseClient.channel(
+    "presence-"+roomCode,
+    {config:{presence:{key:clientId}}}
+  );
 
   roomChannel
-    .on("presence", { event:"sync" }, ()=>updatePresence())
-    .on("presence", { event:"join" }, ()=>updatePresence())
-    .on("presence", { event:"leave" }, ()=>updatePresence());
+    .on("presence",{event:"sync"},()=>updatePresence())
+    .on("presence",{event:"join"},()=>updatePresence())
+    .on("presence",{event:"leave"},()=>updatePresence());
 
   await new Promise((resolve,reject)=>{
     roomChannel.subscribe(async status=>{
       if(status==="SUBSCRIBED"){
         try{
-          await roomChannel.track({ id:clientId, name:yourName, camera:false, time:Date.now() });
+          await roomChannel.track({
+            id:clientId,
+            name:yourName,
+            camera:false,
+            time:Date.now()
+          });
+
           resolve();
-        }catch(e){ reject(e); }
+        }catch(e){
+          reject(e);
+        }
       }
     });
   });
@@ -1019,946 +1048,2742 @@ async function setupRoom(){
 
 async function setupSignalChannel(){
   if(signalChannel) return;
-  signalChannel=supabaseClient.channel("photobooth-signal-"+roomCode, { config:{ broadcast:{ ack:true, self:false } } });
 
-  signalChannel.on("broadcast", { event:"signal" }, async payload=>{
-    const msg=payload.payload;
-    if(!msg || msg.sender===clientId) return;
-    await handleSignal(msg);
-  });
+  signalChannel=supabaseClient.channel(
+    "photobooth-signal-"+roomCode,
+    {config:{broadcast:{ack:true,self:false}}}
+  );
 
-  await new Promise((resolve)=>{
-    signalChannel.subscribe(status=>{ if(status==="SUBSCRIBED") resolve(); });
+  signalChannel.on(
+    "broadcast",
+    {event:"signal"},
+    async payload=>{
+      const msg=payload.payload;
+
+      if(!msg || msg.sender===clientId) return;
+
+      await handleSignal(msg);
+    }
+  );
+
+  await new Promise(resolve=>{
+    signalChannel.subscribe(status=>{
+      if(status==="SUBSCRIBED") resolve();
+    });
   });
 
   for(let i=0;i<5;i++){
-    setTimeout(()=>sendSignal("hello", {}), i*700);
+    setTimeout(
+      ()=>sendSignal("hello",{}),
+      i*700
+    );
   }
 }
 
 async function updatePresence(){
   if(!roomChannel) return;
+
   const state=roomChannel.presenceState();
   let others=[];
 
   Object.values(state).forEach(entries=>{
-    entries.forEach(e=>{ if(e.id!==clientId) others.push(e); });
+    entries.forEach(e=>{
+      if(e.id!==clientId) others.push(e);
+    });
   });
 
   if(!others.length){
     partnerClientId=null;
     partnerCameraReady=false;
-    document.getElementById("partnerStatus").textContent="⚪ Waiting for partner...";
-    document.getElementById("partnerCameraText").textContent="Waiting for partner...";
+
+    document.getElementById("partnerStatus").textContent=
+      "⚪ Waiting for partner...";
+
+    document.getElementById("partnerCameraText").textContent=
+      "Waiting for partner...";
+
     return;
   }
 
-  others.sort((a,b)=>String(a.id).localeCompare(String(b.id)));
+  others.sort((a,b)=>
+    String(a.id).localeCompare(String(b.id))
+  );
+
   const partner=others[0];
+
   partnerClientId=partner.id;
 
-  document.getElementById("partnerStatus").textContent="🟢 "+(partner.name || partnerName || "Partner")+" is here ♡";
+  document.getElementById("partnerStatus").textContent=
+    "🟢 "+(partner.name || partnerName || "Partner")+" is here ♡";
+
   partnerCameraReady=partner.camera===true;
-  document.getElementById("partnerCameraText").textContent=partnerCameraReady ? "🟢 Camera ready" : "Waiting for partner camera...";
+
+  document.getElementById("partnerCameraText").textContent=
+    partnerCameraReady
+      ? "🟢 Camera ready"
+      : "Waiting for partner camera...";
 
   await ensurePeer();
-  await sendSignal("hello", {});
+  await sendSignal("hello",{});
 
   const all=[];
-  Object.values(state).forEach(entries=>{ entries.forEach(e=>all.push(e)); });
-  all.sort((a,b)=>String(a.id).localeCompare(String(b.id)));
-  isCaller=all.length>=2 && all[0].id===clientId;
+
+  Object.values(state).forEach(entries=>{
+    entries.forEach(e=>all.push(e));
+  });
+
+  all.sort((a,b)=>
+    String(a.id).localeCompare(String(b.id))
+  );
+
+  isCaller=
+    all.length>=2 &&
+    all[0].id===clientId;
 
   maybeOffer();
 }
 
 async function updateMyCameraPresence(){
   if(!roomChannel) return;
+
   try{
-    await roomChannel.track({ id:clientId, name:yourName, camera:localCameraReady, time:Date.now() });
-  }catch(e){ console.warn("Presence error:", e); }
+    await roomChannel.track({
+      id:clientId,
+      name:yourName,
+      camera:localCameraReady,
+      time:Date.now()
+    });
+  }catch(e){
+    console.warn("Presence error:",e);
+  }
 }
 
 async function ensurePeer(){
   if(peerConnection) return;
+
   peerConnection=new RTCPeerConnection(rtcConfig);
 
   if(cameraStream){
-    cameraStream.getTracks().forEach(track=>peerConnection.addTrack(track, cameraStream));
+    cameraStream.getTracks().forEach(track=>{
+      peerConnection.addTrack(track,cameraStream);
+    });
   }
 
   peerConnection.onicecandidate=event=>{
-    if(event.candidate) sendSignal("candidate", { candidate: event.candidate.toJSON() });
+    if(event.candidate){
+      sendSignal("candidate",{
+        candidate:event.candidate.toJSON()
+      });
+    }
   };
 
   peerConnection.ontrack=event=>{
     const video=document.getElementById("partnerVideo");
-    let stream=event.streams && event.streams[0];
+
+    let stream=
+      event.streams &&
+      event.streams[0];
+
     if(!stream){
-      stream=video.srcObject || new MediaStream();
-      if(event.track && !stream.getTracks().includes(event.track)) stream.addTrack(event.track);
+      stream=
+        video.srcObject ||
+        new MediaStream();
+
+      if(
+        event.track &&
+        !stream.getTracks().includes(event.track)
+      ){
+        stream.addTrack(event.track);
+      }
     }
+
     video.srcObject=stream;
     video.muted=true;
-    video.play().catch(e=>console.warn(e));
-    document.getElementById("partnerWaiting").style.display="none";
-    setConnectionStatus("🟢 You can see each other!", true);
+
+    video.play().catch(e=>
+      console.warn(e)
+    );
+
+    document.getElementById(
+      "partnerWaiting"
+    ).style.display="none";
+
+    setConnectionStatus(
+      "🟢 You can see each other!",
+      true
+    );
   };
 
   peerConnection.onconnectionstatechange=()=>{
     if(!peerConnection) return;
-    const state=peerConnection.connectionState;
+
+    const state=
+      peerConnection.connectionState;
+
     if(state==="connected"){
-      document.getElementById("partnerWaiting").style.display="none";
-      setConnectionStatus("🟢 You can see each other!", true);
+
+      document.getElementById(
+        "partnerWaiting"
+      ).style.display="none";
+
+      setConnectionStatus(
+        "🟢 You can see each other!",
+        true
+      );
+
       stopConnectionRetry();
+
     }else if(state==="connecting"){
-      setConnectionStatus("🟡 Connecting your cameras...", false);
-    }else if(state==="disconnected" || state==="failed" || state==="closed"){
-      setConnectionStatus("🟠 Reconnecting cameras...", false);
+
+      setConnectionStatus(
+        "🟡 Connecting your cameras...",
+        false
+      );
+
+    }else if(
+      state==="disconnected" ||
+      state==="failed" ||
+      state==="closed"
+    ){
+
+      setConnectionStatus(
+        "🟠 Reconnecting cameras...",
+        false
+      );
+
       scheduleReconnect();
     }
   };
 }
 
-async function sendSignal(type, data={}){
+async function sendSignal(type,data={}){
   if(!signalChannel) return;
+
   try{
     await signalChannel.send({
       type:"broadcast",
       event:"signal",
-      payload:{ sender:clientId, senderName:yourName, type:type, ...data }
+      payload:{
+        sender:clientId,
+        senderName:yourName,
+        type:type,
+        ...data
+      }
     });
-  }catch(e){ console.warn("Signal failed:", type, e); }
+  }catch(e){
+    console.warn(
+      "Signal failed:",
+      type,
+      e
+    );
+  }
 }
 
 async function handleSignal(message){
   await ensurePeer();
+
   if(message.type==="hello"){
-    if(localCameraReady) await sendSignal("camera-ready", {});
-    if(partnerClientId===null) partnerClientId=message.sender;
+
+    if(localCameraReady){
+      await sendSignal(
+        "camera-ready",
+        {}
+      );
+    }
+
+    if(partnerClientId===null){
+      partnerClientId=message.sender;
+    }
+
     maybeOffer();
     return;
   }
 
   if(message.type==="camera-ready"){
+
     partnerClientId=message.sender;
     partnerCameraReady=true;
-    document.getElementById("partnerCameraText").textContent="🟢 Camera ready";
+
+    document.getElementById(
+      "partnerCameraText"
+    ).textContent="🟢 Camera ready";
+
     maybeOffer();
     return;
   }
 
   if(message.type==="offer"){
-    if(peerConnection.signalingState!=="stable") await rebuildPeer();
+
+    if(
+      peerConnection.signalingState!=="stable"
+    ){
+      await rebuildPeer();
+    }
+
     await ensurePeer();
+
     try{
-      await peerConnection.setRemoteDescription(new RTCSessionDescription(message.description));
-    }catch(e){ return; }
+      await peerConnection.setRemoteDescription(
+        new RTCSessionDescription(
+          message.description
+        )
+      );
+    }catch(e){
+      return;
+    }
+
     remoteDescriptionSet=true;
+
     await flushCandidates();
-    const answer=await peerConnection.createAnswer();
-    await peerConnection.setLocalDescription(answer);
-    await sendSignal("answer", { description:{ type:peerConnection.localDescription.type, sdp:peerConnection.localDescription.sdp } });
+
+    const answer=
+      await peerConnection.createAnswer();
+
+    await peerConnection.setLocalDescription(
+      answer
+    );
+
+    await sendSignal(
+      "answer",
+      {
+        description:{
+          type:
+            peerConnection.localDescription.type,
+          sdp:
+            peerConnection.localDescription.sdp
+        }
+      }
+    );
+
     return;
   }
 
   if(message.type==="answer"){
-    if(peerConnection.signalingState==="have-local-offer"){
-      await peerConnection.setRemoteDescription(new RTCSessionDescription(message.description));
+
+    if(
+      peerConnection.signalingState===
+      "have-local-offer"
+    ){
+
+      await peerConnection.setRemoteDescription(
+        new RTCSessionDescription(
+          message.description
+        )
+      );
+
       remoteDescriptionSet=true;
+
       await flushCandidates();
     }
+
     return;
   }
 
   if(message.type==="candidate"){
-    const candidate=new RTCIceCandidate(message.candidate);
-    if(remoteDescriptionSet && peerConnection){
-      try{ await peerConnection.addIceCandidate(candidate); }catch(e){}
+
+    const candidate=
+      new RTCIceCandidate(
+        message.candidate
+      );
+
+    if(
+      remoteDescriptionSet &&
+      peerConnection
+    ){
+
+      try{
+        await peerConnection.addIceCandidate(
+          candidate
+        );
+      }catch(e){}
+
     }else{
+
       pendingCandidates.push(candidate);
     }
+
     return;
   }
 
-  if(message.type==="shutter"){ await receiveShutter(message); return; }
-  if(message.type==="photo"){ receiveRemotePhoto(message); return; }
+  if(message.type==="shutter"){
+    await receiveShutter(message);
+    return;
+  }
+
+  if(message.type==="photo"){
+    receiveRemotePhoto(message);
+    return;
+  }
 }
 
 async function maybeOffer(){
-  if(!isCaller || !localCameraReady || !partnerCameraReady || !peerConnection || makingOffer) return;
-  if(peerConnection.signalingState!=="stable") return;
+
+  if(
+    !isCaller ||
+    !localCameraReady ||
+    !partnerCameraReady ||
+    !peerConnection ||
+    makingOffer
+  ){
+    return;
+  }
+
+  if(
+    peerConnection.signalingState!=="stable"
+  ){
+    return;
+  }
 
   try{
+
     makingOffer=true;
-    const offer=await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-    await sendSignal("offer", { description:{ type:peerConnection.localDescription.type, sdp:peerConnection.localDescription.sdp } });
-  }catch(e){ console.error("Offer error:", e); }finally{ makingOffer=false; }
+
+    const offer=
+      await peerConnection.createOffer();
+
+    await peerConnection.setLocalDescription(
+      offer
+    );
+
+    await sendSignal(
+      "offer",
+      {
+        description:{
+          type:
+            peerConnection.localDescription.type,
+          sdp:
+            peerConnection.localDescription.sdp
+        }
+      }
+    );
+
+  }catch(e){
+
+    console.error(
+      "Offer error:",
+      e
+    );
+
+  }finally{
+
+    makingOffer=false;
+  }
 }
 
 async function flushCandidates(){
+
   if(!peerConnection) return;
+
   while(pendingCandidates.length){
-    try{ await peerConnection.addIceCandidate(pendingCandidates.shift()); }catch(e){}
+
+    try{
+
+      await peerConnection.addIceCandidate(
+        pendingCandidates.shift()
+      );
+
+    }catch(e){}
   }
 }
 
 async function rebuildPeer(){
+
   try{
+
     if(peerConnection){
+
       peerConnection.ontrack=null;
       peerConnection.onicecandidate=null;
+
       peerConnection.close();
     }
+
   }catch(e){}
+
   peerConnection=null;
   remoteDescriptionSet=false;
   pendingCandidates=[];
   makingOffer=false;
+
   await ensurePeer();
 }
 
 function scheduleReconnect(){
+
   if(connectionRetryTimer) return;
-  connectionRetryTimer=setTimeout(async()=>{
-    connectionRetryTimer=null;
-    await rebuildPeer();
-    await sendSignal("hello", {});
-    await sendSignal("camera-ready", {});
-    setTimeout(maybeOffer, 500);
-  }, 1500);
+
+  connectionRetryTimer=
+    setTimeout(async()=>{
+
+      connectionRetryTimer=null;
+
+      await rebuildPeer();
+
+      await sendSignal(
+        "hello",
+        {}
+      );
+
+      await sendSignal(
+        "camera-ready",
+        {}
+      );
+
+      setTimeout(
+        maybeOffer,
+        500
+      );
+
+    },1500);
 }
 
 function stopConnectionRetry(){
-  if(connectionRetryTimer){ clearTimeout(connectionRetryTimer); connectionRetryTimer=null; }
+
+  if(connectionRetryTimer){
+
+    clearTimeout(
+      connectionRetryTimer
+    );
+
+    connectionRetryTimer=null;
+  }
 }
 
-function setConnectionStatus(text, connected){
-  const pill=document.getElementById("connectionPill");
+function setConnectionStatus(
+  text,
+  connected
+){
+
+  const pill=
+    document.getElementById(
+      "connectionPill"
+    );
+
   pill.textContent=text;
-  pill.style.background=connected ? "#e8f8ed" : "#fff4f7";
+
+  pill.style.background=
+    connected
+      ? "#e8f8ed"
+      : "#fff4f7";
 }
 
 async function startCamera(){
-  try{
-    if(cameraStream){ cameraStream.getTracks().forEach(track=>track.stop()); }
-    cameraStream=await navigator.mediaDevices.getUserMedia({
-      video:{ facingMode:"user", width:{ideal:1280}, height:{ideal:720} },
-      audio:false
-    });
 
-    const video=document.getElementById("myCamera");
+  try{
+
+    if(cameraStream){
+
+      cameraStream
+        .getTracks()
+        .forEach(track=>track.stop());
+    }
+
+    cameraStream=
+      await navigator.mediaDevices.getUserMedia({
+        video:{
+          facingMode:"user",
+          width:{ideal:1280},
+          height:{ideal:720}
+        },
+        audio:false
+      });
+
+    const video=
+      document.getElementById(
+        "myCamera"
+      );
+
     video.srcObject=cameraStream;
+
     await video.play();
 
     localCameraReady=true;
-    document.getElementById("shutterButton").disabled=false;
-    setConnectionStatus("🟡 Camera ready — connecting...", false);
+
+    document.getElementById(
+      "shutterButton"
+    ).disabled=false;
+
+    setConnectionStatus(
+      "🟡 Camera ready — connecting...",
+      false
+    );
 
     await ensurePeer();
-    const senders=peerConnection.getSenders();
-    cameraStream.getTracks().forEach(track=>{
-      if(!senders.some(s=>s.track===track)) peerConnection.addTrack(track, cameraStream);
-    });
+
+    const senders=
+      peerConnection.getSenders();
+
+    cameraStream
+      .getTracks()
+      .forEach(track=>{
+
+        if(
+          !senders.some(
+            s=>s.track===track
+          )
+        ){
+
+          peerConnection.addTrack(
+            track,
+            cameraStream
+          );
+        }
+
+      });
 
     await updateMyCameraPresence();
-    await sendSignal("camera-ready", {});
 
-    if(readinessTimer) clearInterval(readinessTimer);
-    readinessTimer=setInterval(()=>{
-      if(localCameraReady){
-        updateMyCameraPresence();
-        sendSignal("camera-ready", {});
-        maybeOffer();
-      }
-    }, 2000);
+    await sendSignal(
+      "camera-ready",
+      {}
+    );
+
+    if(readinessTimer){
+      clearInterval(
+        readinessTimer
+      );
+    }
+
+    readinessTimer=
+      setInterval(()=>{
+
+        if(localCameraReady){
+
+          updateMyCameraPresence();
+
+          sendSignal(
+            "camera-ready",
+            {}
+          );
+
+          maybeOffer();
+        }
+
+      },2000);
 
     await updatePresence();
+
     maybeOffer();
+
   }catch(e){
+
+    console.error(e);
+
     localCameraReady=false;
-    document.getElementById("shutterButton").disabled=true;
-    alert("Camera access was blocked. Please allow camera permissions and try again.");
+
+    document.getElementById(
+      "shutterButton"
+    ).disabled=true;
+
+    alert(
+      "Camera access was blocked. Please allow camera permissions and try again."
+    );
   }
 }
 
 function openPhotobooth(){
+
   photos=[];
+
   shotRecords.clear();
+
   shutterBusy=false;
-  document.getElementById("photoCount").textContent="0 / "+selectedStrip;
-  document.getElementById("photoPreview").innerHTML="";
-  document.getElementById("photosDoneButton").disabled=true;
-  document.getElementById("shutterButton").disabled=!localCameraReady;
+
+  document.getElementById(
+    "photoCount"
+  ).textContent=
+    "0 / "+selectedStrip;
+
+  document.getElementById(
+    "photoPreview"
+  ).innerHTML="";
+
+  document.getElementById(
+    "photosDoneButton"
+  ).disabled=true;
+
+  document.getElementById(
+    "shutterButton"
+  ).disabled=
+    !localCameraReady;
+
   showPage("photobooth");
+
   nextStep(1);
 }
 
-function selectStrip(number, button){
+function selectStrip(
+  number,
+  button
+){
+
   selectedStrip=number;
-  document.querySelectorAll(".strip-option").forEach(x=>x.classList.remove("selected"));
+
+  document
+    .querySelectorAll(".strip-option")
+    .forEach(x=>
+      x.classList.remove("selected")
+    );
+
   button.classList.add("selected");
-  document.getElementById("photoCount").textContent=photos.length+" / "+selectedStrip;
+
+  document.getElementById(
+    "photoCount"
+  ).textContent=
+    photos.length+
+    " / "+
+    selectedStrip;
 }
 
 function nextStep(number){
-  document.querySelectorAll(".step").forEach(x=>x.classList.remove("active"));
-  document.getElementById("step"+number).classList.add("active");
-  document.getElementById("stepNumber").textContent=number+" / 5";
+
+  document
+    .querySelectorAll(".step")
+    .forEach(x=>
+      x.classList.remove("active")
+    );
+
+  document
+    .getElementById("step"+number)
+    .classList.add("active");
+
+  document.getElementById(
+    "stepNumber"
+  ).textContent=
+    number+" / 5";
 
   if(number===2){
-    if(!cameraStream) startCamera();
-    setupSignalChannel().then(()=>{ ensurePeer(); sendSignal("hello", {}); });
+
+    if(!cameraStream){
+      startCamera();
+    }
+
+    setupSignalChannel()
+      .then(()=>{
+        ensurePeer();
+        sendSignal(
+          "hello",
+          {}
+        );
+      });
   }
 
-  if(number===3) buildDesignPicker();
-  if(number===4) buildFinalStrip();
+  if(number===3){
+    buildDesignPicker();
+  }
+
+  if(number===4){
+    buildFinalStrip();
+  }
+
   if(number===5){
+
     copyFinalPreview();
+
     autoSaveStrip();
   }
 }
 
 async function takePhoto(){
-  if(!cameraStream || !localCameraReady){ alert("Please start your camera first ♡"); return; }
+
+  if(
+    !cameraStream ||
+    !localCameraReady
+  ){
+
+    alert(
+      "Please start your camera first ♡"
+    );
+
+    return;
+  }
+
   if(shutterBusy) return;
-  if(photos.length>=selectedStrip){ alert("Your strip is already full!"); return; }
+
+  if(
+    photos.length>=selectedStrip
+  ){
+
+    alert(
+      "Your strip is already full!"
+    );
+
+    return;
+  }
 
   shutterBusy=true;
-  const shotIndex=photos.length+1;
-  const shotId=clientId+"-"+Date.now()+"-"+Math.random().toString(36).slice(2,7);
 
-  shotRecords.set(shotId, { id:shotId, index:shotIndex, local:null, remote:null, completed:false });
-  updatePhotoCounter(shotIndex);
+  const shotIndex=
+    photos.length+1;
 
-  await sendSignal("shutter", { shotId:shotId, shotIndex:shotIndex });
-  await countdownAndCapture(shotId, shotIndex);
+  const shotId=
+    clientId+
+    "-"+
+    Date.now()+
+    "-"+
+    Math.random()
+      .toString(36)
+      .slice(2,7);
+
+  shotRecords.set(
+    shotId,
+    {
+      id:shotId,
+      index:shotIndex,
+      local:null,
+      remote:null,
+      completed:false
+    }
+  );
+
+  updatePhotoCounter(
+    shotIndex
+  );
+
+  await sendSignal(
+    "shutter",
+    {
+      shotId:shotId,
+      shotIndex:shotIndex
+    }
+  );
+
+  await countdownAndCapture(
+    shotId,
+    shotIndex
+  );
 }
 
-async function receiveShutter(message){
-  if(!message.shotId || shotRecords.has(message.shotId)) return;
-  shotRecords.set(message.shotId, { id:message.shotId, index:message.shotIndex, local:null, remote:null, completed:false });
-  updatePhotoCounter(message.shotIndex);
+async function receiveShutter(
+  message
+){
 
-  if(!cameraStream){ alert("Your partner took a photo! Press Start Camera."); return; }
-  await countdownAndCapture(message.shotId, message.shotIndex);
+  if(
+    !message.shotId ||
+    shotRecords.has(message.shotId)
+  ){
+    return;
+  }
+
+  shotRecords.set(
+    message.shotId,
+    {
+      id:message.shotId,
+      index:message.shotIndex,
+      local:null,
+      remote:null,
+      completed:false
+    }
+  );
+
+  updatePhotoCounter(
+    message.shotIndex
+  );
+
+  if(!cameraStream){
+
+    alert(
+      "Your partner took a photo! Press Start Camera."
+    );
+
+    return;
+  }
+
+  await countdownAndCapture(
+    message.shotId,
+    message.shotIndex
+  );
 }
 
-function countdownAndCapture(shotId, shotIndex){
+function countdownAndCapture(
+  shotId,
+  shotIndex
+){
+
   return new Promise(resolve=>{
+
     let count=3;
-    const overlay=document.createElement("div");
+
+    const overlay=
+      document.createElement("div");
+
     overlay.style.cssText=`
-      position:fixed; inset:0; z-index:99999; display:grid; place-items:center;
-      background:#0009; color:white; font:bold 100px Georgia;
+      position:fixed;
+      inset:0;
+      z-index:99999;
+      display:grid;
+      place-items:center;
+      background:#0009;
+      color:white;
+      font:bold 100px Georgia;
     `;
-    document.body.appendChild(overlay);
+
+    document.body.appendChild(
+      overlay
+    );
+
     overlay.textContent=count;
 
-    const timer=setInterval(async()=>{
-      count--;
-      if(count>0){
-        overlay.textContent=count;
-      }else{
-        clearInterval(timer);
-        overlay.textContent="♡";
-        setTimeout(async()=>{
-          overlay.remove();
-          await captureLocalForShot(shotId, shotIndex);
-          resolve();
-        }, 180);
-      }
-    }, 550);
+    const timer=
+      setInterval(async()=>{
+
+        count--;
+
+        if(count>0){
+
+          overlay.textContent=count;
+
+        }else{
+
+          clearInterval(timer);
+
+          overlay.textContent="♡";
+
+          setTimeout(async()=>{
+
+            overlay.remove();
+
+            await captureLocalForShot(
+              shotId,
+              shotIndex
+            );
+
+            resolve();
+
+          },180);
+        }
+
+      },550);
   });
 }
 
-async function captureLocalForShot(shotId, shotIndex){
-  const video=document.getElementById("myCamera");
-  if(!video.videoWidth || !video.videoHeight){ shutterBusy=false; return; }
+async function captureLocalForShot(
+  shotId,
+  shotIndex
+){
 
-  const canvas=document.createElement("canvas");
-  const videoBox = video.parentElement;
-  const rect = videoBox.getBoundingClientRect();
-  
+  const video=
+    document.getElementById(
+      "myCamera"
+    );
+
+  if(
+    !video.videoWidth ||
+    !video.videoHeight
+  ){
+
+    shutterBusy=false;
+
+    return;
+  }
+
+  const canvas=
+    document.createElement(
+      "canvas"
+    );
+
+  const videoBox=
+    video.parentElement;
+
+  const rect=
+    videoBox.getBoundingClientRect();
+
   const width=500;
-  const height=Math.round(500 * (rect.height / rect.width));
+
+  const height=
+    Math.round(
+      500*
+      (rect.height/rect.width)
+    );
+
   canvas.width=width;
   canvas.height=height;
 
-  const ctx=canvas.getContext("2d");
+  const ctx=
+    canvas.getContext("2d");
+
   const vw=video.videoWidth;
   const vh=video.videoHeight;
-  const targetRatio=width/height;
-  const videoRatio=vw/vh;
 
-  let sx=0, sy=0, sw=vw, sh=vh;
+  const targetRatio=
+    width/height;
+
+  const videoRatio=
+    vw/vh;
+
+  let sx=0;
+  let sy=0;
+  let sw=vw;
+  let sh=vh;
+
   if(videoRatio>targetRatio){
-    sw=vh*targetRatio; sx=(vw-sw)/2;
+
+    sw=vh*targetRatio;
+    sx=(vw-sw)/2;
+
   }else{
-    sh=vw/targetRatio; sy=(vh-sh)/2;
+
+    sh=vw/targetRatio;
+    sy=(vh-sh)/2;
   }
 
-  // Draw unmirrored frame to maintain raw pixels; createCombinedPhoto handles uniform mirroring
-  ctx.drawImage(video, sx, sy, sw, sh, 0, 0, width, height);
+  /*
+    Capture the raw camera image.
 
-  const image=canvas.toDataURL("image/jpeg", .85);
-  const record=shotRecords.get(shotId);
-  if(!record){ shutterBusy=false; return; }
+    We intentionally do NOT mirror it here.
+
+    The final rendering function below mirrors it
+    so it matches the live camera preview.
+  */
+
+  ctx.drawImage(
+    video,
+    sx,
+    sy,
+    sw,
+    sh,
+    0,
+    0,
+    width,
+    height
+  );
+
+  const image=
+    canvas.toDataURL(
+      "image/jpeg",
+      .85
+    );
+
+  const record=
+    shotRecords.get(
+      shotId
+    );
+
+  if(!record){
+
+    shutterBusy=false;
+
+    return;
+  }
 
   record.local=image;
-  shotRecords.set(shotId, record);
 
-  await sendSignal("photo", { shotId:shotId, shotIndex:shotIndex, image:image });
-  tryCompleteShot(shotId);
+  shotRecords.set(
+    shotId,
+    record
+  );
 
-  setTimeout(()=>{ shutterBusy=false; }, 400);
+  await sendSignal(
+    "photo",
+    {
+      shotId:shotId,
+      shotIndex:shotIndex,
+      image:image
+    }
+  );
+
+  tryCompleteShot(
+    shotId
+  );
+
+  setTimeout(
+    ()=>{
+      shutterBusy=false;
+    },
+    400
+  );
 }
 
-function receiveRemotePhoto(message){
+function receiveRemotePhoto(
+  message
+){
+
   if(!message.shotId) return;
-  let record=shotRecords.get(message.shotId);
+
+  let record=
+    shotRecords.get(
+      message.shotId
+    );
+
   if(!record){
-    record={ id:message.shotId, index:message.shotIndex, local:null, remote:null, completed:false };
+
+    record={
+      id:message.shotId,
+      index:message.shotIndex,
+      local:null,
+      remote:null,
+      completed:false
+    };
   }
-  record.remote=message.image;
-  record.remoteSender=message.sender;
-  shotRecords.set(message.shotId, record);
-  tryCompleteShot(message.shotId);
+
+  record.remote=
+    message.image;
+
+  /*
+    Keep track of which client sent
+    the partner image.
+
+    This is useful for communication,
+    but we DO NOT use clientId sorting
+    to change the left/right positions.
+
+    The local camera always stays LEFT.
+    The remote camera always stays RIGHT.
+  */
+
+  record.remoteSender=
+    message.sender;
+
+  shotRecords.set(
+    message.shotId,
+    record
+  );
+
+  tryCompleteShot(
+    message.shotId
+  );
 }
 
-async function tryCompleteShot(shotId){
-  const record=shotRecords.get(shotId);
-  if(!record || !record.local || !record.remote || record.completed) return;
+async function tryCompleteShot(
+  shotId
+){
+
+  const record=
+    shotRecords.get(
+      shotId
+    );
+
+  if(
+    !record ||
+    !record.local ||
+    !record.remote ||
+    record.completed
+  ){
+    return;
+  }
+
   record.completed=true;
 
-  const combined=await createCombinedPhoto(record.local, record.remote, record);
+  const combined=
+    await createCombinedPhoto(
+      record.local,
+      record.remote,
+      record
+    );
+
   if(!combined) return;
 
-  photos[record.index-1]=combined;
+  photos[
+    record.index-1
+  ]=combined;
+
   updatePhotoThumbnails();
 
-  const completeCount=photos.filter(Boolean).length;
-  document.getElementById("photoCount").textContent=completeCount+" / "+selectedStrip;
+  const completeCount=
+    photos.filter(Boolean).length;
 
-  if(completeCount>=selectedStrip){
-    document.getElementById("photosDoneButton").disabled=false;
+  document.getElementById(
+    "photoCount"
+  ).textContent=
+    completeCount+
+    " / "+
+    selectedStrip;
+
+  if(
+    completeCount>=selectedStrip
+  ){
+
+    document.getElementById(
+      "photosDoneButton"
+    ).disabled=false;
   }
 }
 
-function createCombinedPhoto(localImage, remoteImage, record){
+
+/* =========================================================
+   FIXED COMBINED PHOTO
+   =========================================================
+
+   The old function used clientId sorting:
+
+     if(remoteSender < clientId){
+       leftImage=remote;
+       rightImage=local;
+     }
+
+   That caused the final image to swap people.
+
+   This version NEVER sorts the images.
+
+   LOCAL = LEFT
+   REMOTE/PARTNER = RIGHT
+
+   Both are mirrored exactly like the live camera.
+========================================================= */
+
+function createCombinedPhoto(
+  localImage,
+  remoteImage,
+  record
+){
+
   return new Promise(resolve=>{
-    const local=new Image();
-    const remote=new Image();
+
+    const local=
+      new Image();
+
+    const remote=
+      new Image();
+
     let loaded=0;
 
     function done(){
+
       loaded++;
+
       if(loaded<2) return;
 
-      const canvas=document.createElement("canvas");
+      const canvas=
+        document.createElement(
+          "canvas"
+        );
+
       const W=1000;
       const H=500;
+
       canvas.width=W;
       canvas.height=H;
 
-      const ctx=canvas.getContext("2d");
+      const ctx=
+        canvas.getContext("2d");
+
       ctx.fillStyle="#211b1e";
-      ctx.fillRect(0, 0, W, H);
+
+      ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+      );
 
       const gap=10;
-      const cardW=(W - gap*3)/2;
-      const cardH=H - gap*2;
 
-      let leftImage=local;
-      let rightImage=remote;
+      const cardW=
+        (W-gap*3)/2;
 
-      // Deterministically place clients side-by-side based on unique IDs
-      if(record.remoteSender && String(record.remoteSender).localeCompare(String(clientId))<0){
-        leftImage=remote;
-        rightImage=local;
-      }
+      const cardH=
+        H-gap*2;
 
-      // Mirror both streams (mirror = true) so faces match live video previews exactly
-      drawRoundedImage(ctx, leftImage, gap, gap, cardW, cardH, 20, true);
-      drawRoundedImage(ctx, rightImage, gap*2 + cardW, gap, cardW, cardH, 20, true);
 
-      resolve(canvas.toDataURL("image/jpeg", .9));
+      /*
+        IMPORTANT:
+
+        LOCAL CAMERA = LEFT
+
+        PARTNER CAMERA = RIGHT
+
+        There is deliberately NO clientId
+        comparison here.
+
+        This means whoever is looking at
+        their own live camera sees themselves
+        on the left, and their final photo
+        also places themselves on the left.
+      */
+
+      drawLiveStyleImage(
+        ctx,
+        local,
+        gap,
+        gap,
+        cardW,
+        cardH
+      );
+
+      drawLiveStyleImage(
+        ctx,
+        remote,
+        gap*2+cardW,
+        gap,
+        cardW,
+        cardH
+      );
+
+      resolve(
+        canvas.toDataURL(
+          "image/jpeg",
+          .9
+        )
+      );
     }
 
     local.onload=done;
     remote.onload=done;
+
+    local.onerror=()=>{
+      console.error(
+        "Could not load local photo."
+      );
+
+      resolve(null);
+    };
+
+    remote.onerror=()=>{
+      console.error(
+        "Could not load partner photo."
+      );
+
+      resolve(null);
+    };
+
     local.src=localImage;
     remote.src=remoteImage;
   });
 }
 
-function drawRoundedImage(ctx, img, x, y, w, h, radius, mirror = false){
+
+/* =========================================================
+   LIVE-STYLE PHOTO RENDERING
+========================================================= */
+
+function drawLiveStyleImage(
+  ctx,
+  img,
+  x,
+  y,
+  w,
+  h
+){
+
   ctx.save();
+
+  const radius=20;
+
+  /*
+    Rounded clipping area
+  */
+
   ctx.beginPath();
-  ctx.moveTo(x+radius, y);
-  ctx.lineTo(x+w-radius, y);
-  ctx.quadraticCurveTo(x+w, y, x+w, y+radius);
-  ctx.lineTo(x+w, y+h-radius);
-  ctx.quadraticCurveTo(x+w, y+h, x+w-radius, y+h);
-  ctx.lineTo(x+radius, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-radius);
-  ctx.lineTo(x, y+radius);
-  ctx.quadraticCurveTo(x, y, x+radius, y);
+
+  ctx.moveTo(
+    x+radius,
+    y
+  );
+
+  ctx.lineTo(
+    x+w-radius,
+    y
+  );
+
+  ctx.quadraticCurveTo(
+    x+w,
+    y,
+    x+w,
+    y+radius
+  );
+
+  ctx.lineTo(
+    x+w,
+    y+h-radius
+  );
+
+  ctx.quadraticCurveTo(
+    x+w,
+    y+h,
+    x+w-radius,
+    y+h
+  );
+
+  ctx.lineTo(
+    x+radius,
+    y+h
+  );
+
+  ctx.quadraticCurveTo(
+    x,
+    y+h,
+    x,
+    y+h-radius
+  );
+
+  ctx.lineTo(
+    x,
+    y+radius
+  );
+
+  ctx.quadraticCurveTo(
+    x,
+    y,
+    x+radius,
+    y
+  );
+
   ctx.closePath();
+
   ctx.clip();
 
-  const ratio=Math.max(w/img.width, h/img.height);
-  const nw=img.width*ratio;
-  const nh=img.height*ratio;
-  const dx=x+(w-nw)/2;
-  const dy=y+(h-nh)/2;
 
-  if(mirror){
-    ctx.translate(x + w/2, y + h/2);
-    ctx.scale(-1, 1);
-    ctx.drawImage(img, -nw/2, -nh/2, nw, nh);
-  } else {
-    ctx.drawImage(img, dx, dy, nw, nh);
+  /*
+    This matches CSS:
+
+      object-fit:cover
+
+    The image completely fills the
+    camera box with no black bars.
+  */
+
+  const imageRatio=
+    img.width/img.height;
+
+  const boxRatio=
+    w/h;
+
+  let drawW;
+  let drawH;
+
+  if(imageRatio>boxRatio){
+
+    drawH=h;
+    drawW=
+      h*imageRatio;
+
+  }else{
+
+    drawW=w;
+    drawH=
+      w/imageRatio;
   }
+
+  /*
+    Center the crop exactly like object-fit:cover.
+  */
+
+  const drawX=
+    x+(w-drawW)/2;
+
+  const drawY=
+    y+(h-drawH)/2;
+
+
+  /*
+    Mirror horizontally.
+
+    This is exactly what the live video does:
+
+      transform:scaleX(-1)
+  */
+
+  ctx.translate(
+    x+w/2,
+    y+h/2
+  );
+
+  ctx.scale(
+    -1,
+    1
+  );
+
+  ctx.drawImage(
+    img,
+    -drawW/2,
+    -drawH/2,
+    drawW,
+    drawH
+  );
 
   ctx.restore();
 }
 
-function updatePhotoCounter(number){
-  document.getElementById("photoCount").textContent=number+" / "+selectedStrip;
+function updatePhotoCounter(
+  number
+){
+
+  document.getElementById(
+    "photoCount"
+  ).textContent=
+    number+
+    " / "+
+    selectedStrip;
 }
 
 function updatePhotoThumbnails(){
-  const preview=document.getElementById("photoPreview");
+
+  const preview=
+    document.getElementById(
+      "photoPreview"
+    );
+
   preview.innerHTML="";
-  photos.filter(Boolean).forEach(image=>{
-    const img=document.createElement("img");
-    img.src=image;
-    preview.appendChild(img);
-  });
+
+  photos
+    .filter(Boolean)
+    .forEach(image=>{
+
+      const img=
+        document.createElement(
+          "img"
+        );
+
+      img.src=image;
+
+      preview.appendChild(
+        img
+      );
+    });
 }
 
 function buildDesignPicker(){
-  const grid=document.getElementById("designGrid");
+
+  const grid=
+    document.getElementById(
+      "designGrid"
+    );
+
   grid.innerHTML="";
 
   designs.forEach(name=>{
-    const card=document.createElement("button");
-    card.className="design-card"+(name===selectedDesign ? " selected" : "");
 
-    const preview=document.createElement("div");
-    preview.className="design-preview theme-"+name;
+    const card=
+      document.createElement(
+        "button"
+      );
 
-    photos.filter(Boolean).forEach(image=>{
-      const img=document.createElement("img");
-      img.src=image;
-      preview.appendChild(img);
-    });
+    card.className=
+      "design-card"+
+      (
+        name===selectedDesign
+          ? " selected"
+          : ""
+      );
 
-    const label=document.createElement("div");
-    label.className="design-name";
-    label.textContent=getDesignName(name);
+    const preview=
+      document.createElement(
+        "div"
+      );
 
-    card.appendChild(preview);
-    card.appendChild(label);
+    preview.className=
+      "design-preview theme-"+name;
+
+    photos
+      .filter(Boolean)
+      .forEach(image=>{
+
+        const img=
+          document.createElement(
+            "img"
+          );
+
+        img.src=image;
+
+        preview.appendChild(
+          img
+        );
+      });
+
+    const label=
+      document.createElement(
+        "div"
+      );
+
+    label.className=
+      "design-name";
+
+    label.textContent=
+      getDesignName(name);
+
+    card.appendChild(
+      preview
+    );
+
+    card.appendChild(
+      label
+    );
 
     card.onclick=()=>{
+
       selectedDesign=name;
-      document.querySelectorAll(".design-card").forEach(x=>x.classList.remove("selected"));
-      card.classList.add("selected");
+
+      document
+        .querySelectorAll(
+          ".design-card"
+        )
+        .forEach(x=>
+          x.classList.remove(
+            "selected"
+          )
+        );
+
+      card.classList.add(
+        "selected"
+      );
+
       renderDesignPreview();
     };
 
     if(window.innerWidth>600){
+
       card.onmouseenter=()=>{
+
         selectedDesign=name;
+
         renderDesignPreview();
       };
     }
 
-    grid.appendChild(card);
+    grid.appendChild(
+      card
+    );
   });
 
   renderDesignPreview();
 }
 
 function getDesignName(name){
+
   const names={
-    coquette:"🎀 Coquette", retro:"📻 Retro Film", scrapbook:"📒 Scrapbook", y2k:"💿 Y2K",
-    strawberry:"🍓 Strawberry", lace:"🕊️ Lace", postcard:"💌 Postcard", floral:"🌸 Floral",
-    dreamy:"☁️ Dreamy", vintage:"🌷 Vintage"
+
+    coquette:"🎀 Coquette",
+    retro:"📻 Retro Film",
+    scrapbook:"📒 Scrapbook",
+    y2k:"💿 Y2K",
+    strawberry:"🍓 Strawberry",
+    lace:"🕊️ Lace",
+    postcard:"💌 Postcard",
+    floral:"🌸 Floral",
+    dreamy:"☁️ Dreamy",
+    vintage:"🌷 Vintage"
   };
+
   return names[name];
 }
 
 function renderDesignPreview(){
-  const preview=document.getElementById("designPreview");
-  preview.className="final-strip theme-"+selectedDesign;
+
+  const preview=
+    document.getElementById(
+      "designPreview"
+    );
+
+  preview.className=
+    "final-strip theme-"+
+    selectedDesign;
+
   preview.innerHTML="";
 
-  photos.filter(Boolean).forEach(image=>{
-    const img=document.createElement("img");
-    img.src=image;
-    preview.appendChild(img);
-  });
+  photos
+    .filter(Boolean)
+    .forEach(image=>{
 
-  const title=document.createElement("div");
-  title.className="final-strip-title";
-  title.textContent=yourName+" ♡ "+(partnerName||"Them");
-  preview.appendChild(title);
+      const img=
+        document.createElement(
+          "img"
+        );
+
+      img.src=image;
+
+      preview.appendChild(
+        img
+      );
+    });
+
+  const title=
+    document.createElement(
+      "div"
+    );
+
+  title.className=
+    "final-strip-title";
+
+  title.textContent=
+    yourName+
+    " ♡ "+
+    (partnerName||"Them");
+
+  preview.appendChild(
+    title
+  );
 }
 
 function chooseDesign(){
+
   buildFinalStrip();
+
   nextStep(4);
 }
 
 function buildFinalStrip(){
-  const strip=document.getElementById("photoStrip");
-  strip.className="final-strip theme-"+selectedDesign;
+
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  strip.className=
+    "final-strip theme-"+
+    selectedDesign;
+
   strip.innerHTML="";
 
-  photos.filter(Boolean).forEach(image=>{
-    const img=document.createElement("img");
-    img.src=image;
-    strip.appendChild(img);
-  });
+  photos
+    .filter(Boolean)
+    .forEach(image=>{
 
-  const title=document.createElement("div");
-  title.className="final-strip-title";
-  title.textContent=yourName+" ♡ "+(partnerName||"Them");
-  strip.appendChild(title);
+      const img=
+        document.createElement(
+          "img"
+        );
+
+      img.src=image;
+
+      strip.appendChild(
+        img
+      );
+    });
+
+  const title=
+    document.createElement(
+      "div"
+    );
+
+  title.className=
+    "final-strip-title";
+
+  title.textContent=
+    yourName+
+    " ♡ "+
+    (partnerName||"Them");
+
+  strip.appendChild(
+    title
+  );
 
   editHistory=[];
 }
 
 function saveEditState(){
-  const strip=document.getElementById("photoStrip");
-  editHistory.push(strip.innerHTML);
-  if(editHistory.length>30) editHistory.shift();
+
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  editHistory.push(
+    strip.innerHTML
+  );
+
+  if(
+    editHistory.length>30
+  ){
+
+    editHistory.shift();
+  }
 }
 
 function addSticker(symbol){
-  saveEditState();
-  const sticker=document.createElement("div");
-  sticker.className="decor";
-  sticker.textContent=symbol;
-  sticker.style.left=(15+Math.random()*70)+"%";
-  sticker.style.top=(10+Math.random()*80)+"%";
 
-  const strip=document.getElementById("photoStrip");
-  strip.appendChild(sticker);
-  makeMovable(sticker, strip);
+  saveEditState();
+
+  const sticker=
+    document.createElement(
+      "div"
+    );
+
+  sticker.className="decor";
+
+  sticker.textContent=symbol;
+
+  sticker.style.left=
+    (15+Math.random()*70)+
+    "%";
+
+  sticker.style.top=
+    (10+Math.random()*80)+
+    "%";
+
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  strip.appendChild(
+    sticker
+  );
+
+  makeMovable(
+    sticker,
+    strip
+  );
 }
 
 function addText(){
-  const input=document.getElementById("customText");
-  const value=input.value.trim();
+
+  const input=
+    document.getElementById(
+      "customText"
+    );
+
+  const value=
+    input.value.trim();
+
   if(!value) return;
 
   saveEditState();
-  const text=document.createElement("div");
-  text.className="decor text-decor";
+
+  const text=
+    document.createElement(
+      "div"
+    );
+
+  text.className=
+    "decor text-decor";
+
   text.textContent=value;
+
   text.style.left="50%";
   text.style.top="50%";
 
-  const strip=document.getElementById("photoStrip");
-  strip.appendChild(text);
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  strip.appendChild(
+    text
+  );
+
   input.value="";
-  makeMovable(text, strip);
+
+  makeMovable(
+    text,
+    strip
+  );
 }
 
-function makeMovable(element, container){
+function makeMovable(
+  element,
+  container
+){
+
   let dragging=false;
 
-  function move(clientX, clientY){
-    const rect=container.getBoundingClientRect();
-    let x=((clientX-rect.left)/rect.width)*100;
-    let y=((clientY-rect.top)/rect.height)*100;
-    x=Math.max(5, Math.min(95, x));
-    y=Math.max(3, Math.min(97, y));
-    element.style.left=x+"%";
-    element.style.top=y+"%";
+  function move(
+    clientX,
+    clientY
+  ){
+
+    const rect=
+      container.getBoundingClientRect();
+
+    let x=
+      ((clientX-rect.left)/
+      rect.width)*100;
+
+    let y=
+      ((clientY-rect.top)/
+      rect.height)*100;
+
+    x=
+      Math.max(
+        5,
+        Math.min(
+          95,
+          x
+        )
+      );
+
+    y=
+      Math.max(
+        3,
+        Math.min(
+          97,
+          y
+        )
+      );
+
+    element.style.left=
+      x+"%";
+
+    element.style.top=
+      y+"%";
   }
 
-  element.addEventListener("touchstart", e=>{ dragging=true; e.preventDefault(); }, {passive:false});
-  element.addEventListener("touchmove", e=>{
-    if(!dragging) return;
-    e.preventDefault();
-    move(e.touches[0].clientX, e.touches[0].clientY);
-  }, {passive:false});
-  element.addEventListener("touchend", ()=>{ dragging=false; });
+  element.addEventListener(
+    "touchstart",
+    e=>{
+      dragging=true;
+      e.preventDefault();
+    },
+    {passive:false}
+  );
 
-  element.addEventListener("mousedown", e=>{ dragging=true; e.preventDefault(); });
-  document.addEventListener("mousemove", e=>{ if(dragging) move(e.clientX, e.clientY); });
-  document.addEventListener("mouseup", ()=>{ dragging=false; });
+  element.addEventListener(
+    "touchmove",
+    e=>{
+
+      if(!dragging) return;
+
+      e.preventDefault();
+
+      move(
+        e.touches[0].clientX,
+        e.touches[0].clientY
+      );
+
+    },
+    {passive:false}
+  );
+
+  element.addEventListener(
+    "touchend",
+    ()=>{
+      dragging=false;
+    }
+  );
+
+  element.addEventListener(
+    "mousedown",
+    e=>{
+      dragging=true;
+      e.preventDefault();
+    }
+  );
+
+  document.addEventListener(
+    "mousemove",
+    e=>{
+
+      if(dragging){
+
+        move(
+          e.clientX,
+          e.clientY
+        );
+      }
+    }
+  );
+
+  document.addEventListener(
+    "mouseup",
+    ()=>{
+      dragging=false;
+    }
+  );
 }
 
 function undoLastEdit(){
-  if(!editHistory.length){ alert("Nothing to undo ♡"); return; }
-  const strip=document.getElementById("photoStrip");
-  strip.innerHTML=editHistory.pop();
+
+  if(!editHistory.length){
+
+    alert(
+      "Nothing to undo ♡"
+    );
+
+    return;
+  }
+
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  strip.innerHTML=
+    editHistory.pop();
+
   restoreMovableElements();
 }
 
 function restoreMovableElements(){
-  const strip=document.getElementById("photoStrip");
-  strip.querySelectorAll(".decor").forEach(element=>makeMovable(element, strip));
+
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  strip
+    .querySelectorAll(".decor")
+    .forEach(element=>
+      makeMovable(
+        element,
+        strip
+      )
+    );
 }
 
 function resetEdits(){
-  if(!confirm("Remove all stickers and text?")) return;
+
+  if(
+    !confirm(
+      "Remove all stickers and text?"
+    )
+  ){
+    return;
+  }
+
   buildFinalStrip();
 }
 
 function copyFinalPreview(){
-  const source=document.getElementById("photoStrip");
-  const target=document.getElementById("savedPreview");
-  target.innerHTML=source.innerHTML;
-  target.className=source.className;
+
+  const source=
+    document.getElementById(
+      "photoStrip"
+    );
+
+  const target=
+    document.getElementById(
+      "savedPreview"
+    );
+
+  target.innerHTML=
+    source.innerHTML;
+
+  target.className=
+    source.className;
 }
 
 async function autoSaveStrip(){
-  const msg = document.getElementById("saveStatusMessage");
-  msg.textContent = "Saving your photo strip automatically... ♡";
 
-  try {
-    const blob = await renderFinalCanvas();
-    if(!blob) throw new Error("Could not create image.");
+  const msg=
+    document.getElementById(
+      "saveStatusMessage"
+    );
 
-    if(finalBlobUrl) URL.revokeObjectURL(finalBlobUrl);
-    finalBlobUrl = URL.createObjectURL(blob);
+  msg.textContent=
+    "Saving your photo strip automatically... ♡";
 
-    const link = document.createElement("a");
-    link.href = finalBlobUrl;
-    link.download = "our-little-photobooth.png";
-    document.body.appendChild(link);
+  try{
+
+    const blob=
+      await renderFinalCanvas();
+
+    if(!blob){
+
+      throw new Error(
+        "Could not create image."
+      );
+    }
+
+    if(finalBlobUrl){
+
+      URL.revokeObjectURL(
+        finalBlobUrl
+      );
+    }
+
+    finalBlobUrl=
+      URL.createObjectURL(
+        blob
+      );
+
+    const link=
+      document.createElement(
+        "a"
+      );
+
+    link.href=
+      finalBlobUrl;
+
+    link.download=
+      "our-little-photobooth.png";
+
+    document.body.appendChild(
+      link
+    );
+
     link.click();
+
     link.remove();
 
-    msg.textContent = "✓ Automatically Downloaded / Saved ♡";
+    msg.textContent=
+      "✓ Automatically Downloaded / Saved ♡";
 
-    document.getElementById("saveImage").src = finalBlobUrl;
-    document.getElementById("saveFallback").style.display = "block";
+    document.getElementById(
+      "saveImage"
+    ).src=
+      finalBlobUrl;
 
-  } catch(error) {
-    console.error("Save error:", error);
-    msg.textContent = "✓ Photo Ready Below";
+    document.getElementById(
+      "saveFallback"
+    ).style.display=
+      "block";
+
+  }catch(error){
+
+    console.error(
+      "Save error:",
+      error
+    );
+
+    msg.textContent=
+      "✓ Photo Ready Below";
+
     if(finalBlobUrl){
-      document.getElementById("saveImage").src = finalBlobUrl;
-      document.getElementById("saveFallback").style.display = "block";
+
+      document.getElementById(
+        "saveImage"
+      ).src=
+        finalBlobUrl;
+
+      document.getElementById(
+        "saveFallback"
+      ).style.display=
+        "block";
     }
   }
 }
 
 async function renderFinalCanvas(){
-  const W = 900;
-  const PHOTO_W = 820;
-  const PHOTO_H = PHOTO_W / 2;
 
-  const TOP = 75;
-  const GAP = 18;
-  const CAPTION_H = 120;
+  const W=900;
 
-  const count = photos.length;
-  const H = TOP + count * PHOTO_H + (count - 1) * GAP + CAPTION_H + 45;
+  const PHOTO_W=820;
 
-  const canvas = document.createElement("canvas");
-  canvas.width = W;
-  canvas.height = H;
+  /*
+    Keep the same 2:1 ratio as
+    the captured two-person photo.
+  */
 
-  const ctx = canvas.getContext("2d");
+  const PHOTO_H=
+    PHOTO_W/2;
 
-  drawThemeBackground(ctx, W, H, selectedDesign);
-  drawThemeHeader(ctx, W, selectedDesign);
+  const TOP=75;
 
-  for(let i=0; i<photos.length; i++){
-    const image = await loadImage(photos[i]);
-    const x = (W-PHOTO_W)/2;
-    const y = TOP + i*(PHOTO_H+GAP);
-    drawPhotoToCanvas(ctx, image, x, y, PHOTO_W, PHOTO_H, selectedDesign);
+  const GAP=18;
+
+  const CAPTION_H=120;
+
+  const count=
+    photos.length;
+
+  const H=
+    TOP+
+    count*PHOTO_H+
+    (count-1)*GAP+
+    CAPTION_H+
+    45;
+
+  const canvas=
+    document.createElement(
+      "canvas"
+    );
+
+  canvas.width=W;
+  canvas.height=H;
+
+  const ctx=
+    canvas.getContext(
+      "2d"
+    );
+
+  drawThemeBackground(
+    ctx,
+    W,
+    H,
+    selectedDesign
+  );
+
+  drawThemeHeader(
+    ctx,
+    W,
+    selectedDesign
+  );
+
+  for(
+    let i=0;
+    i<photos.length;
+    i++
+  ){
+
+    const image=
+      await loadImage(
+        photos[i]
+      );
+
+    const x=
+      (W-PHOTO_W)/2;
+
+    const y=
+      TOP+
+      i*(PHOTO_H+GAP);
+
+    drawPhotoToCanvas(
+      ctx,
+      image,
+      x,
+      y,
+      PHOTO_W,
+      PHOTO_H,
+      selectedDesign
+    );
   }
 
-  const strip = document.getElementById("photoStrip");
-  const stripRect = strip.getBoundingClientRect();
+  const strip=
+    document.getElementById(
+      "photoStrip"
+    );
 
-  strip.querySelectorAll(".decor").forEach(element=>{
-    const rect = element.getBoundingClientRect();
-    const centerX = rect.left + rect.width/2;
-    const centerY = rect.top + rect.height/2;
+  const stripRect=
+    strip.getBoundingClientRect();
 
-    const percentX = ((centerX - stripRect.left) / stripRect.width);
-    const percentY = ((centerY - stripRect.top) / stripRect.height);
+  strip
+    .querySelectorAll(".decor")
+    .forEach(element=>{
 
-    const canvasX = percentX * W;
-    const canvasY = percentY * H;
+      const rect=
+        element.getBoundingClientRect();
 
-    ctx.save();
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+      const centerX=
+        rect.left+
+        rect.width/2;
 
-    let fontSize = 38;
-    if(element.classList.contains("text-decor")) fontSize = 25;
-    ctx.font = fontSize + "px Georgia";
+      const centerY=
+        rect.top+
+        rect.height/2;
 
-    if(element.classList.contains("text-decor")){
-      const padding = 9;
-      const metrics = ctx.measureText(element.textContent);
-      const bw = metrics.width + padding*2;
-      const bh = fontSize + padding;
+      const percentX=
+        (
+          centerX-
+          stripRect.left
+        )/
+        stripRect.width;
 
-      ctx.fillStyle = "rgba(255,255,255,.88)";
-      roundRect(ctx, canvasX - bw/2, canvasY - bh/2, bw, bh, 10);
-      ctx.fill();
-    }
+      const percentY=
+        (
+          centerY-
+          stripRect.top
+        )/
+        stripRect.height;
 
-    ctx.fillStyle = "#49363e";
-    ctx.fillText(element.textContent, canvasX, canvasY);
-    ctx.restore();
-  });
+      const canvasX=
+        percentX*W;
 
-  const captionY = H - 55;
+      const canvasY=
+        percentY*H;
+
+      ctx.save();
+
+      ctx.textAlign="center";
+      ctx.textBaseline="middle";
+
+      let fontSize=38;
+
+      if(
+        element.classList.contains(
+          "text-decor"
+        )
+      ){
+
+        fontSize=25;
+      }
+
+      ctx.font=
+        fontSize+
+        "px Georgia";
+
+      if(
+        element.classList.contains(
+          "text-decor"
+        )
+      ){
+
+        const padding=9;
+
+        const metrics=
+          ctx.measureText(
+            element.textContent
+          );
+
+        const bw=
+          metrics.width+
+          padding*2;
+
+        const bh=
+          fontSize+
+          padding;
+
+        ctx.fillStyle=
+          "rgba(255,255,255,.88)";
+
+        roundRect(
+          ctx,
+          canvasX-bw/2,
+          canvasY-bh/2,
+          bw,
+          bh,
+          10
+        );
+
+        ctx.fill();
+      }
+
+      ctx.fillStyle=
+        "#49363e";
+
+      ctx.fillText(
+        element.textContent,
+        canvasX,
+        canvasY
+      );
+
+      ctx.restore();
+    });
+
+  const captionY=
+    H-55;
+
   ctx.save();
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillStyle = getThemeTextColor(selectedDesign);
-  ctx.font = "bold 42px Georgia";
-  ctx.fillText(yourName + " ♡ " + (partnerName||"Them"), W/2, captionY);
+
+  ctx.textAlign="center";
+  ctx.textBaseline="middle";
+
+  ctx.fillStyle=
+    getThemeTextColor(
+      selectedDesign
+    );
+
+  ctx.font=
+    "bold 42px Georgia";
+
+  ctx.fillText(
+    yourName+
+    " ♡ "+
+    (partnerName||"Them"),
+    W/2,
+    captionY
+  );
+
   ctx.restore();
 
-  return new Promise(resolve=>{
-    canvas.toBlob(blob=>resolve(blob), "image/png");
-  });
+  return new Promise(
+    resolve=>{
+
+      canvas.toBlob(
+        blob=>
+          resolve(blob),
+        "image/png"
+      );
+    }
+  );
 }
 
 function loadImage(src){
-  return new Promise((resolve,reject)=>{
-    const image = new Image();
-    image.onload = ()=>resolve(image);
-    image.onerror = reject;
-    image.src = src;
-  });
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const image=
+        new Image();
+
+      image.onload=()=>{
+        resolve(image);
+      };
+
+      image.onerror=
+        reject;
+
+      image.src=src;
+    }
+  );
 }
 
-function drawPhotoToCanvas(ctx, img, x, y, w, h, theme){
+function drawPhotoToCanvas(
+  ctx,
+  img,
+  x,
+  y,
+  w,
+  h,
+  theme
+){
+
   ctx.save();
-  const border = getThemeBorder(theme);
+
+  const border=
+    getThemeBorder(
+      theme
+    );
 
   if(border){
-    ctx.fillStyle = border;
-    roundRect(ctx, x-8, y-8, w+16, h+16, 18);
+
+    ctx.fillStyle=
+      border;
+
+    roundRect(
+      ctx,
+      x-8,
+      y-8,
+      w+16,
+      h+16,
+      18
+    );
+
     ctx.fill();
   }
 
-  roundRect(ctx, x, y, w, h, 14);
+  roundRect(
+    ctx,
+    x,
+    y,
+    w,
+    h,
+    14
+  );
+
   ctx.clip();
 
-  const ratio = Math.max(w/img.width, h/img.height);
-  const nw = img.width * ratio;
-  const nh = img.height * ratio;
-  const dx = x + (w - nw)/2;
-  const dy = y + (h - nh)/2;
+  const ratio=
+    Math.max(
+      w/img.width,
+      h/img.height
+    );
 
-  if(theme==="retro" || theme==="vintage"){
-    ctx.filter = "sepia(.4) saturate(.8)";
+  const nw=
+    img.width*ratio;
+
+  const nh=
+    img.height*ratio;
+
+  const dx=
+    x+(w-nw)/2;
+
+  const dy=
+    y+(h-nh)/2;
+
+  if(
+    theme==="retro" ||
+    theme==="vintage"
+  ){
+
+    ctx.filter=
+      "sepia(.4) saturate(.8)";
   }
 
-  ctx.drawImage(img, dx, dy, nw, nh);
-  ctx.filter = "none";
+  ctx.drawImage(
+    img,
+    dx,
+    dy,
+    nw,
+    nh
+  );
+
+  ctx.filter="none";
+
   ctx.restore();
 }
 
-function drawThemeBackground(ctx, W, H, theme){
-  let bg = "#fff0f6";
+function drawThemeBackground(
+  ctx,
+  W,
+  H,
+  theme
+){
 
-  if(theme==="retro") bg="#c89470";
-  if(theme==="scrapbook") bg="#ead8c0";
+  let bg="#fff0f6";
+
+  if(theme==="retro")
+    bg="#c89470";
+
+  if(theme==="scrapbook")
+    bg="#ead8c0";
+
   if(theme==="y2k"){
-    const gradient=ctx.createLinearGradient(0,0,W,H);
-    gradient.addColorStop(0,"#a8d6ed");
-    gradient.addColorStop(.5,"#d9c8f0");
-    gradient.addColorStop(1,"#f2b9d7");
+
+    const gradient=
+      ctx.createLinearGradient(
+        0,
+        0,
+        W,
+        H
+      );
+
+    gradient.addColorStop(
+      0,
+      "#a8d6ed"
+    );
+
+    gradient.addColorStop(
+      .5,
+      "#d9c8f0"
+    );
+
+    gradient.addColorStop(
+      1,
+      "#f2b9d7"
+    );
+
     bg=gradient;
   }
-  if(theme==="strawberry") bg="#fff0e9";
-  if(theme==="lace") bg="#ead8e3";
-  if(theme==="postcard") bg="#e6cdb5";
-  if(theme==="floral") bg="#f7e7dc";
+
+  if(theme==="strawberry")
+    bg="#fff0e9";
+
+  if(theme==="lace")
+    bg="#ead8e3";
+
+  if(theme==="postcard")
+    bg="#e6cdb5";
+
+  if(theme==="floral")
+    bg="#f7e7dc";
+
   if(theme==="dreamy"){
-    const gradient=ctx.createLinearGradient(0,0,0,H);
-    gradient.addColorStop(0,"#bfcce7");
-    gradient.addColorStop(1,"#ead8ee");
+
+    const gradient=
+      ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        H
+      );
+
+    gradient.addColorStop(
+      0,
+      "#bfcce7"
+    );
+
+    gradient.addColorStop(
+      1,
+      "#ead8ee"
+    );
+
     bg=gradient;
   }
-  if(theme==="vintage") bg="#d0b39f";
+
+  if(theme==="vintage")
+    bg="#d0b39f";
 
   ctx.fillStyle=bg;
-  ctx.fillRect(0, 0, W, H);
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
 }
 
-function drawThemeHeader(ctx, W, theme){
+function drawThemeHeader(
+  ctx,
+  W,
+  theme
+){
+
   ctx.save();
+
   ctx.textAlign="center";
-  ctx.fillStyle=getThemeTextColor(theme);
-  ctx.font="22px Georgia";
-  ctx.fillText(getThemeHeader(theme), W/2, 40);
+
+  ctx.fillStyle=
+    getThemeTextColor(
+      theme
+    );
+
+  ctx.font=
+    "22px Georgia";
+
+  ctx.fillText(
+    getThemeHeader(theme),
+    W/2,
+    40
+  );
+
   ctx.restore();
 }
 
-function getThemeHeader(theme){
+function getThemeHeader(
+  theme
+){
+
   const headers={
-    coquette:"♡ ୨୧ 🎀 ୨୧ ♡", retro:"MEMORIES • 1990s • LOVE", scrapbook:"♡ OUR LITTLE MOMENTS ♡",
-    y2k:"★ BABY ★ ANGEL ★ 2000 ★", strawberry:"🍓 strawberry kisses 🍓", lace:"୨୧ love letter ୨୧",
-    postcard:"POSTCARD FROM US ♡", floral:"✿ 🌸 love grows here 🌸 ✿", dreamy:"☁︎ DREAMING OF YOU ☁︎",
-    vintage:"♡ VINTAGE LOVE ♡"
+
+    coquette:
+      "♡ ୨୧ 🎀 ୨୧ ♡",
+
+    retro:
+      "MEMORIES • 1990s • LOVE",
+
+    scrapbook:
+      "♡ OUR LITTLE MOMENTS ♡",
+
+    y2k:
+      "★ BABY ★ ANGEL ★ 2000 ★",
+
+    strawberry:
+      "🍓 strawberry kisses 🍓",
+
+    lace:
+      "୨୧ love letter ୨୧",
+
+    postcard:
+      "POSTCARD FROM US ♡",
+
+    floral:
+      "✿ 🌸 love grows here 🌸 ✿",
+
+    dreamy:
+      "☁︎ DREAMING OF YOU ☁︎",
+
+    vintage:
+      "♡ VINTAGE LOVE ♡"
   };
-  return headers[theme] || "♡ OUR LITTLE MOMENTS ♡";
+
+  return headers[theme] ||
+    "♡ OUR LITTLE MOMENTS ♡";
 }
 
-function getThemeTextColor(theme){
-  if(theme==="dreamy" || theme==="y2k") return "#ffffff";
-  if(theme==="retro") return "#5c3d30";
-  if(theme==="scrapbook") return "#785b4c";
-  if(theme==="postcard") return "#704b39";
-  if(theme==="vintage") return "#654b3d";
+function getThemeTextColor(
+  theme
+){
+
+  if(
+    theme==="dreamy" ||
+    theme==="y2k"
+  ){
+
+    return "#ffffff";
+  }
+
+  if(theme==="retro")
+    return "#5c3d30";
+
+  if(theme==="scrapbook")
+    return "#785b4c";
+
+  if(theme==="postcard")
+    return "#704b39";
+
+  if(theme==="vintage")
+    return "#654b3d";
+
   return "#49363e";
 }
 
-function getThemeBorder(theme){
+function getThemeBorder(
+  theme
+){
+
   const borders={
-    coquette:"#efb6c9", retro:"#76503e", scrapbook:"#a98267", y2k:"#ffffff",
-    strawberry:"#e76572", lace:"#a87b96", postcard:"#956c52", floral:"#d19aaa",
-    dreamy:"#ffffff", vintage:"#806351"
+
+    coquette:"#efb6c9",
+    retro:"#76503e",
+    scrapbook:"#a98267",
+    y2k:"#ffffff",
+    strawberry:"#e76572",
+    lace:"#a87b96",
+    postcard:"#956c52",
+    floral:"#d19aaa",
+    dreamy:"#ffffff",
+    vintage:"#806351"
   };
-  return borders[theme] || "#efb6c9";
+
+  return borders[theme] ||
+    "#efb6c9";
 }
 
-function roundRect(ctx, x, y, w, h, r){
+function roundRect(
+  ctx,
+  x,
+  y,
+  w,
+  h,
+  r
+){
+
   ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y);
-  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
-  ctx.lineTo(x+w, y+h-r);
-  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
-  ctx.lineTo(x+r, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
-  ctx.lineTo(x, y+r);
-  ctx.quadraticCurveTo(x, y, x+r, y);
+
+  ctx.moveTo(
+    x+r,
+    y
+  );
+
+  ctx.lineTo(
+    x+w-r,
+    y
+  );
+
+  ctx.quadraticCurveTo(
+    x+w,
+    y,
+    x+w,
+    y+r
+  );
+
+  ctx.lineTo(
+    x+w,
+    y+h-r
+  );
+
+  ctx.quadraticCurveTo(
+    x+w,
+    y+h,
+    x+w-r,
+    y+h
+  );
+
+  ctx.lineTo(
+    x+r,
+    y+h
+  );
+
+  ctx.quadraticCurveTo(
+    x,
+    y+h,
+    x,
+    y+h-r
+  );
+
+  ctx.lineTo(
+    x,
+    y+r
+  );
+
+  ctx.quadraticCurveTo(
+    x,
+    y,
+    x+r,
+    y
+  );
+
   ctx.closePath();
 }
 
-window.addEventListener("beforeunload", ()=>{
-  if(readinessTimer) clearInterval(readinessTimer);
-  if(connectionRetryTimer) clearTimeout(connectionRetryTimer);
-  if(cameraStream) cameraStream.getTracks().forEach(t=>t.stop());
-  if(peerConnection) peerConnection.close();
-  if(roomChannel) roomChannel.unsubscribe();
-  if(signalChannel) signalChannel.unsubscribe();
-  if(finalBlobUrl) URL.revokeObjectURL(finalBlobUrl);
-});
+window.addEventListener(
+  "beforeunload",
+  ()=>{
+
+    if(readinessTimer)
+      clearInterval(
+        readinessTimer
+      );
+
+    if(connectionRetryTimer)
+      clearTimeout(
+        connectionRetryTimer
+      );
+
+    if(cameraStream){
+
+      cameraStream
+        .getTracks()
+        .forEach(
+          t=>t.stop()
+        );
+    }
+
+    if(peerConnection)
+      peerConnection.close();
+
+    if(roomChannel)
+      roomChannel.unsubscribe();
+
+    if(signalChannel)
+      signalChannel.unsubscribe();
+
+    if(finalBlobUrl)
+      URL.revokeObjectURL(
+        finalBlobUrl
+      );
+  }
+);
 </script>
 
 </body>
