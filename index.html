@@ -11,1183 +11,663 @@
 *{box-sizing:border-box}
 
 :root{
---pink:#d97899;
---pink2:#b9577a;
---dark:#49363e;
---cream:#fff8f5;
---line:#ead9df;
+  --pink:#d97899;
+  --dark:#49363e;
+  --cream:#fff8f5;
+  --line:#ead9df;
 }
 
 body{
-margin:0;
-font-family:Georgia,serif;
-background:
-radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
-radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
-#fff8fa;
-background-size:90px 90px;
-color:var(--dark);
+  margin:0;
+  font-family:Georgia,serif;
+  color:var(--dark);
+  background:
+    radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
+    radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
+    #fff8fa;
+  background-size:90px 90px;
 }
 
 button,input{font:inherit}
 button{cursor:pointer}
 
 .page{
-display:none;
-min-height:100vh;
-padding:12px;
+  display:none;
+  min-height:100vh;
+  padding:12px;
 }
-
 .page.active{display:block}
 
 .card{
-width:min(600px,100%);
-margin:5vh auto;
-padding:38px 28px;
-background:#fffdfd;
-border:1px solid var(--line);
-border-radius:35px;
-text-align:center;
-box-shadow:0 25px 70px #68445220;
+  width:min(600px,100%);
+  margin:5vh auto;
+  padding:38px 28px;
+  background:#fffdfd;
+  border:1px solid var(--line);
+  border-radius:35px;
+  text-align:center;
+  box-shadow:0 25px 70px #68445220;
 }
 
-.logo{
-font-size:60px;
-color:var(--pink);
-}
+.logo{font-size:60px;color:var(--pink)}
 
 .mini{
-font-family:Arial,sans-serif;
-font-size:10px;
-letter-spacing:3px;
-text-transform:uppercase;
-color:#ad7084;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#ad7084;
 }
 
 h1{
-font-size:58px;
-line-height:.9;
-margin:12px 0 18px;
+  font-size:58px;
+  line-height:.9;
+  margin:12px 0 18px;
 }
 
-h1 span,
-h2 span{
-color:var(--pink);
+h1 span,h2 span{color:var(--pink)}
+
+.desc,.muted{
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+  color:#88747c;
 }
 
-.desc,
-.muted{
-font-family:Arial,sans-serif;
-line-height:1.6;
-color:#88747c;
-}
-
-.field{
-text-align:left;
-margin:16px 0;
-}
+.field{text-align:left;margin:16px 0}
 
 .field label{
-font-family:Arial,sans-serif;
-font-size:12px;
-font-weight:bold;
+  font-family:Arial,sans-serif;
+  font-size:12px;
+  font-weight:bold;
 }
 
 .field input{
-width:100%;
-padding:14px;
-margin-top:7px;
-border:1px solid var(--line);
-border-radius:15px;
-background:#fffafa;
-outline:none;
-}
-
-.field input:focus{
-border-color:#d97899;
-box-shadow:0 0 0 3px #d9789918;
+  width:100%;
+  padding:14px;
+  margin-top:7px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#fffafa;
+  outline:none;
 }
 
 .primary{
-width:100%;
-padding:15px;
-border:0;
-border-radius:16px;
-background:linear-gradient(135deg,#c96d8b,#b85d7e);
-color:white;
-font-family:Arial,sans-serif;
-font-weight:bold;
-box-shadow:0 10px 25px #b85d7e25;
-}
-
-.primary:disabled{
-opacity:.45;
-cursor:not-allowed;
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(135deg,#c96d8b,#b85d7e);
+  color:white;
+  font-family:Arial,sans-serif;
+  font-weight:bold;
+  box-shadow:0 10px 25px #b85d7e25;
 }
 
 .secondary{
-padding:12px 18px;
-border:1px solid #dfd0d7;
-border-radius:14px;
-background:white;
-color:#654e57;
+  padding:12px 18px;
+  border:1px solid #dfd0d7;
+  border-radius:14px;
+  background:white;
+  color:#654e57;
 }
 
 .topbar{
-height:58px;
-max-width:1100px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:space-between;
-font-family:Arial,sans-serif;
+  height:58px;
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:Arial,sans-serif;
 }
 
 .back{
-width:42px;
-height:42px;
-border:1px solid #e5d7dd;
-border-radius:50%;
-background:white;
+  width:42px;
+  height:42px;
+  border:1px solid #e5d7dd;
+  border-radius:50%;
+  background:white;
 }
 
 .content{
-max-width:1100px;
-margin:20px auto;
-padding:28px;
-background:#fffdfd;
-border:1px solid var(--line);
-border-radius:30px;
-box-shadow:0 20px 60px #533b4614;
+  max-width:1100px;
+  margin:20px auto;
+  padding:28px;
+  background:#fffdfd;
+  border:1px solid var(--line);
+  border-radius:30px;
+  box-shadow:0 20px 60px #533b4614;
 }
 
 .step{display:none}
 .step.active{display:block}
 
 .step h2{
-font-size:40px;
-margin:8px 0;
+  font-size:40px;
+  margin:8px 0;
 }
 
-
-/* =========================
-STRIP OPTIONS
-========================= */
-
 .strip-options{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px;
-margin:28px 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin:28px 0;
 }
 
 .strip-option{
-padding:22px 12px;
-border:2px solid var(--line);
-border-radius:22px;
-background:white;
+  padding:22px 12px;
+  border:2px solid var(--line);
+  border-radius:22px;
+  background:white;
 }
 
 .strip-option.selected{
-border-color:var(--pink);
-background:#fff0f5;
+  border-color:var(--pink);
+  background:#fff0f5;
 }
 
 .strip-option strong{
-display:block;
-font-size:42px;
-color:var(--pink);
+  display:block;
+  font-size:42px;
+  color:var(--pink);
 }
 
-
-/* =========================
-CAMERA
-========================= */
+/* CAMERA */
 
 .camera{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-background:#211b1e;
-padding:10px;
-border-radius:28px;
-overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  background:#211b1e;
+  padding:10px;
+  border-radius:28px;
+  overflow:hidden;
 }
 
 .video-box{
-position:relative;
-background:#30262b;
-min-height:320px;
-border-radius:20px;
-overflow:hidden;
+  position:relative;
+  background:#30262b;
+  min-height:320px;
+  border-radius:20px;
+  overflow:hidden;
 }
 
 .video-box video{
-width:100%;
-height:320px;
-object-fit:cover;
-display:block;
-background:#30262b;
-transform:scaleX(-1);
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  display:block;
+  background:#30262b;
+  transform:scaleX(-1);
 }
 
-#partnerVideo{
-transform:scaleX(-1);
+.video-box.partner video{
+  transform:none;
 }
 
 .video-label{
-position:absolute;
-bottom:10px;
-left:10px;
-padding:7px 12px;
-border-radius:20px;
-background:#0009;
-color:white;
-font-family:Arial,sans-serif;
-font-size:11px;
-z-index:5;
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  padding:7px 12px;
+  border-radius:20px;
+  background:#0009;
+  color:white;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  z-index:5;
 }
 
 .waiting{
-position:absolute;
-inset:0;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-color:white;
-background:#3d3037;
-font-family:Arial,sans-serif;
-text-align:center;
-padding:20px;
-z-index:4;
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:white;
+  background:#3d3037;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding:20px;
+  z-index:4;
 }
 
-.waiting .heart{
-font-size:55px;
-}
+.waiting .heart{font-size:55px}
 
-.connection-dot{
-display:inline-block;
-width:8px;
-height:8px;
-border-radius:50%;
-background:#d97899;
-margin-right:5px;
-}
-
-.camera-status{
-font-family:Arial,sans-serif;
-font-size:12px;
-text-align:center;
-color:#8b737d;
-margin-top:10px;
+.connection-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin:12px auto;
+  padding:8px 14px;
+  border-radius:30px;
+  background:#fff4f7;
+  font:12px Arial;
 }
 
 .camera-buttons{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:16px;
-margin:20px 0;
-flex-wrap:wrap;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:16px;
+  margin:20px 0;
+  flex-wrap:wrap;
 }
 
 .shutter{
-width:70px;
-height:70px;
-border-radius:50%;
-border:7px solid #e3b3c2;
-background:white;
-font-size:22px;
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  border:7px solid #e3b3c2;
+  background:white;
+  font-size:22px;
 }
 
-#photoPreview{
-text-align:center;
-}
+#photoPreview{text-align:center}
 
 #photoPreview img{
-width:75px;
-height:94px;
-object-fit:cover;
-margin:5px;
-border-radius:8px;
+  width:75px;
+  height:95px;
+  object-fit:cover;
+  margin:5px;
+  border-radius:8px;
 }
 
-
-/* =========================
-DESIGN PICKER
-========================= */
+/* DESIGNS */
 
 .design-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px;
-margin:25px 0;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:13px;
+  margin:25px 0;
 }
 
 .design-card{
-border:2px solid transparent;
-background:#fff;
-border-radius:20px;
-padding:8px;
-transition:.2s;
-box-shadow:0 8px 20px #51363f12;
-overflow:hidden;
+  border:2px solid transparent;
+  background:white;
+  border-radius:18px;
+  padding:8px;
+  transition:.2s;
+  box-shadow:0 8px 20px #51363f12;
 }
 
 .design-card:hover,
 .design-card.selected{
-transform:translateY(-5px);
-border-color:var(--pink);
-box-shadow:0 15px 30px #b85d7e22;
+  transform:translateY(-4px);
+  border-color:var(--pink);
 }
 
 .design-preview{
-position:relative;
-width:100%;
-aspect-ratio:4/5;
-display:flex;
-flex-direction:column;
-gap:4px;
-padding:9px;
-overflow:hidden;
+  height:240px;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  padding:8px;
+  overflow:hidden;
 }
 
 .design-preview img{
-width:100%;
-flex:1;
-min-height:0;
-object-fit:cover;
-display:block;
+  width:100%;
+  flex:1;
+  min-height:0;
+  object-fit:cover;
+  display:block;
 }
 
 .design-name{
-font-size:12px;
-font-weight:bold;
-padding:8px 2px 5px;
+  font-size:12px;
+  font-weight:bold;
+  padding:8px 2px 4px;
 }
 
-
-/* =========================
-PHOTOBOOTH DESIGN THEMES
-========================= */
-
-/* COQUETTE */
+/* PINTEREST-STYLE THEMES */
 
 .theme-coquette{
-background:
-radial-gradient(circle,#f1a8c0 1px,transparent 2px),
-#fff0f6;
-background-size:14px 14px;
-border:5px solid #d889a3;
+  background:#fff0f6;
+  border:3px solid #d889a3;
 }
 
 .theme-coquette:before{
-content:"♡  🎀  ♡";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-size:12px;
-color:#c66588;
-z-index:5;
-}
-
-.theme-coquette:after{
-content:"♡";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-size:18px;
-color:#c66588;
-z-index:5;
+  content:"♡ ୨୧ 🎀 ୨୧ ♡";
+  display:block;
+  text-align:center;
+  color:#c76c8c;
+  font-size:12px;
+  letter-spacing:2px;
 }
 
 .theme-coquette img{
-border:2px solid #efb6c9;
+  border:2px solid #efb6c9;
 }
 
-
-/* FILM STRIP */
-
-.theme-film{
-background:#171416;
-border:8px solid #171416;
+.theme-retro{
+  background:#c89470;
+  border:7px solid #76503e;
 }
 
-.theme-film:before{
-content:"♡  FRAME 01  •  35MM  •  ♡";
-position:absolute;
-top:1px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:7px;
-letter-spacing:1px;
-color:#fff;
-z-index:5;
+.theme-retro:before{
+  content:"MEMORIES • 1990s • LOVE";
+  display:block;
+  text-align:center;
+  color:#5c3d30;
+  font:8px Arial;
+  letter-spacing:2px;
 }
 
-.theme-film:after{
-content:"OUR LITTLE MOMENT  •  2026";
-position:absolute;
-bottom:2px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:6px;
-letter-spacing:1px;
-color:#fff;
-z-index:5;
+.theme-retro img{
+  filter:sepia(.45) contrast(1.05);
+  border:2px solid #f0d1a8;
 }
-
-.theme-film img{
-border:2px solid #fff;
-}
-
-
-/* SCRAPBOOK */
 
 .theme-scrapbook{
-background:#e8d7bd;
-border:7px dashed #98755e;
+  background:#ead8c0;
+  border:7px dashed #a98267;
 }
 
 .theme-scrapbook:before{
-content:"✦ little memories ✦";
-position:absolute;
-top:2px;
-left:0;
-right:0;
-text-align:center;
-font-size:9px;
-color:#765545;
-z-index:5;
-}
-
-.theme-scrapbook:after{
-content:"♡  ✿  ୨୧";
-position:absolute;
-bottom:1px;
-left:0;
-right:0;
-text-align:center;
-font-size:13px;
-color:#765545;
-z-index:5;
+  content:"♡ OUR LITTLE MOMENTS ♡";
+  display:block;
+  text-align:center;
+  color:#785b4c;
+  font-size:9px;
 }
 
 .theme-scrapbook img{
-border:4px solid white;
-box-shadow:2px 3px 0 #9c765d;
+  border:4px solid white;
+  box-shadow:2px 3px 0 #9c765d;
 }
 
-
-/* Y2K */
-
 .theme-y2k{
-background:
-linear-gradient(135deg,#a8d6ed,#d9c8f0,#f2b9d7);
-border:5px solid white;
+  background:linear-gradient(135deg,#a8d6ed,#d9c8f0,#f2b9d7);
+  border:5px solid white;
 }
 
 .theme-y2k:before{
-content:"★ LOVE CONNECTION ★";
-position:absolute;
-top:5px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-weight:bold;
-font-size:8px;
-color:#fff;
-text-shadow:1px 1px #8d6a9d;
-z-index:5;
-}
-
-.theme-y2k:after{
-content:"♡ 2000s BABY ♡";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:8px;
-font-weight:bold;
-color:#fff;
-z-index:5;
+  content:"★ BABY ★ ANGEL ★ 2000 ★";
+  display:block;
+  text-align:center;
+  color:#fff;
+  text-shadow:1px 1px #a65c91;
+  font:9px Arial;
 }
 
 .theme-y2k img{
-border:2px solid white;
-box-shadow:0 0 10px #fff;
+  border:2px solid white;
+  box-shadow:0 0 10px #fff;
 }
 
-
-/* STRAWBERRY */
-
 .theme-strawberry{
-background:
-radial-gradient(circle at 20% 10%,#e76572 0 2px,transparent 3px),
-#fff0e9;
-background-size:25px 25px;
-border:5px solid #e76572;
+  background:#fff0e9;
+  border:5px solid #e76572;
 }
 
 .theme-strawberry:before{
-content:"🍓 SWEET MEMORIES 🍓";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-size:8px;
-z-index:5;
-}
-
-.theme-strawberry:after{
-content:"♡ strawberry kiss ♡";
-position:absolute;
-bottom:2px;
-left:0;
-right:0;
-text-align:center;
-font-size:8px;
-color:#d14e61;
-z-index:5;
+  content:"🍓 strawberry kisses 🍓";
+  display:block;
+  text-align:center;
+  color:#df5967;
+  font-size:11px;
 }
 
 .theme-strawberry img{
-border:2px solid #e76572;
+  border:2px solid #e76572;
 }
 
-
-/* LACE */
-
 .theme-lace{
-background:
-radial-gradient(circle at center,#ead8e3 0 40%,#d9bdcd 41% 43%,transparent 44%);
-background-size:24px 24px;
-border:7px double #a87b96;
+  background:#ead8e3;
+  border:7px double #a87b96;
 }
 
 .theme-lace:before{
-content:"୨୧  WITH LOVE  ୨୧";
-position:absolute;
-top:4px;
-left:0;
-right:0;
-text-align:center;
-font-size:8px;
-color:#8c637b;
-z-index:5;
-}
-
-.theme-lace:after{
-content:"♡";
-position:absolute;
-bottom:2px;
-left:0;
-right:0;
-text-align:center;
-font-size:16px;
-color:#8c637b;
-z-index:5;
+  content:"୨୧ 𝓁𝑜𝓋𝑒 𝓁𝑒𝓉𝓉𝑒𝓇 ୨୧";
+  display:block;
+  text-align:center;
+  color:#87627a;
+  font-size:12px;
 }
 
 .theme-lace img{
-border:3px solid white;
+  border:3px solid white;
 }
 
-
-/* POSTCARD */
-
 .theme-postcard{
-background:#e6cdb5;
-border:8px solid #956c52;
+  background:#e6cdb5;
+  border:8px solid #956c52;
 }
 
 .theme-postcard:before{
-content:"LOVE POSTCARD";
-position:absolute;
-top:4px;
-left:6px;
-font-family:Arial,sans-serif;
-font-weight:bold;
-font-size:8px;
-letter-spacing:1px;
-color:#704b39;
-z-index:5;
-}
-
-.theme-postcard:after{
-content:"wish you were here ♡";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Georgia,serif;
-font-style:italic;
-font-size:9px;
-color:#704b39;
-z-index:5;
+  content:"POSTCARD FROM US ♡";
+  display:block;
+  text-align:center;
+  color:#704b39;
+  font:9px Arial;
+  letter-spacing:2px;
 }
 
 .theme-postcard img{
-border:2px solid #704b39;
+  border:2px solid #704b39;
 }
 
-
-/* FLORAL */
-
 .theme-floral{
-background:
-radial-gradient(circle at 10% 10%,#d19aaa 0 3px,transparent 4px),
-radial-gradient(circle at 90% 90%,#e5b7c5 0 3px,transparent 4px),
-#f7e7dc;
-background-size:30px 30px;
-border:7px solid #d19aaa;
+  background:#f7e7dc;
+  border:7px solid #d19aaa;
 }
 
 .theme-floral:before{
-content:"✿  BLOOM WITH ME  ✿";
-position:absolute;
-top:2px;
-left:0;
-right:0;
-text-align:center;
-font-size:8px;
-color:#a85f76;
-z-index:5;
-}
-
-.theme-floral:after{
-content:"🌷  ♡  🌷";
-position:absolute;
-bottom:1px;
-left:0;
-right:0;
-text-align:center;
-font-size:11px;
-z-index:5;
+  content:"✿  🌸  love grows here  🌸  ✿";
+  display:block;
+  text-align:center;
+  color:#b86f84;
+  font-size:10px;
 }
 
 .theme-floral img{
-border:2px solid #d19aaa;
+  border:2px solid #d19aaa;
 }
 
-
-/* DREAMY */
-
 .theme-dreamy{
-background:
-linear-gradient(135deg,#bfcce7,#ead8ee,#f7d9e7);
-border:5px solid white;
+  background:linear-gradient(#bfcce7,#ead8ee);
+  border:5px solid white;
 }
 
 .theme-dreamy:before{
-content:"☁  dreamy little memory  ☁";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-size:8px;
-color:white;
-text-shadow:0 1px 4px #777;
-z-index:5;
-}
-
-.theme-dreamy:after{
-content:"✦  stay close  ✦";
-position:absolute;
-bottom:2px;
-left:0;
-right:0;
-text-align:center;
-font-size:8px;
-color:white;
-z-index:5;
+  content:"☁︎ DREAMING OF YOU ☁︎";
+  display:block;
+  text-align:center;
+  color:white;
+  text-shadow:1px 1px #827a9c;
+  font-size:10px;
 }
 
 .theme-dreamy img{
-border-radius:10px;
+  border-radius:8px;
 }
 
-
-/* VINTAGE */
-
 .theme-vintage{
-background:
-repeating-linear-gradient(
-45deg,
-#d6bdab 0 8px,
-#c2a48d 8px 16px
-);
-border:8px solid #806351;
+  background:repeating-linear-gradient(
+    45deg,
+    #d6bdab 0 8px,
+    #c2a48d 8px 16px
+  );
+  border:8px solid #806351;
 }
 
 .theme-vintage:before{
-content:"EST. 2026  •  A LITTLE LOVE STORY";
-position:absolute;
-top:4px;
-left:0;
-right:0;
-text-align:center;
-font-family:Georgia,serif;
-font-size:7px;
-letter-spacing:1px;
-color:#5f493d;
-z-index:5;
-}
-
-.theme-vintage:after{
-content:"♡ forever favorite ♡";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Georgia,serif;
-font-style:italic;
-font-size:9px;
-color:#5f493d;
-z-index:5;
+  content:"♡ VINTAGE LOVE ♡";
+  display:block;
+  text-align:center;
+  color:#654b3d;
+  font:10px Georgia;
+  letter-spacing:2px;
 }
 
 .theme-vintage img{
-filter:sepia(.55) saturate(.75);
-border:2px solid #f0dfca;
+  filter:sepia(.55) saturate(.75);
+  border:2px solid #f0dfca;
 }
 
-
-/* POLAROID */
-
-.theme-polaroid{
-background:#f8f5ec;
-border:8px solid #fff;
-box-shadow:inset 0 0 0 1px #ddd3c5;
-}
-
-.theme-polaroid:before{
-content:"♡ OUR DAY ♡";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:7px;
-letter-spacing:2px;
-color:#777;
-z-index:5;
-}
-
-.theme-polaroid:after{
-content:"love, always.";
-position:absolute;
-bottom:4px;
-left:0;
-right:0;
-text-align:center;
-font-family:cursive;
-font-size:10px;
-color:#6b5c58;
-z-index:5;
-}
-
-.theme-polaroid img{
-border:1px solid #ddd;
-}
-
-
-/* CUTE DIARY */
-
-.theme-diary{
-background:#f7e8d9;
-border:5px solid #c68d9f;
-}
-
-.theme-diary:before{
-content:"DEAR DIARY ♡";
-position:absolute;
-top:4px;
-left:0;
-right:0;
-text-align:center;
-font-family:cursive;
-font-size:11px;
-color:#9b5f74;
-z-index:5;
-}
-
-.theme-diary:after{
-content:"today was a good day ✿";
-position:absolute;
-bottom:2px;
-left:0;
-right:0;
-text-align:center;
-font-family:cursive;
-font-size:8px;
-color:#9b5f74;
-z-index:5;
-}
-
-.theme-diary img{
-border:3px solid white;
-}
-
-
-/* BLACK & WHITE */
-
-.theme-editorial{
-background:#111;
-border:8px solid #111;
-}
-
-.theme-editorial:before{
-content:"LOVE / ISSUE 01";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:7px;
-letter-spacing:2px;
-color:white;
-z-index:5;
-}
-
-.theme-editorial:after{
-content:"TOGETHER, SOMEWHERE";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:7px;
-letter-spacing:2px;
-color:white;
-z-index:5;
-}
-
-.theme-editorial img{
-filter:grayscale(1) contrast(1.05);
-border:2px solid white;
-}
-
-
-/* PINK CAM */
-
-.theme-pinkcam{
-background:
-linear-gradient(#f6c4d5,#fff0f5);
-border:6px solid #d97899;
-}
-
-.theme-pinkcam:before{
-content:"♡ PINK CAM ♡";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:8px;
-font-weight:bold;
-letter-spacing:2px;
-color:#bd5f80;
-z-index:5;
-}
-
-.theme-pinkcam:after{
-content:"SMILE! ୨୧";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-size:9px;
-color:#bd5f80;
-z-index:5;
-}
-
-.theme-pinkcam img{
-border:3px solid white;
-}
-
-
-/* CAFE */
-
-.theme-cafe{
-background:#e9d6c5;
-border:7px solid #8b6754;
-}
-
-.theme-cafe:before{
-content:"COFFEE & MEMORIES";
-position:absolute;
-top:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:7px;
-letter-spacing:1px;
-color:#604536;
-z-index:5;
-}
-
-.theme-cafe:after{
-content:"☕︎  one sweet memory  ♡";
-position:absolute;
-bottom:3px;
-left:0;
-right:0;
-text-align:center;
-font-family:Georgia,serif;
-font-size:8px;
-color:#604536;
-z-index:5;
-}
-
-.theme-cafe img{
-border:2px solid #8b6754;
-}
-
-
-/* =========================
-FINAL STRIP
-========================= */
+/* FINAL */
 
 .final-preview-wrap{
-display:flex;
-justify-content:center;
-padding:25px;
-background:#f7edf1;
-border-radius:25px;
+  display:flex;
+  justify-content:center;
+  padding:25px;
+  background:#f7edf1;
+  border-radius:25px;
 }
 
 .final-strip{
-position:relative;
-width:310px;
-aspect-ratio:auto;
-padding:13px;
-box-shadow:0 20px 50px #51363f35;
-overflow:hidden;
+  position:relative;
+  width:310px;
+  padding:13px;
+  box-shadow:0 20px 50px #51363f35;
 }
 
 .final-strip img{
-display:block;
-width:100%;
-aspect-ratio:4/5;
-object-fit:cover;
-margin-bottom:8px;
+  display:block;
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  margin-bottom:8px;
 }
 
 .final-strip-title{
-position:relative;
-z-index:10;
-text-align:center;
-padding:12px 3px 7px;
-font-size:17px;
+  text-align:center;
+  padding:12px 3px 7px;
+  font-size:17px;
 }
 
-
-/* =========================
-STICKERS
-========================= */
+/* STICKERS */
 
 .sticker-bar{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding:8px 3px 16px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:8px 3px 16px;
 }
 
 .sticker-choice{
-flex:0 0 auto;
-width:52px;
-height:52px;
-border:1px solid #eadde2;
-border-radius:15px;
-background:#fff8fa;
-font-size:26px;
+  flex:0 0 auto;
+  width:52px;
+  height:52px;
+  border:1px solid #eadde2;
+  border-radius:15px;
+  background:#fff8fa;
+  font-size:26px;
 }
 
 .decor{
-position:absolute;
-z-index:50;
-font-size:32px;
-cursor:grab;
-user-select:none;
-touch-action:none;
-transform:translate(-50%,-50%);
+  position:absolute;
+  z-index:50;
+  font-size:32px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  transform:translate(-50%,-50%);
 }
 
-.decor:active{
-cursor:grabbing;
-}
+.decor:active{cursor:grabbing}
 
 .text-decor{
-font-size:17px;
-padding:5px 9px;
-background:#fff9;
-border-radius:8px;
+  font-size:17px;
+  padding:5px 9px;
+  background:#fff9;
+  border-radius:8px;
 }
 
-
-/* =========================
-TOOLS
-========================= */
-
-.edit-tools{
-display:flex;
-gap:8px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:14px;
+.edit-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
 }
 
-.tool-btn{
-padding:10px 14px;
-border-radius:13px;
-border:1px solid #e3d3da;
-background:white;
-font-family:Arial,sans-serif;
-font-size:12px;
+.edit-buttons button{
+  flex:1;
 }
 
+.text-row{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
 
-/* =========================
-RESPONSIVE
-========================= */
+.text-row input{
+  flex:1;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+}
 
 @media(max-width:850px){
-
-.design-grid{
-grid-template-columns:repeat(3,1fr);
-}
-
+  .design-grid{grid-template-columns:repeat(3,1fr)}
 }
 
 @media(max-width:600px){
+  .content{padding:18px}
+  .step h2{font-size:31px}
+  .strip-options{grid-template-columns:1fr 1fr}
 
-.page{
-padding:8px;
-}
+  .camera{
+    grid-template-columns:1fr 1fr;
+  }
 
-.content{
-padding:18px;
-}
+  .video-box,
+  .video-box video,
+  .waiting{
+    height:230px;
+    min-height:230px;
+  }
 
-.step h2{
-font-size:31px;
-}
+  .design-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
 
-.strip-options{
-grid-template-columns:1fr 1fr;
-}
+  .design-preview{height:210px}
 
-.camera{
-grid-template-columns:1fr 1fr;
-}
+  .final-strip{width:270px}
 
-.video-box,
-.video-box video,
-.waiting{
-height:230px;
-min-height:230px;
-}
-
-.design-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.design-preview{
-height:auto;
-aspect-ratio:4/5;
-}
-
-.final-strip{
-width:270px;
-}
-
+  .text-row{flex-direction:column}
 }
 
 @media(max-width:400px){
-
-.camera{
-gap:5px;
-padding:5px;
-}
-
-.video-box video{
-height:205px;
-}
-
-.final-strip{
-width:250px;
-}
-
+  .camera{gap:5px;padding:5px}
+  .video-box video{height:205px}
+  .design-preview{height:190px}
 }
 </style>
 </head>
 
 <body>
 
-
-<!-- =========================
-WELCOME
-========================= -->
-
+<!-- WELCOME -->
 <section id="welcome" class="page active">
-
 <div class="card">
 
 <div class="logo">♡</div>
-
 <div class="mini">a tiny place for two</div>
 
-<h1>
-Our Little<br>
-<span>Photobooth</span>
-</h1>
+<h1>Our Little<br><span>Photobooth</span></h1>
 
 <p class="desc">
 Take pictures together even when you're far apart.
 </p>
 
 <div class="field">
-<label>
-Your name
-<input id="yourName" placeholder="Your name" autocomplete="off">
+<label>Your name
+<input id="yourName" placeholder="Your name">
 </label>
 </div>
 
 <div class="field">
-<label>
-Partner's name
-<input id="partnerName" placeholder="Their name" autocomplete="off">
+<label>Partner's name
+<input id="partnerName" placeholder="Their name">
 </label>
 </div>
 
 <div class="field">
-<label>
-Shared room code
-<input id="roomCode" placeholder="OURWORLD" autocomplete="off">
+<label>Shared room code
+<input id="roomCode" placeholder="OURWORLD">
 </label>
 </div>
 
@@ -1195,26 +675,19 @@ Shared room code
 Enter Our World ♡
 </button>
 
-<p id="connectionMessage" class="muted"></p>
+<p id="connectionMessage"></p>
 
 </div>
 </section>
 
 
-<!-- =========================
-HOME
-========================= -->
-
+<!-- HOME -->
 <section id="home" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('welcome')">←</button>
-
 <div>our little ♡ world</div>
-
 <div></div>
-
 </div>
 
 <div class="content">
@@ -1255,32 +728,22 @@ ROOM:
 </button>
 
 </div>
-
 </div>
 </section>
 
 
-<!-- =========================
-PHOTOBOOTH
-========================= -->
-
+<!-- PHOTOBOOTH -->
 <section id="photobooth" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('home')">←</button>
-
 <div>photobooth ♡</div>
-
 <div id="stepNumber">1 / 5</div>
-
 </div>
 
 <div class="content">
 
-
 <!-- STEP 1 -->
-
 <div id="step1" class="step active">
 
 <div class="mini">01 · choose</div>
@@ -1288,33 +751,29 @@ PHOTOBOOTH
 <h2>How many photos?</h2>
 
 <p class="muted">
-Choose how many 4:5 photos you want in your strip.
+Choose the size of your photobooth strip.
 </p>
 
 <div class="strip-options">
 
 <button class="strip-option selected"
 onclick="selectStrip(2,this)">
-<strong>2</strong>
-classic
+<strong>2</strong>classic
 </button>
 
 <button class="strip-option"
 onclick="selectStrip(3,this)">
-<strong>3</strong>
-sweet
+<strong>3</strong>sweet
 </button>
 
 <button class="strip-option"
 onclick="selectStrip(4,this)">
-<strong>4</strong>
-classic +
+<strong>4</strong>classic +
 </button>
 
 <button class="strip-option"
 onclick="selectStrip(6,this)">
-<strong>6</strong>
-long
+<strong>6</strong>long
 </button>
 
 </div>
@@ -1327,7 +786,6 @@ Take Photos →
 
 
 <!-- STEP 2 -->
-
 <div id="step2" class="step">
 
 <div class="mini">02 · camera</div>
@@ -1335,33 +793,21 @@ Take Photos →
 <h2>Let's take pictures 📸</h2>
 
 <p class="muted">
-Keep this page open while you're both taking photos.
+Your cameras are side-by-side. Smile!
 </p>
 
 <div class="camera">
 
 <div class="video-box">
-
-<video
-id="myCamera"
-autoplay
-playsinline
-muted>
-</video>
+<video id="myCamera" autoplay playsinline muted></video>
 
 <div class="video-label">
 You · <span id="cameraYouName">You</span>
 </div>
-
 </div>
 
-<div class="video-box">
-
-<video
-id="partnerVideo"
-autoplay
-playsinline>
-</video>
+<div class="video-box partner">
+<video id="partnerVideo" autoplay playsinline></video>
 
 <div id="partnerWaiting" class="waiting">
 
@@ -1372,7 +818,7 @@ Waiting for partner...
 </b>
 
 <p>
-Open the same room on their phone.
+Keep the same room code open.
 </p>
 
 </div>
@@ -1380,38 +826,36 @@ Open the same room on their phone.
 <div class="video-label">
 Partner · <span id="cameraPartnerName">Them</span>
 </div>
-
 </div>
 
 </div>
 
-<div id="cameraStatus" class="camera-status">
-<span class="connection-dot"></span>
-Connecting room...
+<div style="text-align:center">
+
+<div id="connectionPill"
+class="connection-pill">
+🔴 Not connected
+</div>
+
 </div>
 
 <div class="camera-buttons">
 
-<button class="secondary"
-onclick="startCamera()">
+<button class="secondary" onclick="startCamera()">
 Start Camera
 </button>
 
-<button class="shutter"
-onclick="takePhoto()">
+<button class="shutter" onclick="takePhoto()">
 ●
 </button>
 
-<span id="photoCount">
-0 / 2
-</span>
+<span id="photoCount">0 / 2</span>
 
 </div>
 
 <div id="photoPreview"></div>
 
-<button
-id="photosDoneButton"
+<button id="photosDoneButton"
 class="primary"
 onclick="nextStep(3)"
 disabled>
@@ -1422,31 +866,25 @@ Choose Design →
 
 
 <!-- STEP 3 -->
-
 <div id="step3" class="step">
 
 <div class="mini">03 · choose your design</div>
 
-<h2>Pick your photobooth look ✨</h2>
+<h2>Which one feels like you? ✨</h2>
 
 <p class="muted">
-Tap a design. On desktop, hover over one to preview your actual photos.
+Tap a design, or hover over one to preview your actual photos.
 </p>
 
 <div id="designGrid" class="design-grid"></div>
 
 <div class="final-preview-wrap">
-
-<div id="designPreview"
-class="final-strip">
-</div>
-
+<div id="designPreview" class="final-strip"></div>
 </div>
 
 <div style="margin-top:18px">
 
-<button class="secondary"
-onclick="nextStep(2)">
+<button class="secondary" onclick="nextStep(2)">
 ← Retake
 </button>
 
@@ -1457,12 +895,10 @@ style="margin-top:10px">
 </button>
 
 </div>
-
 </div>
 
 
 <!-- STEP 4 -->
-
 <div id="step4" class="step">
 
 <div class="mini">04 · make it yours</div>
@@ -1470,7 +906,7 @@ style="margin-top:10px">
 <h2>Add your little details ✨</h2>
 
 <p class="muted">
-Tap a sticker or add text, then drag it anywhere on the strip.
+Tap a sticker, then drag it anywhere on your strip.
 </p>
 
 <div class="sticker-bar">
@@ -1489,49 +925,31 @@ Tap a sticker or add text, then drag it anywhere on the strip.
 <button class="sticker-choice" onclick="addSticker('🦋')">🦋</button>
 <button class="sticker-choice" onclick="addSticker('✿')">✿</button>
 <button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
-<button class="sticker-choice" onclick="addSticker('☕')">☕</button>
-<button class="sticker-choice" onclick="addSticker('📷')">📷</button>
 
 </div>
 
 <div class="final-preview-wrap">
-
-<div id="photoStrip"
-class="final-strip">
+<div id="photoStrip" class="final-strip"></div>
 </div>
 
-</div>
+<div class="edit-buttons">
 
-<div class="edit-tools">
-
-<button class="tool-btn" onclick="undoLast()">
+<button class="secondary" onclick="undoLastEdit()">
 ↩ Undo
 </button>
 
-<button class="tool-btn" onclick="resetDecorations()">
+<button class="secondary" onclick="resetEdits()">
 ↻ Reset
 </button>
 
 </div>
 
-<div class="text-row" style="
-display:flex;
-gap:8px;
-margin-top:14px;
-">
+<div class="text-row">
 
-<input
-id="customText"
-placeholder="our little moment ♡"
-style="
-flex:1;
-padding:12px;
-border:1px solid var(--line);
-border-radius:12px;
-">
+<input id="customText"
+placeholder="our little moment ♡">
 
-<button class="secondary"
-onclick="addText()">
+<button class="secondary" onclick="addText()">
 Add
 </button>
 
@@ -1547,7 +965,6 @@ See Final Strip →
 
 
 <!-- STEP 5 -->
-
 <div id="step5" class="step">
 
 <div class="mini">05 · your memory</div>
@@ -1559,11 +976,7 @@ Your little photobooth memory is finished.
 </p>
 
 <div class="final-preview-wrap">
-
-<div id="savedPreview"
-class="final-strip">
-</div>
-
+<div id="savedPreview" class="final-strip"></div>
 </div>
 
 <button class="primary"
@@ -1579,7 +992,6 @@ style="margin-top:10px;width:100%">
 </button>
 
 </div>
-
 
 </div>
 </section>
@@ -1605,84 +1017,54 @@ SUPABASE_KEY
 
 
 /* =====================================================
-USER / ROOM
+APP VARIABLES
 ===================================================== */
 
 let yourName="";
 let partnerName="";
 let roomCode="";
 
-const currentUserId =
-crypto.randomUUID();
-
-let realtimeChannel=null;
-let realtimeReady=false;
-
-let remoteUserId=null;
-
-
-/* =====================================================
-WEBRTC
-===================================================== */
-
-let peerConnection=null;
-let cameraStream=null;
-
-let pendingCandidates=[];
-
-let makingOffer=false;
-
-const rtcConfig={
-iceServers:[
-{
-urls:"stun:stun.l.google.com:19302"
-},
-{
-urls:"stun:stun1.l.google.com:19302"
-},
-{
-urls:"stun:stun2.l.google.com:19302"
-},
-{
-urls:"stun:stun3.l.google.com:19302"
-}
-]
-};
-
-
-/* =====================================================
-PHOTO VARIABLES
-===================================================== */
-
 let selectedStrip=2;
-
 let selectedDesign="coquette";
 
 let photos=[];
+let cameraStream=null;
 
-let decorationHistory=[];
+let roomChannel=null;
+let webrtcChannel=null;
+let peerConnection=null;
 
+let isCaller=false;
+let makingOffer=false;
+let remoteDescriptionSet=false;
 
-/* =====================================================
-DESIGNS
-===================================================== */
+let pendingCandidates=[];
+
+const clientId=
+crypto.randomUUID();
+
+const rtcConfig={
+  iceServers:[
+    {
+      urls:"stun:stun.l.google.com:19302"
+    },
+    {
+      urls:"stun:stun1.l.google.com:19302"
+    }
+  ]
+};
 
 const designs=[
-"coquette",
-"film",
-"scrapbook",
-"y2k",
-"strawberry",
-"lace",
-"postcard",
-"floral",
-"dreamy",
-"vintage",
-"polaroid",
-"diary",
-"editorial",
-"pinkcam",
-"cafe"
+  "coquette",
+  "retro",
+  "scrapbook",
+  "y2k",
+  "strawberry",
+  "lace",
+  "postcard",
+  "floral",
+  "dreamy",
+  "vintage"
 ];
 
 
@@ -1694,9 +1076,7 @@ function showPage(id){
 
 document
 .querySelectorAll(".page")
-.forEach(page=>{
-page.classList.remove("active");
-});
+.forEach(p=>p.classList.remove("active"));
 
 document
 .getElementById(id)
@@ -1708,418 +1088,292 @@ window.scrollTo(0,0);
 
 
 /* =====================================================
-ENTER WORLD
+ENTER ROOM
 ===================================================== */
 
 async function enterWorld(){
 
 yourName=
-document
-.getElementById("yourName")
-.value
-.trim();
+document.getElementById("yourName")
+.value.trim();
 
 partnerName=
-document
-.getElementById("partnerName")
-.value
-.trim();
+document.getElementById("partnerName")
+.value.trim();
 
 roomCode=
-document
-.getElementById("roomCode")
-.value
-.trim()
+document.getElementById("roomCode")
+.value.trim()
 .toUpperCase();
 
 if(!yourName){
-
 alert("Please enter your name ♡");
 return;
-
 }
 
 if(!roomCode){
-
 alert("Please enter a room code ♡");
+return;
+}
+
+document.getElementById(
+"connectionMessage"
+).textContent="Connecting to room...";
+
+const {error}=await supabaseClient
+.from("rooms")
+.insert({
+room_code:roomCode,
+user_name:yourName
+});
+
+if(error){
+
+console.error(error);
+
+alert(
+"Could not join the room. Make sure your Supabase rooms table allows inserts."
+);
+
 return;
 
 }
 
-document
-.getElementById("connectionMessage")
-textContent="";
+document.getElementById(
+"displayYou"
+).textContent=yourName;
 
-document
-.getElementById("connectionMessage")
-textContent=
-"Joining your private room...";
+document.getElementById(
+"displayPartner"
+).textContent=partnerName||"Them";
 
-document
-.getElementById("displayYou")
-.textContent=yourName;
+document.getElementById(
+"displayRoom"
+).textContent=roomCode;
 
-document
-.getElementById("displayPartner")
-.textContent=
-partnerName||"Them";
+document.getElementById(
+"cameraYouName"
+).textContent=yourName;
 
-document
-.getElementById("displayRoom")
-.textContent=roomCode;
-
-document
-.getElementById("cameraYouName")
-.textContent=yourName;
-
-document
-.getElementById("cameraPartnerName")
-.textContent=
-partnerName||"Them";
+document.getElementById(
+"cameraPartnerName"
+).textContent=partnerName||"Them";
 
 showPage("home");
 
-await connectToRoom();
+await setupRoomChannel();
 
 }
 
 
 /* =====================================================
-SUPABASE BROADCAST ROOM
+ROOM PRESENCE / BROADCAST
 ===================================================== */
 
-async function connectToRoom(){
+async function setupRoomChannel(){
 
-if(realtimeChannel){
+if(roomChannel)return;
 
-try{
-await supabaseClient
-.removeChannel(realtimeChannel);
-}catch(e){}
+roomChannel=
+supabaseClient.channel(
+"presence-"+roomCode,
+{
+config:{
+presence:{
+key:clientId
+}
+}
+}
+);
 
-realtimeChannel=null;
+roomChannel
+.on(
+"presence",
+{
+event:"sync"
+},
+()=>{
+updatePresence();
+}
+)
+.subscribe(
+async status=>{
+
+if(status==="SUBSCRIBED"){
+
+await roomChannel.track({
+id:clientId,
+name:yourName
+});
+
+await updatePresence();
 
 }
 
-realtimeReady=false;
+}
+);
 
-const topic=
-"photobooth-room-"+roomCode;
+}
 
-realtimeChannel=
+
+async function updatePresence(){
+
+if(!roomChannel)return;
+
+const state=
+roomChannel.presenceState();
+
+let users=[];
+
+Object.values(state)
+.forEach(entries=>{
+entries.forEach(entry=>{
+if(entry.id!==clientId){
+users.push(entry);
+}
+});
+});
+
+if(users.length){
+
+document.getElementById(
+"partnerStatus"
+).textContent=
+"🟢 "+(users[0].name||partnerName||"Partner")+" is here ♡";
+
+document.getElementById(
+"partnerCameraText"
+).textContent=
+"Connecting video...";
+
+await setupWebRTC();
+
+}else{
+
+document.getElementById(
+"partnerStatus"
+).textContent=
+"⚪ Waiting for partner...";
+
+}
+
+}
+
+
+/* =====================================================
+WEBRTC BROADCAST CHANNEL
+===================================================== */
+
+async function setupWebRTC(){
+
+if(webrtcChannel)return;
+
+webrtcChannel=
 supabaseClient.channel(
-topic,
+"webrtc-room-"+roomCode,
 {
 config:{
 broadcast:{
-self:false,
 ack:true
 }
 }
 }
 );
 
-
-/*
-All WebRTC signaling travels through this
-Broadcast channel.
-
-No call_signals table is needed.
-*/
-
-realtimeChannel.on(
+webrtcChannel
+.on(
 "broadcast",
-{event:"webrtc"},
-async message=>{
+{
+event:"signal"
+},
+async payload=>{
 
-const payload=
-message.payload;
+const message=payload.payload;
 
-if(!payload)
-return;
+if(!message)return;
 
-if(payload.sender===currentUserId)
-return;
+if(message.sender===clientId)return;
 
-await handleWebRTCMessage(
-payload
-);
+await handleSignal(message);
 
 }
-);
-
-realtimeChannel.on(
-"broadcast",
-{event:"room-presence"},
-message=>{
-
-const payload=
-message.payload;
-
-if(!payload)
-return;
-
-if(payload.sender===currentUserId)
-return;
-
-if(payload.type==="hello"){
-
-remoteUserId=
-payload.sender;
-
-updatePartnerStatus(
-"🟢 Partner is in the room"
-);
-
-document
-.getElementById("partnerCameraText")
-.textContent=
-"Partner connected ♡";
-
-/*
-Only one side becomes caller.
-This prevents both phones from
-creating offers at the same time.
-*/
-
-if(
-currentUserId <
-payload.sender
-){
-
-createOffer();
-
-}
-
-}
-
-}
-);
-
-realtimeChannel.subscribe(
+)
+.subscribe(
 async status=>{
-
-console.log(
-"Realtime status:",
-status
-);
 
 if(status==="SUBSCRIBED"){
 
-realtimeReady=true;
+await createPeer();
 
-updatePartnerStatus(
-"🟢 Room connected · waiting for partner"
-);
-
-await broadcastRoomMessage({
-type:"hello",
-sender:currentUserId,
-name:yourName
-});
-
-}
-else if(
-status==="CHANNEL_ERROR"||
-status==="TIMED_OUT"
-){
-
-updatePartnerStatus(
-"🔴 Room connection failed"
-);
-
-console.error(
-"Realtime connection failed:",
-status
+setTimeout(
+electCaller,
+700
 );
 
 }
 
-});
+}
+);
 
 }
 
 
 /* =====================================================
-BROADCAST ROOM MESSAGE
+PEER CONNECTION
 ===================================================== */
 
-async function broadcastRoomMessage(
-payload
-){
+async function createPeer(){
 
-if(
-!realtimeChannel||
-!realtimeReady
-)
-return;
-
-try{
-
-await realtimeChannel.send({
-type:"broadcast",
-event:"room-presence",
-payload
-});
-
-}catch(error){
-
-console.error(
-"Room broadcast error:",
-error
-);
-
-}
-
-}
-
-
-/* =====================================================
-SEND WEBRTC SIGNAL
-===================================================== */
-
-async function sendWebRTC(
-type,
-data
-){
-
-if(
-!realtimeChannel||
-!realtimeReady
-)
-return;
-
-try{
-
-const response=
-await realtimeChannel.send({
-
-type:"broadcast",
-
-event:"webrtc",
-
-payload:{
-sender:currentUserId,
-type:type,
-data:data
-}
-
-});
-
-console.log(
-"Sent WebRTC:",
-type,
-response
-);
-
-}catch(error){
-
-console.error(
-"WebRTC broadcast error:",
-error
-);
-
-}
-
-}
-
-
-/* =====================================================
-CREATE PEER
-===================================================== */
-
-async function createPeerConnection(){
-
-if(peerConnection)
-return peerConnection;
+if(peerConnection)return;
 
 peerConnection=
 new RTCPeerConnection(
 rtcConfig
 );
 
+peerConnection.onicecandidate=
+async event=>{
 
-/*
-Add local camera if already available.
-*/
+if(event.candidate){
 
-if(cameraStream){
-
-cameraStream
-.getTracks()
-.forEach(track=>{
-
-peerConnection.addTrack(
-track,
-cameraStream
+await broadcastSignal(
+"candidate",
+{
+candidate:event.candidate.toJSON()
+}
 );
-
-});
 
 }
 
-
-/*
-Receive partner camera.
-*/
+};
 
 peerConnection.ontrack=
 event=>{
-
-console.log(
-"Remote track received"
-);
 
 const video=
 document.getElementById(
 "partnerVideo"
 );
 
-if(event.streams&&event.streams[0]){
+if(event.streams[0]){
 
 video.srcObject=
 event.streams[0];
 
-}
+video.play().catch(()=>{});
 
-document
-.getElementById("partnerWaiting")
-.style.display="none";
+document.getElementById(
+"partnerWaiting"
+).style.display="none";
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"🟢 Live together ♡";
-
-updateCameraStatus(
-"🟢 Both cameras connected"
-);
-
-};
-
-
-/*
-ICE candidates.
-*/
-
-peerConnection.onicecandidate=
-async event=>{
-
-if(event.candidate){
-
-await sendWebRTC(
-"candidate",
-event.candidate.toJSON()
+setConnectionStatus(
+"🟢 Connected — you can see each other",
+true
 );
 
 }
 
 };
-
-
-/*
-Connection state.
-*/
 
 peerConnection.onconnectionstatechange=
 ()=>{
@@ -2128,103 +1382,60 @@ const state=
 peerConnection.connectionState;
 
 console.log(
-"WebRTC state:",
+"WebRTC connection:",
 state
 );
 
 if(state==="connected"){
 
-document
-.getElementById("partnerWaiting")
-.style.display="none";
+setConnectionStatus(
+"🟢 Connected — you can see each other",
+true
+);
 
-updateCameraStatus(
-"🟢 Live together"
+document.getElementById(
+"partnerWaiting"
+).style.display="none";
+
+}
+
+else if(
+state==="connecting"
+){
+
+setConnectionStatus(
+"🟡 Connecting video...",
+false
 );
 
 }
 
-if(state==="connecting"){
-
-updateCameraStatus(
-"🟡 Connecting cameras..."
-);
-
-}
-
-if(
+else if(
 state==="failed"||
 state==="disconnected"
 ){
 
-updateCameraStatus(
-"🟠 Camera connection interrupted"
+setConnectionStatus(
+"🔴 Video connection failed — retrying...",
+false
 );
 
-}
-
-if(state==="closed"){
-
-updateCameraStatus(
-"⚪ Connection closed"
-);
+restartWebRTC();
 
 }
 
 };
 
+peerConnection.onnegotiationneeded=
+async()=>{
 
-/*
-ICE connection state.
-*/
+if(!isCaller)return;
 
-peerConnection.oniceconnectionstatechange=
-()=>{
-
-console.log(
-"ICE state:",
-peerConnection.iceConnectionState
-);
-
-};
-
-
-/*
-Negotiation event.
-
-We intentionally do not automatically
-create offers here. The hello system
-chooses one caller.
-*/
-
-return peerConnection;
-
-}
-
-
-/* =====================================================
-CREATE OFFER
-===================================================== */
-
-async function createOffer(){
-
-if(makingOffer)
-return;
-
-makingOffer=true;
+if(makingOffer)return;
 
 try{
 
-await createPeerConnection();
-
-
-/*
-If camera was started after the peer
-was created, make sure the track exists.
-*/
-
-await ensureLocalTrack();
-
+makingOffer=true;
 
 const offer=
 await peerConnection.createOffer();
@@ -2233,14 +1444,13 @@ await peerConnection.setLocalDescription(
 offer
 );
 
-await sendWebRTC(
+await broadcastSignal(
 "offer",
 {
-type:
-peerConnection.localDescription.type,
-
-sdp:
-peerConnection.localDescription.sdp
+description:{
+type:offer.type,
+sdp:offer.sdp
+}
 }
 );
 
@@ -2257,20 +1467,178 @@ makingOffer=false;
 
 }
 
+};
+
+if(cameraStream){
+
+cameraStream
+.getTracks()
+.forEach(track=>{
+peerConnection.addTrack(
+track,
+cameraStream
+);
+});
+
+}
+
 }
 
 
 /* =====================================================
-CREATE ANSWER
+CALLER ELECTION
 ===================================================== */
 
-async function createAnswer(){
+async function electCaller(){
+
+if(!roomChannel)return;
+
+const state=
+roomChannel.presenceState();
+
+let users=[];
+
+Object.values(state)
+.forEach(entries=>{
+entries.forEach(entry=>{
+users.push(entry);
+});
+});
+
+if(!users.length)return;
+
+users.sort(
+(a,b)=>
+String(a.id).localeCompare(
+String(b.id)
+)
+);
+
+const newCaller=
+users[0].id===clientId;
+
+if(
+newCaller!==isCaller
+){
+
+isCaller=newCaller;
+
+console.log(
+"is caller:",
+isCaller
+);
+
+}
+
+if(isCaller){
+
+setTimeout(
+createOffer,
+500
+);
+
+}
+
+}
+
+
+/* =====================================================
+CREATE OFFER
+===================================================== */
+
+async function createOffer(){
+
+if(!peerConnection)return;
+
+if(
+peerConnection.signalingState!=="stable"
+)return;
+
+if(makingOffer)return;
 
 try{
 
-await createPeerConnection();
+makingOffer=true;
 
-await ensureLocalTrack();
+const offer=
+await peerConnection.createOffer();
+
+await peerConnection.setLocalDescription(
+offer
+);
+
+await broadcastSignal(
+"offer",
+{
+description:{
+type:offer.type,
+sdp:offer.sdp
+}
+}
+);
+
+}catch(error){
+
+console.error(
+"Create offer error:",
+error
+);
+
+}finally{
+
+makingOffer=false;
+
+}
+
+}
+
+
+/* =====================================================
+SIGNAL BROADCAST
+===================================================== */
+
+async function broadcastSignal(
+type,
+data
+){
+
+if(!webrtcChannel)return;
+
+await webrtcChannel.send({
+type:"broadcast",
+event:"signal",
+payload:{
+sender:clientId,
+type:type,
+...data
+}
+});
+
+}
+
+
+/* =====================================================
+HANDLE SIGNAL
+===================================================== */
+
+async function handleSignal(message){
+
+if(!peerConnection)
+await createPeer();
+
+try{
+
+if(message.type==="offer"){
+
+await peerConnection.setRemoteDescription(
+new RTCSessionDescription(
+message.description
+)
+);
+
+remoteDescriptionSet=true;
+
+await flushCandidates();
 
 const answer=
 await peerConnection.createAnswer();
@@ -2279,124 +1647,48 @@ await peerConnection.setLocalDescription(
 answer
 );
 
-await sendWebRTC(
+await broadcastSignal(
 "answer",
 {
-type:
-peerConnection.localDescription.type,
-
-sdp:
-peerConnection.localDescription.sdp
+description:{
+type:answer.type,
+sdp:answer.sdp
 }
-);
-
-}catch(error){
-
-console.error(
-"Answer error:",
-error
+}
 );
 
 }
 
-}
+else if(message.type==="answer"){
 
-
-/* =====================================================
-HANDLE WEBRTC
-===================================================== */
-
-async function handleWebRTCMessage(
-message
-){
-
-try{
-
-await createPeerConnection();
-
-
-/*
-OFFER
-*/
-
-if(message.type==="offer"){
-
-console.log(
-"Received offer"
-);
-
-await peerConnection
-.setRemoteDescription(
+await peerConnection.setRemoteDescription(
 new RTCSessionDescription(
-message.data
+message.description
 )
 );
 
-await flushPendingCandidates();
+remoteDescriptionSet=true;
 
-await createAnswer();
-
-return;
+await flushCandidates();
 
 }
 
-
-/*
-ANSWER
-*/
-
-if(message.type==="answer"){
-
-console.log(
-"Received answer"
-);
-
-await peerConnection
-.setRemoteDescription(
-new RTCSessionDescription(
-message.data
-)
-);
-
-await flushPendingCandidates();
-
-return;
-
-}
-
-
-/*
-ICE CANDIDATE
-*/
-
-if(message.type==="candidate"){
+else if(message.type==="candidate"){
 
 const candidate=
 new RTCIceCandidate(
-message.data
+message.candidate
 );
 
+if(remoteDescriptionSet){
 
-/*
-Sometimes ICE arrives before the
-remote description. Queue it.
-*/
-
-if(
-peerConnection.remoteDescription&&
-peerConnection.remoteDescription.type
-){
-
-await peerConnection
-.addIceCandidate(
+await peerConnection.addIceCandidate(
 candidate
 );
 
 }else{
 
-pendingCandidates.push(
-candidate
-);
+pendingCandidates.push(candidate);
 
 }
 
@@ -2405,7 +1697,7 @@ candidate
 }catch(error){
 
 console.error(
-"WebRTC handling error:",
+"Signal handling error:",
 error
 );
 
@@ -2415,34 +1707,28 @@ error
 
 
 /* =====================================================
-FLUSH ICE
+ICE QUEUE
 ===================================================== */
 
-async function flushPendingCandidates(){
+async function flushCandidates(){
 
-if(!peerConnection)
-return;
-
-const candidates=
-pendingCandidates.splice(
-0
-);
-
-for(
-const candidate of candidates
+while(
+pendingCandidates.length
 ){
+
+const candidate=
+pendingCandidates.shift();
 
 try{
 
-await peerConnection
-.addIceCandidate(
+await peerConnection.addIceCandidate(
 candidate
 );
 
 }catch(error){
 
 console.error(
-"ICE candidate error:",
+"ICE error:",
 error
 );
 
@@ -2454,48 +1740,66 @@ error
 
 
 /* =====================================================
-ENSURE LOCAL TRACK
+RESTART CONNECTION
 ===================================================== */
 
-async function ensureLocalTrack(){
+async function restartWebRTC(){
 
-if(!cameraStream)
-return;
+try{
 
-if(!peerConnection)
-return;
+if(peerConnection){
 
-const track=
-cameraStream
-.getVideoTracks()[0];
+peerConnection.ontrack=null;
 
-if(!track)
-return;
+peerConnection.close();
 
-const senders=
-peerConnection.getSenders();
+}
 
-const existing=
-senders.find(
-sender=>
-sender.track&&
-sender.track.kind==="video"
+peerConnection=null;
+
+remoteDescriptionSet=false;
+
+pendingCandidates=[];
+
+await createPeer();
+
+setTimeout(
+electCaller,
+500
 );
 
-if(existing){
+}catch(error){
 
-await existing.replaceTrack(
-track
-);
-
-}else{
-
-peerConnection.addTrack(
-track,
-cameraStream
+console.error(
+"Restart error:",
+error
 );
 
 }
+
+}
+
+
+/* =====================================================
+CONNECTION STATUS
+===================================================== */
+
+function setConnectionStatus(
+text,
+connected
+){
+
+const pill=
+document.getElementById(
+"connectionPill"
+);
+
+pill.textContent=text;
+
+pill.style.background=
+connected
+?"#e8f8ed"
+:"#fff4f7";
 
 }
 
@@ -2508,39 +1812,23 @@ async function startCamera(){
 
 try{
 
-if(
-!navigator.mediaDevices||
-!navigator.mediaDevices.getUserMedia
-){
+if(cameraStream){
 
-alert(
-"Your browser does not allow camera access here. Make sure the site is opened over HTTPS."
-);
-
-return;
+cameraStream
+.getTracks()
+.forEach(track=>track.stop());
 
 }
-
 
 cameraStream=
-await navigator
-.mediaDevices
-.getUserMedia({
-
+await navigator.mediaDevices.getUserMedia({
 video:{
 facingMode:"user",
-width:{
-ideal:1280
+width:{ideal:1280},
+height:{ideal:720}
 },
-height:{
-ideal:720
-}
-},
-
 audio:false
-
 });
-
 
 const video=
 document.getElementById(
@@ -2552,32 +1840,40 @@ cameraStream;
 
 await video.play();
 
-updateCameraStatus(
-"🟢 Your camera is ready"
+setConnectionStatus(
+"🟡 Camera on — connecting partner...",
+false
 );
 
+if(peerConnection){
 
-/*
-Create peer after camera exists.
-*/
+const track=
+cameraStream.getVideoTracks()[0];
 
-await createPeerConnection();
+const sender=
+peerConnection
+.getSenders()
+.find(
+s=>s.track &&
+s.track.kind==="video"
+);
 
-await ensureLocalTrack();
+if(sender){
 
+await sender.replaceTrack(track);
 
-/*
-If we're the caller, create offer again
-so the camera track is included.
-*/
+}else{
 
-if(
-remoteUserId&&
-currentUserId <
-remoteUserId
-){
+peerConnection.addTrack(
+track,
+cameraStream
+);
 
-await createOffer();
+}
+
+}else{
+
+await setupWebRTC();
 
 }
 
@@ -2589,7 +1885,7 @@ error
 );
 
 alert(
-"Camera access was blocked. Please allow camera permission in your browser settings and try again."
+"Camera access was blocked. Allow camera permission in your browser, then press Start Camera again."
 );
 
 }
@@ -2598,62 +1894,25 @@ alert(
 
 
 /* =====================================================
-STATUS
-===================================================== */
-
-function updatePartnerStatus(
-text
-){
-
-const el=
-document.getElementById(
-"partnerStatus"
-);
-
-if(el)
-el.textContent=text;
-
-}
-
-function updateCameraStatus(
-text
-){
-
-const el=
-document.getElementById(
-"cameraStatus"
-);
-
-if(el)
-el.textContent=text;
-
-}
-
-
-/* =====================================================
-OPEN PHOTOBOOTH
+PHOTOBOOTH
 ===================================================== */
 
 function openPhotobooth(){
 
 photos=[];
 
-selectedDesign="coquette";
-
-decorationHistory=[];
-
-document
-.getElementById("photoCount")
-.textContent=
+document.getElementById(
+"photoCount"
+).textContent=
 "0 / "+selectedStrip;
 
-document
-.getElementById("photoPreview")
-.innerHTML="";
+document.getElementById(
+"photoPreview"
+).innerHTML="";
 
-document
-.getElementById("photosDoneButton")
-.disabled=true;
+document.getElementById(
+"photosDoneButton"
+).disabled=true;
 
 showPage("photobooth");
 
@@ -2661,10 +1920,6 @@ nextStep(1);
 
 }
 
-
-/* =====================================================
-STRIP SELECT
-===================================================== */
 
 function selectStrip(
 number,
@@ -2675,19 +1930,15 @@ selectedStrip=number;
 
 document
 .querySelectorAll(".strip-option")
-.forEach(x=>{
-x.classList.remove(
-"selected"
-);
-});
-
-button.classList.add(
-"selected"
+.forEach(x=>
+x.classList.remove("selected")
 );
 
-document
-.getElementById("photoCount")
-.textContent=
+button.classList.add("selected");
+
+document.getElementById(
+"photoCount"
+).textContent=
 photos.length+
 " / "+
 selectedStrip;
@@ -2695,29 +1946,21 @@ selectedStrip;
 }
 
 
-/* =====================================================
-STEP
-===================================================== */
-
 function nextStep(number){
 
 document
 .querySelectorAll(".step")
-.forEach(x=>{
-x.classList.remove(
-"active"
+.forEach(x=>
+x.classList.remove("active")
 );
-});
 
-document
-.getElementById(
+document.getElementById(
 "step"+number
-)
-.classList.add("active");
+).classList.add("active");
 
-document
-.getElementById("stepNumber")
-.textContent=
+document.getElementById(
+"stepNumber"
+).textContent=
 number+" / 5";
 
 if(number===2){
@@ -2725,34 +1968,18 @@ if(number===2){
 if(!cameraStream)
 startCamera();
 
-if(
-!realtimeChannel||
-!realtimeReady
-){
-
-connectToRoom();
+setupWebRTC();
 
 }
 
-}
-
-if(number===3){
-
+if(number===3)
 buildDesignPicker();
 
-}
-
-if(number===4){
-
+if(number===4)
 buildFinalStrip();
 
-}
-
-if(number===5){
-
+if(number===5)
 copyFinalPreview();
-
-}
 
 }
 
@@ -2765,22 +1992,14 @@ function takePhoto(){
 
 if(!cameraStream){
 
-alert(
-"Start your camera first."
-);
-
+alert("Start your camera first.");
 return;
 
 }
 
-if(
-photos.length>=selectedStrip
-){
+if(photos.length>=selectedStrip){
 
-alert(
-"Your strip is already full!"
-);
-
+alert("Your strip is already full!");
 return;
 
 }
@@ -2790,23 +2009,23 @@ let count=3;
 const overlay=
 document.createElement("div");
 
-overlay.style.position="fixed";
-overlay.style.inset="0";
-overlay.style.zIndex="9999";
-overlay.style.display="grid";
-overlay.style.placeItems="center";
-overlay.style.background="#0009";
-overlay.style.color="white";
-overlay.style.font="bold 100px Georgia";
+overlay.style.cssText=
+`
+position:fixed;
+inset:0;
+z-index:9999;
+display:grid;
+place-items:center;
+background:#0009;
+color:white;
+font:bold 100px Georgia;
+`;
 
-document.body.appendChild(
-overlay
-);
+document.body.appendChild(overlay);
 
 overlay.textContent=count;
 
-const timer=
-setInterval(()=>{
+const timer=setInterval(()=>{
 
 count--;
 
@@ -2817,9 +2036,7 @@ overlay.textContent=count;
 }else{
 
 clearInterval(timer);
-
 overlay.remove();
-
 capturePhoto();
 
 }
@@ -2830,8 +2047,7 @@ capturePhoto();
 
 
 /* =====================================================
-CAPTURE PHOTO
-4:5
+CAPTURE 4:5
 ===================================================== */
 
 function capturePhoto(){
@@ -2842,75 +2058,44 @@ document.getElementById(
 );
 
 const canvas=
-document.createElement(
-"canvas"
-);
+document.createElement("canvas");
 
+const width=800;
+const height=1000;
 
-/*
-EXACT 4:5
-*/
-
-canvas.width=800;
-canvas.height=1000;
+canvas.width=width;
+canvas.height=height;
 
 const ctx=
 canvas.getContext("2d");
 
+const vw=video.videoWidth;
+const vh=video.videoHeight;
 
-/*
-Mirror camera image.
-*/
-
-ctx.save();
-
-ctx.translate(
-800,
-0
-);
-
-ctx.scale(
--1,
-1
-);
-
-
-/*
-Crop the video into 4:5
-without stretching.
-*/
-
-const videoRatio=
-video.videoWidth/
-video.videoHeight;
-
-const targetRatio=
-4/5;
+const targetRatio=4/5;
+const videoRatio=vw/vh;
 
 let sx=0;
 let sy=0;
-let sw=video.videoWidth;
-let sh=video.videoHeight;
+let sw=vw;
+let sh=vh;
 
 if(videoRatio>targetRatio){
 
-sw=
-video.videoHeight*
-targetRatio;
-
-sx=
-(video.videoWidth-sw)/2;
+sw=vh*targetRatio;
+sx=(vw-sw)/2;
 
 }else{
 
-sh=
-video.videoWidth/
-targetRatio;
-
-sy=
-(video.videoHeight-sh)/2;
+sh=vw/targetRatio;
+sy=(vh-sh)/2;
 
 }
+
+ctx.save();
+
+ctx.translate(width,0);
+ctx.scale(-1,1);
 
 ctx.drawImage(
 video,
@@ -2920,23 +2105,22 @@ sw,
 sh,
 0,
 0,
-800,
-1000
+width,
+height
 );
 
 ctx.restore();
 
-const image=
+photos.push(
 canvas.toDataURL(
 "image/jpeg",
-.92
+.94
+)
 );
 
-photos.push(image);
-
-document
-.getElementById("photoCount")
-.textContent=
+document.getElementById(
+"photoCount"
+).textContent=
 photos.length+
 " / "+
 selectedStrip;
@@ -2947,20 +2131,14 @@ if(
 photos.length>=selectedStrip
 ){
 
-document
-.getElementById(
+document.getElementById(
 "photosDoneButton"
-)
-.disabled=false;
+).disabled=false;
 
 }
 
 }
 
-
-/* =====================================================
-THUMBNAILS
-===================================================== */
 
 function updatePhotoThumbnails(){
 
@@ -2986,37 +2164,6 @@ preview.appendChild(img);
 
 
 /* =====================================================
-DESIGN NAMES
-===================================================== */
-
-function getDesignName(name){
-
-const names={
-
-coquette:"🎀 Coquette",
-film:"🎞️ 35mm Film",
-scrapbook:"📒 Scrapbook",
-y2k:"💿 Y2K",
-strawberry:"🍓 Strawberry",
-lace:"୨୧ Lace",
-postcard:"💌 Love Postcard",
-floral:"🌷 Floral",
-dreamy:"☁️ Dreamy",
-vintage:"📻 Vintage",
-polaroid:"📷 Polaroid",
-diary:"📔 Dear Diary",
-editorial:"🖤 Editorial",
-pinkcam:"🎀 Pink Cam",
-cafe:"☕ Café Memory"
-
-};
-
-return names[name]||name;
-
-}
-
-
-/* =====================================================
 DESIGN PICKER
 ===================================================== */
 
@@ -3036,22 +2183,14 @@ document.createElement("button");
 
 card.className=
 "design-card"+
-(
-name===selectedDesign
-?" selected"
-:""
-);
+(name===selectedDesign?
+" selected":"");
 
 const preview=
 document.createElement("div");
 
 preview.className=
 "design-preview theme-"+name;
-
-
-/*
-Actual 4:5 photos.
-*/
 
 photos.forEach(image=>{
 
@@ -3064,12 +2203,10 @@ preview.appendChild(img);
 
 });
 
-
 const label=
 document.createElement("div");
 
-label.className=
-"design-name";
+label.className="design-name";
 
 label.textContent=
 getDesignName(name);
@@ -3077,54 +2214,27 @@ getDesignName(name);
 card.appendChild(preview);
 card.appendChild(label);
 
-
-/*
-Tap.
-*/
-
 card.onclick=()=>{
 
 selectedDesign=name;
 
 document
 .querySelectorAll(".design-card")
-.forEach(x=>{
-x.classList.remove(
-"selected"
+.forEach(x=>
+x.classList.remove("selected")
 );
-});
 
-card.classList.add(
-"selected"
-);
+card.classList.add("selected");
 
 renderDesignPreview();
 
 };
-
-
-/*
-Desktop hover.
-*/
 
 card.onmouseenter=()=>{
 
 if(window.innerWidth>600){
 
 selectedDesign=name;
-
-document
-.querySelectorAll(".design-card")
-.forEach(x=>{
-x.classList.remove(
-"selected"
-);
-});
-
-card.classList.add(
-"selected"
-);
-
 renderDesignPreview();
 
 }
@@ -3140,9 +2250,25 @@ renderDesignPreview();
 }
 
 
-/* =====================================================
-DESIGN PREVIEW
-===================================================== */
+function getDesignName(name){
+
+const names={
+coquette:"🎀 Coquette",
+retro:"📻 Retro Film",
+scrapbook:"📒 Scrapbook",
+y2k:"💿 Y2K",
+strawberry:"🍓 Strawberry",
+lace:"🕊️ Lace",
+postcard:"💌 Postcard",
+floral:"🌸 Floral",
+dreamy:"☁️ Dreamy",
+vintage:"🌷 Vintage"
+};
+
+return names[name];
+
+}
+
 
 function renderDesignPreview(){
 
@@ -3152,8 +2278,7 @@ document.getElementById(
 );
 
 preview.className=
-"final-strip theme-"+
-selectedDesign;
+"final-strip theme-"+selectedDesign;
 
 preview.innerHTML="";
 
@@ -3184,23 +2309,39 @@ preview.appendChild(title);
 }
 
 
-/* =====================================================
-CHOOSE DESIGN
-===================================================== */
-
 function chooseDesign(){
 
 buildFinalStrip();
-
-decorationHistory=[];
-
 nextStep(4);
 
 }
 
 
 /* =====================================================
-BUILD FINAL STRIP
+EDIT HISTORY
+===================================================== */
+
+let editHistory=[];
+
+function saveEditState(){
+
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
+editHistory.push(
+strip.innerHTML
+);
+
+if(editHistory.length>30)
+editHistory.shift();
+
+}
+
+
+/* =====================================================
+FINAL STRIP
 ===================================================== */
 
 function buildFinalStrip(){
@@ -3211,8 +2352,7 @@ document.getElementById(
 );
 
 strip.className=
-"final-strip theme-"+
-selectedDesign;
+"final-strip theme-"+selectedDesign;
 
 strip.innerHTML="";
 
@@ -3240,34 +2380,18 @@ yourName+
 
 strip.appendChild(title);
 
-}
-
-
-/* =====================================================
-DECORATION HISTORY
-===================================================== */
-
-function recordDecoration(
-element
-){
-
-decorationHistory.push(
-element
-);
+editHistory=[];
 
 }
 
 
 /* =====================================================
-ADD STICKER
+STICKERS
 ===================================================== */
 
 function addSticker(symbol){
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
+saveEditState();
 
 const sticker=
 document.createElement("div");
@@ -3282,11 +2406,12 @@ sticker.style.left=
 sticker.style.top=
 (10+Math.random()*80)+"%";
 
-strip.appendChild(sticker);
-
-recordDecoration(
-sticker
+const strip=
+document.getElementById(
+"photoStrip"
 );
+
+strip.appendChild(sticker);
 
 makeMovable(
 sticker,
@@ -3295,10 +2420,6 @@ strip
 
 }
 
-
-/* =====================================================
-ADD TEXT
-===================================================== */
 
 function addText(){
 
@@ -3310,13 +2431,9 @@ document.getElementById(
 const value=
 input.value.trim();
 
-if(!value)
-return;
+if(!value)return;
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
+saveEditState();
 
 const text=
 document.createElement("div");
@@ -3329,24 +2446,25 @@ text.textContent=value;
 text.style.left="50%";
 text.style.top="50%";
 
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
 strip.appendChild(text);
 
-recordDecoration(
-text
-);
+input.value="";
 
 makeMovable(
 text,
 strip
 );
 
-input.value="";
-
 }
 
 
 /* =====================================================
-MOVABLE DECORATION
+MOVABLE ELEMENTS
 ===================================================== */
 
 function makeMovable(
@@ -3365,150 +2483,79 @@ const rect=
 container.getBoundingClientRect();
 
 let x=
-(
-(clientX-rect.left)/
-rect.width
-)*100;
+((clientX-rect.left)/
+rect.width)*100;
 
 let y=
-(
-(clientY-rect.top)/
-rect.height
-)*100;
+((clientY-rect.top)/
+rect.height)*100;
 
-x=Math.max(
-5,
-Math.min(95,x)
-);
+x=Math.max(5,Math.min(95,x));
+y=Math.max(3,Math.min(97,y));
 
-y=Math.max(
-3,
-Math.min(97,y)
-);
-
-element.style.left=
-x+"%";
-
-element.style.top=
-y+"%";
+element.style.left=x+"%";
+element.style.top=y+"%";
 
 }
-
-
-/*
-Touch.
-*/
 
 element.addEventListener(
 "touchstart",
 e=>{
-
 dragging=true;
-
 e.preventDefault();
-
 },
-{
-passive:false
-}
+{passive:false}
 );
 
 element.addEventListener(
 "touchmove",
 e=>{
 
-if(!dragging)
-return;
+if(!dragging)return;
 
 e.preventDefault();
 
-const touch=
-e.touches[0];
+const t=e.touches[0];
 
 move(
-touch.clientX,
-touch.clientY
+t.clientX,
+t.clientY
 );
 
 },
-{
-passive:false
-}
+{passive:false}
 );
 
 element.addEventListener(
 "touchend",
-()=>{
-
-dragging=false;
-
-}
+()=>dragging=false
 );
-
-
-/*
-Mouse.
-*/
 
 element.addEventListener(
 "mousedown",
 e=>{
-
 dragging=true;
-
 e.preventDefault();
-
 }
 );
 
-const mouseMove=
+document.addEventListener(
+"mousemove",
 e=>{
 
-if(!dragging)
-return;
-
+if(dragging)
 move(
 e.clientX,
 e.clientY
 );
 
-};
-
-const mouseUp=
-()=>{
-
-dragging=false;
-
-};
-
-document.addEventListener(
-"mousemove",
-mouseMove
+}
 );
 
 document.addEventListener(
 "mouseup",
-mouseUp
+()=>dragging=false
 );
-
-
-/*
-Store cleanup functions on element.
-*/
-
-element._cleanup=()=>{
-
-document.removeEventListener(
-"mousemove",
-mouseMove
-);
-
-document.removeEventListener(
-"mouseup",
-mouseUp
-);
-
-};
 
 }
 
@@ -3517,36 +2564,29 @@ mouseUp
 UNDO
 ===================================================== */
 
-function undoLast(){
+function undoLastEdit(){
 
-if(
-decorationHistory.length===0
-){
+if(!editHistory.length){
 
+alert("Nothing to undo ♡");
 return;
 
 }
 
-const last=
-decorationHistory.pop();
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
-if(last){
+strip.innerHTML=
+editHistory.pop();
 
-if(last._cleanup)
-last._cleanup();
-
-last.remove();
-
-}
+restoreMovableElements();
 
 }
 
 
-/* =====================================================
-RESET
-===================================================== */
-
-function resetDecorations(){
+function restoreMovableElements(){
 
 const strip=
 document.getElementById(
@@ -3557,20 +2597,34 @@ strip
 .querySelectorAll(".decor")
 .forEach(element=>{
 
-if(element._cleanup)
-element._cleanup();
-
-element.remove();
+makeMovable(
+element,
+strip
+);
 
 });
-
-decorationHistory=[];
 
 }
 
 
 /* =====================================================
-COPY FINAL PREVIEW
+RESET
+===================================================== */
+
+function resetEdits(){
+
+if(!confirm(
+"Remove all stickers and text?"
+))
+return;
+
+buildFinalStrip();
+
+}
+
+
+/* =====================================================
+FINAL PREVIEW
 ===================================================== */
 
 function copyFinalPreview(){
@@ -3585,38 +2639,22 @@ document.getElementById(
 "savedPreview"
 );
 
-target.innerHTML="";
+target.innerHTML=
+source.innerHTML;
 
 target.className=
 source.className;
-
-
-/*
-Clone everything.
-*/
-
-Array
-.from(source.children)
-.forEach(child=>{
-
-target.appendChild(
-child.cloneNode(true)
-);
-
-});
 
 }
 
 
 /* =====================================================
-SAVE PHOTO
+SAVE IMAGE
 ===================================================== */
 
 async function saveStrip(){
 
-if(
-typeof html2canvas==="undefined"
-){
+if(typeof html2canvas==="undefined"){
 
 const script=
 document.createElement("script");
@@ -3624,28 +2662,19 @@ document.createElement("script");
 script.src=
 "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
 
-script.onload=async()=>{
+script.onload=
+actuallySaveStrip;
 
-await actuallySaveStrip();
-
-};
-
-document.head.appendChild(
-script
-);
+document.head.appendChild(script);
 
 }else{
 
-await actuallySaveStrip();
+actuallySaveStrip();
 
 }
 
 }
 
-
-/* =====================================================
-ACTUAL SAVE
-===================================================== */
 
 async function actuallySaveStrip(){
 
@@ -3654,16 +2683,13 @@ document.getElementById(
 "photoStrip"
 );
 
-try{
-
 const canvas=
 await html2canvas(
 strip,
 {
 scale:3,
 backgroundColor:null,
-useCORS:true,
-logging:false
+useCORS:true
 }
 );
 
@@ -3674,24 +2700,9 @@ link.download=
 "our-little-photobooth.png";
 
 link.href=
-canvas.toDataURL(
-"image/png"
-);
+canvas.toDataURL("image/png");
 
 link.click();
-
-}catch(error){
-
-console.error(
-"Save error:",
-error
-);
-
-alert(
-"Something went wrong while saving the photo. Please try again."
-);
-
-}
 
 }
 
@@ -3708,26 +2719,20 @@ if(cameraStream){
 
 cameraStream
 .getTracks()
-.forEach(track=>{
-track.stop();
-});
-
-}
-
-if(peerConnection){
-
-peerConnection.close();
-
-}
-
-if(realtimeChannel){
-
-supabaseClient
-.removeChannel(
-realtimeChannel
+.forEach(track=>
+track.stop()
 );
 
 }
+
+if(peerConnection)
+peerConnection.close();
+
+if(roomChannel)
+roomChannel.unsubscribe();
+
+if(webrtcChannel)
+webrtcChannel.unsubscribe();
 
 }
 );
