@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Little World ♡</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -24,10 +24,7 @@ color:#5b4650;
 display:flex;
 align-items:center;
 justify-content:center;
-background:
-radial-gradient(circle at 10% 20%,#f4cadb 0 2%,transparent 2.5%),
-radial-gradient(circle at 90% 30%,#ead8eb 0 2%,transparent 2.5%),
-#fff8fa;
+background:#fff7fa;
 }
 
 .card{
@@ -50,7 +47,7 @@ color:#b4778d;
 }
 
 h1{
-font-size:65px;
+font-size:60px;
 line-height:.9;
 margin:12px 0;
 }
@@ -89,6 +86,7 @@ background:#b96e88;
 color:white;
 font-family:Arial,sans-serif;
 font-weight:bold;
+cursor:pointer;
 }
 
 .secondary{
@@ -264,9 +262,7 @@ position:relative;
 }
 
 .coquette{
-background:
-radial-gradient(circle,#e8a8bb 1px,transparent 2px),
-#fff1f5;
+background:radial-gradient(circle,#e8a8bb 1px,transparent 2px),#fff1f5;
 background-size:13px 13px;
 }
 
@@ -280,9 +276,7 @@ background:linear-gradient(135deg,#d7d1f3,#b8d9e9,#f5cce1);
 }
 
 .strawberry{
-background:
-radial-gradient(circle,#fff 2px,transparent 3px),
-#ffd9d5;
+background:radial-gradient(circle,#fff 2px,transparent 3px),#ffd9d5;
 background-size:18px 18px;
 }
 
@@ -351,6 +345,8 @@ background:#3d3037;
 font-family:Arial,sans-serif;
 text-align:center;
 padding:25px;
+position:absolute;
+inset:0;
 }
 
 .waiting .heart{
@@ -416,8 +412,6 @@ font-size:17px;
 position:absolute;
 z-index:20;
 font-size:30px;
-user-select:none;
-touch-action:none;
 cursor:move;
 }
 
@@ -456,8 +450,7 @@ font-size:22px;
 cursor:pointer;
 }
 
-.tools input,
-textarea{
+.tools input,textarea{
 width:100%;
 padding:12px;
 border:1px solid #e5d9de;
@@ -488,36 +481,21 @@ line-height:29px;
 }
 
 @media(max-width:850px){
-
 .menu{grid-template-columns:1fr 1fr}
-
 .templates{grid-template-columns:repeat(2,1fr)}
-
 .editor{grid-template-columns:1fr}
-
 }
 
 @media(max-width:550px){
-
 .menu{grid-template-columns:1fr}
-
 .strip-options{grid-template-columns:1fr 1fr}
-
 .camera{grid-template-columns:1fr}
-
-.video-box video,
-.waiting{
-height:300px;
-min-height:300px;
-}
-
+.video-box video,.waiting{height:300px;min-height:300px}
 }
 </style>
 </head>
 
 <body>
-
-<!-- WELCOME -->
 
 <section id="welcome" class="page active home">
 
@@ -562,26 +540,18 @@ Shared room code
 Enter Our World ♡
 </button>
 
-<p id="connectionMessage"
-style="font-family:Arial,sans-serif;font-size:12px;color:#a06d7e;margin-top:15px">
-</p>
+<p id="connectionMessage"></p>
 
 </div>
 </section>
 
 
-<!-- HOME -->
-
 <section id="home" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('welcome')">←</button>
-
 <div>our little ♡ world</div>
-
 <div></div>
-
 </div>
 
 <div class="home-content">
@@ -642,23 +612,15 @@ ROOM:
 </section>
 
 
-<!-- PHOTOBOOTH -->
-
 <section id="photobooth" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('home')">←</button>
-
 <div>photobooth ♡</div>
-
 <div id="stepNumber">1 / 3</div>
-
 </div>
 
 <div class="content">
-
-<!-- STEP 1 -->
 
 <div id="step1" class="step active">
 
@@ -670,26 +632,22 @@ ROOM:
 
 <div class="strip-options">
 
-<button class="strip-option selected"
-onclick="selectStrip(2,this)">
+<button class="strip-option selected" onclick="selectStrip(2,this)">
 <strong>2</strong>
 classic
 </button>
 
-<button class="strip-option"
-onclick="selectStrip(3,this)">
+<button class="strip-option" onclick="selectStrip(3,this)">
 <strong>3</strong>
 sweet
 </button>
 
-<button class="strip-option"
-onclick="selectStrip(4,this)">
+<button class="strip-option" onclick="selectStrip(4,this)">
 <strong>4</strong>
 classic +
 </button>
 
-<button class="strip-option"
-onclick="selectStrip(6,this)">
+<button class="strip-option" onclick="selectStrip(6,this)">
 <strong>6</strong>
 long
 </button>
@@ -703,8 +661,6 @@ Choose design →
 </div>
 
 
-<!-- STEP 2 -->
-
 <div id="step2" class="step">
 
 <div class="mini">choose your aesthetic</div>
@@ -715,62 +671,52 @@ Choose design →
 
 <div class="templates">
 
-<button class="template selected"
-onclick="selectTemplate('coquette',this)">
+<button class="template selected" onclick="selectTemplate('coquette',this)">
 <div class="preview coquette"></div>
 <div class="template-name">🎀 Coquette</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('retro',this)">
+<button class="template" onclick="selectTemplate('retro',this)">
 <div class="preview retro"></div>
 <div class="template-name">📻 Retro</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('y2k',this)">
+<button class="template" onclick="selectTemplate('y2k',this)">
 <div class="preview y2k"></div>
 <div class="template-name">💿 Y2K</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('strawberry',this)">
+<button class="template" onclick="selectTemplate('strawberry',this)">
 <div class="preview strawberry"></div>
 <div class="template-name">🍓 Strawberry</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('letter',this)">
+<button class="template" onclick="selectTemplate('letter',this)">
 <div class="preview letter"></div>
 <div class="template-name">💌 Love Letter</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('vintage',this)">
+<button class="template" onclick="selectTemplate('vintage',this)">
 <div class="preview vintage"></div>
 <div class="template-name">🌷 Vintage</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('kawaii',this)">
+<button class="template" onclick="selectTemplate('kawaii',this)">
 <div class="preview kawaii"></div>
 <div class="template-name">🧸 Kawaii</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('dreamy',this)">
+<button class="template" onclick="selectTemplate('dreamy',this)">
 <div class="preview dreamy"></div>
 <div class="template-name">☁️ Dreamy</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('indie',this)">
+<button class="template" onclick="selectTemplate('indie',this)">
 <div class="preview indie"></div>
 <div class="template-name">🎧 Indie</div>
 </button>
 
-<button class="template"
-onclick="selectTemplate('dark',this)">
+<button class="template" onclick="selectTemplate('dark',this)">
 <div class="preview dark"></div>
 <div class="template-name">🥀 Dark</div>
 </button>
@@ -781,16 +727,12 @@ onclick="selectTemplate('dark',this)">
 ← Back
 </button>
 
-<button class="primary"
-onclick="nextStep(3)"
-style="margin-top:10px">
+<button class="primary" onclick="nextStep(3)" style="margin-top:10px">
 Open photobooth →
 </button>
 
 </div>
 
-
-<!-- STEP 3 -->
 
 <div id="step3" class="step">
 
@@ -799,18 +741,14 @@ Open photobooth →
 <h2>Let's take pictures 📸</h2>
 
 <p class="muted">
-Your live cameras appear below. Microphone is not used.
+Camera only — no microphone.
 </p>
 
 <div class="camera">
 
 <div class="video-box">
 
-<video id="myCamera"
-autoplay
-playsinline
-muted>
-</video>
+<video id="myCamera" autoplay playsinline muted></video>
 
 <div class="video-label">
 You · <span id="cameraYouName">You</span>
@@ -820,10 +758,7 @@ You · <span id="cameraYouName">You</span>
 
 <div class="video-box">
 
-<video id="partnerVideo"
-autoplay
-playsinline>
-</video>
+<video id="partnerVideo" autoplay playsinline></video>
 
 <div id="partnerWaiting" class="waiting">
 
@@ -834,8 +769,7 @@ Waiting for partner...
 </b>
 
 <p>
-When they open the same room,
-their camera will appear here.
+Open the same room on the other phone.
 </p>
 
 </div>
@@ -854,9 +788,7 @@ Partner · <span id="cameraPartnerName">Them</span>
 Start Camera
 </button>
 
-<button class="shutter" onclick="takePhoto()">
-●
-</button>
+<button class="shutter" onclick="takePhoto()">●</button>
 
 <span id="photoCount">0 / 2</span>
 
@@ -864,21 +796,14 @@ Start Camera
 
 <div id="photoPreview" style="text-align:center"></div>
 
-<button
-id="editButton"
-class="primary"
-onclick="openEditor()"
-disabled>
+<button id="editButton" class="primary" onclick="openEditor()" disabled>
 Design My Strip →
 </button>
 
 </div>
-
 </div>
 </section>
 
-
-<!-- EDITOR -->
 
 <section id="editor" class="page">
 
@@ -936,40 +861,25 @@ Design My Strip →
 
 <b>Add text</b>
 
-<input id="customText"
-placeholder="our little moment ♡">
+<input id="customText" placeholder="our little moment ♡">
 
-<button class="secondary"
-onclick="addText()"
-style="margin-top:8px">
+<button class="secondary" onclick="addText()" style="margin-top:8px">
 Add text
 </button>
 
 </div>
-
-<button class="secondary"
-onclick="downloadStrip()"
-style="width:100%;margin-top:15px">
-📥 Download Finished Strip
-</button>
 
 </div>
 </div>
 </section>
 
 
-<!-- LETTERS -->
-
 <section id="letters" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('home')">←</button>
-
 <div>love letters 💌</div>
-
 <div></div>
-
 </div>
 
 <div class="simple">
@@ -978,13 +888,10 @@ style="width:100%;margin-top:15px">
 
 <h2>Write a little letter.</h2>
 
-<textarea id="letterInput"
-placeholder="Dear you..."></textarea>
+<textarea id="letterInput" placeholder="Dear you..."></textarea>
 
-<button class="primary"
-onclick="sendLetter()"
-style="margin-top:10px">
-Send Letter 💌
+<button class="primary" onclick="sendLetter()" style="margin-top:10px">
+Save Letter 💌
 </button>
 
 <div id="lettersList"></div>
@@ -993,44 +900,33 @@ Send Letter 💌
 </section>
 
 
-<!-- MEMORIES -->
-
 <section id="memories" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('home')">←</button>
-
 <div>our memories 🖼️</div>
-
 <div></div>
-
 </div>
 
 <div class="simple">
 
 <div class="mini">little moments</div>
-
 <h2>Our scrapbook</h2>
 
-<div id="memoryList"></div>
+<p class="desc">
+Your decorated photobooth strips can be saved here later.
+</p>
 
 </div>
 </section>
 
 
-<!-- DISTANCE -->
-
 <section id="distance" class="page">
 
 <div class="topbar">
-
 <button class="back" onclick="showPage('home')">←</button>
-
 <div>our distance 🌎</div>
-
 <div></div>
-
 </div>
 
 <div class="simple" style="text-align:center">
@@ -1095,12 +991,12 @@ let peerConnection=null;
 
 let signalingChannel=null;
 
-let currentUserId=
+const currentUserId=
 crypto.randomUUID();
 
 
 /* =====================================================
-WEBRTC SERVERS
+WEBRTC
 ===================================================== */
 
 const rtcConfig={
@@ -1116,16 +1012,14 @@ urls:"stun:stun1.l.google.com:19302"
 
 
 /* =====================================================
-PAGE NAVIGATION
+PAGE
 ===================================================== */
 
 function showPage(id){
 
 document
 .querySelectorAll(".page")
-.forEach(page=>{
-page.classList.remove("active");
-});
+.forEach(p=>p.classList.remove("active"));
 
 document
 .getElementById(id)
@@ -1137,29 +1031,19 @@ window.scrollTo(0,0);
 
 
 /* =====================================================
-ENTER ROOM
+ENTER WORLD
 ===================================================== */
 
 async function enterWorld(){
 
 yourName=
-document
-.getElementById("yourName")
-.value
-.trim();
+document.getElementById("yourName").value.trim();
 
 partnerName=
-document
-.getElementById("partnerName")
-.value
-.trim();
+document.getElementById("partnerName").value.trim();
 
 roomCode=
-document
-.getElementById("roomCode")
-.value
-.trim()
-.toUpperCase();
+document.getElementById("roomCode").value.trim().toUpperCase();
 
 if(!yourName){
 
@@ -1175,31 +1059,32 @@ return;
 
 }
 
-document
-.getElementById("connectionMessage")
-.textContent=
-"Connecting to your little world...";
+const message=
+document.getElementById("connectionMessage");
+
+message.textContent=
+"Connecting...";
 
 
-const {error}=await supabaseClient
+const {data,error}=await supabaseClient
 .from("rooms")
 .insert({
 room_code:roomCode,
 user_name:yourName
-});
+})
+.select()
+.single();
 
 
 if(error){
 
-console.error(error);
+console.error("ROOM ERROR:",error);
 
-document
-.getElementById("connectionMessage")
-.textContent=
+message.textContent=
 "Could not join the room.";
 
 alert(
-"Could not join the room. Check your Supabase table permissions."
+"Could not join the room. Please check your Supabase policies."
 );
 
 return;
@@ -1208,48 +1093,54 @@ return;
 
 
 document.getElementById("displayYou").textContent=yourName;
-document.getElementById("displayPartner").textContent=partnerName||"Them";
+document.getElementById("displayPartner").textContent=
+partnerName||"Them";
+
 document.getElementById("displayRoom").textContent=roomCode;
 
 document.getElementById("cameraYouName").textContent=yourName;
-document.getElementById("cameraPartnerName").textContent=partnerName||"Them";
+
+document.getElementById("cameraPartnerName").textContent=
+partnerName||"Them";
 
 document.getElementById("stripNames").textContent=
 yourName+" ♡ "+(partnerName||"Them");
 
 document.getElementById("distanceYou").textContent=yourName;
-document.getElementById("distancePartner").textContent=partnerName||"Them";
 
-document.getElementById("connectionMessage").textContent="Connected ♡";
+document.getElementById("distancePartner").textContent=
+partnerName||"Them";
+
+message.textContent="Connected ♡";
 
 showPage("home");
 
-listenForRoom();
+startRoomListener();
 
 }
 
 
 /* =====================================================
-ROOM REALTIME
+ROOM LISTENER
 ===================================================== */
 
-function listenForRoom(){
+async function startRoomListener(){
 
-checkRoom();
+await checkRoom();
 
 supabaseClient
-.channel("room-users-"+roomCode)
+.channel("room-presence-"+roomCode)
 .on(
 "postgres_changes",
 {
-event:"*",
+event:"INSERT",
 schema:"public",
 table:"rooms",
 filter:"room_code=eq."+roomCode
 },
-payload=>{
+async payload=>{
 
-checkRoom();
+await checkRoom();
 
 }
 )
@@ -1259,41 +1150,37 @@ checkRoom();
 
 
 /* =====================================================
-CHECK OTHER USER
+CHECK ROOM
 ===================================================== */
 
 async function checkRoom(){
 
 const {data,error}=await supabaseClient
 .from("rooms")
-.select("*")
+.select("id,room_code,user_name,created_at")
 .eq("room_code",roomCode);
 
 if(error){
 
-console.error(error);
+console.error("ROOM READ ERROR:",error);
 return;
 
 }
 
-const others=
-data.filter(
-user=>user.user_name!==yourName
+const otherUsers=
+(data||[]).filter(
+row=>row.user_name!==yourName
 );
 
-if(others.length){
+if(otherUsers.length>0){
 
 document.getElementById("partnerStatus").textContent=
-"🟢 "+others[0].user_name+" is in the room ♡";
+"🟢 "+otherUsers[0].user_name+" is here ♡";
 
 document.getElementById("partnerCameraText").textContent=
-others[0].user_name+" is connecting...";
-
-if(!peerConnection){
+"Connecting...";
 
 startSignaling();
-
-}
 
 }else{
 
@@ -1306,7 +1193,7 @@ document.getElementById("partnerStatus").textContent=
 
 
 /* =====================================================
-START SIGNALING
+SIGNALING
 ===================================================== */
 
 function startSignaling(){
@@ -1317,7 +1204,9 @@ return;
 
 signalingChannel=
 supabaseClient
-.channel("signals-"+roomCode)
+.channel(
+"webrtc-"+roomCode+"-"+currentUserId
+)
 .on(
 "postgres_changes",
 {
@@ -1334,31 +1223,21 @@ if(signal.sender===currentUserId){
 return;
 }
 
+console.log("Received:",signal.type);
+
 await handleSignal(signal);
 
 }
 )
 .subscribe(async status=>{
 
+console.log("Realtime status:",status);
+
 if(status==="SUBSCRIBED"){
 
 await createPeerConnection();
 
-const {data}=await supabaseClient
-.from("rooms")
-.select("*")
-.eq("room_code",roomCode);
-
-const isFirst=
-data &&
-data.length>0 &&
-data[0].user_name===yourName;
-
-if(isFirst){
-
-await createOffer();
-
-}
+await decideCaller();
 
 }
 
@@ -1368,7 +1247,34 @@ await createOffer();
 
 
 /* =====================================================
-CREATE PEER CONNECTION
+DECIDE WHO CREATES OFFER
+===================================================== */
+
+async function decideCaller(){
+
+const {data,error}=await supabaseClient
+.from("rooms")
+.select("id,user_name")
+.eq("room_code",roomCode)
+.order("id",{ascending:true});
+
+if(error||!data||data.length<2){
+return;
+}
+
+const firstUser=data[0];
+
+if(firstUser.user_name===yourName){
+
+await createOffer();
+
+}
+
+}
+
+
+/* =====================================================
+PEER
 ===================================================== */
 
 async function createPeerConnection(){
@@ -1380,11 +1286,6 @@ return;
 peerConnection=
 new RTCPeerConnection(rtcConfig);
 
-
-/*
-Camera only.
-NO microphone.
-*/
 
 if(cameraStream){
 
@@ -1404,6 +1305,8 @@ cameraStream
 
 peerConnection.ontrack=event=>{
 
+console.log("PARTNER VIDEO RECEIVED");
+
 const video=
 document.getElementById("partnerVideo");
 
@@ -1412,48 +1315,39 @@ event.streams[0];
 
 document.getElementById("partnerWaiting").style.display="none";
 
-document.getElementById("partnerCameraText").textContent=
-"Connected ♡";
+document.getElementById("partnerStatus").textContent=
+"🟢 Live together ♡";
 
 };
 
 
 peerConnection.onicecandidate=async event=>{
 
-if(!event.candidate){
-return;
-}
+if(event.candidate){
 
 await sendSignal(
 "candidate",
 event.candidate.toJSON()
 );
 
+}
+
 };
 
 
 peerConnection.onconnectionstatechange=()=>{
 
-const state=
-peerConnection.connectionState;
+console.log(
+"Connection:",
+peerConnection.connectionState
+);
 
-if(state==="connected"){
-
-document.getElementById("partnerStatus").textContent=
-"🟢 Live together ♡";
+if(peerConnection.connectionState==="connected"){
 
 document.getElementById("partnerWaiting").style.display="none";
 
-}
-
-if(
-state==="disconnected"||
-state==="failed"||
-state==="closed"
-){
-
 document.getElementById("partnerStatus").textContent=
-"⚪ Partner disconnected";
+"🟢 Live together ♡";
 
 }
 
@@ -1463,34 +1357,33 @@ document.getElementById("partnerStatus").textContent=
 
 
 /* =====================================================
-CREATE OFFER
+OFFER
 ===================================================== */
 
 async function createOffer(){
 
 if(!peerConnection){
-
 await createPeerConnection();
-
 }
 
 const offer=
 await peerConnection.createOffer();
 
-await peerConnection.setLocalDescription(
-offer
-);
+await peerConnection.setLocalDescription(offer);
 
 await sendSignal(
 "offer",
-offer
+{
+type:offer.type,
+sdp:offer.sdp
+}
 );
 
 }
 
 
 /* =====================================================
-HANDLE SIGNAL
+SIGNALS
 ===================================================== */
 
 async function handleSignal(signal){
@@ -1512,13 +1405,14 @@ new RTCSessionDescription(signal.data)
 const answer=
 await peerConnection.createAnswer();
 
-await peerConnection.setLocalDescription(
-answer
-);
+await peerConnection.setLocalDescription(answer);
 
 await sendSignal(
 "answer",
-answer
+{
+type:answer.type,
+sdp:answer.sdp
+}
 );
 
 }
@@ -1535,27 +1429,16 @@ new RTCSessionDescription(signal.data)
 
 else if(signal.type==="candidate"){
 
-try{
-
 await peerConnection.addIceCandidate(
 new RTCIceCandidate(signal.data)
 );
-
-}catch(error){
-
-console.warn(
-"ICE candidate waiting:",
-error
-);
-
-}
 
 }
 
 }catch(error){
 
 console.error(
-"WebRTC signal error:",
+"Signal handling error:",
 error
 );
 
@@ -1565,7 +1448,7 @@ error
 
 
 /* =====================================================
-SEND SIGNAL
+SEND SIGNAL TO SUPABASE
 ===================================================== */
 
 async function sendSignal(type,data){
@@ -1573,21 +1456,16 @@ async function sendSignal(type,data){
 const {error}=await supabaseClient
 .from("call_signals")
 .insert({
-
 room_code:roomCode,
-
 sender:currentUserId,
-
 type:type,
-
 data:data
-
 });
 
 if(error){
 
 console.error(
-"Signal error:",
+"CALL SIGNAL ERROR:",
 error
 );
 
@@ -1606,59 +1484,46 @@ try{
 
 cameraStream=
 await navigator.mediaDevices.getUserMedia({
-
 video:{
 facingMode:"user"
 },
-
 audio:false
-
 });
 
-
-document
-.getElementById("myCamera")
-.srcObject=
+document.getElementById("myCamera").srcObject=
 cameraStream;
 
-
-/*
-If the peer connection already exists,
-add the camera tracks.
-*/
 
 if(peerConnection){
 
 const senders=
 peerConnection.getSenders();
 
+const videoSender=
+senders.find(
+s=>s.track&&s.track.kind==="video"
+);
+
+if(videoSender){
+
+await videoSender.replaceTrack(
+cameraStream.getVideoTracks()[0]
+);
+
+}else{
+
 cameraStream
 .getTracks()
 .forEach(track=>{
-
-const alreadyAdded=
-senders.some(
-sender=>
-sender.track &&
-sender.track.kind==="video"
-);
-
-if(!alreadyAdded){
-
 peerConnection.addTrack(
 track,
 cameraStream
 );
-
-}
-
 });
 
 }
 
-document.getElementById("cameraYouName").textContent=
-yourName;
-
+}
 
 if(roomCode){
 
@@ -1668,10 +1533,10 @@ startSignaling();
 
 }catch(error){
 
-console.error(error);
+console.error("CAMERA ERROR:",error);
 
 alert(
-"Camera access was blocked. Please allow camera permission in your browser."
+"Please allow camera access in your browser."
 );
 
 }
@@ -1707,9 +1572,7 @@ selectedStrip=number;
 
 document
 .querySelectorAll(".strip-option")
-.forEach(x=>{
-x.classList.remove("selected");
-});
+.forEach(x=>x.classList.remove("selected"));
 
 button.classList.add("selected");
 
@@ -1725,9 +1588,7 @@ selectedTemplate=name;
 
 document
 .querySelectorAll(".template")
-.forEach(x=>{
-x.classList.remove("selected");
-});
+.forEach(x=>x.classList.remove("selected"));
 
 button.classList.add("selected");
 
@@ -1738,9 +1599,7 @@ function nextStep(number){
 
 document
 .querySelectorAll(".step")
-.forEach(x=>{
-x.classList.remove("active");
-});
+.forEach(x=>x.classList.remove("active"));
 
 document
 .getElementById("step"+number)
@@ -1749,18 +1608,13 @@ document
 document.getElementById("stepNumber").textContent=
 number+" / 3";
 
-
 if(number===3){
 
 if(!cameraStream){
-
 startCamera();
-
-}else{
+}
 
 startSignaling();
-
-}
 
 }
 
@@ -1775,20 +1629,14 @@ function takePhoto(){
 
 if(!cameraStream){
 
-alert(
-"Start your camera first."
-);
-
+alert("Start your camera first.");
 return;
 
 }
 
 if(photos.length>=selectedStrip){
 
-alert(
-"Your strip is full!"
-);
-
+alert("Your strip is full!");
 return;
 
 }
@@ -1864,10 +1712,7 @@ video,
 ctx.restore();
 
 const image=
-canvas.toDataURL(
-"image/jpeg",
-0.92
-);
+canvas.toDataURL("image/jpeg",0.92);
 
 photos.push(image);
 
@@ -1891,9 +1736,7 @@ document
 
 if(photos.length>=selectedStrip){
 
-document
-.getElementById("editButton")
-.disabled=false;
+document.getElementById("editButton").disabled=false;
 
 }
 
@@ -1907,14 +1750,8 @@ EDITOR
 function openEditor(){
 
 if(!photos.length){
-
-alert("Take some photos first ♡");
 return;
-
 }
-
-const strip=
-document.getElementById("photoStrip");
 
 const container=
 document.getElementById("stripPhotos");
@@ -1923,8 +1760,7 @@ container.innerHTML="";
 
 photos.forEach(image=>{
 
-const img=
-document.createElement("img");
+const img=document.createElement("img");
 
 img.src=image;
 
@@ -1934,6 +1770,9 @@ container.appendChild(img);
 
 document.getElementById("stripNames").textContent=
 yourName+" ♡ "+(partnerName||"Them");
+
+const strip=
+document.getElementById("photoStrip");
 
 const designs={
 
@@ -2006,8 +1845,7 @@ STICKERS
 
 function addSticker(symbol){
 
-const sticker=
-document.createElement("div");
+const sticker=document.createElement("div");
 
 sticker.className="decor";
 
@@ -2023,28 +1861,25 @@ document
 .getElementById("photoStrip")
 .appendChild(sticker);
 
-makeDraggable(sticker);
-
 }
 
+
+/* =====================================================
+TEXT
+===================================================== */
 
 function addText(){
 
 const value=
-document
-.getElementById("customText")
-.value
-.trim();
+document.getElementById("customText").value.trim();
 
 if(!value){
 return;
 }
 
-const text=
-document.createElement("div");
+const text=document.createElement("div");
 
-text.className=
-"decor decor-text";
+text.className="decor decor-text";
 
 text.textContent=value;
 
@@ -2055,131 +1890,7 @@ document
 .getElementById("photoStrip")
 .appendChild(text);
 
-makeDraggable(text);
-
-document
-.getElementById("customText")
-.value="";
-
-}
-
-
-/* =====================================================
-DRAG DECORATIONS
-===================================================== */
-
-function makeDraggable(element){
-
-let startX;
-let startY;
-let originalX;
-let originalY;
-
-function start(event){
-
-event.preventDefault();
-
-const point=
-event.touches
-?event.touches[0]
-:event;
-
-startX=point.clientX;
-startY=point.clientY;
-
-originalX=
-parseFloat(element.style.left);
-
-originalY=
-parseFloat(element.style.top);
-
-document.addEventListener("mousemove",move);
-document.addEventListener("mouseup",end);
-
-document.addEventListener(
-"touchmove",
-move,
-{passive:false}
-);
-
-document.addEventListener(
-"touchend",
-end
-);
-
-}
-
-function move(event){
-
-event.preventDefault();
-
-const point=
-event.touches
-?event.touches[0]
-:event;
-
-const strip=
-document
-.getElementById("photoStrip")
-.getBoundingClientRect();
-
-const dx=
-(point.clientX-startX)/
-strip.width*100;
-
-const dy=
-(point.clientY-startY)/
-strip.height*100;
-
-element.style.left=
-Math.max(
-0,
-Math.min(
-90,
-originalX+dx
-)
-)+"%";
-
-element.style.top=
-Math.max(
-0,
-Math.min(
-90,
-originalY+dy
-)
-)+"%";
-
-}
-
-function end(){
-
-document.removeEventListener("mousemove",move);
-document.removeEventListener("mouseup",end);
-document.removeEventListener("touchmove",move);
-document.removeEventListener("touchend",end);
-
-}
-
-element.addEventListener("mousedown",start);
-
-element.addEventListener(
-"touchstart",
-start,
-{passive:false}
-);
-
-}
-
-
-/* =====================================================
-DOWNLOAD
-===================================================== */
-
-async function downloadStrip(){
-
-alert(
-"Your decorated strip is ready to save. For a full image export, use a screenshot of the finished strip."
-);
+document.getElementById("customText").value="";
 
 }
 
@@ -2191,10 +1902,7 @@ LETTERS
 async function sendLetter(){
 
 const text=
-document
-.getElementById("letterInput")
-.value
-.trim();
+document.getElementById("letterInput").value.trim();
 
 if(!text){
 return;
@@ -2206,12 +1914,8 @@ localStorage.getItem("letters")||"[]"
 );
 
 letters.unshift({
-
 text:text,
-
-date:new Date()
-.toLocaleDateString()
-
+date:new Date().toLocaleDateString()
 });
 
 localStorage.setItem(
@@ -2219,9 +1923,7 @@ localStorage.setItem(
 JSON.stringify(letters)
 );
 
-document
-.getElementById("letterInput")
-.value="";
+document.getElementById("letterInput").value="";
 
 loadLetters();
 
@@ -2242,8 +1944,7 @@ list.innerHTML="";
 
 letters.forEach(letter=>{
 
-const div=
-document.createElement("div");
+const div=document.createElement("div");
 
 div.className="letter-note";
 
@@ -2259,21 +1960,13 @@ list.appendChild(div);
 }
 
 
-/* =====================================================
-CLEAN UP CAMERA
-===================================================== */
-
-window.addEventListener(
-"beforeunload",
-()=>{
+window.addEventListener("beforeunload",()=>{
 
 if(cameraStream){
 
 cameraStream
 .getTracks()
-.forEach(track=>{
-track.stop();
-});
+.forEach(track=>track.stop());
 
 }
 
@@ -2283,22 +1976,7 @@ peerConnection.close();
 
 }
 
-}
-);
-
-
-/* =====================================================
-LOAD
-===================================================== */
-
-window.addEventListener(
-"load",
-()=>{
-
-loadLetters();
-
-}
-);
+});
 
 </script>
 
