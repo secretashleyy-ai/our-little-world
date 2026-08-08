@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>Our Little Photobooth ♡</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -26,7 +26,6 @@ body{
     radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
     radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
     #fff8fa;
-  background-size:90px 90px;
 }
 
 button,input{font:inherit}
@@ -70,13 +69,11 @@ h1{
   margin:12px 0 18px;
 }
 
-h1 span,
-h2 span{
+h1 span,h2 span{
   color:var(--pink);
 }
 
-.desc,
-.muted{
+.desc,.muted{
   font-family:Arial,sans-serif;
   line-height:1.6;
   color:#88747c;
@@ -151,13 +148,23 @@ h2 span{
   box-shadow:0 20px 60px #533b4614;
 }
 
-.step{display:none}
-.step.active{display:block}
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+}
 
 .step h2{
   font-size:40px;
   margin:8px 0;
 }
+
+
+/* =========================
+   STRIP CHOICE
+========================= */
 
 .strip-options{
   display:grid;
@@ -184,7 +191,10 @@ h2 span{
   color:var(--pink);
 }
 
-/* CAMERA */
+
+/* =========================
+   CAMERA
+========================= */
 
 .camera{
   display:grid;
@@ -193,20 +203,19 @@ h2 span{
   background:#211b1e;
   padding:10px;
   border-radius:28px;
-  overflow:hidden;
 }
 
 .video-box{
   position:relative;
   background:#30262b;
-  min-height:320px;
+  min-height:330px;
   border-radius:20px;
   overflow:hidden;
 }
 
 .video-box video{
   width:100%;
-  height:320px;
+  height:330px;
   object-fit:cover;
   display:block;
   background:#30262b;
@@ -269,10 +278,6 @@ h2 span{
   flex-wrap:wrap;
 }
 
-/*
-IMPORTANT:
-The shutter is NEVER disabled by WebRTC.
-*/
 .shutter{
   width:78px;
   height:78px;
@@ -280,17 +285,25 @@ The shutter is NEVER disabled by WebRTC.
   border:7px solid #e3b3c2;
   background:white;
   font-size:22px;
-  color:#b85d7e;
-  cursor:pointer;
-  touch-action:manipulation;
+  box-shadow:0 8px 25px #6c3c4d22;
 }
 
-.shutter:active{
-  transform:scale(.94);
+.shutter:disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
-.shutter.ready{
-  box-shadow:0 0 0 6px #f6dce6;
+.countdown{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:#0009;
+  color:white;
+  font:bold 110px Georgia,serif;
+  text-shadow:0 5px 25px #000;
 }
 
 #photoPreview{
@@ -305,7 +318,17 @@ The shutter is NEVER disabled by WebRTC.
   border-radius:8px;
 }
 
-/* DESIGN PICKER */
+.photo-progress{
+  text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+  margin:8px;
+}
+
+
+/* =========================
+   DESIGNS
+========================= */
 
 .design-grid{
   display:grid;
@@ -333,7 +356,7 @@ The shutter is NEVER disabled by WebRTC.
   height:240px;
   display:flex;
   flex-direction:column;
-  gap:4px;
+  gap:5px;
   padding:8px;
   overflow:hidden;
 }
@@ -352,7 +375,10 @@ The shutter is NEVER disabled by WebRTC.
   padding:8px 2px 4px;
 }
 
-/* THEMES */
+
+/* =========================
+   DESIGN THEMES
+========================= */
 
 .theme-coquette{
   background:#fff0f6;
@@ -538,7 +564,10 @@ The shutter is NEVER disabled by WebRTC.
   border:2px solid #f0dfca;
 }
 
-/* FINAL STRIP */
+
+/* =========================
+   PHOTO EDITOR
+========================= */
 
 .final-preview-wrap{
   display:flex;
@@ -548,80 +577,238 @@ The shutter is NEVER disabled by WebRTC.
   border-radius:25px;
 }
 
-/*
-THIS is the new strip structure.
-
-Design decorations live around the PHOTOS.
-The names appear ONLY ONCE at the bottom.
-*/
-
 .final-strip{
   position:relative;
   width:310px;
-  padding:18px;
+  padding:13px;
   box-shadow:0 20px 50px #51363f35;
+}
+
+.photo-item{
+  position:relative;
+  width:100%;
+  margin-bottom:12px;
+  padding:8px;
   overflow:hidden;
 }
 
-.final-strip-photo{
-  position:relative;
+.photo-item img{
+  display:block;
   width:100%;
   aspect-ratio:4/5;
-  margin-bottom:12px;
-}
-
-.final-strip-photo img{
-  width:100%;
-  height:100%;
   object-fit:cover;
-  display:block;
 }
 
-.final-strip-title{
+.photo-item .photo-decoration{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+
+.strip-title{
   text-align:center;
-  padding:18px 3px 7px;
-  font-size:19px;
+  padding:15px 4px 9px;
+  font-size:18px;
   font-weight:bold;
   color:#49363e;
 }
 
-.final-strip-title small{
-  display:block;
-  margin-top:5px;
-  font:10px Arial;
-  letter-spacing:2px;
-  color:#ad7084;
+
+/* Each photo gets design decorations */
+
+.design-coquette{
+  background:#fff0f6;
+  border:3px solid #d889a3;
 }
 
-/* DECORATIONS */
-
-.decor{
+.design-coquette .photo-decoration:before{
+  content:"♡ 🎀 ୨୧ ♡";
   position:absolute;
-  z-index:50;
-  font-size:32px;
-  cursor:grab;
-  user-select:none;
-  touch-action:none;
-  transform:translate(-50%,-50%);
+  top:2px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#c76c8c;
+  font-size:14px;
 }
 
-.decor:active{
-  cursor:grabbing;
-}
-
-.text-decor{
-  font-size:17px;
-  padding:5px 9px;
-  background:#fff9;
-  border-radius:8px;
-}
-
-.photo-decoration{
+.design-coquette .photo-decoration:after{
+  content:"♡";
   position:absolute;
-  z-index:20;
-  pointer-events:none;
-  font-size:24px;
+  bottom:2px;
+  right:8px;
+  color:#d97899;
 }
+
+.design-retro{
+  background:#c89470;
+  border:7px solid #76503e;
+}
+
+.design-retro .photo-decoration:before{
+  content:"MEMORIES • LOVE";
+  position:absolute;
+  top:2px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#5c3d30;
+  font:8px Arial;
+}
+
+.design-retro img{
+  filter:sepia(.45) contrast(1.05);
+}
+
+.design-scrapbook{
+  background:#ead8c0;
+  border:7px dashed #a98267;
+}
+
+.design-scrapbook .photo-decoration:before{
+  content:"♡";
+  position:absolute;
+  top:2px;
+  left:8px;
+  color:#785b4c;
+}
+
+.design-scrapbook .photo-decoration:after{
+  content:"✿";
+  position:absolute;
+  bottom:2px;
+  right:8px;
+  color:#785b4c;
+}
+
+.design-y2k{
+  background:linear-gradient(135deg,#a8d6ed,#d9c8f0,#f2b9d7);
+  border:5px solid white;
+}
+
+.design-y2k .photo-decoration:before{
+  content:"★";
+  position:absolute;
+  top:1px;
+  left:7px;
+  color:white;
+}
+
+.design-y2k .photo-decoration:after{
+  content:"☆";
+  position:absolute;
+  bottom:1px;
+  right:7px;
+  color:white;
+}
+
+.design-strawberry{
+  background:#fff0e9;
+  border:5px solid #e76572;
+}
+
+.design-strawberry .photo-decoration:before{
+  content:"🍓";
+  position:absolute;
+  top:1px;
+  left:7px;
+}
+
+.design-strawberry .photo-decoration:after{
+  content:"🍓";
+  position:absolute;
+  bottom:1px;
+  right:7px;
+}
+
+.design-lace{
+  background:#ead8e3;
+  border:7px double #a87b96;
+}
+
+.design-lace .photo-decoration:before{
+  content:"୨୧";
+  position:absolute;
+  top:2px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#87627a;
+}
+
+.design-postcard{
+  background:#e6cdb5;
+  border:8px solid #956c52;
+}
+
+.design-postcard .photo-decoration:before{
+  content:"♡ POSTCARD ♡";
+  position:absolute;
+  top:2px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#704b39;
+  font:8px Arial;
+}
+
+.design-floral{
+  background:#f7e7dc;
+  border:7px solid #d19aaa;
+}
+
+.design-floral .photo-decoration:before{
+  content:"🌸";
+  position:absolute;
+  top:1px;
+  left:7px;
+}
+
+.design-floral .photo-decoration:after{
+  content:"🌸";
+  position:absolute;
+  bottom:1px;
+  right:7px;
+}
+
+.design-dreamy{
+  background:linear-gradient(#bfcce7,#ead8ee);
+  border:5px solid white;
+}
+
+.design-dreamy .photo-decoration:before{
+  content:"☁︎";
+  position:absolute;
+  top:1px;
+  left:7px;
+  color:white;
+}
+
+.design-dreamy .photo-decoration:after{
+  content:"☁︎";
+  position:absolute;
+  bottom:1px;
+  right:7px;
+  color:white;
+}
+
+.design-vintage{
+  background:#c2a48d;
+  border:8px solid #806351;
+}
+
+.design-vintage .photo-decoration:before{
+  content:"♡";
+  position:absolute;
+  top:2px;
+  left:8px;
+  color:#654b3d;
+}
+
+.design-vintage img{
+  filter:sepia(.55) saturate(.75);
+}
+
+
+/* =========================
+   STICKERS
+========================= */
 
 .sticker-bar{
   display:flex;
@@ -638,6 +825,23 @@ The names appear ONLY ONCE at the bottom.
   border-radius:15px;
   background:#fff8fa;
   font-size:26px;
+}
+
+.decor{
+  position:absolute;
+  z-index:50;
+  font-size:32px;
+  cursor:grab;
+  user-select:none;
+  touch-action:none;
+  transform:translate(-50%,-50%);
+}
+
+.text-decor{
+  font-size:17px;
+  padding:5px 9px;
+  background:#fff9;
+  border-radius:8px;
 }
 
 .edit-buttons{
@@ -663,82 +867,115 @@ The names appear ONLY ONCE at the bottom.
   border-radius:12px;
 }
 
-.auto-save-message{
-  margin-top:12px;
+
+/* =========================
+   SAVING
+========================= */
+
+.save-status{
   text-align:center;
-  font:12px Arial;
-  color:#9d7181;
+  padding:12px;
+  font-family:Arial,sans-serif;
+  font-size:13px;
+  color:#8b6d78;
 }
 
+.auto-save-box{
+  margin-top:18px;
+  padding:16px;
+  border-radius:18px;
+  background:#fff2f6;
+  border:1px solid #efd5df;
+  text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:13px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
 @media(max-width:850px){
-  .design-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+
+.design-grid{
+  grid-template-columns:repeat(3,1fr);
+}
+
 }
 
 @media(max-width:600px){
-  .content{
-    padding:18px;
-  }
 
-  .step h2{
-    font-size:31px;
-  }
+.content{
+  padding:18px;
+}
 
-  .strip-options{
-    grid-template-columns:1fr 1fr;
-  }
+.step h2{
+  font-size:31px;
+}
 
-  .camera{
-    grid-template-columns:1fr 1fr;
-  }
+.strip-options{
+  grid-template-columns:1fr 1fr;
+}
 
-  .video-box,
-  .video-box video,
-  .waiting{
-    height:230px;
-    min-height:230px;
-  }
+.camera{
+  grid-template-columns:1fr 1fr;
+  padding:5px;
+  gap:5px;
+}
 
-  .design-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+.video-box{
+  min-height:230px;
+}
 
-  .design-preview{
-    height:210px;
-  }
+.video-box video{
+  height:230px;
+}
 
-  .final-strip{
-    width:270px;
-  }
+.design-grid{
+  grid-template-columns:repeat(2,1fr);
+}
 
-  .text-row{
-    flex-direction:column;
-  }
+.design-preview{
+  height:210px;
+}
+
+.final-strip{
+  width:270px;
+}
+
+.text-row{
+  flex-direction:column;
+}
+
 }
 
 @media(max-width:400px){
-  .camera{
-    gap:5px;
-    padding:5px;
-  }
 
-  .video-box video{
-    height:205px;
-  }
+.video-box,
+.video-box video{
+  height:205px;
+  min-height:205px;
+}
 
-  .design-preview{
-    height:190px;
-  }
+.final-strip{
+  width:250px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- =====================================================
+
+<!-- COUNTDOWN -->
+<div id="countdown" class="countdown">3</div>
+
+
+<!-- =========================
 WELCOME
-===================================================== -->
+========================= -->
 
 <section id="welcome" class="page active">
 
@@ -790,9 +1027,9 @@ Enter Our World ♡
 </section>
 
 
-<!-- =====================================================
+<!-- =========================
 HOME
-===================================================== -->
+========================= -->
 
 <section id="home" class="page">
 
@@ -837,8 +1074,10 @@ border-radius:30px;
 font-family:Arial,sans-serif;
 font-size:11px
 ">
+
 ROOM:
 <b id="displayRoom">---</b>
+
 </div>
 
 <p id="partnerStatus" class="muted">
@@ -850,13 +1089,14 @@ ROOM:
 </button>
 
 </div>
+
 </div>
 </section>
 
 
-<!-- =====================================================
+<!-- =========================
 PHOTOBOOTH
-===================================================== -->
+========================= -->
 
 <section id="photobooth" class="page">
 
@@ -875,6 +1115,7 @@ photobooth ♡
 </div>
 
 </div>
+
 
 <div class="content">
 
@@ -923,7 +1164,8 @@ long
 
 </div>
 
-<button class="primary" onclick="nextStep(2)">
+<button class="primary"
+onclick="nextStep(2)">
 Take Photos →
 </button>
 
@@ -943,8 +1185,9 @@ Let's take pictures 📸
 </h2>
 
 <p class="muted">
-Start your camera on both phones. Either person can press the shutter.
+Both cameras stay visible while you take your photos.
 </p>
+
 
 <div class="camera">
 
@@ -975,8 +1218,7 @@ autoplay
 playsinline>
 </video>
 
-<div id="partnerWaiting"
-class="waiting">
+<div id="partnerWaiting" class="waiting">
 
 <div class="heart">
 ♡
@@ -1008,7 +1250,7 @@ Them
 
 <div id="connectionPill"
 class="connection-pill">
-🔴 Camera not started
+🔴 Not connected
 </div>
 
 </div>
@@ -1016,31 +1258,27 @@ class="connection-pill">
 
 <div class="camera-buttons">
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="startCamera()">
 Start Camera
 </button>
 
-
-<!--
-IMPORTANT:
-NO DISABLED ATTRIBUTE HERE.
--->
 <button
 id="shutterButton"
 class="shutter"
-onclick="takePhoto()">
+onclick="takePhoto()"
+disabled>
 ●
 </button>
 
+</div>
 
+
+<div class="photo-progress">
 <span id="photoCount">
 0 / 2
 </span>
-
 </div>
-
 
 <div id="photoPreview"></div>
 
@@ -1069,7 +1307,7 @@ Which one feels like you? ✨
 </h2>
 
 <p class="muted">
-Tap a design or hover over one to preview your actual photos.
+The design will decorate every photo, while your names appear only once at the bottom.
 </p>
 
 <div id="designGrid" class="design-grid"></div>
@@ -1084,14 +1322,12 @@ class="final-strip">
 
 <div style="margin-top:18px">
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="nextStep(2)">
 ← Retake
 </button>
 
-<button
-class="primary"
+<button class="primary"
 onclick="chooseDesign()"
 style="margin-top:10px">
 ♡ Use This Design
@@ -1150,14 +1386,12 @@ class="final-strip">
 
 <div class="edit-buttons">
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="undoLastEdit()">
 ↩ Undo
 </button>
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="resetEdits()">
 ↻ Reset
 </button>
@@ -1171,11 +1405,19 @@ onclick="resetEdits()">
 id="customText"
 placeholder="our little moment ♡">
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="addText()">
 Add
 </button>
+
+</div>
+
+
+<div class="auto-save-box">
+
+💗 When you're finished editing, press below.
+<br>
+The finished photo will be generated automatically.
 
 </div>
 
@@ -1184,14 +1426,8 @@ Add
 class="primary"
 onclick="finishEditing()"
 style="margin-top:18px">
-✨ Finish & Auto Save
+✨ Finish & Automatically Save
 </button>
-
-<div
-id="autoSaveMessage"
-class="auto-save-message">
-Your photo will automatically save when you're finished.
-</div>
 
 </div>
 
@@ -1209,24 +1445,30 @@ It's ready. ♡
 </h2>
 
 <p class="muted">
-Your little photobooth memory has been saved.
+Your final photobooth memory is ready.
 </p>
+
 
 <div class="final-preview-wrap">
 
-<div
-id="savedPreview"
+<div id="savedPreview"
 class="final-strip">
 </div>
 
 </div>
 
 
+<div id="saveStatus"
+class="save-status">
+Preparing your photo...
+</div>
+
+
 <button
 class="primary"
-onclick="downloadAgain()"
-style="margin-top:18px">
-💾 Save Again
+onclick="saveStrip()"
+style="margin-top:10px">
+💾 Save / Share Photo
 </button>
 
 
@@ -1239,8 +1481,10 @@ style="margin-top:10px;width:100%">
 
 </div>
 
+
 </div>
 </section>
+
 
 
 <script>
@@ -1263,7 +1507,7 @@ SUPABASE_KEY
 
 
 /* =====================================================
-APP VARIABLES
+APP
 ===================================================== */
 
 let yourName="";
@@ -1278,30 +1522,33 @@ let photos=[];
 let cameraStream=null;
 
 let roomChannel=null;
-let webrtcChannel=null;
+let signalChannel=null;
+
 let peerConnection=null;
 
-let isCaller=false;
+let localCameraReady=false;
+let partnerCameraReady=false;
 
 let partnerClientId=null;
 
-let partnerCameraReady=false;
-let localCameraReady=false;
+let isCaller=false;
 
 let remoteDescriptionSet=false;
+
 let pendingCandidates=[];
 
-let makingOffer=false;
 let offerCreated=false;
-
-let shotRecords=new Map();
+let makingOffer=false;
 
 let shutterLocked=false;
+
+let shotRecords=new Map();
 
 let editHistory=[];
 
 const clientId=
 crypto.randomUUID();
+
 
 const rtcConfig={
   iceServers:[
@@ -1316,6 +1563,7 @@ const rtcConfig={
     }
   ]
 };
+
 
 const designs=[
   "coquette",
@@ -1339,9 +1587,9 @@ function showPage(id){
 
 document
 .querySelectorAll(".page")
-.forEach(p=>{
-p.classList.remove("active");
-});
+.forEach(p=>
+p.classList.remove("active")
+);
 
 document
 .getElementById(id)
@@ -1353,7 +1601,7 @@ window.scrollTo(0,0);
 
 
 /* =====================================================
-ENTER WORLD
+ENTER
 ===================================================== */
 
 async function enterWorld(){
@@ -1377,6 +1625,7 @@ document
 .trim()
 .toUpperCase();
 
+
 if(!yourName){
 
 alert("Please enter your name ♡");
@@ -1384,6 +1633,7 @@ alert("Please enter your name ♡");
 return;
 
 }
+
 
 if(!roomCode){
 
@@ -1393,10 +1643,12 @@ return;
 
 }
 
+
 document
 .getElementById("connectionMessage")
 .textContent=
-"Connecting to room...";
+"Connecting...";
+
 
 try{
 
@@ -1427,12 +1679,15 @@ document
 .textContent=
 partnerName||"Them";
 
+
 document
 .getElementById("connectionMessage")
 .textContent=
-"Room connected ♡";
+"Connected ♡";
+
 
 showPage("home");
+
 
 }catch(error){
 
@@ -1441,7 +1696,7 @@ console.error(error);
 document
 .getElementById("connectionMessage")
 .textContent=
-"Could not connect. Please try again.";
+"Connection failed. Try again.";
 
 }
 
@@ -1449,7 +1704,7 @@ document
 
 
 /* =====================================================
-ROOM CHANNEL
+SUPABASE PRESENCE
 ===================================================== */
 
 async function setupRoomChannel(){
@@ -1457,9 +1712,10 @@ async function setupRoomChannel(){
 if(roomChannel)
 return;
 
+
 roomChannel=
 supabaseClient.channel(
-"presence-"+roomCode,
+"photo-room-"+roomCode,
 {
 config:{
 presence:{
@@ -1469,35 +1725,35 @@ key:clientId
 }
 );
 
+
 roomChannel
 .on(
 "presence",
 {
 event:"sync"
 },
-()=>{
-updatePresence();
-}
+updatePresence
 )
 .on(
 "presence",
 {
 event:"join"
 },
-()=>{
-updatePresence();
-}
+updatePresence
 )
 .on(
 "presence",
 {
 event:"leave"
 },
-()=>{
-updatePresence();
-}
-)
-.subscribe(
+updatePresence
+);
+
+
+await new Promise(
+(resolve,reject)=>{
+
+roomChannel.subscribe(
 async status=>{
 
 if(status==="SUBSCRIBED"){
@@ -1507,7 +1763,15 @@ id:clientId,
 name:yourName
 });
 
-await updatePresence();
+resolve();
+
+}
+
+if(status==="CHANNEL_ERROR"){
+
+reject(
+new Error("Channel error")
+);
 
 }
 
@@ -1515,25 +1779,37 @@ await updatePresence();
 );
 
 }
+);
 
+}
+
+
+/* =====================================================
+PRESENCE
+===================================================== */
 
 async function updatePresence(){
 
 if(!roomChannel)
 return;
 
+
 const state=
 roomChannel.presenceState();
 
 let users=[];
+
 
 Object.values(state)
 .forEach(entries=>{
 
 entries.forEach(entry=>{
 
-if(entry.id!==clientId)
+if(entry.id!==clientId){
+
 users.push(entry);
+
+}
 
 });
 
@@ -1542,8 +1818,17 @@ users.push(entry);
 
 if(users.length){
 
+users.sort(
+(a,b)=>
+String(a.id).localeCompare(
+String(b.id)
+)
+);
+
+
 partnerClientId=
 users[0].id;
+
 
 document
 .getElementById("partnerStatus")
@@ -1552,7 +1837,8 @@ document
 (users[0].name||partnerName||"Partner")+
 " is here ♡";
 
-await setupWebRTC();
+
+await setupSignalChannel();
 
 }else{
 
@@ -1560,10 +1846,12 @@ partnerClientId=null;
 
 partnerCameraReady=false;
 
+
 document
 .getElementById("partnerStatus")
 .textContent=
 "⚪ Waiting for partner...";
+
 
 document
 .getElementById("partnerCameraText")
@@ -1576,17 +1864,18 @@ document
 
 
 /* =====================================================
-WEBRTC
+SIGNAL CHANNEL
 ===================================================== */
 
-async function setupWebRTC(){
+async function setupSignalChannel(){
 
-if(webrtcChannel)
+if(signalChannel)
 return;
 
-webrtcChannel=
+
+signalChannel=
 supabaseClient.channel(
-"webrtc-room-"+roomCode,
+"photo-signal-"+roomCode,
 {
 config:{
 broadcast:{
@@ -1596,37 +1885,36 @@ ack:true
 }
 );
 
-webrtcChannel
+
+signalChannel
 .on(
 "broadcast",
 {
 event:"signal"
 },
-async payload=>{
+async ({payload})=>{
 
-const message=
-payload.payload;
-
-if(!message)
+if(!payload)
 return;
 
-if(message.sender===clientId)
+if(payload.sender===clientId)
 return;
 
-if(message.sender)
-partnerClientId=
-message.sender;
-
-await handleSignal(message);
+await handleSignal(payload);
 
 }
-)
-.subscribe(
+);
+
+
+await new Promise(
+(resolve,reject)=>{
+
+signalChannel.subscribe(
 async status=>{
 
 if(status==="SUBSCRIBED"){
 
-await createPeer();
+await createPeerConnection();
 
 await sendSignal(
 "hello",
@@ -1644,10 +1932,23 @@ await sendSignal(
 
 setTimeout(
 electCaller,
-700
+500
+);
+
+resolve();
+
+}
+
+if(status==="CHANNEL_ERROR"){
+
+reject(
+new Error("Signal channel error")
 );
 
 }
+
+}
+);
 
 }
 );
@@ -1656,18 +1957,57 @@ electCaller,
 
 
 /* =====================================================
-CREATE PEER
+SIGNAL SEND
 ===================================================== */
 
-async function createPeer(){
+async function sendSignal(type,data){
+
+if(!signalChannel)
+return;
+
+try{
+
+await signalChannel.send({
+
+type:"broadcast",
+
+event:"signal",
+
+payload:{
+sender:clientId,
+type:type,
+...data
+}
+
+});
+
+}catch(error){
+
+console.error(
+"Signal error",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
+PEER
+===================================================== */
+
+async function createPeerConnection(){
 
 if(peerConnection)
 return;
+
 
 peerConnection=
 new RTCPeerConnection(
 rtcConfig
 );
+
 
 peerConnection.onicecandidate=
 async event=>{
@@ -1694,18 +2034,23 @@ document.getElementById(
 "partnerVideo"
 );
 
-if(event.streams&&event.streams[0]){
+
+if(event.streams &&
+event.streams[0]){
 
 video.srcObject=
 event.streams[0];
 
+
 video.play()
 .catch(()=>{});
+
 
 document
 .getElementById("partnerWaiting")
 .style.display=
 "none";
+
 
 setConnectionStatus(
 "🟢 Connected — you can see each other",
@@ -1723,26 +2068,30 @@ peerConnection.onconnectionstatechange=
 const state=
 peerConnection.connectionState;
 
+
 console.log(
 "WebRTC state:",
 state
 );
 
-if(state==="connected"){
 
-setConnectionStatus(
-"🟢 Connected — you can see each other",
-true
-);
+if(state==="connected"){
 
 document
 .getElementById("partnerWaiting")
 .style.display=
 "none";
 
+
+setConnectionStatus(
+"🟢 Connected — you can see each other",
+true
+);
+
 }
 
-else if(state==="connecting"){
+
+if(state==="connecting"){
 
 setConnectionStatus(
 "🟡 Connecting video...",
@@ -1751,21 +2100,23 @@ false
 
 }
 
-else if(state==="failed"){
+
+if(state==="failed"){
 
 setConnectionStatus(
-"🔴 Reconnecting video...",
+"🔴 Reconnecting...",
 false
 );
 
-restartWebRTC();
+restartConnection();
 
 }
 
-else if(state==="disconnected"){
+
+if(state==="disconnected"){
 
 setConnectionStatus(
-"🟡 Video temporarily disconnected...",
+"🟡 Video disconnected...",
 false
 );
 
@@ -1775,26 +2126,43 @@ false
 
 
 /*
-IMPORTANT:
-If the camera is already running,
-immediately attach its video track.
+  IMPORTANT:
+  Add camera track whenever camera is already ready.
 */
 
 if(cameraStream){
+
+addLocalTracks();
+
+}
+
+}
+
+
+/* =====================================================
+ADD CAMERA TRACKS
+===================================================== */
+
+function addLocalTracks(){
+
+if(!peerConnection ||
+!cameraStream)
+return;
+
 
 cameraStream
 .getTracks()
 .forEach(track=>{
 
-const exists=
+const alreadyAdded=
 peerConnection
 .getSenders()
 .some(
-sender=>
-sender.track===track
+sender=>sender.track===track
 );
 
-if(!exists){
+
+if(!alreadyAdded){
 
 peerConnection.addTrack(
 track,
@@ -1807,53 +2175,54 @@ cameraStream
 
 }
 
-}
-
 
 /* =====================================================
-CALLER ELECTION
+CALLER
 ===================================================== */
 
-async function electCaller(){
+function electCaller(){
 
 if(!roomChannel)
 return;
+
 
 const state=
 roomChannel.presenceState();
 
 let users=[];
 
+
 Object.values(state)
 .forEach(entries=>{
 
 entries.forEach(entry=>{
+
 users.push(entry);
-});
 
 });
 
-if(users.length<2){
+});
 
+
+if(users.length<2)
 return;
 
-}
 
 users.sort(
 (a,b)=>
-String(a.id)
-.localeCompare(String(b.id))
+String(a.id).localeCompare(
+String(b.id)
+)
 );
 
-const callerId=
-users[0].id;
 
 isCaller=
-callerId===clientId;
+users[0].id===clientId;
+
 
 if(isCaller){
 
-maybeCreateOffer();
+createOfferWhenReady();
 
 }
 
@@ -1864,12 +2233,9 @@ maybeCreateOffer();
 CREATE OFFER
 ===================================================== */
 
-async function maybeCreateOffer(){
+async function createOfferWhenReady(){
 
 if(!isCaller)
-return;
-
-if(!peerConnection)
 return;
 
 if(!localCameraReady)
@@ -1878,29 +2244,41 @@ return;
 if(!partnerCameraReady)
 return;
 
+if(!peerConnection)
+return;
+
 if(makingOffer)
 return;
 
 if(offerCreated)
 return;
 
+
 if(
 peerConnection.signalingState!=="stable"
 )
 return;
 
+
 try{
 
 makingOffer=true;
 
+
+addLocalTracks();
+
+
 const offer=
 await peerConnection.createOffer();
+
 
 await peerConnection.setLocalDescription(
 offer
 );
 
+
 offerCreated=true;
+
 
 await sendSignal(
 "offer",
@@ -1912,10 +2290,11 @@ sdp:offer.sdp
 }
 );
 
+
 }catch(error){
 
 console.error(
-"Offer error:",
+"Offer creation failed",
 error
 );
 
@@ -1929,54 +2308,27 @@ makingOffer=false;
 
 
 /* =====================================================
-SEND SIGNAL
-===================================================== */
-
-async function sendSignal(
-type,
-data
-){
-
-if(!webrtcChannel)
-return;
-
-try{
-
-await webrtcChannel.send({
-type:"broadcast",
-event:"signal",
-payload:{
-sender:clientId,
-type,
-...data
-}
-});
-
-}catch(error){
-
-console.error(
-"Broadcast error:",
-error
-);
-
-}
-
-}
-
-
-/* =====================================================
-HANDLE SIGNAL
+SIGNAL HANDLER
 ===================================================== */
 
 async function handleSignal(message){
 
 if(!peerConnection){
 
-await createPeer();
+await createPeerConnection();
 
 }
 
-try{
+
+if(message.sender){
+
+partnerClientId=
+message.sender;
+
+}
+
+
+/* HELLO */
 
 if(message.type==="hello"){
 
@@ -1989,40 +2341,66 @@ await sendSignal(
 
 }
 
-await electCaller();
+electCaller();
 
 return;
 
 }
 
 
+/* CAMERA READY */
+
 if(message.type==="camera-ready"){
 
 partnerCameraReady=true;
+
 
 document
 .getElementById("partnerCameraText")
 .textContent=
 "🟢 Camera ready";
 
-await electCaller();
 
-maybeCreateOffer();
+electCaller();
+
+createOfferWhenReady();
 
 return;
 
 }
 
 
+/* OFFER */
+
 if(message.type==="offer"){
+
+console.log(
+"Offer received"
+);
+
 
 if(
 peerConnection.signalingState!=="stable"
 ){
 
-await restartPeerOnly();
+try{
+
+peerConnection.close();
+
+}catch(e){}
+
+peerConnection=null;
+
+remoteDescriptionSet=false;
+
+pendingCandidates=[];
+
+offerCreated=false;
+
+await createPeerConnection();
 
 }
+
 
 await peerConnection.setRemoteDescription(
 new RTCSessionDescription(
@@ -2030,16 +2408,24 @@ message.description
 )
 );
 
+
 remoteDescriptionSet=true;
 
+
 await flushCandidates();
+
+
+addLocalTracks();
+
 
 const answer=
 await peerConnection.createAnswer();
 
+
 await peerConnection.setLocalDescription(
 answer
 );
+
 
 await sendSignal(
 "answer",
@@ -2051,12 +2437,20 @@ sdp:answer.sdp
 }
 );
 
+
 return;
 
 }
 
 
+/* ANSWER */
+
 if(message.type==="answer"){
+
+console.log(
+"Answer received"
+);
+
 
 if(
 peerConnection.signalingState===
@@ -2069,7 +2463,9 @@ message.description
 )
 );
 
+
 remoteDescriptionSet=true;
+
 
 await flushCandidates();
 
@@ -2080,12 +2476,15 @@ return;
 }
 
 
+/* ICE */
+
 if(message.type==="candidate"){
 
 const candidate=
 new RTCIceCandidate(
 message.candidate
 );
+
 
 if(remoteDescriptionSet){
 
@@ -2098,7 +2497,7 @@ candidate
 }catch(error){
 
 console.warn(
-"ICE error:",
+"ICE failed",
 error
 );
 
@@ -2106,7 +2505,9 @@ error
 
 }else{
 
-pendingCandidates.push(candidate);
+pendingCandidates.push(
+candidate
+);
 
 }
 
@@ -2114,6 +2515,8 @@ return;
 
 }
 
+
+/* SHUTTER */
 
 if(message.type==="shutter"){
 
@@ -2124,20 +2527,13 @@ return;
 }
 
 
+/* PHOTO */
+
 if(message.type==="photo"){
 
 receiveRemotePhoto(message);
 
 return;
-
-}
-
-}catch(error){
-
-console.error(
-"Signal error:",
-error
-);
 
 }
 
@@ -2165,7 +2561,10 @@ candidate
 
 }catch(error){
 
-console.warn(error);
+console.warn(
+"Queued ICE error",
+error
+);
 
 }
 
@@ -2178,7 +2577,7 @@ console.warn(error);
 RESTART
 ===================================================== */
 
-async function restartPeerOnly(){
+async function restartConnection(){
 
 try{
 
@@ -2186,6 +2585,7 @@ if(peerConnection)
 peerConnection.close();
 
 }catch(e){}
+
 
 peerConnection=null;
 
@@ -2195,18 +2595,12 @@ pendingCandidates=[];
 
 offerCreated=false;
 
-await createPeer();
+await createPeerConnection();
 
-}
-
-
-async function restartWebRTC(){
-
-await restartPeerOnly();
 
 setTimeout(
 electCaller,
-800
+500
 );
 
 }
@@ -2237,25 +2631,12 @@ connected
 
 
 /* =====================================================
-START CAMERA
+CAMERA
 ===================================================== */
 
 async function startCamera(){
 
 try{
-
-if(
-!navigator.mediaDevices ||
-!navigator.mediaDevices.getUserMedia
-){
-
-alert(
-"Your browser does not support camera access."
-);
-
-return;
-
-}
 
 if(cameraStream){
 
@@ -2267,8 +2648,10 @@ track=>track.stop()
 
 }
 
+
 cameraStream=
 await navigator.mediaDevices.getUserMedia({
+
 video:{
 facingMode:"user",
 width:{
@@ -2278,74 +2661,43 @@ height:{
 ideal:720
 }
 },
+
 audio:false
+
 });
+
 
 const video=
 document.getElementById(
 "myCamera"
 );
 
+
 video.srcObject=
 cameraStream;
 
+
 await video.play();
+
 
 localCameraReady=true;
 
 
-/*
-IMPORTANT:
-Never disable shutter here.
-Just visually mark it as ready.
-*/
+document
+.getElementById("shutterButton")
+.disabled=false;
 
-const shutter=
-document.getElementById(
-"shutterButton"
-);
-
-shutter.classList.add("ready");
 
 setConnectionStatus(
-"🟡 Camera ready — connecting partner...",
+"🟡 Camera ready — connecting...",
 false
 );
 
 
-/*
-Attach local video to WebRTC.
-*/
-
-await setupWebRTC();
+await setupSignalChannel();
 
 
-if(peerConnection){
-
-cameraStream
-.getTracks()
-.forEach(track=>{
-
-const exists=
-peerConnection
-.getSenders()
-.some(
-sender=>
-sender.track===track
-);
-
-if(!exists){
-
-peerConnection.addTrack(
-track,
-cameraStream
-);
-
-}
-
-});
-
-}
+addLocalTracks();
 
 
 await sendSignal(
@@ -2353,9 +2705,11 @@ await sendSignal(
 {}
 );
 
-await electCaller();
 
-maybeCreateOffer();
+electCaller();
+
+createOfferWhenReady();
+
 
 }catch(error){
 
@@ -2364,10 +2718,17 @@ console.error(
 error
 );
 
+
 localCameraReady=false;
 
+
+document
+.getElementById("shutterButton")
+.disabled=true;
+
+
 alert(
-"Camera access was blocked. Allow camera permission in your browser, then press Start Camera again."
+"Camera could not start. Please allow camera permission and try again."
 );
 
 }
@@ -2387,27 +2748,23 @@ shotRecords.clear();
 
 shutterLocked=false;
 
-document
-.getElementById("photoCount")
-.textContent=
-"0 / "+selectedStrip;
 
 document
 .getElementById("photoPreview")
 .innerHTML="";
 
+
+document
+.getElementById("photoCount")
+.textContent=
+"0 / "+
+selectedStrip;
+
+
 document
 .getElementById("photosDoneButton")
 .disabled=true;
 
-
-/*
-Do NOT disable shutter.
-*/
-
-document
-.getElementById("shutterButton")
-.classList.remove("ready");
 
 showPage("photobooth");
 
@@ -2417,7 +2774,7 @@ nextStep(1);
 
 
 /* =====================================================
-SELECT STRIP
+STRIP
 ===================================================== */
 
 function selectStrip(
@@ -2427,13 +2784,16 @@ button
 
 selectedStrip=number;
 
+
 document
 .querySelectorAll(".strip-option")
-.forEach(x=>
-x.classList.remove("selected")
+.forEach(
+x=>x.classList.remove("selected")
 );
 
+
 button.classList.add("selected");
+
 
 document
 .getElementById("photoCount")
@@ -2453,18 +2813,21 @@ function nextStep(number){
 
 document
 .querySelectorAll(".step")
-.forEach(x=>
-x.classList.remove("active")
+.forEach(
+x=>x.classList.remove("active")
 );
+
 
 document
 .getElementById("step"+number)
 .classList.add("active");
 
+
 document
 .getElementById("stepNumber")
 .textContent=
 number+" / 5";
+
 
 if(number===2){
 
@@ -2474,17 +2837,14 @@ startCamera();
 
 }else{
 
-localCameraReady=true;
-
 document
 .getElementById("shutterButton")
-.classList.add("ready");
+.disabled=false;
 
 }
 
-setupWebRTC();
-
 }
+
 
 if(number===3){
 
@@ -2492,11 +2852,13 @@ buildDesignPicker();
 
 }
 
+
 if(number===4){
 
 buildFinalStrip();
 
 }
+
 
 if(number===5){
 
@@ -2513,43 +2875,38 @@ SHUTTER
 
 async function takePhoto(){
 
-/*
-FIX:
-The button itself is never disabled.
+if(shutterLocked)
+return;
 
-If the camera isn't ready, tell the user.
-*/
 
 if(!cameraStream ||
 !localCameraReady){
 
 alert(
-"Please press Start Camera first ♡"
+"Press Start Camera first ♡"
 );
 
 return;
 
 }
 
-if(shutterLocked)
-return;
 
 if(photos.length>=selectedStrip){
 
-alert(
-"Your strip is already full!"
-);
-
 return;
 
 }
 
+
+/*
+  LOCK IMMEDIATELY.
+*/
 shutterLocked=true;
 
 
-/*
-Create shared shot ID.
-*/
+const shotIndex=
+photos.length+1;
+
 
 const shotId=
 clientId+
@@ -2558,10 +2915,7 @@ Date.now()+
 "-"+
 Math.random()
 .toString(36)
-.slice(2,8);
-
-const shotIndex=
-photos.length+1;
+.slice(2,7);
 
 
 shotRecords.set(
@@ -2571,40 +2925,33 @@ id:shotId,
 index:shotIndex,
 local:null,
 remote:null,
-completed:false,
-localSender:clientId,
-remoteSender:null
+completed:false
 }
 );
 
 
 /*
-Immediately update local counter.
+  Tell partner BEFORE local countdown.
 */
-
-updatePhotoCounter(
-shotIndex
-);
-
-
-/*
-Tell partner to take exactly the same shot.
-*/
-
 await sendSignal(
 "shutter",
 {
-shotId,
-shotIndex
+shotId:shotId,
+shotIndex:shotIndex
 }
 );
 
 
 /*
-Capture local image.
+  Local countdown.
 */
+await doCountdown();
 
-await countdownAndCapture(
+
+/*
+  Capture.
+*/
+await capturePhoto(
 shotId,
 shotIndex
 );
@@ -2621,9 +2968,8 @@ async function receiveShutter(message){
 if(!message.shotId)
 return;
 
-if(
-shotRecords.has(message.shotId)
-)
+
+if(shotRecords.has(message.shotId))
 return;
 
 
@@ -2634,31 +2980,33 @@ id:message.shotId,
 index:message.shotIndex,
 local:null,
 remote:null,
-completed:false,
-localSender:clientId,
-remoteSender:message.sender
+completed:false
 }
 );
 
-updatePhotoCounter(
-message.shotIndex
-);
 
+/*
+  IMPORTANT:
+  Partner also sees the countdown.
+*/
 
-if(
-!cameraStream ||
-!localCameraReady
-){
+if(!cameraStream ||
+!localCameraReady){
 
-alert(
-"Your partner pressed the shutter. Please press Start Camera so your photo can be captured."
-);
+document
+.getElementById("partnerCameraText")
+.textContent=
+"⚠️ Start your camera!";
 
 return;
 
 }
 
-await countdownAndCapture(
+
+await doCountdown();
+
+
+await capturePhoto(
 message.shotId,
 message.shotIndex
 );
@@ -2670,70 +3018,61 @@ message.shotIndex
 COUNTDOWN
 ===================================================== */
 
-function countdownAndCapture(
-shotId,
-shotIndex
-){
+function doCountdown(){
 
 return new Promise(resolve=>{
 
-let count=3;
-
 const overlay=
-document.createElement("div");
-
-overlay.style.cssText=`
-position:fixed;
-inset:0;
-z-index:9999;
-display:grid;
-place-items:center;
-background:#0009;
-color:white;
-font:bold 100px Georgia;
-`;
-
-document.body.appendChild(
-overlay
+document.getElementById(
+"countdown"
 );
 
-overlay.textContent=count;
+
+overlay.style.display=
+"flex";
+
+
+let number=3;
+
+
+overlay.textContent=
+number;
 
 
 const timer=
 setInterval(()=>{
 
-count--;
+number--;
 
-if(count>0){
 
-overlay.textContent=count;
+if(number>0){
 
-}else{
+overlay.textContent=
+number;
 
-clearInterval(timer);
-
-overlay.textContent="♡";
-
-setTimeout(
-async()=>{
-
-overlay.remove();
-
-await captureLocalForShot(
-shotId,
-shotIndex
-);
-
-resolve();
-
-},
-180
-);
+return;
 
 }
 
-},550);
+
+clearInterval(timer);
+
+
+overlay.textContent=
+"♡";
+
+
+setTimeout(()=>{
+
+overlay.style.display=
+"none";
+
+resolve();
+
+},300);
+
+
+},700);
 
 });
 
@@ -2741,10 +3080,10 @@ resolve();
 
 
 /* =====================================================
-CAPTURE LOCAL
+CAPTURE
 ===================================================== */
 
-async function captureLocalForShot(
+async function capturePhoto(
 shotId,
 shotIndex
 ){
@@ -2754,13 +3093,14 @@ document.getElementById(
 "myCamera"
 );
 
+
 if(
 !video.videoWidth ||
 !video.videoHeight
 ){
 
 console.error(
-"No camera frame available."
+"Video frame unavailable"
 );
 
 shutterLocked=false;
@@ -2769,17 +3109,22 @@ return;
 
 }
 
+
 const canvas=
 document.createElement("canvas");
 
-const width=400;
-const height=500;
 
-canvas.width=width;
-canvas.height=height;
+const W=400;
+const H=500;
+
+
+canvas.width=W;
+canvas.height=H;
+
 
 const ctx=
 canvas.getContext("2d");
+
 
 const vw=
 video.videoWidth;
@@ -2787,36 +3132,49 @@ video.videoWidth;
 const vh=
 video.videoHeight;
 
-const targetRatio=4/5;
 
-const videoRatio=
+const targetRatio=
+4/5;
+
+const ratio=
 vw/vh;
+
 
 let sx=0;
 let sy=0;
 let sw=vw;
 let sh=vh;
 
-if(videoRatio>targetRatio){
 
-sw=vh*targetRatio;
+if(ratio>targetRatio){
 
-sx=(vw-sw)/2;
+sw=
+vh*targetRatio;
+
+sx=
+(vw-sw)/2;
 
 }else{
 
-sh=vw/targetRatio;
+sh=
+vw/targetRatio;
 
-sy=(vh-sh)/2;
+sy=
+(vh-sh)/2;
 
 }
 
 
 ctx.save();
 
-ctx.translate(width,0);
+
+/*
+  Mirror selfie.
+*/
+ctx.translate(W,0);
 
 ctx.scale(-1,1);
+
 
 ctx.drawImage(
 video,
@@ -2826,9 +3184,10 @@ sw,
 sh,
 0,
 0,
-width,
-height
+W,
+H
 );
+
 
 ctx.restore();
 
@@ -2836,12 +3195,13 @@ ctx.restore();
 const image=
 canvas.toDataURL(
 "image/jpeg",
-.72
+0.78
 );
 
 
 const record=
 shotRecords.get(shotId);
+
 
 if(!record){
 
@@ -2851,7 +3211,10 @@ return;
 
 }
 
-record.local=image;
+
+record.local=
+image;
+
 
 shotRecords.set(
 shotId,
@@ -2860,30 +3223,35 @@ record
 
 
 /*
-Send our captured image.
+  Send local photo to partner.
 */
-
 await sendSignal(
 "photo",
 {
-shotId,
-shotIndex,
-image
+shotId:shotId,
+shotIndex:shotIndex,
+image:image
 }
 );
 
 
+/*
+  If partner photo arrived first,
+  complete immediately.
+*/
 tryCompleteShot(
 shotId
 );
 
 
-setTimeout(
-()=>{
+/*
+  Unlock after capture.
+*/
+setTimeout(()=>{
+
 shutterLocked=false;
-},
-450
-);
+
+},500);
 
 }
 
@@ -2894,13 +3262,11 @@ REMOTE PHOTO
 
 function receiveRemotePhoto(message){
 
-if(!message.shotId)
-return;
-
 let record=
 shotRecords.get(
 message.shotId
 );
+
 
 if(!record){
 
@@ -2909,9 +3275,7 @@ id:message.shotId,
 index:message.shotIndex,
 local:null,
 remote:null,
-completed:false,
-localSender:clientId,
-remoteSender:message.sender
+completed:false
 };
 
 shotRecords.set(
@@ -2921,16 +3285,16 @@ record
 
 }
 
+
 record.remote=
 message.image;
 
-record.remoteSender=
-message.sender;
 
 shotRecords.set(
 message.shotId,
 record
 );
+
 
 tryCompleteShot(
 message.shotId
@@ -2940,7 +3304,7 @@ message.shotId
 
 
 /* =====================================================
-COMPLETE SHOT
+COMPLETE
 ===================================================== */
 
 async function tryCompleteShot(
@@ -2948,10 +3312,14 @@ shotId
 ){
 
 const record=
-shotRecords.get(shotId);
+shotRecords.get(
+shotId
+);
+
 
 if(!record)
 return;
+
 
 if(
 !record.local ||
@@ -2959,44 +3327,43 @@ if(
 )
 return;
 
+
 if(record.completed)
 return;
+
 
 record.completed=true;
 
 
 const combined=
-await createCombinedPhoto(
+await combineTwoPhotos(
 record.local,
 record.remote,
 record
 );
-
-if(!combined)
-return;
 
 
 photos[
 record.index-1
 ]=combined;
 
+
 updatePhotoThumbnails();
 
 
-const completeCount=
+const count=
 photos.filter(Boolean).length;
+
 
 document
 .getElementById("photoCount")
 .textContent=
-completeCount+
+count+
 " / "+
 selectedStrip;
 
 
-if(
-completeCount>=selectedStrip
-){
+if(count>=selectedStrip){
 
 document
 .getElementById("photosDoneButton")
@@ -3008,10 +3375,10 @@ document
 
 
 /* =====================================================
-COMBINE PHOTO
+COMBINE
 ===================================================== */
 
-function createCombinedPhoto(
+function combineTwoPhotos(
 localImage,
 remoteImage,
 record
@@ -3025,11 +3392,14 @@ new Image();
 const remote=
 new Image();
 
+
 let loaded=0;
 
-function done(){
+
+function ready(){
 
 loaded++;
+
 
 if(loaded<2)
 return;
@@ -3038,11 +3408,14 @@ return;
 const canvas=
 document.createElement("canvas");
 
+
 const W=800;
 const H=1000;
 
+
 canvas.width=W;
 canvas.height=H;
+
 
 const ctx=
 canvas.getContext("2d");
@@ -3058,106 +3431,74 @@ H
 );
 
 
-let first=local;
-let second=remote;
-
-
-if(
-record.remoteSender &&
-String(record.remoteSender)
-<
-String(clientId)
-){
-
-first=remote;
-second=local;
-
-}
-
+/*
+  BOTH FACES SIDE BY SIDE
+*/
+const gap=20;
 
 const cardW=350;
 const cardH=437.5;
 
-const gap=20;
-
-const startX=
+const x=
 (W-(cardW*2+gap))/2;
 
-const startY=250;
+const y=250;
 
 
 drawRoundedImage(
 ctx,
-first,
-startX,
-startY,
-cardW,
-cardH,
-22
-);
-
-drawRoundedImage(
-ctx,
-second,
-startX+cardW+gap,
-startY,
+local,
+x,
+y,
 cardW,
 cardH,
 22
 );
 
 
-ctx.font="34px Georgia";
+drawRoundedImage(
+ctx,
+remote,
+x+cardW+gap,
+y,
+cardW,
+cardH,
+22
+);
 
-ctx.textAlign="center";
 
-ctx.fillStyle="#d97899";
+ctx.font=
+"34px Georgia";
+
+ctx.textAlign=
+"center";
+
+ctx.fillStyle=
+"#d97899";
 
 ctx.fillText(
 "♡",
 W/2,
-startY+cardH/2+12
-);
-
-
-ctx.font="bold 28px Georgia";
-
-ctx.fillStyle="#49363e";
-
-ctx.fillText(
-yourName+
-" ♡ "+
-(partnerName||"Them"),
-W/2,
-820
-);
-
-
-ctx.font="18px Arial";
-
-ctx.fillStyle="#ad7084";
-
-ctx.fillText(
-"our little moment",
-W/2,
-855
+y+cardH/2+12
 );
 
 
 resolve(
 canvas.toDataURL(
 "image/jpeg",
-.92
+0.92
 )
 );
 
 }
 
 
-local.onload=done;
-remote.onload=done;
+local.onload=ready;
+
+remote.onload=ready;
 
 local.src=localImage;
+
 remote.src=remoteImage;
 
 });
@@ -3166,7 +3507,7 @@ remote.src=remoteImage;
 
 
 /* =====================================================
-DRAW ROUNDED
+DRAW IMAGE
 ===================================================== */
 
 function drawRoundedImage(
@@ -3181,7 +3522,9 @@ radius
 
 ctx.save();
 
+
 ctx.beginPath();
+
 
 ctx.moveTo(
 x+radius,
@@ -3238,26 +3581,30 @@ y
 
 ctx.closePath();
 
+
 ctx.clip();
 
 
-const ratio=
+const scale=
 Math.max(
 w/img.width,
 h/img.height
 );
 
+
 const nw=
-img.width*ratio;
+img.width*scale;
 
 const nh=
-img.height*ratio;
+img.height*scale;
+
 
 const dx=
 x+(w-nw)/2;
 
 const dy=
 y+(h-nh)/2;
+
 
 ctx.drawImage(
 img,
@@ -3266,6 +3613,7 @@ dy,
 nw,
 nh
 );
+
 
 ctx.restore();
 
@@ -3278,12 +3626,14 @@ THUMBNAILS
 
 function updatePhotoThumbnails(){
 
-const preview=
+const box=
 document.getElementById(
 "photoPreview"
 );
 
-preview.innerHTML="";
+
+box.innerHTML="";
+
 
 photos
 .filter(Boolean)
@@ -3294,7 +3644,7 @@ document.createElement("img");
 
 img.src=image;
 
-preview.appendChild(img);
+box.appendChild(img);
 
 });
 
@@ -3312,6 +3662,7 @@ document.getElementById(
 "designGrid"
 );
 
+
 grid.innerHTML="";
 
 
@@ -3320,23 +3671,25 @@ designs.forEach(name=>{
 const card=
 document.createElement("button");
 
+
 card.className=
 "design-card"+
-(name===selectedDesign
+(
+name===selectedDesign
 ?" selected"
-:"");
+:""
+);
 
 
 const preview=
 document.createElement("div");
 
+
 preview.className=
 "design-preview theme-"+name;
 
 
-photos
-.filter(Boolean)
-.forEach(image=>{
+photos.forEach(image=>{
 
 const img=
 document.createElement("img");
@@ -3351,8 +3704,10 @@ preview.appendChild(img);
 const label=
 document.createElement("div");
 
+
 label.className=
 "design-name";
+
 
 label.textContent=
 getDesignName(name);
@@ -3365,30 +3720,21 @@ card.appendChild(label);
 
 card.onclick=()=>{
 
-selectedDesign=name;
+selectedDesign=
+name;
+
 
 document
 .querySelectorAll(".design-card")
-.forEach(x=>
-x.classList.remove("selected")
+.forEach(
+x=>x.classList.remove("selected")
 );
+
 
 card.classList.add("selected");
 
-renderDesignPreview();
-
-};
-
-
-card.onmouseenter=()=>{
-
-if(window.innerWidth>600){
-
-selectedDesign=name;
 
 renderDesignPreview();
-
-}
 
 };
 
@@ -3402,6 +3748,10 @@ renderDesignPreview();
 
 }
 
+
+/* =====================================================
+DESIGN NAME
+===================================================== */
 
 function getDesignName(name){
 
@@ -3420,6 +3770,7 @@ vintage:"🌷 Vintage"
 
 };
 
+
 return names[name];
 
 }
@@ -3436,55 +3787,80 @@ document.getElementById(
 "designPreview"
 );
 
+
 preview.className=
-"final-strip theme-"+selectedDesign;
+"final-strip";
+
 
 preview.innerHTML="";
 
 
 photos
 .filter(Boolean)
-.forEach(image=>{
+.forEach(
+(image,index)=>{
 
-const photo=
+const item=
 document.createElement("div");
 
-photo.className=
-"final-strip-photo";
+
+item.className=
+"photo-item design-"+selectedDesign;
 
 
 const img=
 document.createElement("img");
 
+
 img.src=image;
 
-photo.appendChild(img);
 
-preview.appendChild(photo);
+const decorations=
+document.createElement("div");
 
-});
+
+decorations.className=
+"photo-decoration";
+
+
+item.appendChild(img);
+
+item.appendChild(
+decorations
+);
+
+
+preview.appendChild(item);
+
+}
+);
 
 
 /*
-ONLY ONE NAME AT THE BOTTOM.
+  NAME ONLY ONCE.
 */
-
 const title=
 document.createElement("div");
 
-title.className=
-"final-strip-title";
 
-title.innerHTML=
-escapeHTML(yourName)+
-" ♡ "+
-escapeHTML(partnerName||"Them")+
-"<small>our little moment</small>";
+title.className=
+"strip-title";
+
+
+title.textContent=
+yourName+
+" ♡ love ♡ "+
+(partnerName||"stan");
+
 
 preview.appendChild(title);
 
 }
 
+
+/* =====================================================
+CHOOSE DESIGN
+===================================================== */
 
 function chooseDesign(){
 
@@ -3506,139 +3882,76 @@ document.getElementById(
 "photoStrip"
 );
 
+
 strip.className=
-"final-strip theme-"+selectedDesign;
+"final-strip";
+
 
 strip.innerHTML="";
 
 
-/*
-Each photo gets its own design/card area.
-
-The names are NOT placed underneath each photo.
-*/
-
 photos
 .filter(Boolean)
-.forEach((image,index)=>{
+.forEach(
+(image,index)=>{
 
-const photo=
+const item=
 document.createElement("div");
 
-photo.className=
-"final-strip-photo";
 
-photo.dataset.photoIndex=
-index;
+item.className=
+"photo-item design-"+selectedDesign;
+
 
 const img=
 document.createElement("img");
 
+
 img.src=image;
 
-photo.appendChild(img);
+
+const decorations=
+document.createElement("div");
 
 
-/*
-Little decorations around the photo.
-These are part of the selected design.
-*/
+decorations.className=
+"photo-decoration";
 
-addThemeDecorations(
-photo,
-index
+
+item.appendChild(img);
+
+item.appendChild(
+decorations
 );
 
-strip.appendChild(photo);
 
-});
+strip.appendChild(item);
+
+}
+);
 
 
 /*
-ONE FINAL TITLE FOR THE WHOLE STRIP.
+  ONLY ONE TITLE AT THE BOTTOM
 */
-
 const title=
 document.createElement("div");
 
-title.className=
-"final-strip-title";
 
-title.innerHTML=
-escapeHTML(yourName)+
-" ♡ "+
-escapeHTML(partnerName||"Them")+
-"<small>our little moment</small>";
+title.className=
+"strip-title";
+
+
+title.textContent=
+yourName+
+" ♡ love ♡ "+
+(partnerName||"stan");
+
 
 strip.appendChild(title);
 
 
-/*
-Preserve movable stickers if rebuilding isn't intended.
-*/
 editHistory=[];
-
-}
-
-
-/* =====================================================
-THEME DECORATIONS
-===================================================== */
-
-function addThemeDecorations(
-photo,
-index
-){
-
-const decorations={
-coquette:["🎀","♡","୨୧"],
-retro:["★","•","1990"],
-scrapbook:["✿","♡","📎"],
-y2k:["★","✦","☆"],
-strawberry:["🍓","♡","🍓"],
-lace:["୨୧","♡","✿"],
-postcard:["✈️","♡","✉️"],
-floral:["🌸","✿","🌷"],
-dreamy:["☁️","☆","☁️"],
-vintage:["✿","♡","★"]
-};
-
-const items=
-decorations[selectedDesign]||
-["♡","✦","☆"];
-
-
-items.forEach(
-(symbol,i)=>{
-
-const d=
-document.createElement("div");
-
-d.className=
-"photo-decoration";
-
-d.textContent=symbol;
-
-if(i===0){
-
-d.style.left="4px";
-d.style.top="4px";
-
-}else if(i===1){
-
-d.style.right="4px";
-d.style.top="4px";
-
-}else{
-
-d.style.right="5px";
-d.style.bottom="4px";
-
-}
-
-photo.appendChild(d);
-
-});
 
 }
 
@@ -3654,12 +3967,17 @@ document.getElementById(
 "photoStrip"
 );
 
+
 editHistory.push(
 strip.innerHTML
 );
 
-if(editHistory.length>30)
+
+if(editHistory.length>30){
+
 editHistory.shift();
+
+}
 
 }
 
@@ -3672,17 +3990,22 @@ function addSticker(symbol){
 
 saveEditState();
 
+
 const sticker=
 document.createElement("div");
+
 
 sticker.className=
 "decor";
 
+
 sticker.textContent=
 symbol;
 
+
 sticker.style.left=
 (15+Math.random()*70)+"%";
+
 
 sticker.style.top=
 (10+Math.random()*80)+"%";
@@ -3693,7 +4016,11 @@ document.getElementById(
 "photoStrip"
 );
 
-strip.appendChild(sticker);
+
+strip.appendChild(
+sticker
+);
+
 
 makeMovable(
 sticker,
@@ -3703,6 +4030,10 @@ strip
 }
 
 
+/* =====================================================
+TEXT
+===================================================== */
+
 function addText(){
 
 const input=
@@ -3710,11 +4041,14 @@ document.getElementById(
 "customText"
 );
 
+
 const value=
 input.value.trim();
 
+
 if(!value)
 return;
+
 
 saveEditState();
 
@@ -3722,14 +4056,21 @@ saveEditState();
 const text=
 document.createElement("div");
 
+
 text.className=
 "decor text-decor";
 
-text.textContent=value;
 
-text.style.left="50%";
+text.textContent=
+value;
 
-text.style.top="50%";
+
+text.style.left=
+"50%";
+
+
+text.style.top=
+"50%";
 
 
 const strip=
@@ -3737,9 +4078,14 @@ document.getElementById(
 "photoStrip"
 );
 
-strip.appendChild(text);
+
+strip.appendChild(
+text
+);
+
 
 input.value="";
+
 
 makeMovable(
 text,
@@ -3750,7 +4096,7 @@ strip
 
 
 /* =====================================================
-DRAGGING
+DRAG
 ===================================================== */
 
 function makeMovable(
@@ -3761,50 +4107,57 @@ container
 let dragging=false;
 
 
-function move(
-clientX,
-clientY
-){
+function move(x,y){
 
 const rect=
 container.getBoundingClientRect();
 
-let x=
-((clientX-rect.left)/
+
+let left=
+((x-rect.left)/
 rect.width)*100;
 
-let y=
-((clientY-rect.top)/
+
+let top=
+((y-rect.top)/
 rect.height)*100;
 
-x=
+
+left=
 Math.max(
 5,
-Math.min(95,x)
+Math.min(95,left)
 );
 
-y=
+
+top=
 Math.max(
 3,
-Math.min(97,y)
+Math.min(97,top)
 );
 
+
 element.style.left=
-x+"%";
+left+"%";
+
 
 element.style.top=
-y+"%";
+top+"%";
 
 }
 
 
+/*
+  TOUCH
+*/
+
 element.addEventListener(
 "touchstart",
-e=>{
+event=>{
 
 dragging=true;
 
-e.preventDefault();
+event.preventDefault();
 
 },
 {
@@ -3815,19 +4168,22 @@ passive:false
 
 element.addEventListener(
 "touchmove",
-e=>{
+event=>{
 
 if(!dragging)
 return;
 
-e.preventDefault();
 
-const t=
-e.touches[0];
+event.preventDefault();
+
+
+const touch=
+event.touches[0];
+
 
 move(
-t.clientX,
-t.clientY
+touch.clientX,
+touch.clientY
 );
 
 },
@@ -3840,45 +4196,61 @@ passive:false
 element.addEventListener(
 "touchend",
 ()=>{
+
 dragging=false;
+
 }
 );
 
+
+/*
+  MOUSE
+*/
 
 element.addEventListener(
 "mousedown",
-e=>{
+event=>{
 
 dragging=true;
 
-e.preventDefault();
+event.preventDefault();
 
 }
 );
 
 
-document.addEventListener(
-"mousemove",
-e=>{
+const mouseMove=
+event=>{
 
 if(dragging){
 
 move(
-e.clientX,
-e.clientY
+event.clientX,
+event.clientY
 );
 
 }
 
-}
+};
+
+
+const mouseUp=
+()=>{
+
+dragging=false;
+
+};
+
+
+document.addEventListener(
+"mousemove",
+mouseMove
 );
 
 
 document.addEventListener(
 "mouseup",
-()=>{
-dragging=false;
-}
+mouseUp
 );
 
 }
@@ -3906,13 +4278,19 @@ document.getElementById(
 "photoStrip"
 );
 
+
 strip.innerHTML=
 editHistory.pop();
+
 
 restoreMovableElements();
 
 }
 
+
+/* =====================================================
+RESTORE
+===================================================== */
 
 function restoreMovableElements(){
 
@@ -3921,9 +4299,11 @@ document.getElementById(
 "photoStrip"
 );
 
+
 strip
 .querySelectorAll(".decor")
-.forEach(element=>{
+.forEach(
+element=>{
 
 makeMovable(
 element,
@@ -3941,10 +4321,13 @@ RESET
 
 function resetEdits(){
 
-if(!confirm(
+if(
+!confirm(
 "Remove all stickers and text?"
-))
+)
+)
 return;
+
 
 buildFinalStrip();
 
@@ -3957,133 +4340,25 @@ FINISH EDITING
 
 async function finishEditing(){
 
-const message=
-document.getElementById(
-"autoSaveMessage"
-);
+copyFinalPreview();
 
-message.textContent=
-"♡ Creating your finished photo...";
+
+nextStep(5);
 
 
 /*
-Wait for browser layout to finish.
+  Automatically generate the image.
 */
-
-await new Promise(
-resolve=>
-requestAnimationFrame(
-()=>requestAnimationFrame(resolve)
-)
-);
-
-
-try{
-
-const canvas=
-await html2canvas(
-document.getElementById(
-"photoStrip"
-),
-{
-scale:3,
-backgroundColor:null,
-useCORS:true,
-allowTaint:true,
-logging:false
-}
-);
-
-
-const dataURL=
-canvas.toDataURL(
-"image/png"
-);
-
-
-/*
-Store the finished edited image.
-*/
-
-window.finishedPhotoData=
-dataURL;
-
-
-/*
-Display it on final page.
-*/
-
-const target=
-document.getElementById(
-"savedPreview"
-);
-
-target.innerHTML="";
-
-const image=
-document.createElement("img");
-
-image.src=dataURL;
-
-image.style.width="100%";
-image.style.display="block";
-
-target.appendChild(image);
-
-
-/*
-AUTOMATIC DOWNLOAD.
-
-Using a real anchor element makes this work
-more reliably on phones than relying on the
-original HTML element.
-*/
-
-const link=
-document.createElement("a");
-
-link.href=dataURL;
-
-link.download=
-"our-little-photobooth-"+Date.now()+".png";
-
-link.style.display="none";
-
-document.body.appendChild(link);
-
-link.click();
-
 setTimeout(
-()=>{
-link.remove();
+async()=>{
+
+await saveStrip(
+true
+);
+
 },
-1000
+350
 );
-
-
-message.textContent=
-"♡ Saved automatically! Check your Downloads/Photos.";
-
-
-/*
-Go to final page.
-*/
-
-nextStep(5);
-
-}catch(error){
-
-console.error(
-"Automatic save error:",
-error
-);
-
-message.textContent=
-"Couldn't automatically save. Tap Save Again below.";
-
-nextStep(5);
-
-}
 
 }
 
@@ -4099,13 +4374,16 @@ document.getElementById(
 "photoStrip"
 );
 
+
 const target=
 document.getElementById(
 "savedPreview"
 );
 
+
 target.innerHTML=
 source.innerHTML;
+
 
 target.className=
 source.className;
@@ -4114,31 +4392,173 @@ source.className;
 
 
 /* =====================================================
-SAVE AGAIN
+GENERATE PNG
 ===================================================== */
 
-async function downloadAgain(){
+async function generateFinalImage(){
 
-if(window.finishedPhotoData){
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
-const link=
-document.createElement("a");
 
-link.href=
-window.finishedPhotoData;
+if(!strip){
 
-link.download=
-"our-little-photobooth-"+Date.now()+".png";
+throw new Error(
+"Photo strip not found"
+);
 
-document.body.appendChild(link);
+}
 
-link.click();
 
-setTimeout(
-()=>{
-link.remove();
-},
-1000
+/*
+  Wait for images.
+*/
+const images=
+[
+...strip.querySelectorAll("img")
+];
+
+
+await Promise.all(
+images.map(
+img=>{
+
+if(img.complete)
+return Promise.resolve();
+
+return new Promise(
+resolve=>{
+
+img.onload=resolve;
+
+img.onerror=resolve;
+
+}
+);
+
+}
+)
+);
+
+
+const canvas=
+document.createElement(
+"canvas"
+);
+
+
+const W=1200;
+
+
+/*
+  Calculate height based on the
+  actual strip.
+*/
+const ratio=
+strip.getBoundingClientRect().height/
+strip.getBoundingClientRect().width;
+
+
+const H=
+Math.max(
+1000,
+Math.round(W*ratio)
+);
+
+
+canvas.width=W;
+
+canvas.height=H;
+
+
+const ctx=
+canvas.getContext("2d");
+
+
+ctx.fillStyle="#fff8fa";
+
+ctx.fillRect(
+0,
+0,
+W,
+H
+);
+
+
+/*
+  Use SVG foreignObject so all
+  CSS decorations/stickers are included.
+*/
+const serialized=
+new XMLSerializer()
+.serializeToString(
+strip
+);
+
+
+const svg=
+`
+<svg
+xmlns="http://www.w3.org/2000/svg"
+width="${strip.offsetWidth}"
+height="${strip.offsetHeight}">
+<foreignObject
+width="100%"
+height="100%">
+<div
+xmlns="http://www.w3.org/1999/xhtml">
+${serialized}
+</div>
+</foreignObject>
+</svg>
+`;
+
+
+const blob=
+new Blob(
+[svg],
+{
+type:"image/svg+xml;charset=utf-8"
+}
+);
+
+
+const url=
+URL.createObjectURL(blob);
+
+
+const img=
+new Image();
+
+
+return new Promise(
+(resolve,reject)=>{
+
+img.onload=()=>{
+
+ctx.drawImage(
+img,
+0,
+0,
+W,
+H
+);
+
+
+URL.revokeObjectURL(url);
+
+
+canvas.toBlob(
+blob=>{
+
+if(!blob){
+
+reject(
+new Error(
+"PNG creation failed"
+)
 );
 
 return;
@@ -4146,61 +4566,177 @@ return;
 }
 
 
-try{
+resolve(blob);
 
-const canvas=
-await html2canvas(
-document.getElementById(
-"photoStrip"
-),
-{
-scale:3,
-backgroundColor:null,
-useCORS:true,
-allowTaint:true
-}
+},
+"image/png"
 );
 
-const link=
-document.createElement("a");
+};
 
-link.href=
-canvas.toDataURL("image/png");
 
-link.download=
-"our-little-photobooth.png";
-
-document.body.appendChild(link);
-
-link.click();
-
-link.remove();
-
-}catch(error){
-
-console.error(error);
-
-alert(
-"Sorry, the phone/browser blocked the download. You can take a screenshot of the finished strip."
+img.onerror=()=>{
+URL.revokeObjectURL(url);
+reject(
+new Error(
+"Could not render photo"
+)
 );
+};
+
+
+img.src=url;
 
 }
+);
 
 }
 
 
 /* =====================================================
-ESCAPE HTML
+SAVE / SHARE
 ===================================================== */
 
-function escapeHTML(value){
+async function saveStrip(
+automatic=false
+){
 
-return String(value)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+const status=
+document.getElementById(
+"saveStatus"
+);
+
+
+if(status){
+
+status.textContent=
+"💗 Creating your photo...";
+
+}
+
+
+try{
+
+const blob=
+await generateFinalImage();
+
+
+const file=
+new File(
+[blob],
+"our-little-photobooth.png",
+{
+type:"image/png"
+}
+);
+
+
+/*
+  MOBILE:
+  Use native share sheet when available.
+  This is the most reliable way to let
+  Android/iPhone save the finished photo.
+*/
+
+if(
+navigator.share &&
+navigator.canShare &&
+navigator.canShare({
+files:[file]
+})
+){
+
+await navigator.share({
+files:[file],
+title:"Our Little Photobooth ♡",
+text:"Our little moment ♡"
+});
+
+
+if(status){
+
+status.textContent=
+"♡ Photo ready!";
+
+}
+
+
+return;
+
+}
+
+
+/*
+  DESKTOP / browsers without Web Share:
+  trigger download.
+*/
+
+const url=
+URL.createObjectURL(blob);
+
+
+const link=
+document.createElement("a");
+
+
+link.href=url;
+
+link.download=
+"our-little-photobooth.png";
+
+
+document.body.appendChild(
+link
+);
+
+
+link.click();
+
+
+link.remove();
+
+
+setTimeout(
+()=>{
+URL.revokeObjectURL(url);
+},
+3000
+);
+
+
+if(status){
+
+status.textContent=
+"♡ Photo saved/downloaded!";
+
+}
+
+
+}catch(error){
+
+console.error(
+"Saving error:",
+error
+);
+
+
+if(status){
+
+status.textContent=
+"Your photo is ready, but your browser blocked automatic saving. Tap Save / Share Photo.";
+
+}
+
+
+if(automatic){
+
+alert(
+"Your finished photo is ready ♡ Your browser blocked automatic saving, so tap 'Save / Share Photo' once."
+);
+
+}
+
+}
 
 }
 
@@ -4223,14 +4759,26 @@ track=>track.stop()
 
 }
 
-if(peerConnection)
+
+if(peerConnection){
+
 peerConnection.close();
 
-if(roomChannel)
+}
+
+
+if(roomChannel){
+
 roomChannel.unsubscribe();
 
-if(webrtcChannel)
-webrtcChannel.unsubscribe();
+}
+
+
+if(signalChannel){
+
+signalChannel.unsubscribe();
+
+}
 
 }
 );
