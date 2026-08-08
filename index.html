@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
 <title>Our Little Photobooth ♡</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -18,12 +18,8 @@
   --line:#ead9df;
 }
 
-html,body{
-  margin:0;
-  min-height:100%;
-}
-
 body{
+  margin:0;
   font-family:Georgia,serif;
   color:var(--dark);
   background:
@@ -33,13 +29,8 @@ body{
   background-size:90px 90px;
 }
 
-button,input{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input{font:inherit}
+button{cursor:pointer}
 
 .page{
   display:none;
@@ -47,9 +38,7 @@ button{
   padding:12px;
 }
 
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
 .card{
   width:min(600px,100%);
@@ -81,13 +70,11 @@ h1{
   margin:12px 0 18px;
 }
 
-h1 span,
-h2 span{
+h1 span,h2 span{
   color:var(--pink);
 }
 
-.desc,
-.muted{
+.desc,.muted{
   font-family:Arial,sans-serif;
   line-height:1.6;
   color:#88747c;
@@ -124,11 +111,6 @@ h2 span{
   font-family:Arial,sans-serif;
   font-weight:bold;
   box-shadow:0 10px 25px #b85d7e25;
-}
-
-.primary:disabled{
-  opacity:.45;
-  cursor:not-allowed;
 }
 
 .secondary{
@@ -180,11 +162,6 @@ h2 span{
   margin:8px 0;
 }
 
-
-/* =========================================================
-   STRIP OPTIONS
-========================================================= */
-
 .strip-options{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -211,9 +188,9 @@ h2 span{
 }
 
 
-/* =========================================================
-   CAMERA
-========================================================= */
+/* =====================================================
+CAMERA
+===================================================== */
 
 .camera{
   display:grid;
@@ -228,14 +205,14 @@ h2 span{
 .video-box{
   position:relative;
   background:#30262b;
-  min-height:330px;
+  min-height:320px;
   border-radius:20px;
   overflow:hidden;
 }
 
 .video-box video{
   width:100%;
-  height:330px;
+  height:320px;
   object-fit:cover;
   display:block;
   background:#30262b;
@@ -256,7 +233,7 @@ h2 span{
   color:white;
   font-family:Arial,sans-serif;
   font-size:11px;
-  z-index:10;
+  z-index:5;
 }
 
 .waiting{
@@ -307,10 +284,6 @@ h2 span{
   font-size:22px;
 }
 
-.shutter:disabled{
-  opacity:.4;
-}
-
 #photoPreview{
   text-align:center;
 }
@@ -324,9 +297,9 @@ h2 span{
 }
 
 
-/* =========================================================
-   DESIGNS
-========================================================= */
+/* =====================================================
+DESIGNS
+===================================================== */
 
 .design-grid{
   display:grid;
@@ -374,9 +347,9 @@ h2 span{
 }
 
 
-/* =========================================================
-   THEMES
-========================================================= */
+/* =====================================================
+DESIGN THEMES
+===================================================== */
 
 .theme-coquette{
   background:#fff0f6;
@@ -390,7 +363,6 @@ h2 span{
   color:#c76c8c;
   font-size:12px;
   letter-spacing:2px;
-  padding-bottom:5px;
 }
 
 .theme-coquette img{
@@ -409,7 +381,6 @@ h2 span{
   color:#5c3d30;
   font:8px Arial;
   letter-spacing:2px;
-  padding-bottom:5px;
 }
 
 .theme-retro img{
@@ -428,7 +399,6 @@ h2 span{
   text-align:center;
   color:#785b4c;
   font-size:9px;
-  padding-bottom:5px;
 }
 
 .theme-scrapbook img{
@@ -448,7 +418,6 @@ h2 span{
   color:#fff;
   text-shadow:1px 1px #a65c91;
   font:9px Arial;
-  padding-bottom:5px;
 }
 
 .theme-y2k img{
@@ -467,7 +436,6 @@ h2 span{
   text-align:center;
   color:#df5967;
   font-size:11px;
-  padding-bottom:5px;
 }
 
 .theme-strawberry img{
@@ -485,7 +453,6 @@ h2 span{
   text-align:center;
   color:#87627a;
   font-size:12px;
-  padding-bottom:5px;
 }
 
 .theme-lace img{
@@ -504,7 +471,6 @@ h2 span{
   color:#704b39;
   font:9px Arial;
   letter-spacing:2px;
-  padding-bottom:5px;
 }
 
 .theme-postcard img{
@@ -522,7 +488,6 @@ h2 span{
   text-align:center;
   color:#b86f84;
   font-size:10px;
-  padding-bottom:5px;
 }
 
 .theme-floral img{
@@ -541,7 +506,10 @@ h2 span{
   color:white;
   text-shadow:1px 1px #827a9c;
   font-size:10px;
-  padding-bottom:5px;
+}
+
+.theme-dreamy img{
+  border-radius:8px;
 }
 
 .theme-vintage{
@@ -560,7 +528,6 @@ h2 span{
   color:#654b3d;
   font:10px Georgia;
   letter-spacing:2px;
-  padding-bottom:5px;
 }
 
 .theme-vintage img{
@@ -569,9 +536,11 @@ h2 span{
 }
 
 
-/* =========================================================
-   FINAL STRIP
-========================================================= */
+/* =====================================================
+NEW FINAL PHOTO DESIGN
+Each photo gets decorations around it.
+The names only appear ONCE at the bottom.
+===================================================== */
 
 .final-preview-wrap{
   display:flex;
@@ -584,38 +553,107 @@ h2 span{
 
 .final-strip{
   position:relative;
-  width:310px;
-  padding:13px;
+  width:340px;
+  padding:18px 15px 20px;
   box-shadow:0 20px 50px #51363f35;
-  overflow:hidden;
+  background:#fff8fa;
 }
 
-.final-strip img{
+
+/* One complete decorated photo */
+
+.photo-unit{
+  width:100%;
+  margin-bottom:22px;
+  padding:8px;
+  border-radius:14px;
+}
+
+
+/* Decorations above photo */
+
+.photo-decor-top{
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  font-size:20px;
+  line-height:1;
+}
+
+
+/* Middle row */
+
+.photo-middle{
+  display:grid;
+  grid-template-columns:42px 1fr 42px;
+  align-items:center;
+  gap:4px;
+}
+
+
+/* Decorations beside photo */
+
+.photo-decor-side{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
+  min-height:100%;
+  font-size:20px;
+  line-height:1.4;
+}
+
+
+/* Actual image */
+
+.photo-main{
   display:block;
   width:100%;
   aspect-ratio:4/5;
   object-fit:cover;
-  margin-bottom:8px;
+  border-radius:8px;
 }
 
-/*
- IMPORTANT:
- The names are ONE SINGLE caption at the bottom.
- There is NO caption underneath individual photos.
-*/
 
-.final-strip-title{
-  text-align:center;
-  padding:14px 3px 7px;
+/* Decorations underneath each photo */
+
+.photo-decor-bottom{
+  min-height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
   font-size:20px;
+  line-height:1;
+}
+
+
+/* FINAL NAME ONLY ONCE */
+
+.final-love{
+  text-align:center;
+  margin-top:12px;
+  padding:18px 5px 5px;
+  font-size:24px;
   font-weight:bold;
   color:#49363e;
+  border-top:1px dashed #d9a9ba;
+}
+
+.final-love-sub{
+  text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#b4778b;
+  margin-top:5px;
 }
 
 
-/* =========================================================
-   STICKERS
-========================================================= */
+/* =====================================================
+STICKERS
+===================================================== */
 
 .sticker-bar{
   display:flex;
@@ -679,35 +717,23 @@ h2 span{
 }
 
 
-/* =========================================================
-   SAVE FALLBACK
-========================================================= */
+/* =====================================================
+AUTO SAVE MESSAGE
+===================================================== */
 
-#saveFallback{
-  display:none;
+.auto-save-status{
   text-align:center;
-  margin-top:15px;
-}
-
-#saveFallback img{
-  width:100%;
-  max-width:350px;
-  border-radius:10px;
-  box-shadow:0 10px 30px #0002;
-}
-
-.save-note{
   font-family:Arial,sans-serif;
-  font-size:12px;
-  color:#88747c;
-  line-height:1.5;
-  margin-top:10px;
+  font-size:11px;
+  color:#a36c80;
+  min-height:18px;
+  margin-top:12px;
 }
 
 
-/* =========================================================
-   MOBILE
-========================================================= */
+/* =====================================================
+RESPONSIVE
+===================================================== */
 
 @media(max-width:850px){
 
@@ -733,16 +759,13 @@ h2 span{
 
   .camera{
     grid-template-columns:1fr 1fr;
-    gap:5px;
-    padding:5px;
   }
 
-  .video-box{
-    min-height:230px;
-  }
-
-  .video-box video{
+  .video-box,
+  .video-box video,
+  .waiting{
     height:230px;
+    min-height:230px;
   }
 
   .design-grid{
@@ -754,7 +777,20 @@ h2 span{
   }
 
   .final-strip{
-    width:270px;
+    width:300px;
+  }
+
+  .photo-middle{
+    grid-template-columns:34px 1fr 34px;
+  }
+
+  .photo-decor-side{
+    font-size:17px;
+  }
+
+  .photo-decor-top,
+  .photo-decor-bottom{
+    font-size:18px;
   }
 
   .text-row{
@@ -765,29 +801,51 @@ h2 span{
 
 @media(max-width:400px){
 
-  .video-box video{
-    height:205px;
+  .camera{
+    gap:5px;
+    padding:5px;
   }
 
-  .video-box{
-    min-height:205px;
+  .video-box video{
+    height:205px;
   }
 
   .design-preview{
     height:190px;
   }
 
+  .final-strip{
+    width:280px;
+  }
+
+  .photo-middle{
+    grid-template-columns:29px 1fr 29px;
+  }
+
+  .photo-decor-side{
+    font-size:15px;
+  }
+
 }
+
+
+/* =====================================================
+HIDDEN CANVAS
+===================================================== */
+
+#saveCanvas{
+  display:none;
+}
+
 </style>
 </head>
-
 
 <body>
 
 
-<!-- =====================================================
+<!-- ===================================================
 WELCOME
-===================================================== -->
+=================================================== -->
 
 <section id="welcome" class="page active">
 
@@ -808,7 +866,6 @@ Our Little<br>
 Take pictures together even when you're far apart.
 </p>
 
-
 <div class="field">
 
 <label>
@@ -817,13 +874,11 @@ Your name
 <input
 id="yourName"
 placeholder="Your name"
-autocomplete="off"
 >
 
 </label>
 
 </div>
-
 
 <div class="field">
 
@@ -833,13 +888,11 @@ Partner's name
 <input
 id="partnerName"
 placeholder="Their name"
-autocomplete="off"
 >
 
 </label>
 
 </div>
-
 
 <div class="field">
 
@@ -849,13 +902,11 @@ Shared room code
 <input
 id="roomCode"
 placeholder="OURWORLD"
-autocomplete="off"
 >
 
 </label>
 
 </div>
-
 
 <button
 class="primary"
@@ -864,21 +915,16 @@ onclick="enterWorld()"
 Enter Our World ♡
 </button>
 
-
-<p
-id="connectionMessage"
-style="font-family:Arial,sans-serif;font-size:12px"
-></p>
+<p id="connectionMessage"></p>
 
 </div>
 
 </section>
 
 
-
-<!-- =====================================================
+<!-- ===================================================
 HOME
-===================================================== -->
+=================================================== -->
 
 <section id="home" class="page">
 
@@ -927,11 +973,9 @@ Them
 
 </h2>
 
-
 <p class="desc">
 Same love. Different places. One little photobooth.
 </p>
-
 
 <div
 style="
@@ -953,14 +997,12 @@ ROOM:
 
 </div>
 
-
 <p
 id="partnerStatus"
 class="muted"
 >
 ⚪ Waiting for partner...
 </p>
-
 
 <button
 class="primary"
@@ -976,10 +1018,9 @@ onclick="openPhotobooth()"
 </section>
 
 
-
-<!-- =====================================================
+<!-- ===================================================
 PHOTOBOOTH
-===================================================== -->
+=================================================== -->
 
 <section id="photobooth" class="page">
 
@@ -1006,9 +1047,9 @@ photobooth ♡
 <div class="content">
 
 
-<!-- ===================================================
+<!-- =================================================
 STEP 1
-=================================================== -->
+================================================= -->
 
 <div
 id="step1"
@@ -1027,16 +1068,16 @@ How many photos?
 Choose the size of your photobooth strip.
 </p>
 
-
 <div class="strip-options">
-
 
 <button
 class="strip-option selected"
 onclick="selectStrip(2,this)"
 >
 
-<strong>2</strong>
+<strong>
+2
+</strong>
 
 classic
 
@@ -1048,7 +1089,9 @@ class="strip-option"
 onclick="selectStrip(3,this)"
 >
 
-<strong>3</strong>
+<strong>
+3
+</strong>
 
 sweet
 
@@ -1060,7 +1103,9 @@ class="strip-option"
 onclick="selectStrip(4,this)"
 >
 
-<strong>4</strong>
+<strong>
+4
+</strong>
 
 classic +
 
@@ -1072,15 +1117,15 @@ class="strip-option"
 onclick="selectStrip(6,this)"
 >
 
-<strong>6</strong>
+<strong>
+6
+</strong>
 
 long
 
 </button>
 
-
 </div>
-
 
 <button
 class="primary"
@@ -1092,10 +1137,9 @@ Take Photos →
 </div>
 
 
-
-<!-- ===================================================
-STEP 2 CAMERA
-=================================================== -->
+<!-- =================================================
+STEP 2
+================================================= -->
 
 <div
 id="step2"
@@ -1111,7 +1155,7 @@ Let's take pictures 📸
 </h2>
 
 <p class="muted">
-Start your camera on both phones. Once both cameras are ready, you will be able to see each other live.
+Start your camera on both phones, then either person can press the shutter.
 </p>
 
 
@@ -1127,19 +1171,14 @@ playsinline
 muted
 ></video>
 
-
 <div class="video-label">
-
 You ·
-
 <span id="cameraYouName">
 You
 </span>
-
 </div>
 
 </div>
-
 
 
 <div class="video-box partner">
@@ -1148,9 +1187,7 @@ You
 id="partnerVideo"
 autoplay
 playsinline
-muted
 ></video>
-
 
 <div
 id="partnerWaiting"
@@ -1171,15 +1208,11 @@ Keep the same room code open.
 
 </div>
 
-
 <div class="video-label">
-
 Partner ·
-
 <span id="cameraPartnerName">
 Them
 </span>
-
 </div>
 
 </div>
@@ -1201,14 +1234,12 @@ class="connection-pill"
 
 <div class="camera-buttons">
 
-
 <button
 class="secondary"
 onclick="startCamera()"
 >
 Start Camera
 </button>
-
 
 <button
 id="shutterButton"
@@ -1219,7 +1250,6 @@ disabled
 ●
 </button>
 
-
 <span id="photoCount">
 0 / 2
 </span>
@@ -1227,9 +1257,7 @@ disabled
 </div>
 
 
-<div
-id="photoPreview"
-></div>
+<div id="photoPreview"></div>
 
 
 <button
@@ -1244,10 +1272,9 @@ Choose Design →
 </div>
 
 
-
-<!-- ===================================================
+<!-- =================================================
 STEP 3
-=================================================== -->
+================================================= -->
 
 <div
 id="step3"
@@ -1265,7 +1292,6 @@ Which one feels like you? ✨
 <p class="muted">
 Tap a design, or hover over one to preview your actual photos.
 </p>
-
 
 <div
 id="designGrid"
@@ -1292,7 +1318,6 @@ onclick="nextStep(2)"
 ← Retake
 </button>
 
-
 <button
 class="primary"
 onclick="chooseDesign()"
@@ -1306,10 +1331,9 @@ style="margin-top:10px"
 </div>
 
 
-
-<!-- ===================================================
+<!-- =================================================
 STEP 4
-=================================================== -->
+================================================= -->
 
 <div
 id="step4"
@@ -1326,25 +1350,109 @@ Add your little details ✨
 
 <p class="muted">
 Tap a sticker, then drag it anywhere on your strip.
+Your names will stay only at the very bottom. ♡
 </p>
 
 
 <div class="sticker-bar">
 
-<button class="sticker-choice" onclick="addSticker('🎀')">🎀</button>
-<button class="sticker-choice" onclick="addSticker('♡')">♡</button>
-<button class="sticker-choice" onclick="addSticker('♥')">♥</button>
-<button class="sticker-choice" onclick="addSticker('✦')">✦</button>
-<button class="sticker-choice" onclick="addSticker('☆')">☆</button>
-<button class="sticker-choice" onclick="addSticker('🌷')">🌷</button>
-<button class="sticker-choice" onclick="addSticker('🌸')">🌸</button>
-<button class="sticker-choice" onclick="addSticker('🍓')">🍓</button>
-<button class="sticker-choice" onclick="addSticker('🧸')">🧸</button>
-<button class="sticker-choice" onclick="addSticker('☁️')">☁️</button>
-<button class="sticker-choice" onclick="addSticker('💌')">💌</button>
-<button class="sticker-choice" onclick="addSticker('🦋')">🦋</button>
-<button class="sticker-choice" onclick="addSticker('✿')">✿</button>
-<button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
+<button
+class="sticker-choice"
+onclick="addSticker('🎀')"
+>
+🎀
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('♡')"
+>
+♡
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('♥')"
+>
+♥
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('✦')"
+>
+✦
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('☆')"
+>
+☆
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('🌷')"
+>
+🌷
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('🌸')"
+>
+🌸
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('🍓')"
+>
+🍓
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('🧸')"
+>
+🧸
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('☁️')"
+>
+☁️
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('💌')"
+>
+💌
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('🦋')"
+>
+🦋
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('✿')"
+>
+✿
+</button>
+
+<button
+class="sticker-choice"
+onclick="addSticker('୨୧')"
+>
+୨୧
+</button>
 
 </div>
 
@@ -1359,6 +1467,11 @@ class="final-strip"
 </div>
 
 
+<div class="auto-save-status" id="autoSaveStatus">
+Your finished photo will save automatically ♡
+</div>
+
+
 <div class="edit-buttons">
 
 <button
@@ -1367,7 +1480,6 @@ onclick="undoLastEdit()"
 >
 ↩ Undo
 </button>
-
 
 <button
 class="secondary"
@@ -1383,7 +1495,7 @@ onclick="resetEdits()"
 
 <input
 id="customText"
-placeholder="our little moment ♡"
+placeholder="add a little message ♡"
 >
 
 <button
@@ -1407,10 +1519,9 @@ See Final Strip →
 </div>
 
 
-
-<!-- ===================================================
+<!-- =================================================
 STEP 5
-=================================================== -->
+================================================= -->
 
 <div
 id="step5"
@@ -1440,27 +1551,21 @@ class="final-strip"
 </div>
 
 
+<div
+id="finalSaveStatus"
+class="auto-save-status"
+>
+Saving your memory automatically... ♡
+</div>
+
+
 <button
 class="primary"
 onclick="saveStrip()"
 style="margin-top:18px"
 >
-💾 Save Photo
+💾 Save Photo Again
 </button>
-
-
-<div id="saveFallback">
-
-<p class="save-note">
-If your phone doesn't automatically download it, tap the image below, then save it to your Photos/Gallery.
-</p>
-
-<img
-id="saveImage"
-alt="Your photobooth strip"
->
-
-</div>
 
 
 <button
@@ -1479,12 +1584,11 @@ style="margin-top:10px;width:100%"
 </section>
 
 
-
 <script>
 
-/* =========================================================
-   SUPABASE
-========================================================= */
+/* =====================================================
+SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://pqmnwuwkdgvlmsxbizmp.supabase.co";
@@ -1499,9 +1603,9 @@ SUPABASE_KEY
 );
 
 
-/* =========================================================
-   USER VARIABLES
-========================================================= */
+/* =====================================================
+APP VARIABLES
+===================================================== */
 
 let yourName="";
 let partnerName="";
@@ -1515,36 +1619,32 @@ let photos=[];
 let cameraStream=null;
 
 let roomChannel=null;
-let signalChannel=null;
-
+let webrtcChannel=null;
 let peerConnection=null;
 
-let localCameraReady=false;
-let partnerCameraReady=false;
-
+let isCaller=false;
 let partnerClientId=null;
 
-let isCaller=false;
+let partnerCameraReady=false;
+let localCameraReady=false;
 
 let remoteDescriptionSet=false;
 let pendingCandidates=[];
 
 let makingOffer=false;
-let offerInProgress=false;
-
-let connectionRetryTimer=null;
-let readinessTimer=null;
+let offerCreated=false;
 
 let shotRecords=new Map();
 
-let shutterBusy=false;
+let shutterLocked=false;
 
 let editHistory=[];
 
-let finalBlobUrl=null;
+let autoSaveTimer=null;
 
 const clientId=
 crypto.randomUUID();
+
 
 const rtcConfig={
   iceServers:[
@@ -1556,9 +1656,6 @@ const rtcConfig={
     },
     {
       urls:"stun:stun2.l.google.com:19302"
-    },
-    {
-      urls:"stun:stun3.l.google.com:19302"
     }
   ]
 };
@@ -1578,4378 +1675,3467 @@ const designs=[
 ];
 
 
-/* =========================================================
-   PAGE
-========================================================= */
+/* =====================================================
+PAGE
+===================================================== */
 
 function showPage(id){
 
-  document
-    .querySelectorAll(".page")
-    .forEach(page=>{
-      page.classList.remove("active");
-    });
+document
+.querySelectorAll(".page")
+.forEach(p=>
+p.classList.remove("active")
+);
 
-  document
-    .getElementById(id)
-    .classList.add("active");
+document
+.getElementById(id)
+.classList.add("active");
 
-  window.scrollTo(0,0);
+window.scrollTo(0,0);
 
 }
 
 
-/* =========================================================
-   ENTER ROOM
-========================================================= */
+/* =====================================================
+ENTER ROOM
+===================================================== */
 
 async function enterWorld(){
 
-  yourName=
-    document
-      .getElementById("yourName")
-      .value
-      .trim();
+yourName=
+document
+.getElementById("yourName")
+.value
+.trim();
 
-  partnerName=
-    document
-      .getElementById("partnerName")
-      .value
-      .trim();
+partnerName=
+document
+.getElementById("partnerName")
+.value
+.trim();
 
-  roomCode=
-    document
-      .getElementById("roomCode")
-      .value
-      .trim()
-      .toUpperCase();
+roomCode=
+document
+.getElementById("roomCode")
+.value
+.trim()
+.toUpperCase();
 
-  if(!yourName){
 
-    alert("Please enter your name ♡");
-    return;
+if(!yourName){
 
-  }
+alert(
+"Please enter your name ♡"
+);
 
-  if(!roomCode){
-
-    alert("Please enter a room code ♡");
-    return;
-
-  }
-
-  document
-    .getElementById("connectionMessage")
-    .textContent=
-      "Connecting to your little room...";
-
-  try{
-
-    await setupRoom();
-
-    document
-      .getElementById("displayYou")
-      .textContent=yourName;
-
-    document
-      .getElementById("displayPartner")
-      .textContent=
-        partnerName || "Them";
-
-    document
-      .getElementById("displayRoom")
-      .textContent=roomCode;
-
-    document
-      .getElementById("cameraYouName")
-      .textContent=yourName;
-
-    document
-      .getElementById("cameraPartnerName")
-      .textContent=
-        partnerName || "Them";
-
-    document
-      .getElementById("connectionMessage")
-      .textContent=
-        "Connected ♡";
-
-    showPage("home");
-
-  }catch(error){
-
-    console.error(error);
-
-    document
-      .getElementById("connectionMessage")
-      .textContent=
-        "Could not connect. Try again.";
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   ROOM PRESENCE
-========================================================= */
+if(!roomCode){
 
-async function setupRoom(){
+alert(
+"Please enter a room code ♡"
+);
 
-  if(roomChannel) return;
-
-  roomChannel=
-    supabaseClient.channel(
-      "presence-"+roomCode,
-      {
-        config:{
-          presence:{
-            key:clientId
-          }
-        }
-      }
-    );
-
-
-  roomChannel
-    .on(
-      "presence",
-      {
-        event:"sync"
-      },
-      ()=>{
-        updatePresence();
-      }
-    )
-    .on(
-      "presence",
-      {
-        event:"join"
-      },
-      ()=>{
-        updatePresence();
-      }
-    )
-    .on(
-      "presence",
-      {
-        event:"leave"
-      },
-      ()=>{
-        updatePresence();
-      }
-    );
-
-
-  await new Promise(
-    (resolve,reject)=>{
-
-      roomChannel.subscribe(
-        async status=>{
-
-          if(status==="SUBSCRIBED"){
-
-            try{
-
-              await roomChannel.track({
-                id:clientId,
-                name:yourName,
-                camera:false,
-                time:Date.now()
-              });
-
-              resolve();
-
-            }catch(error){
-
-              reject(error);
-
-            }
-
-          }
-
-        }
-      );
-
-    }
-  );
-
-
-  await setupSignalChannel();
-
-  await updatePresence();
+return;
 
 }
 
 
-/* =========================================================
-   SIGNAL CHANNEL
-========================================================= */
-
-async function setupSignalChannel(){
-
-  if(signalChannel) return;
-
-  signalChannel=
-    supabaseClient.channel(
-      "photobooth-signal-"+roomCode,
-      {
-        config:{
-          broadcast:{
-            ack:true,
-            self:false
-          }
-        }
-      }
-    );
+document
+.getElementById("connectionMessage")
+.textContent=
+"Connecting to room...";
 
 
-  signalChannel.on(
-    "broadcast",
-    {
-      event:"signal"
-    },
-    async payload=>{
+try{
 
-      const message=
-        payload.payload;
-
-      if(!message) return;
-
-      if(message.sender===clientId)
-        return;
-
-      await handleSignal(message);
-
-    }
-  );
+await setupRoomChannel();
 
 
-  await new Promise(
-    (resolve,reject)=>{
-
-      signalChannel.subscribe(
-        status=>{
-
-          if(status==="SUBSCRIBED"){
-
-            resolve();
-
-          }
-
-        }
-      );
-
-    }
-  );
+document
+.getElementById("displayYou")
+.textContent=
+yourName;
 
 
-  /*
-    Send a hello repeatedly for a short time.
-    This prevents one phone missing the first
-    handshake because it opened slightly later.
-  */
+document
+.getElementById("displayPartner")
+.textContent=
+partnerName||"Them";
 
-  for(let i=0;i<5;i++){
 
-    setTimeout(
-      ()=>{
-        sendSignal(
-          "hello",
-          {}
-        );
-      },
-      i*700
-    );
+document
+.getElementById("displayRoom")
+.textContent=
+roomCode;
 
-  }
+
+document
+.getElementById("cameraYouName")
+.textContent=
+yourName;
+
+
+document
+.getElementById("cameraPartnerName")
+.textContent=
+partnerName||"Them";
+
+
+document
+.getElementById("connectionMessage")
+.textContent=
+"Room connected ♡";
+
+
+showPage("home");
+
+
+}catch(error){
+
+console.error(error);
+
+document
+.getElementById("connectionMessage")
+.textContent=
+"Could not connect. Please try again.";
+
+}
 
 }
 
 
-/* =========================================================
-   PRESENCE
-========================================================= */
+/* =====================================================
+ROOM PRESENCE
+===================================================== */
+
+async function setupRoomChannel(){
+
+if(roomChannel)return;
+
+
+roomChannel=
+supabaseClient.channel(
+"presence-"+roomCode,
+{
+config:{
+presence:{
+key:clientId
+}
+}
+}
+);
+
+
+roomChannel
+.on(
+"presence",
+{
+event:"sync"
+},
+()=>{
+updatePresence();
+}
+)
+.on(
+"presence",
+{
+event:"join"
+},
+()=>{
+updatePresence();
+}
+)
+.on(
+"presence",
+{
+event:"leave"
+},
+()=>{
+updatePresence();
+}
+)
+.subscribe(
+async status=>{
+
+if(status==="SUBSCRIBED"){
+
+await roomChannel.track({
+id:clientId,
+name:yourName
+});
+
+await updatePresence();
+
+}
+
+}
+);
+
+}
+
+
+/* =====================================================
+PRESENCE UPDATE
+===================================================== */
 
 async function updatePresence(){
 
-  if(!roomChannel)
-    return;
-
-  const state=
-    roomChannel.presenceState();
-
-  let others=[];
-
-  Object
-    .values(state)
-    .forEach(entries=>{
-
-      entries.forEach(entry=>{
-
-        if(entry.id!==clientId){
-
-          others.push(entry);
-
-        }
-
-      });
-
-    });
+if(!roomChannel)return;
 
 
-  if(!others.length){
-
-    partnerClientId=null;
-    partnerCameraReady=false;
-
-    document
-      .getElementById("partnerStatus")
-      .textContent=
-        "⚪ Waiting for partner...";
-
-    document
-      .getElementById("partnerCameraText")
-      .textContent=
-        "Waiting for partner...";
-
-    return;
-
-  }
+const state=
+roomChannel.presenceState();
 
 
-  /*
-    Deterministic partner.
-  */
-
-  others.sort(
-    (a,b)=>
-      String(a.id)
-        .localeCompare(String(b.id))
-  );
+let users=[];
 
 
-  const partner=
-    others[0];
+Object.values(state)
+.forEach(entries=>{
 
-  partnerClientId=
-    partner.id;
+entries.forEach(entry=>{
 
+if(entry.id!==clientId){
 
-  document
-    .getElementById("partnerStatus")
-    .textContent=
-      "🟢 "+
-      (partner.name || partnerName || "Partner")+
-      " is here ♡";
+users.push(entry);
 
+}
 
-  /*
-    Presence contains camera state too.
-  */
+});
 
-  partnerCameraReady=
-    partner.camera===true;
+});
 
 
-  document
-    .getElementById("partnerCameraText")
-    .textContent=
-      partnerCameraReady
-        ? "🟢 Camera ready"
-        : "Waiting for partner camera...";
+if(users.length){
+
+partnerClientId=
+users[0].id;
 
 
-  /*
-    Start WebRTC as soon as the other person appears.
-  */
-
-  await ensurePeer();
-
-  await sendSignal(
-    "hello",
-    {}
-  );
+document
+.getElementById("partnerStatus")
+.textContent=
+"🟢 "+
+(users[0].name||partnerName||"Partner")+
+" is here ♡";
 
 
-  /*
-    Update caller state.
-  */
-
-  const all=[];
-
-  Object
-    .values(state)
-    .forEach(entries=>{
-      entries.forEach(entry=>{
-        all.push(entry);
-      });
-    });
+document
+.getElementById("partnerCameraText")
+.textContent=
+partnerCameraReady
+?"🟢 Camera ready"
+:"Waiting for partner camera...";
 
 
-  all.sort(
-    (a,b)=>
-      String(a.id)
-        .localeCompare(String(b.id))
-  );
+await setupWebRTC();
 
 
-  isCaller=
-    all.length>=2 &&
-    all[0].id===clientId;
+}else{
+
+partnerClientId=null;
+
+partnerCameraReady=false;
 
 
-  maybeOffer();
+document
+.getElementById("partnerStatus")
+.textContent=
+"⚪ Waiting for partner...";
+
+
+document
+.getElementById("partnerCameraText")
+.textContent=
+"Waiting for partner...";
+
+}
 
 }
 
 
-/* =========================================================
-   UPDATE OUR PRESENCE CAMERA STATE
-========================================================= */
+/* =====================================================
+WEBRTC CHANNEL
+===================================================== */
 
-async function updateMyCameraPresence(){
+async function setupWebRTC(){
 
-  if(!roomChannel)
-    return;
+if(webrtcChannel)return;
 
-  try{
 
-    await roomChannel.track({
-      id:clientId,
-      name:yourName,
-      camera:localCameraReady,
-      time:Date.now()
-    });
+webrtcChannel=
+supabaseClient.channel(
+"webrtc-room-"+roomCode,
+{
+config:{
+broadcast:{
+ack:true
+}
+}
+}
+);
 
-  }catch(error){
 
-    console.warn(
-      "Presence update failed:",
-      error
-    );
+webrtcChannel
+.on(
+"broadcast",
+{
+event:"signal"
+},
+async payload=>{
 
-  }
+const message=
+payload.payload;
+
+
+if(!message)return;
+
+if(message.sender===clientId)
+return;
+
+
+if(message.sender){
+
+partnerClientId=
+message.sender;
 
 }
 
 
-/* =========================================================
-   WEBRTC PEER
-========================================================= */
+await handleSignal(message);
 
-async function ensurePeer(){
+}
+)
+.subscribe(
+async status=>{
 
-  if(peerConnection)
-    return;
+if(status==="SUBSCRIBED"){
 
+await createPeer();
 
-  peerConnection=
-    new RTCPeerConnection(
-      rtcConfig
-    );
+await sendSignal(
+"hello",
+{}
+);
 
+if(localCameraReady){
 
-  /*
-    LOCAL VIDEO TRACK
-  */
+await sendSignal(
+"camera-ready",
+{}
+);
 
-  if(cameraStream){
+}
 
-    cameraStream
-      .getTracks()
-      .forEach(track=>{
+setTimeout(
+electCaller,
+500
+);
 
-        peerConnection.addTrack(
-          track,
-          cameraStream
-        );
+}
 
-      });
-
-  }
-
-
-  /*
-    ICE CANDIDATES
-  */
-
-  peerConnection.onicecandidate=
-    event=>{
-
-      if(event.candidate){
-
-        sendSignal(
-          "candidate",
-          {
-            candidate:
-              event.candidate.toJSON()
-          }
-        );
-
-      }
-
-    };
-
-
-  /*
-    REMOTE TRACK
-  */
-
-  peerConnection.ontrack=
-    event=>{
-
-      console.log(
-        "REMOTE TRACK RECEIVED"
-      );
-
-
-      const video=
-        document
-          .getElementById("partnerVideo");
-
-
-      let stream=
-        event.streams &&
-        event.streams[0];
-
-
-      /*
-        Some browsers don't provide event.streams.
-        Create one manually.
-      */
-
-      if(!stream){
-
-        stream=
-          video.srcObject ||
-          new MediaStream();
-
-        if(
-          event.track &&
-          !stream
-            .getTracks()
-            .includes(event.track)
-        ){
-
-          stream.addTrack(
-            event.track
-          );
-
-        }
-
-      }
-
-
-      video.srcObject=stream;
-
-
-      /*
-        Muted means autoplay is allowed.
-        There is no audio track anyway.
-      */
-
-      video.muted=true;
-
-      video.play()
-        .catch(error=>{
-          console.warn(
-            "Remote video autoplay:",
-            error
-          );
-        });
-
-
-      document
-        .getElementById("partnerWaiting")
-        .style.display="none";
-
-
-      setConnectionStatus(
-        "🟢 You can see each other!",
-        true
-      );
-
-    };
-
-
-  /*
-    CONNECTION STATE
-  */
-
-  peerConnection
-    .onconnectionstatechange=
-      ()=>{
-
-        if(!peerConnection)
-          return;
-
-        const state=
-          peerConnection
-            .connectionState;
-
-
-        console.log(
-          "WebRTC state:",
-          state
-        );
-
-
-        if(state==="connected"){
-
-          document
-            .getElementById("partnerWaiting")
-            .style.display="none";
-
-          setConnectionStatus(
-            "🟢 You can see each other!",
-            true
-          );
-
-          stopConnectionRetry();
-
-        }
-
-
-        else if(
-          state==="connecting"
-        ){
-
-          setConnectionStatus(
-            "🟡 Connecting your cameras...",
-            false
-          );
-
-        }
-
-
-        else if(
-          state==="disconnected" ||
-          state==="failed"
-        ){
-
-          setConnectionStatus(
-            "🟠 Reconnecting cameras...",
-            false
-          );
-
-          scheduleReconnect();
-
-        }
-
-
-        else if(
-          state==="closed"
-        ){
-
-          scheduleReconnect();
-
-        }
-
-      };
-
-
-  /*
-    ICE CONNECTION STATE
-  */
-
-  peerConnection
-    .oniceconnectionstatechange=
-      ()=>{
-
-        if(!peerConnection)
-          return;
-
-        const state=
-          peerConnection
-            .iceConnectionState;
-
-        console.log(
-          "ICE state:",
-          state
-        );
-
-        if(
-          state==="failed"
-        ){
-
-          scheduleReconnect();
-
-        }
-
-      };
+}
+);
 
 }
 
 
-/* =========================================================
-   SEND SIGNAL
-========================================================= */
+/* =====================================================
+CREATE PEER
+===================================================== */
 
-async function sendSignal(
-  type,
-  data={}
+async function createPeer(){
+
+if(peerConnection)return;
+
+
+peerConnection=
+new RTCPeerConnection(
+rtcConfig
+);
+
+
+peerConnection.onicecandidate=
+async event=>{
+
+if(event.candidate){
+
+await sendSignal(
+"candidate",
+{
+candidate:
+event.candidate.toJSON()
+}
+);
+
+}
+
+};
+
+
+peerConnection.ontrack=
+event=>{
+
+const video=
+document.getElementById(
+"partnerVideo"
+);
+
+
+if(
+event.streams &&
+event.streams[0]
 ){
 
-  if(!signalChannel)
-    return;
+video.srcObject=
+event.streams[0];
+
+video.play().catch(()=>{});
 
 
-  try{
+document
+.getElementById("partnerWaiting")
+.style.display=
+"none";
 
-    await signalChannel.send({
 
-      type:"broadcast",
+setConnectionStatus(
+"🟢 Connected — you can see each other",
+true
+);
 
-      event:"signal",
+}
 
-      payload:{
-        sender:clientId,
-        senderName:yourName,
-        type:type,
-        ...data
-      }
+};
 
-    });
 
-  }catch(error){
+peerConnection.onconnectionstatechange=
+()=>{
 
-    console.warn(
-      "Signal failed:",
-      type,
-      error
-    );
+const state=
+peerConnection.connectionState;
 
-  }
+
+if(state==="connected"){
+
+setConnectionStatus(
+"🟢 Connected — you can see each other",
+true
+);
+
+
+document
+.getElementById("partnerWaiting")
+.style.display=
+"none";
 
 }
 
 
-/* =========================================================
-   HANDLE SIGNAL
-========================================================= */
+else if(state==="connecting"){
+
+setConnectionStatus(
+"🟡 Connecting video...",
+false
+);
+
+}
+
+
+else if(state==="failed"){
+
+setConnectionStatus(
+"🔴 Reconnecting video...",
+false
+);
+
+restartWebRTC();
+
+}
+
+
+else if(state==="disconnected"){
+
+setConnectionStatus(
+"🟡 Video temporarily disconnected...",
+false
+);
+
+}
+
+};
+
+
+if(cameraStream){
+
+cameraStream
+.getTracks()
+.forEach(track=>{
+
+const exists=
+peerConnection
+.getSenders()
+.some(
+sender=>
+sender.track===track
+);
+
+
+if(!exists){
+
+peerConnection.addTrack(
+track,
+cameraStream
+);
+
+}
+
+});
+
+}
+
+}
+
+
+/* =====================================================
+CALLER ELECTION
+===================================================== */
+
+async function electCaller(){
+
+if(!roomChannel)return;
+
+
+const state=
+roomChannel.presenceState();
+
+
+let users=[];
+
+
+Object.values(state)
+.forEach(entries=>{
+
+entries.forEach(entry=>{
+users.push(entry);
+});
+
+});
+
+
+if(users.length<2){
+
+document
+.getElementById("partnerWaiting")
+.style.display=
+"flex";
+
+return;
+
+}
+
+
+users.sort(
+(a,b)=>
+String(a.id)
+.localeCompare(
+String(b.id)
+)
+);
+
+
+const callerId=
+users[0].id;
+
+
+isCaller=
+callerId===clientId;
+
+
+if(isCaller){
+
+maybeCreateOffer();
+
+}
+
+}
+
+
+/* =====================================================
+CREATE OFFER
+===================================================== */
+
+async function maybeCreateOffer(){
+
+if(!isCaller)return;
+
+if(!peerConnection)return;
+
+if(!localCameraReady)return;
+
+if(!partnerCameraReady)return;
+
+if(makingOffer)return;
+
+if(offerCreated)return;
+
+if(
+peerConnection.signalingState!=="stable"
+)return;
+
+
+try{
+
+makingOffer=true;
+
+
+const offer=
+await peerConnection.createOffer();
+
+
+await peerConnection.setLocalDescription(
+offer
+);
+
+
+offerCreated=true;
+
+
+await sendSignal(
+"offer",
+{
+description:{
+type:offer.type,
+sdp:offer.sdp
+}
+}
+);
+
+
+}catch(error){
+
+console.error(
+"Offer error:",
+error
+);
+
+
+}finally{
+
+makingOffer=false;
+
+}
+
+}
+
+
+/* =====================================================
+SEND SIGNAL
+===================================================== */
+
+async function sendSignal(
+type,
+data
+){
+
+if(!webrtcChannel)return;
+
+
+try{
+
+await webrtcChannel.send({
+type:"broadcast",
+event:"signal",
+payload:{
+sender:clientId,
+type,
+...data
+}
+});
+
+}catch(error){
+
+console.error(
+"Broadcast error:",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
+HANDLE SIGNAL
+===================================================== */
 
 async function handleSignal(message){
 
-  await ensurePeer();
+if(!peerConnection){
 
-
-  /*
-    HELLO
-  */
-
-  if(message.type==="hello"){
-
-    if(localCameraReady){
-
-      await sendSignal(
-        "camera-ready",
-        {}
-      );
-
-    }
-
-    if(partnerClientId===null){
-
-      partnerClientId=
-        message.sender;
-
-    }
-
-    maybeOffer();
-
-    return;
-
-  }
-
-
-  /*
-    CAMERA READY
-  */
-
-  if(message.type==="camera-ready"){
-
-    partnerClientId=
-      message.sender;
-
-    partnerCameraReady=true;
-
-
-    document
-      .getElementById("partnerCameraText")
-      .textContent=
-        "🟢 Camera ready";
-
-
-    maybeOffer();
-
-    return;
-
-  }
-
-
-  /*
-    OFFER
-  */
-
-  if(message.type==="offer"){
-
-    console.log(
-      "RECEIVED OFFER"
-    );
-
-
-    /*
-      Rebuild if an old broken connection exists.
-    */
-
-    if(
-      peerConnection
-        .signalingState!=="stable"
-    ){
-
-      await rebuildPeer();
-
-    }
-
-
-    await ensurePeer();
-
-
-    try{
-
-      await peerConnection
-        .setRemoteDescription(
-          new RTCSessionDescription(
-            message.description
-          )
-        );
-
-    }catch(error){
-
-      console.error(
-        "Remote description failed:",
-        error
-      );
-
-      return;
-
-    }
-
-
-    remoteDescriptionSet=true;
-
-
-    await flushCandidates();
-
-
-    const answer=
-      await peerConnection
-        .createAnswer();
-
-
-    await peerConnection
-      .setLocalDescription(
-        answer
-      );
-
-
-    await sendSignal(
-      "answer",
-      {
-        description:{
-          type:
-            peerConnection
-              .localDescription
-              .type,
-
-          sdp:
-            peerConnection
-              .localDescription
-              .sdp
-        }
-      }
-    );
-
-
-    return;
-
-  }
-
-
-  /*
-    ANSWER
-  */
-
-  if(message.type==="answer"){
-
-    console.log(
-      "RECEIVED ANSWER"
-    );
-
-
-    if(
-      peerConnection
-        .signalingState==="have-local-offer"
-    ){
-
-      await peerConnection
-        .setRemoteDescription(
-          new RTCSessionDescription(
-            message.description
-          )
-        );
-
-
-      remoteDescriptionSet=true;
-
-      await flushCandidates();
-
-    }
-
-    return;
-
-  }
-
-
-  /*
-    ICE CANDIDATE
-  */
-
-  if(message.type==="candidate"){
-
-    const candidate=
-      new RTCIceCandidate(
-        message.candidate
-      );
-
-
-    if(
-      remoteDescriptionSet &&
-      peerConnection
-    ){
-
-      try{
-
-        await peerConnection
-          .addIceCandidate(
-            candidate
-          );
-
-      }catch(error){
-
-        console.warn(
-          "ICE candidate error:",
-          error
-        );
-
-      }
-
-    }else{
-
-      pendingCandidates.push(
-        candidate
-      );
-
-    }
-
-    return;
-
-  }
-
-
-  /*
-    SYNCHRONIZED SHUTTER
-  */
-
-  if(message.type==="shutter"){
-
-    await receiveShutter(
-      message
-    );
-
-    return;
-
-  }
-
-
-  /*
-    CAPTURED PHOTO
-  */
-
-  if(message.type==="photo"){
-
-    receiveRemotePhoto(
-      message
-    );
-
-    return;
-
-  }
+await createPeer();
 
 }
 
 
-/* =========================================================
-   CREATE OFFER
-========================================================= */
-
-async function maybeOffer(){
-
-  if(!isCaller)
-    return;
-
-  if(!localCameraReady)
-    return;
-
-  if(!partnerCameraReady)
-    return;
-
-  if(!peerConnection)
-    return;
-
-  if(makingOffer)
-    return;
+try{
 
 
-  if(
-    peerConnection
-      .signalingState!=="stable"
-  )
-    return;
+if(message.type==="hello"){
 
+if(localCameraReady){
 
-  /*
-    Check that a local video sender exists.
-  */
+await sendSignal(
+"camera-ready",
+{}
+);
 
-  const senders=
-    peerConnection
-      .getSenders();
+}
 
+await electCaller();
 
-  const hasVideo=
-    senders.some(
-      sender=>
-        sender.track &&
-        sender.track.kind==="video"
-    );
-
-
-  if(!hasVideo){
-
-    if(cameraStream){
-
-      cameraStream
-        .getTracks()
-        .forEach(track=>{
-
-          if(track.kind!=="video")
-            return;
-
-          const exists=
-            peerConnection
-              .getSenders()
-              .some(
-                sender=>
-                  sender.track===track
-              );
-
-          if(!exists){
-
-            peerConnection.addTrack(
-              track,
-              cameraStream
-            );
-
-          }
-
-        });
-
-    }
-
-  }
-
-
-  if(
-    !peerConnection
-      .getSenders()
-      .some(
-        sender=>
-          sender.track &&
-          sender.track.kind==="video"
-      )
-  ){
-
-    return;
-
-  }
-
-
-  try{
-
-    makingOffer=true;
-
-    const offer=
-      await peerConnection
-        .createOffer();
-
-
-    await peerConnection
-      .setLocalDescription(
-        offer
-      );
-
-
-    await sendSignal(
-      "offer",
-      {
-        description:{
-          type:
-            peerConnection
-              .localDescription
-              .type,
-
-          sdp:
-            peerConnection
-              .localDescription
-              .sdp
-        }
-      }
-    );
-
-
-    console.log(
-      "OFFER SENT"
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Offer error:",
-      error
-    );
-
-  }finally{
-
-    makingOffer=false;
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   FLUSH ICE
-========================================================= */
+/* CAMERA READY */
+
+if(message.type==="camera-ready"){
+
+partnerCameraReady=true;
+
+
+document
+.getElementById("partnerCameraText")
+.textContent=
+"🟢 Camera ready";
+
+
+await electCaller();
+
+maybeCreateOffer();
+
+return;
+
+}
+
+
+/* OFFER */
+
+if(message.type==="offer"){
+
+if(
+peerConnection.signalingState!=="stable"
+){
+
+await restartPeerOnly();
+
+}
+
+
+await peerConnection.setRemoteDescription(
+new RTCSessionDescription(
+message.description
+)
+);
+
+
+remoteDescriptionSet=true;
+
+
+await flushCandidates();
+
+
+const answer=
+await peerConnection.createAnswer();
+
+
+await peerConnection.setLocalDescription(
+answer
+);
+
+
+await sendSignal(
+"answer",
+{
+description:{
+type:answer.type,
+sdp:answer.sdp
+}
+}
+);
+
+
+return;
+
+}
+
+
+/* ANSWER */
+
+if(message.type==="answer"){
+
+if(
+peerConnection.signalingState===
+"have-local-offer"
+){
+
+await peerConnection.setRemoteDescription(
+new RTCSessionDescription(
+message.description
+)
+);
+
+remoteDescriptionSet=true;
+
+await flushCandidates();
+
+}
+
+return;
+
+}
+
+
+/* ICE */
+
+if(message.type==="candidate"){
+
+const candidate=
+new RTCIceCandidate(
+message.candidate
+);
+
+
+if(remoteDescriptionSet){
+
+try{
+
+await peerConnection.addIceCandidate(
+candidate
+);
+
+}catch(error){
+
+console.warn(
+"ICE candidate error:",
+error
+);
+
+}
+
+}else{
+
+pendingCandidates.push(candidate);
+
+}
+
+return;
+
+}
+
+
+/* SHUTTER */
+
+if(message.type==="shutter"){
+
+await receiveShutter(
+message
+);
+
+return;
+
+}
+
+
+/* PHOTO */
+
+if(message.type==="photo"){
+
+receiveRemotePhoto(
+message
+);
+
+return;
+
+}
+
+
+}catch(error){
+
+console.error(
+"Signal handling error:",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
+FLUSH ICE
+===================================================== */
 
 async function flushCandidates(){
 
-  if(!peerConnection)
-    return;
-
-
-  while(
-    pendingCandidates.length
-  ){
-
-    const candidate=
-      pendingCandidates.shift();
-
-
-    try{
-
-      await peerConnection
-        .addIceCandidate(
-          candidate
-        );
-
-    }catch(error){
-
-      console.warn(
-        "Queued ICE failed:",
-        error
-      );
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   REBUILD PEER
-========================================================= */
-
-async function rebuildPeer(){
-
-  try{
-
-    if(peerConnection){
-
-      peerConnection.ontrack=null;
-      peerConnection.onicecandidate=null;
-      peerConnection.close();
-
-    }
-
-  }catch(e){}
-
-
-  peerConnection=null;
-
-  remoteDescriptionSet=false;
-
-  pendingCandidates=[];
-
-  makingOffer=false;
-
-  await ensurePeer();
-
-}
-
-
-/* =========================================================
-   RECONNECT
-========================================================= */
-
-function scheduleReconnect(){
-
-  if(connectionRetryTimer)
-    return;
-
-
-  connectionRetryTimer=
-    setTimeout(
-      async()=>{
-
-        connectionRetryTimer=null;
-
-        await rebuildPeer();
-
-        await sendSignal(
-          "hello",
-          {}
-        );
-
-        await sendSignal(
-          "camera-ready",
-          {}
-        );
-
-        setTimeout(
-          maybeOffer,
-          500
-        );
-
-      },
-      1500
-    );
-
-}
-
-
-function stopConnectionRetry(){
-
-  if(connectionRetryTimer){
-
-    clearTimeout(
-      connectionRetryTimer
-    );
-
-    connectionRetryTimer=null;
-
-  }
-
-}
-
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-function setConnectionStatus(
-  text,
-  connected
+while(
+pendingCandidates.length
 ){
 
-  const pill=
-    document
-      .getElementById(
-        "connectionPill"
-      );
+const candidate=
+pendingCandidates.shift();
 
 
-  pill.textContent=text;
+try{
 
+await peerConnection.addIceCandidate(
+candidate
+);
 
-  pill.style.background=
-    connected
-      ? "#e8f8ed"
-      : "#fff4f7";
+}catch(error){
+
+console.warn(
+"Could not add queued ICE:",
+error
+);
+
+}
+
+}
 
 }
 
 
-/* =========================================================
-   CAMERA
-========================================================= */
+/* =====================================================
+RESTART PEER
+===================================================== */
+
+async function restartPeerOnly(){
+
+try{
+
+if(peerConnection)
+peerConnection.close();
+
+}catch(e){}
+
+
+peerConnection=null;
+
+remoteDescriptionSet=false;
+
+pendingCandidates=[];
+
+offerCreated=false;
+
+
+await createPeer();
+
+}
+
+
+async function restartWebRTC(){
+
+await restartPeerOnly();
+
+
+setTimeout(
+electCaller,
+600
+);
+
+}
+
+
+/* =====================================================
+CONNECTION STATUS
+===================================================== */
+
+function setConnectionStatus(
+text,
+connected
+){
+
+const pill=
+document.getElementById(
+"connectionPill"
+);
+
+
+pill.textContent=text;
+
+
+pill.style.background=
+connected
+?"#e8f8ed"
+:"#fff4f7";
+
+}
+
+
+/* =====================================================
+CAMERA
+===================================================== */
 
 async function startCamera(){
 
-  try{
+try{
 
-    if(cameraStream){
 
-      cameraStream
-        .getTracks()
-        .forEach(track=>
-          track.stop()
-        );
+if(cameraStream){
 
-    }
-
-
-    cameraStream=
-      await navigator
-        .mediaDevices
-        .getUserMedia({
-
-          video:{
-            facingMode:"user",
-            width:{
-              ideal:1280
-            },
-            height:{
-              ideal:720
-            }
-          },
-
-          audio:false
-
-        });
-
-
-    const video=
-      document
-        .getElementById(
-          "myCamera"
-        );
-
-
-    video.srcObject=
-      cameraStream;
-
-
-    await video.play();
-
-
-    localCameraReady=true;
-
-
-    document
-      .getElementById(
-        "shutterButton"
-      )
-      .disabled=false;
-
-
-    setConnectionStatus(
-      "🟡 Camera ready — connecting...",
-      false
-    );
-
-
-    /*
-      IMPORTANT FIX:
-      If a peer existed before camera started,
-      add the camera track now.
-    */
-
-    await ensurePeer();
-
-
-    const senders=
-      peerConnection
-        .getSenders();
-
-
-    cameraStream
-      .getTracks()
-      .forEach(track=>{
-
-        const exists=
-          senders.some(
-            sender=>
-              sender.track===track
-          );
-
-        if(!exists){
-
-          peerConnection.addTrack(
-            track,
-            cameraStream
-          );
-
-        }
-
-      });
-
-
-    /*
-      Tell Supabase presence.
-    */
-
-    await updateMyCameraPresence();
-
-
-    /*
-      Tell WebRTC signaling.
-    */
-
-    await sendSignal(
-      "camera-ready",
-      {}
-    );
-
-
-    /*
-      Repeated readiness messages prevent the
-      other phone from missing the event.
-    */
-
-    if(readinessTimer){
-
-      clearInterval(
-        readinessTimer
-      );
-
-    }
-
-
-    readinessTimer=
-      setInterval(
-        ()=>{
-
-          if(
-            localCameraReady
-          ){
-
-            updateMyCameraPresence();
-
-            sendSignal(
-              "camera-ready",
-              {}
-            );
-
-            maybeOffer();
-
-          }
-
-        },
-        2000
-      );
-
-
-    /*
-      Recalculate caller.
-    */
-
-    await updatePresence();
-
-    maybeOffer();
-
-
-  }catch(error){
-
-    console.error(
-      "Camera error:",
-      error
-    );
-
-
-    localCameraReady=false;
-
-
-    document
-      .getElementById(
-        "shutterButton"
-      )
-      .disabled=true;
-
-
-    alert(
-      "Camera access was blocked. Please allow camera permission in your browser, then press Start Camera again."
-    );
-
-  }
+cameraStream
+.getTracks()
+.forEach(track=>
+track.stop()
+);
 
 }
 
 
-/* =========================================================
-   OPEN PHOTOBOOTH
-========================================================= */
+cameraStream=
+await navigator.mediaDevices.getUserMedia({
+
+video:{
+facingMode:"user",
+width:{
+ideal:1280
+},
+height:{
+ideal:720
+}
+},
+
+audio:false
+
+});
+
+
+const video=
+document.getElementById(
+"myCamera"
+);
+
+
+video.srcObject=
+cameraStream;
+
+
+await video.play();
+
+
+localCameraReady=true;
+
+
+document
+.getElementById("shutterButton")
+.disabled=false;
+
+
+setConnectionStatus(
+"🟡 Camera ready — connecting partner...",
+false
+);
+
+
+await setupWebRTC();
+
+
+/*
+  Add camera tracks if peer already exists.
+*/
+
+if(peerConnection){
+
+cameraStream
+.getTracks()
+.forEach(track=>{
+
+const exists=
+peerConnection
+.getSenders()
+.some(
+sender=>
+sender.track===track
+);
+
+
+if(!exists){
+
+peerConnection.addTrack(
+track,
+cameraStream
+);
+
+}
+
+});
+
+}
+
+
+await sendSignal(
+"camera-ready",
+{}
+);
+
+
+await electCaller();
+
+maybeCreateOffer();
+
+
+}catch(error){
+
+console.error(
+"Camera error:",
+error
+);
+
+
+localCameraReady=false;
+
+
+document
+.getElementById("shutterButton")
+.disabled=true;
+
+
+alert(
+"Camera access was blocked. Allow camera permission in your browser, then press Start Camera again."
+);
+
+}
+
+}
+
+
+/* =====================================================
+OPEN PHOTOBOOTH
+===================================================== */
 
 function openPhotobooth(){
 
-  photos=[];
+photos=[];
 
-  shotRecords.clear();
+shotRecords.clear();
 
-  shutterBusy=false;
-
-  document
-    .getElementById("photoCount")
-    .textContent=
-      "0 / "+selectedStrip;
+shutterLocked=false;
 
 
-  document
-    .getElementById("photoPreview")
-    .innerHTML="";
+document
+.getElementById("photoCount")
+.textContent=
+"0 / "+
+selectedStrip;
 
 
-  document
-    .getElementById(
-      "photosDoneButton"
-    )
-    .disabled=true;
+document
+.getElementById("photoPreview")
+.innerHTML="";
 
 
-  document
-    .getElementById(
-      "shutterButton"
-    )
-    .disabled=
-      !localCameraReady;
+document
+.getElementById("photosDoneButton")
+.disabled=true;
 
 
-  showPage("photobooth");
+document
+.getElementById("shutterButton")
+.disabled=
+!localCameraReady;
 
-  nextStep(1);
+
+showPage("photobooth");
+
+nextStep(1);
 
 }
 
 
-/* =========================================================
-   STRIP SELECT
-========================================================= */
+/* =====================================================
+SELECT STRIP
+===================================================== */
 
 function selectStrip(
-  number,
-  button
+number,
+button
 ){
 
-  selectedStrip=number;
+selectedStrip=number;
 
 
-  document
-    .querySelectorAll(
-      ".strip-option"
-    )
-    .forEach(x=>
-      x.classList.remove(
-        "selected"
-      )
-    );
+document
+.querySelectorAll(".strip-option")
+.forEach(x=>
+x.classList.remove("selected")
+);
 
 
-  button.classList.add(
-    "selected"
-  );
+button.classList.add("selected");
 
 
-  document
-    .getElementById(
-      "photoCount"
-    )
-    .textContent=
-      photos.length+
-      " / "+
-      selectedStrip;
+document
+.getElementById("photoCount")
+.textContent=
+photos.length+
+" / "+
+selectedStrip;
 
 }
 
 
-/* =========================================================
-   STEP
-========================================================= */
+/* =====================================================
+STEP NAVIGATION
+===================================================== */
 
 function nextStep(number){
 
-  document
-    .querySelectorAll(
-      ".step"
-    )
-    .forEach(x=>
-      x.classList.remove(
-        "active"
-      )
-    );
+document
+.querySelectorAll(".step")
+.forEach(x=>
+x.classList.remove("active")
+);
 
 
-  document
-    .getElementById(
-      "step"+number
-    )
-    .classList.add(
-      "active"
-    );
+document
+.getElementById("step"+number)
+.classList.add("active");
 
 
-  document
-    .getElementById(
-      "stepNumber"
-    )
-    .textContent=
-      number+
-      " / 5";
+document
+.getElementById("stepNumber")
+.textContent=
+number+
+" / 5";
 
 
-  if(number===2){
+if(number===2){
 
-    if(!cameraStream)
-      startCamera();
+if(!cameraStream)
+startCamera();
 
-    setupSignalChannel()
-      .then(()=>{
-        ensurePeer();
-        sendSignal(
-          "hello",
-          {}
-        );
-      });
-
-  }
-
-
-  if(number===3){
-
-    buildDesignPicker();
-
-  }
-
-
-  if(number===4){
-
-    buildFinalStrip();
-
-  }
-
-
-  if(number===5){
-
-    copyFinalPreview();
-
-  }
+setupWebRTC();
 
 }
 
 
-/* =========================================================
-   TAKE PHOTO
-========================================================= */
+if(number===3)
+buildDesignPicker();
+
+
+if(number===4)
+buildFinalStrip();
+
+
+if(number===5){
+
+copyFinalPreview();
+
+setTimeout(
+()=>{
+autoSaveFinal("final");
+},
+400
+);
+
+}
+
+}
+
+
+/* =====================================================
+TAKE PHOTO
+===================================================== */
 
 async function takePhoto(){
 
-  if(!cameraStream){
+if(!cameraStream){
 
-    alert(
-      "Press Start Camera first ♡"
-    );
+alert(
+"Start your camera first ♡"
+);
 
-    return;
-
-  }
-
-
-  if(!localCameraReady){
-
-    alert(
-      "Please start your camera first."
-    );
-
-    return;
-
-  }
-
-
-  if(shutterBusy)
-    return;
-
-
-  if(
-    photos.length>=selectedStrip
-  ){
-
-    alert(
-      "Your strip is already full!"
-    );
-
-    return;
-
-  }
-
-
-  shutterBusy=true;
-
-
-  const shotIndex=
-    photos.length+1;
-
-
-  const shotId=
-    clientId+
-    "-"+
-    Date.now()+
-    "-"+
-    Math.random()
-      .toString(36)
-      .slice(2,7);
-
-
-  shotRecords.set(
-    shotId,
-    {
-      id:shotId,
-      index:shotIndex,
-      local:null,
-      remote:null,
-      completed:false
-    }
-  );
-
-
-  updatePhotoCounter(
-    shotIndex
-  );
-
-
-  /*
-    Send to partner immediately.
-  */
-
-  await sendSignal(
-    "shutter",
-    {
-      shotId:shotId,
-      shotIndex:shotIndex
-    }
-  );
-
-
-  /*
-    Capture our own picture.
-  */
-
-  await countdownAndCapture(
-    shotId,
-    shotIndex
-  );
+return;
 
 }
 
 
-/* =========================================================
-   RECEIVE SHUTTER
-========================================================= */
+if(!localCameraReady){
 
-async function receiveShutter(
-  message
-){
+alert(
+"Please start your camera first."
+);
 
-  if(!message.shotId)
-    return;
-
-
-  if(
-    shotRecords.has(
-      message.shotId
-    )
-  ){
-
-    return;
-
-  }
-
-
-  shotRecords.set(
-    message.shotId,
-    {
-      id:message.shotId,
-      index:message.shotIndex,
-      local:null,
-      remote:null,
-      completed:false
-    }
-  );
-
-
-  updatePhotoCounter(
-    message.shotIndex
-  );
-
-
-  if(!cameraStream){
-
-    alert(
-      "Your partner pressed the shutter. Press Start Camera so your photo can be captured."
-    );
-
-    return;
-
-  }
-
-
-  await countdownAndCapture(
-    message.shotId,
-    message.shotIndex
-  );
+return;
 
 }
 
 
-/* =========================================================
-   COUNTDOWN
-========================================================= */
+if(shutterLocked)
+return;
+
+
+if(photos.length>=selectedStrip){
+
+alert(
+"Your strip is already full!"
+);
+
+return;
+
+}
+
+
+shutterLocked=true;
+
+
+const shotIndex=
+photos.length+1;
+
+
+const shotId=
+clientId+
+"-"+
+Date.now()+
+"-"+
+Math.random()
+.toString(36)
+.slice(2,8);
+
+
+shotRecords.set(
+shotId,
+{
+id:shotId,
+index:shotIndex,
+local:null,
+remote:null,
+localSender:clientId,
+remoteSender:null
+}
+);
+
+
+updatePhotoCounter(
+shotIndex
+);
+
+
+await sendSignal(
+"shutter",
+{
+shotId,
+shotIndex
+}
+);
+
+
+await countdownAndCapture(
+shotId,
+shotIndex
+);
+
+}
+
+
+/* =====================================================
+RECEIVE SHUTTER
+===================================================== */
+
+async function receiveShutter(message){
+
+if(!message.shotId)
+return;
+
+
+if(
+shotRecords.has(message.shotId)
+)
+return;
+
+
+shotRecords.set(
+message.shotId,
+{
+id:message.shotId,
+index:message.shotIndex,
+local:null,
+remote:null,
+localSender:clientId,
+remoteSender:message.sender
+}
+);
+
+
+updatePhotoCounter(
+message.shotIndex
+);
+
+
+if(!cameraStream){
+
+alert(
+"Your partner pressed the shutter. Please press Start Camera first so your photo can be captured."
+);
+
+return;
+
+}
+
+
+await countdownAndCapture(
+message.shotId,
+message.shotIndex
+);
+
+}
+
+
+/* =====================================================
+COUNTDOWN
+===================================================== */
 
 function countdownAndCapture(
-  shotId,
-  shotIndex
+shotId,
+shotIndex
 ){
 
-  return new Promise(
-    resolve=>{
-
-      let count=3;
+return new Promise(resolve=>{
 
 
-      const overlay=
-        document.createElement(
-          "div"
-        );
+let count=3;
 
 
-      overlay.style.cssText=`
-        position:fixed;
-        inset:0;
-        z-index:99999;
-        display:grid;
-        place-items:center;
-        background:#0009;
-        color:white;
-        font:bold 100px Georgia;
-      `;
+const overlay=
+document.createElement("div");
 
 
-      document.body.appendChild(
-        overlay
-      );
+overlay.style.cssText=`
+position:fixed;
+inset:0;
+z-index:9999;
+display:grid;
+place-items:center;
+background:#0009;
+color:white;
+font:bold 100px Georgia;
+`;
 
 
-      overlay.textContent=
-        count;
+document.body.appendChild(
+overlay
+);
 
 
-      const timer=
-        setInterval(
-          async()=>{
-
-            count--;
+overlay.textContent=count;
 
 
-            if(count>0){
-
-              overlay.textContent=
-                count;
-
-            }else{
-
-              clearInterval(
-                timer
-              );
+const timer=
+setInterval(()=>{
 
 
-              overlay.textContent=
-                "♡";
+count--;
 
 
-              setTimeout(
-                async()=>{
+if(count>0){
 
-                  overlay.remove();
+overlay.textContent=count;
+
+}else{
+
+clearInterval(timer);
+
+overlay.textContent="♡";
 
 
-                  await captureLocalForShot(
-                    shotId,
-                    shotIndex
-                  );
+setTimeout(
+async()=>{
+
+overlay.remove();
 
 
-                  resolve();
+await captureLocalForShot(
+shotId,
+shotIndex
+);
 
-                },
-                180
-              );
 
-            }
+resolve();
 
-          },
-          550
-        );
+},
+180
+);
 
-    }
-  );
+}
+
+},550);
+
+});
 
 }
 
 
-/* =========================================================
-   CAPTURE LOCAL
-========================================================= */
+/* =====================================================
+CAPTURE LOCAL PHOTO
+===================================================== */
 
 async function captureLocalForShot(
-  shotId,
-  shotIndex
+shotId,
+shotIndex
 ){
 
-  const video=
-    document
-      .getElementById(
-        "myCamera"
-      );
+const video=
+document.getElementById(
+"myCamera"
+);
 
 
-  if(
-    !video.videoWidth ||
-    !video.videoHeight
-  ){
+if(
+!video.videoWidth ||
+!video.videoHeight
+){
 
-    shutterBusy=false;
+console.error(
+"Camera has no video frame yet."
+);
 
-    return;
+shutterLocked=false;
 
-  }
-
-
-  /*
-    400 x 500 = 4:5
-  */
-
-  const canvas=
-    document.createElement(
-      "canvas"
-    );
-
-
-  const width=400;
-  const height=500;
-
-
-  canvas.width=width;
-  canvas.height=height;
-
-
-  const ctx=
-    canvas.getContext("2d");
-
-
-  const vw=
-    video.videoWidth;
-
-  const vh=
-    video.videoHeight;
-
-
-  const targetRatio=4/5;
-
-  const videoRatio=
-    vw/vh;
-
-
-  let sx=0;
-  let sy=0;
-  let sw=vw;
-  let sh=vh;
-
-
-  if(
-    videoRatio>targetRatio
-  ){
-
-    sw=
-      vh*targetRatio;
-
-    sx=
-      (vw-sw)/2;
-
-  }else{
-
-    sh=
-      vw/targetRatio;
-
-    sy=
-      (vh-sh)/2;
-
-  }
-
-
-  /*
-    Mirror selfie camera.
-  */
-
-  ctx.save();
-
-  ctx.translate(
-    width,
-    0
-  );
-
-  ctx.scale(
-    -1,
-    1
-  );
-
-
-  ctx.drawImage(
-    video,
-    sx,
-    sy,
-    sw,
-    sh,
-    0,
-    0,
-    width,
-    height
-  );
-
-
-  ctx.restore();
-
-
-  const image=
-    canvas.toDataURL(
-      "image/jpeg",
-      .68
-    );
-
-
-  const record=
-    shotRecords.get(
-      shotId
-    );
-
-
-  if(!record){
-
-    shutterBusy=false;
-
-    return;
-
-  }
-
-
-  record.local=image;
-
-
-  shotRecords.set(
-    shotId,
-    record
-  );
-
-
-  /*
-    Send our captured image.
-  */
-
-  await sendSignal(
-    "photo",
-    {
-      shotId:shotId,
-      shotIndex:shotIndex,
-      image:image
-    }
-  );
-
-
-  /*
-    If their photo already arrived,
-    combine now.
-  */
-
-  tryCompleteShot(
-    shotId
-  );
-
-
-  setTimeout(
-    ()=>{
-      shutterBusy=false;
-    },
-    400
-  );
+return;
 
 }
 
 
-/* =========================================================
-   RECEIVE REMOTE PHOTO
-========================================================= */
-
-function receiveRemotePhoto(
-  message
-){
-
-  if(!message.shotId)
-    return;
+const canvas=
+document.createElement("canvas");
 
 
-  let record=
-    shotRecords.get(
-      message.shotId
-    );
+const width=400;
+const height=500;
 
 
-  if(!record){
-
-    record={
-      id:message.shotId,
-      index:message.shotIndex,
-      local:null,
-      remote:null,
-      completed:false
-    };
-
-  }
+canvas.width=width;
+canvas.height=height;
 
 
-  record.remote=
-    message.image;
+const ctx=
+canvas.getContext("2d");
 
 
-  record.remoteSender=
-    message.sender;
+const vw=
+video.videoWidth;
 
 
-  shotRecords.set(
-    message.shotId,
-    record
-  );
+const vh=
+video.videoHeight;
 
 
-  tryCompleteShot(
-    message.shotId
-  );
+const targetRatio=
+4/5;
+
+
+const videoRatio=
+vw/vh;
+
+
+let sx=0;
+let sy=0;
+let sw=vw;
+let sh=vh;
+
+
+if(videoRatio>targetRatio){
+
+sw=
+vh*targetRatio;
+
+sx=
+(vw-sw)/2;
+
+}else{
+
+sh=
+vw/targetRatio;
+
+sy=
+(vh-sh)/2;
 
 }
 
 
-/* =========================================================
-   COMPLETE SHOT
-========================================================= */
+ctx.save();
+
+
+ctx.translate(
+width,
+0
+);
+
+
+ctx.scale(
+-1,
+1
+);
+
+
+ctx.drawImage(
+video,
+sx,
+sy,
+sw,
+sh,
+0,
+0,
+width,
+height
+);
+
+
+ctx.restore();
+
+
+const image=
+canvas.toDataURL(
+"image/jpeg",
+.72
+);
+
+
+const record=
+shotRecords.get(
+shotId
+);
+
+
+if(!record)
+return;
+
+
+record.local=image;
+
+
+shotRecords.set(
+shotId,
+record
+);
+
+
+await sendSignal(
+"photo",
+{
+shotId,
+shotIndex,
+image
+}
+);
+
+
+tryCompleteShot(
+shotId
+);
+
+
+setTimeout(
+()=>{
+shutterLocked=false;
+},
+450
+);
+
+}
+
+
+/* =====================================================
+REMOTE PHOTO
+===================================================== */
+
+function receiveRemotePhoto(message){
+
+if(!message.shotId)
+return;
+
+
+partnerClientId=
+message.sender||
+partnerClientId;
+
+
+let record=
+shotRecords.get(
+message.shotId
+);
+
+
+if(!record){
+
+record={
+id:message.shotId,
+index:message.shotIndex,
+local:null,
+remote:null,
+localSender:clientId,
+remoteSender:message.sender
+};
+
+shotRecords.set(
+message.shotId,
+record
+);
+
+}
+
+
+record.remote=
+message.image;
+
+
+record.remoteSender=
+message.sender;
+
+
+shotRecords.set(
+message.shotId,
+record
+);
+
+
+tryCompleteShot(
+message.shotId
+);
+
+}
+
+
+/* =====================================================
+COMPLETE SHOT
+===================================================== */
 
 async function tryCompleteShot(
-  shotId
+shotId
 ){
 
-  const record=
-    shotRecords.get(
-      shotId
-    );
+const record=
+shotRecords.get(
+shotId
+);
 
 
-  if(!record)
-    return;
+if(!record)
+return;
 
 
-  if(
-    !record.local ||
-    !record.remote
-  )
-    return;
+if(
+!record.local ||
+!record.remote
+)
+return;
 
 
-  if(record.completed)
-    return;
+if(record.completed)
+return;
 
 
-  record.completed=true;
+record.completed=true;
 
 
-  const combined=
-    await createCombinedPhoto(
-      record.local,
-      record.remote,
-      record
-    );
+const combined=
+await createCombinedPhoto(
+record.local,
+record.remote,
+record
+);
 
 
-  if(!combined)
-    return;
+if(!combined)
+return;
 
 
-  photos[
-    record.index-1
-  ]=combined;
+photos[
+record.index-1
+]=combined;
 
 
-  updatePhotoThumbnails();
+updatePhotoThumbnails();
 
 
-  const completeCount=
-    photos.filter(Boolean)
-      .length;
+const completeCount=
+photos.filter(Boolean).length;
 
 
-  document
-    .getElementById(
-      "photoCount"
-    )
-    .textContent=
-      completeCount+
-      " / "+
-      selectedStrip;
+document
+.getElementById("photoCount")
+.textContent=
+completeCount+
+" / "+
+selectedStrip;
 
 
-  if(
-    completeCount>=selectedStrip
-  ){
+if(
+completeCount>=selectedStrip
+){
 
-    document
-      .getElementById(
-        "photosDoneButton"
-      )
-      .disabled=false;
+document
+.getElementById("photosDoneButton")
+.disabled=false;
 
-  }
+}
 
 }
 
 
-/* =========================================================
-   CREATE COMBINED PHOTO
-========================================================= */
+/* =====================================================
+COMBINE TWO PEOPLE
+===================================================== */
 
 function createCombinedPhoto(
-  localImage,
-  remoteImage,
-  record
+localImage,
+remoteImage,
+record
 ){
 
-  return new Promise(
-    resolve=>{
-
-      const local=
-        new Image();
-
-      const remote=
-        new Image();
+return new Promise(resolve=>{
 
 
-      let loaded=0;
+const local=
+new Image();
 
 
-      function done(){
-
-        loaded++;
-
-
-        if(loaded<2)
-          return;
+const remote=
+new Image();
 
 
-        const canvas=
-          document.createElement(
-            "canvas"
-          );
+let loaded=0;
 
 
-        /*
-          Final individual photo is 4:5.
-        */
+function done(){
 
-        const W=800;
-        const H=1000;
+loaded++;
 
 
-        canvas.width=W;
-        canvas.height=H;
+if(loaded<2)
+return;
 
 
-        const ctx=
-          canvas.getContext(
-            "2d"
-          );
+const canvas=
+document.createElement("canvas");
 
 
-        ctx.fillStyle=
-          "#fff8fa";
+const W=800;
+const H=1000;
 
 
-        ctx.fillRect(
-          0,
-          0,
-          W,
-          H
-        );
+canvas.width=W;
+canvas.height=H;
 
 
-        /*
-          Two 4:5 portraits side by side.
-        */
-
-        const cardW=350;
-        const cardH=437.5;
-
-        const gap=20;
-
-        const startX=
-          (W-(cardW*2+gap))/2;
-
-        const startY=250;
+const ctx=
+canvas.getContext("2d");
 
 
-        let first=local;
-        let second=remote;
+ctx.fillStyle="#fff8fa";
 
 
-        /*
-          Both phones use the same deterministic
-          ordering so the combined image is identical.
-        */
-
-        if(
-          record.remoteSender &&
-          String(record.remoteSender)
-            .localeCompare(
-              String(clientId)
-            )<0
-        ){
-
-          first=remote;
-          second=local;
-
-        }
+ctx.fillRect(
+0,
+0,
+W,
+H
+);
 
 
-        drawRoundedImage(
-          ctx,
-          first,
-          startX,
-          startY,
-          cardW,
-          cardH,
-          22
-        );
+let first=local;
+let second=remote;
 
 
-        drawRoundedImage(
-          ctx,
-          second,
-          startX+cardW+gap,
-          startY,
-          cardW,
-          cardH,
-          22
-        );
+if(
+record.remoteSender &&
+String(record.remoteSender)
+<
+String(clientId)
+){
 
-
-        ctx.font=
-          "34px Georgia";
-
-        ctx.textAlign=
-          "center";
-
-        ctx.fillStyle=
-          "#d97899";
-
-
-        ctx.fillText(
-          "♡",
-          W/2,
-          startY+
-          cardH/2+
-          12
-        );
-
-
-        /*
-          NO NAMES HERE.
-          Names are ONLY added at the bottom of
-          the COMPLETE strip later.
-        */
-
-
-        resolve(
-          canvas.toDataURL(
-            "image/jpeg",
-            .9
-          )
-        );
-
-      }
-
-
-      local.onload=done;
-      remote.onload=done;
-
-
-      local.src=
-        localImage;
-
-      remote.src=
-        remoteImage;
-
-    }
-  );
+first=remote;
+second=local;
 
 }
 
 
-/* =========================================================
-   DRAW ROUNDED IMAGE
-========================================================= */
+const cardW=350;
+const cardH=437.5;
+const gap=20;
+
+
+const startX=
+(W-(cardW*2+gap))/2;
+
+
+const startY=250;
+
+
+drawRoundedImage(
+ctx,
+first,
+startX,
+startY,
+cardW,
+cardH,
+22
+);
+
+
+drawRoundedImage(
+ctx,
+second,
+startX+cardW+gap,
+startY,
+cardW,
+cardH,
+22
+);
+
+
+ctx.font=
+"34px Georgia";
+
+
+ctx.textAlign=
+"center";
+
+
+ctx.fillStyle=
+"#d97899";
+
+
+ctx.fillText(
+"♡",
+W/2,
+startY+
+cardH/2+
+12
+);
+
+
+resolve(
+canvas.toDataURL(
+"image/jpeg",
+.92
+)
+);
+
+}
+
+
+local.onload=done;
+remote.onload=done;
+
+
+local.src=localImage;
+remote.src=remoteImage;
+
+});
+
+}
+
+
+/* =====================================================
+DRAW ROUNDED IMAGE
+===================================================== */
 
 function drawRoundedImage(
-  ctx,
-  img,
-  x,
-  y,
-  w,
-  h,
-  radius
+ctx,
+img,
+x,
+y,
+w,
+h,
+radius
 ){
 
-  ctx.save();
+ctx.save();
 
 
-  ctx.beginPath();
-
-  ctx.moveTo(
-    x+radius,
-    y
-  );
-
-  ctx.lineTo(
-    x+w-radius,
-    y
-  );
-
-  ctx.quadraticCurveTo(
-    x+w,
-    y,
-    x+w,
-    y+radius
-  );
-
-  ctx.lineTo(
-    x+w,
-    y+h-radius
-  );
-
-  ctx.quadraticCurveTo(
-    x+w,
-    y+h,
-    x+w-radius,
-    y+h
-  );
-
-  ctx.lineTo(
-    x+radius,
-    y+h
-  );
-
-  ctx.quadraticCurveTo(
-    x,
-    y+h,
-    x,
-    y+h-radius
-  );
-
-  ctx.lineTo(
-    x,
-    y+radius
-  );
-
-  ctx.quadraticCurveTo(
-    x,
-    y,
-    x+radius,
-    y
-  );
-
-  ctx.closePath();
-
-  ctx.clip();
+ctx.beginPath();
 
 
-  const ratio=
-    Math.max(
-      w/img.width,
-      h/img.height
-    );
+ctx.moveTo(
+x+radius,
+y
+);
 
 
-  const nw=
-    img.width*ratio;
-
-  const nh=
-    img.height*ratio;
-
-
-  const dx=
-    x+(w-nw)/2;
-
-  const dy=
-    y+(h-nh)/2;
+ctx.lineTo(
+x+w-radius,
+y
+);
 
 
-  ctx.drawImage(
-    img,
-    dx,
-    dy,
-    nw,
-    nh
-  );
+ctx.quadraticCurveTo(
+x+w,
+y,
+x+w,
+y+radius
+);
 
 
-  ctx.restore();
+ctx.lineTo(
+x+w,
+y+h-radius
+);
+
+
+ctx.quadraticCurveTo(
+x+w,
+y+h,
+x+w-radius,
+y+h
+);
+
+
+ctx.lineTo(
+x+radius,
+y+h
+);
+
+
+ctx.quadraticCurveTo(
+x,
+y+h,
+x,
+y+h-radius
+);
+
+
+ctx.lineTo(
+x,
+y+radius
+);
+
+
+ctx.quadraticCurveTo(
+x,
+y,
+x+radius,
+y
+);
+
+
+ctx.closePath();
+
+
+ctx.clip();
+
+
+const ratio=
+Math.max(
+w/img.width,
+h/img.height
+);
+
+
+const nw=
+img.width*ratio;
+
+
+const nh=
+img.height*ratio;
+
+
+const dx=
+x+(w-nw)/2;
+
+
+const dy=
+y+(h-nh)/2;
+
+
+ctx.drawImage(
+img,
+dx,
+dy,
+nw,
+nh
+);
+
+
+ctx.restore();
 
 }
 
 
-/* =========================================================
-   PHOTO COUNT
-========================================================= */
-
-function updatePhotoCounter(
-  number
-){
-
-  document
-    .getElementById(
-      "photoCount"
-    )
-    .textContent=
-      number+
-      " / "+
-      selectedStrip;
-
-}
-
-
-/* =========================================================
-   THUMBNAILS
-========================================================= */
+/* =====================================================
+PHOTO THUMBNAILS
+===================================================== */
 
 function updatePhotoThumbnails(){
 
-  const preview=
-    document
-      .getElementById(
-        "photoPreview"
-      );
+const preview=
+document.getElementById(
+"photoPreview"
+);
 
 
-  preview.innerHTML="";
+preview.innerHTML="";
 
 
-  photos
-    .filter(Boolean)
-    .forEach(image=>{
-
-      const img=
-        document.createElement(
-          "img"
-        );
+photos
+.filter(Boolean)
+.forEach(image=>{
 
 
-      img.src=image;
+const img=
+document.createElement("img");
 
 
-      preview.appendChild(
-        img
-      );
+img.src=image;
 
-    });
+
+preview.appendChild(img);
+
+});
 
 }
 
 
-/* =========================================================
-   DESIGN PICKER
-========================================================= */
+/* =====================================================
+DESIGN PICKER
+===================================================== */
 
 function buildDesignPicker(){
 
-  const grid=
-    document
-      .getElementById(
-        "designGrid"
-      );
+const grid=
+document.getElementById(
+"designGrid"
+);
 
 
-  grid.innerHTML="";
+grid.innerHTML="";
 
 
-  designs.forEach(
-    name=>{
-
-      const card=
-        document.createElement(
-          "button"
-        );
+designs.forEach(name=>{
 
 
-      card.className=
-        "design-card"+
-        (
-          name===selectedDesign
-            ?" selected"
-            :""
-        );
+const card=
+document.createElement("button");
 
 
-      const preview=
-        document.createElement(
-          "div"
-        );
+card.className=
+"design-card"+
+(
+name===selectedDesign
+?" selected"
+:""
+);
 
 
-      preview.className=
-        "design-preview theme-"+
-        name;
+const preview=
+document.createElement("div");
 
 
-      photos
-        .filter(Boolean)
-        .forEach(image=>{
-
-          const img=
-            document.createElement(
-              "img"
-            );
-
-          img.src=image;
-
-          preview.appendChild(
-            img
-          );
-
-        });
+preview.className=
+"design-preview theme-"+name;
 
 
-      const label=
-        document.createElement(
-          "div"
-        );
+photos.forEach(image=>{
 
 
-      label.className=
-        "design-name";
+const img=
+document.createElement("img");
 
 
-      label.textContent=
-        getDesignName(name);
+img.src=image;
 
 
-      card.appendChild(
-        preview
-      );
+preview.appendChild(img);
 
-      card.appendChild(
-        label
-      );
+});
 
 
-      card.onclick=()=>{
-
-        selectedDesign=name;
-
-
-        document
-          .querySelectorAll(
-            ".design-card"
-          )
-          .forEach(x=>
-            x.classList.remove(
-              "selected"
-            )
-          );
+const label=
+document.createElement("div");
 
 
-        card.classList.add(
-          "selected"
-        );
+label.className=
+"design-name";
 
 
-        renderDesignPreview();
-
-      };
-
-
-      card.onmouseenter=()=>{
-
-        if(
-          window.innerWidth>600
-        ){
-
-          selectedDesign=name;
-
-          renderDesignPreview();
-
-        }
-
-      };
+label.textContent=
+getDesignName(name);
 
 
-      grid.appendChild(
-        card
-      );
-
-    }
-  );
+card.appendChild(preview);
+card.appendChild(label);
 
 
-  renderDesignPreview();
+card.onclick=()=>{
+
+
+selectedDesign=name;
+
+
+document
+.querySelectorAll(".design-card")
+.forEach(x=>
+x.classList.remove("selected")
+);
+
+
+card.classList.add("selected");
+
+
+renderDesignPreview();
+
+};
+
+
+card.onmouseenter=()=>{
+
+
+if(window.innerWidth>600){
+
+selectedDesign=name;
+
+renderDesignPreview();
+
+}
+
+};
+
+
+grid.appendChild(card);
+
+});
+
+
+renderDesignPreview();
 
 }
 
 
-/* =========================================================
-   DESIGN NAMES
-========================================================= */
+/* =====================================================
+DESIGN NAMES
+===================================================== */
 
 function getDesignName(name){
 
-  const names={
+const names={
 
-    coquette:"🎀 Coquette",
-    retro:"📻 Retro Film",
-    scrapbook:"📒 Scrapbook",
-    y2k:"💿 Y2K",
-    strawberry:"🍓 Strawberry",
-    lace:"🕊️ Lace",
-    postcard:"💌 Postcard",
-    floral:"🌸 Floral",
-    dreamy:"☁️ Dreamy",
-    vintage:"🌷 Vintage"
+coquette:"🎀 Coquette",
+retro:"📻 Retro Film",
+scrapbook:"📒 Scrapbook",
+y2k:"💿 Y2K",
+strawberry:"🍓 Strawberry",
+lace:"🕊️ Lace",
+postcard:"💌 Postcard",
+floral:"🌸 Floral",
+dreamy:"☁️ Dreamy",
+vintage:"🌷 Vintage"
 
-  };
+};
 
 
-  return names[name];
+return names[name];
 
 }
 
 
-/* =========================================================
-   DESIGN PREVIEW
-========================================================= */
+/* =====================================================
+DECORATION SETS
+===================================================== */
+
+const decorationSets={
+
+coquette:[
+["♡","୨୧","🎀","୨୧","♡"],
+["🎀","♡"],
+["♡","🎀"],
+["୨୧","♡","🎀","♡","୨୧"]
+],
+
+retro:[
+["★","✦","1990","✦","★"],
+["📻","★"],
+["★","📻"],
+["✦","★","1990","★","✦"]
+],
+
+scrapbook:[
+["✿","♡","✦","♡","✿"],
+["📎","✿"],
+["✿","📎"],
+["♡","✿","✦","✿","♡"]
+],
+
+y2k:[
+["★","✦","♡","✦","★"],
+["💿","★"],
+["★","💿"],
+["✦","★","♡","★","✦"]
+],
+
+strawberry:[
+["🍓","♡","🍓","♡","🍓"],
+["🍓","♡"],
+["♡","🍓"],
+["🍓","♡","🍓","♡","🍓"]
+],
+
+lace:[
+["୨୧","♡","୨୧","♡","୨୧"],
+["♡","୨୧"],
+["୨୧","♡"],
+["♡","୨୧","♡","୨୧","♡"]
+],
+
+postcard:[
+["✉","♡","✦","♡","✉"],
+["✦","♡"],
+["♡","✦"],
+["✉","♡","✦","♡","✉"]
+],
+
+floral:[
+["🌸","✿","🌷","✿","🌸"],
+["🌷","✿"],
+["✿","🌷"],
+["🌸","✿","🌷","✿","🌸"]
+],
+
+dreamy:[
+["☁️","✦","☁️","✦","☁️"],
+["☁️","☆"],
+["☆","☁️"],
+["☁️","✦","☁️","✦","☁️"]
+],
+
+vintage:[
+["🌷","♡","✦","♡","🌷"],
+["✦","🌷"],
+["🌷","✦"],
+["♡","🌷","✦","🌷","♡"]
+]
+
+};
+
+
+/* =====================================================
+GET DECORATION SET
+===================================================== */
+
+function getDecorations(){
+
+return (
+decorationSets[selectedDesign] ||
+decorationSets.coquette
+);
+
+}
+
+
+/* =====================================================
+CREATE ONE DECORATED PHOTO
+===================================================== */
+
+function createPhotoUnit(
+image,
+index
+){
+
+const unit=
+document.createElement("div");
+
+
+unit.className=
+"photo-unit";
+
+
+const decorations=
+getDecorations();
+
+
+const top=
+document.createElement("div");
+
+
+top.className=
+"photo-decor-top";
+
+
+top.innerHTML=
+decorations[0]
+.map(x=>`<span>${x}</span>`)
+.join("");
+
+
+const middle=
+document.createElement("div");
+
+
+middle.className=
+"photo-middle";
+
+
+const left=
+document.createElement("div");
+
+
+left.className=
+"photo-decor-side";
+
+
+left.innerHTML=
+decorations[1]
+.map(x=>`<span>${x}</span>`)
+.join("");
+
+
+const img=
+document.createElement("img");
+
+
+img.className=
+"photo-main";
+
+
+img.src=
+image;
+
+
+const right=
+document.createElement("div");
+
+
+right.className=
+"photo-decor-side";
+
+
+right.innerHTML=
+decorations[2]
+.map(x=>`<span>${x}</span>`)
+.join("");
+
+
+middle.appendChild(left);
+middle.appendChild(img);
+middle.appendChild(right);
+
+
+const bottom=
+document.createElement("div");
+
+
+bottom.className=
+"photo-decor-bottom";
+
+
+bottom.innerHTML=
+decorations[3]
+.map(x=>`<span>${x}</span>`)
+.join("");
+
+
+unit.appendChild(top);
+unit.appendChild(middle);
+unit.appendChild(bottom);
+
+
+return unit;
+
+}
+
+
+/* =====================================================
+RENDER FINAL STRIP
+===================================================== */
+
+function renderFinalStrip(
+targetId
+){
+
+const strip=
+document.getElementById(
+targetId
+);
+
+
+if(!strip)
+return;
+
+
+strip.className=
+"final-strip theme-"+selectedDesign;
+
+
+strip.innerHTML="";
+
+
+photos
+.filter(Boolean)
+.forEach(
+(image,index)=>{
+
+strip.appendChild(
+createPhotoUnit(
+image,
+index
+)
+);
+
+});
+
+
+/*
+  IMPORTANT:
+  ONE NAME ONLY.
+*/
+
+const love=
+document.createElement("div");
+
+
+love.className=
+"final-love";
+
+
+love.textContent=
+yourName+
+" ♡ "+
+(partnerName||"Them");
+
+
+strip.appendChild(love);
+
+
+const sub=
+document.createElement("div");
+
+
+sub.className=
+"final-love-sub";
+
+
+sub.textContent=
+"our little moment";
+
+
+strip.appendChild(sub);
+
+}
+
+
+/* =====================================================
+DESIGN PREVIEW
+===================================================== */
 
 function renderDesignPreview(){
 
-  const preview=
-    document
-      .getElementById(
-        "designPreview"
-      );
-
-
-  preview.className=
-    "final-strip theme-"+
-    selectedDesign;
-
-
-  preview.innerHTML="";
-
-
-  /*
-    PHOTO
-    PHOTO
-    PHOTO
-    PHOTO
-    ASH ♡ STAN
-  */
-
-  photos
-    .filter(Boolean)
-    .forEach(image=>{
-
-      const img=
-        document.createElement(
-          "img"
-        );
-
-
-      img.src=image;
-
-
-      preview.appendChild(
-        img
-      );
-
-    });
-
-
-  /*
-    SINGLE caption at bottom.
-  */
-
-  const title=
-    document.createElement(
-      "div"
-    );
-
-
-  title.className=
-    "final-strip-title";
-
-
-  title.textContent=
-    yourName+
-    " ♡ "+
-    (partnerName||"Them");
-
-
-  preview.appendChild(
-    title
-  );
+renderFinalStrip(
+"designPreview"
+);
 
 }
 
 
-/* =========================================================
-   CHOOSE DESIGN
-========================================================= */
+/* =====================================================
+CHOOSE DESIGN
+===================================================== */
 
 function chooseDesign(){
 
-  buildFinalStrip();
+buildFinalStrip();
 
-  nextStep(4);
+nextStep(4);
 
 }
 
 
-/* =========================================================
-   FINAL STRIP
-========================================================= */
+/* =====================================================
+BUILD FINAL STRIP
+===================================================== */
 
 function buildFinalStrip(){
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+renderFinalStrip(
+"photoStrip"
+);
 
 
-  strip.className=
-    "final-strip theme-"+
-    selectedDesign;
+/*
+  Make sure custom movable elements are restored.
+*/
+
+restoreMovableElements();
 
 
-  strip.innerHTML="";
+/*
+  Save automatically after design change.
+*/
 
-
-  /*
-    ONLY THE PHOTOS.
-  */
-
-  photos
-    .filter(Boolean)
-    .forEach(image=>{
-
-      const img=
-        document.createElement(
-          "img"
-        );
-
-      img.src=image;
-
-      strip.appendChild(
-        img
-      );
-
-    });
-
-
-  /*
-    ONE NAME LINE AT THE BOTTOM.
-  */
-
-  const title=
-    document.createElement(
-      "div"
-    );
-
-
-  title.className=
-    "final-strip-title";
-
-
-  title.textContent=
-    yourName+
-    " ♡ "+
-    (partnerName||"Them");
-
-
-  strip.appendChild(
-    title
-  );
-
-
-  editHistory=[];
+scheduleAutoSave();
 
 }
 
 
-/* =========================================================
-   SAVE EDIT STATE
-========================================================= */
+/* =====================================================
+EDIT HISTORY
+===================================================== */
 
 function saveEditState(){
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 
-  editHistory.push(
-    strip.innerHTML
-  );
+if(!strip)
+return;
 
 
-  if(
-    editHistory.length>30
-  ){
+editHistory.push(
+strip.innerHTML
+);
 
-    editHistory.shift();
 
-  }
+if(editHistory.length>30)
+editHistory.shift();
 
 }
 
 
-/* =========================================================
-   STICKER
-========================================================= */
+/* =====================================================
+STICKER
+===================================================== */
 
 function addSticker(symbol){
 
-  saveEditState();
+saveEditState();
 
 
-  const sticker=
-    document.createElement(
-      "div"
-    );
+const sticker=
+document.createElement("div");
 
 
-  sticker.className=
-    "decor";
+sticker.className=
+"decor";
 
 
-  sticker.textContent=
-    symbol;
+sticker.textContent=
+symbol;
 
 
-  sticker.style.left=
-    (15+
-      Math.random()*70)+
-    "%";
+sticker.style.left=
+(15+Math.random()*70)+"%";
 
 
-  sticker.style.top=
-    (10+
-      Math.random()*80)+
-    "%";
+sticker.style.top=
+(10+Math.random()*80)+"%";
 
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 
-  strip.appendChild(
-    sticker
-  );
+strip.appendChild(
+sticker
+);
 
 
-  makeMovable(
-    sticker,
-    strip
-  );
+makeMovable(
+sticker,
+strip
+);
+
+
+scheduleAutoSave();
 
 }
 
 
-/* =========================================================
-   CUSTOM TEXT
-========================================================= */
+/* =====================================================
+TEXT
+===================================================== */
 
 function addText(){
 
-  const input=
-    document
-      .getElementById(
-        "customText"
-      );
+const input=
+document.getElementById(
+"customText"
+);
 
 
-  const value=
-    input.value.trim();
+const value=
+input.value.trim();
 
 
-  if(!value)
-    return;
+if(!value)
+return;
 
 
-  saveEditState();
+saveEditState();
 
 
-  const text=
-    document.createElement(
-      "div"
-    );
+const text=
+document.createElement("div");
 
 
-  text.className=
-    "decor text-decor";
+text.className=
+"decor text-decor";
 
 
-  text.textContent=
-    value;
+text.textContent=
+value;
 
 
-  text.style.left=
-    "50%";
+text.style.left="50%";
+text.style.top="50%";
 
 
-  text.style.top=
-    "50%";
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+strip.appendChild(
+text
+);
 
 
-  strip.appendChild(
-    text
-  );
+input.value="";
 
 
-  input.value="";
+makeMovable(
+text,
+strip
+);
 
 
-  makeMovable(
-    text,
-    strip
-  );
+scheduleAutoSave();
 
 }
 
 
-/* =========================================================
-   DRAGGABLE STICKERS
-========================================================= */
+/* =====================================================
+MOVABLE ELEMENTS
+===================================================== */
 
 function makeMovable(
-  element,
-  container
+element,
+container
 ){
 
-  let dragging=false;
+let dragging=false;
 
 
-  function move(
-    clientX,
-    clientY
-  ){
+function move(
+clientX,
+clientY
+){
 
-    const rect=
-      container
-        .getBoundingClientRect();
-
-
-    let x=
-      (
-        (clientX-rect.left)/
-        rect.width
-      )*100;
+const rect=
+container.getBoundingClientRect();
 
 
-    let y=
-      (
-        (clientY-rect.top)/
-        rect.height
-      )*100;
+let x=
+(
+(clientX-rect.left)/
+rect.width
+)*100;
 
 
-    x=
-      Math.max(
-        5,
-        Math.min(95,x)
-      );
+let y=
+(
+(clientY-rect.top)/
+rect.height
+)*100;
 
 
-    y=
-      Math.max(
-        3,
-        Math.min(97,y)
-      );
+x=
+Math.max(
+5,
+Math.min(95,x)
+);
 
 
-    element.style.left=
-      x+"%";
+y=
+Math.max(
+3,
+Math.min(97,y)
+);
 
 
-    element.style.top=
-      y+"%";
-
-  }
+element.style.left=
+x+"%";
 
 
-  element.addEventListener(
-    "touchstart",
-    e=>{
-
-      dragging=true;
-
-      e.preventDefault();
-
-    },
-    {
-      passive:false
-    }
-  );
-
-
-  element.addEventListener(
-    "touchmove",
-    e=>{
-
-      if(!dragging)
-        return;
-
-
-      e.preventDefault();
-
-
-      const t=
-        e.touches[0];
-
-
-      move(
-        t.clientX,
-        t.clientY
-      );
-
-    },
-    {
-      passive:false
-    }
-  );
-
-
-  element.addEventListener(
-    "touchend",
-    ()=>{
-      dragging=false;
-    }
-  );
-
-
-  element.addEventListener(
-    "mousedown",
-    e=>{
-
-      dragging=true;
-
-      e.preventDefault();
-
-    }
-  );
-
-
-  document.addEventListener(
-    "mousemove",
-    e=>{
-
-      if(dragging){
-
-        move(
-          e.clientX,
-          e.clientY
-        );
-
-      }
-
-    }
-  );
-
-
-  document.addEventListener(
-    "mouseup",
-    ()=>{
-      dragging=false;
-    }
-  );
+element.style.top=
+y+"%";
 
 }
 
 
-/* =========================================================
-   UNDO
-========================================================= */
+element.addEventListener(
+"touchstart",
+e=>{
 
-function undoLastEdit(){
+dragging=true;
 
-  if(!editHistory.length){
+e.preventDefault();
 
-    alert(
-      "Nothing to undo ♡"
-    );
-
-    return;
-
-  }
+},
+{
+passive:false
+}
+);
 
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+element.addEventListener(
+"touchmove",
+e=>{
+
+if(!dragging)
+return;
 
 
-  strip.innerHTML=
-    editHistory.pop();
+e.preventDefault();
 
 
-  restoreMovableElements();
+const t=
+e.touches[0];
+
+
+move(
+t.clientX,
+t.clientY
+);
+
+},
+{
+passive:false
+}
+);
+
+
+element.addEventListener(
+"touchend",
+()=>{
+
+dragging=false;
+
+
+/*
+  Save after dragging finishes.
+*/
+
+scheduleAutoSave();
+
+}
+);
+
+
+element.addEventListener(
+"mousedown",
+e=>{
+
+dragging=true;
+
+e.preventDefault();
+
+}
+);
+
+
+const mouseMoveHandler=
+e=>{
+
+if(dragging){
+
+move(
+e.clientX,
+e.clientY
+);
+
+}
+
+};
+
+
+const mouseUpHandler=
+()=>{
+
+if(dragging){
+
+dragging=false;
+
+scheduleAutoSave();
+
+}
+
+};
+
+
+document.addEventListener(
+"mousemove",
+mouseMoveHandler
+);
+
+
+document.addEventListener(
+"mouseup",
+mouseUpHandler
+);
 
 }
 
 
-/* =========================================================
-   RESTORE MOVABLES
-========================================================= */
+/* =====================================================
+RESTORE MOVABLE ELEMENTS
+===================================================== */
 
 function restoreMovableElements(){
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 
-  strip
-    .querySelectorAll(
-      ".decor"
-    )
-    .forEach(element=>{
+if(!strip)
+return;
 
-      makeMovable(
-        element,
-        strip
-      );
 
-    });
+strip
+.querySelectorAll(".decor")
+.forEach(
+element=>{
+
+makeMovable(
+element,
+strip
+);
+
+});
 
 }
 
 
-/* =========================================================
-   RESET
-========================================================= */
+/* =====================================================
+UNDO
+===================================================== */
+
+function undoLastEdit(){
+
+if(!editHistory.length){
+
+alert(
+"Nothing to undo ♡"
+);
+
+return;
+
+}
+
+
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
+
+strip.innerHTML=
+editHistory.pop();
+
+
+restoreMovableElements();
+
+
+scheduleAutoSave();
+
+}
+
+
+/* =====================================================
+RESET
+===================================================== */
 
 function resetEdits(){
 
-  if(
-    !confirm(
-      "Remove all stickers and text?"
-    )
-  )
-    return;
+if(
+!confirm(
+"Remove all stickers and text?"
+)
+)
+return;
 
 
-  buildFinalStrip();
+saveEditState();
+
+
+buildFinalStrip();
+
+
+scheduleAutoSave();
 
 }
 
 
-/* =========================================================
-   FINAL PREVIEW
-========================================================= */
+/* =====================================================
+COPY FINAL PREVIEW
+===================================================== */
 
 function copyFinalPreview(){
 
-  const source=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+const source=
+document.getElementById(
+"photoStrip"
+);
 
 
-  const target=
-    document
-      .getElementById(
-        "savedPreview"
-      );
+const target=
+document.getElementById(
+"savedPreview"
+);
 
 
-  target.innerHTML=
-    source.innerHTML;
+target.innerHTML=
+source.innerHTML;
 
 
-  target.className=
-    source.className;
+target.className=
+source.className;
 
 }
 
 
-/* =========================================================
-   SAVE FINAL STRIP
-========================================================= */
+/* =====================================================
+AUTO SAVE
+===================================================== */
+
+function scheduleAutoSave(){
+
+clearTimeout(
+autoSaveTimer
+);
+
+
+const status=
+document.getElementById(
+"autoSaveStatus"
+);
+
+
+if(status){
+
+status.textContent=
+"Saving automatically... ♡";
+
+}
+
+
+autoSaveTimer=
+setTimeout(
+()=>{
+
+autoSaveFinal("edit");
+
+},
+700
+);
+
+}
+
+
+/* =====================================================
+AUTO SAVE FINAL
+===================================================== */
+
+async function autoSaveFinal(
+reason="edit"
+){
+
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
+
+if(
+!strip ||
+!photos.length
+)
+return;
+
+
+const status=
+document.getElementById(
+"autoSaveStatus"
+);
+
+
+const finalStatus=
+document.getElementById(
+"finalSaveStatus"
+);
+
+
+if(status){
+
+status.textContent=
+"♡ Creating your saved photo...";
+
+}
+
+
+if(finalStatus){
+
+finalStatus.textContent=
+"♡ Saving your memory...";
+
+}
+
+
+try{
+
 
 /*
-  This does NOT use html2canvas anymore.
-
-  The final image is built directly on a canvas.
-  This makes saving much more reliable on phones.
+  Wait for all images.
 */
+
+await waitForImages(
+strip
+);
+
+
+const canvas=
+await html2canvas(
+strip,
+{
+scale:3,
+backgroundColor:null,
+useCORS:true,
+logging:false
+}
+);
+
+
+/*
+  Convert to PNG.
+*/
+
+const dataURL=
+canvas.toDataURL(
+"image/png"
+);
+
+
+/*
+  Trigger browser download.
+*/
+
+const link=
+document.createElement("a");
+
+
+const safeYou=
+(yourName||"you")
+.replace(
+/[^a-z0-9]/gi,
+"-"
+);
+
+
+const safePartner=
+(partnerName||"love")
+.replace(
+/[^a-z0-9]/gi,
+"-"
+);
+
+
+link.download=
+"our-little-photobooth-"+
+safeYou+
+"-love-"+
+safePartner+
+".png";
+
+
+link.href=
+dataURL;
+
+
+link.style.display=
+"none";
+
+
+document.body.appendChild(
+link
+);
+
+
+link.click();
+
+
+setTimeout(
+()=>{
+link.remove();
+},
+1000
+);
+
+
+if(status){
+
+status.textContent=
+"✓ Saved automatically ♡";
+
+}
+
+
+if(finalStatus){
+
+finalStatus.textContent=
+"✓ Your photo was saved automatically ♡";
+
+}
+
+
+}catch(error){
+
+console.error(
+"Automatic save error:",
+error
+);
+
+
+if(status){
+
+status.textContent=
+"Could not auto-save. Tap Save Photo Again ♡";
+
+}
+
+
+if(finalStatus){
+
+finalStatus.textContent=
+"Tap Save Photo Again below ♡";
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+WAIT FOR IMAGES
+===================================================== */
+
+function waitForImages(
+container
+){
+
+const images=
+[
+...container.querySelectorAll("img")
+];
+
+
+return Promise.all(
+images.map(
+img=>
+new Promise(resolve=>{
+
+if(img.complete){
+
+resolve();
+
+return;
+
+}
+
+
+img.onload=
+()=>resolve();
+
+
+img.onerror=
+()=>resolve();
+
+})
+)
+);
+
+}
+
+
+/* =====================================================
+MANUAL SAVE
+===================================================== */
 
 async function saveStrip(){
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 
-  if(!photos.length){
+if(!strip){
 
-    alert(
-      "There are no photos to save yet."
-    );
+alert(
+"Your photo is not ready yet ♡"
+);
 
-    return;
-
-  }
-
-
-  const button=
-    document
-      .querySelector(
-        '#step5 .primary'
-      );
-
-
-  button.disabled=true;
-
-  button.textContent=
-    "Creating your photo... ♡";
-
-
-  try{
-
-    const blob=
-      await renderFinalCanvas();
-
-
-    if(!blob)
-      throw new Error(
-        "Could not create image."
-      );
-
-
-    /*
-      Create a real downloadable file.
-    */
-
-    if(finalBlobUrl){
-
-      URL.revokeObjectURL(
-        finalBlobUrl
-      );
-
-    }
-
-
-    finalBlobUrl=
-      URL.createObjectURL(
-        blob
-      );
-
-
-    const link=
-      document.createElement(
-        "a"
-      );
-
-
-    link.href=
-      finalBlobUrl;
-
-
-    link.download=
-      "our-little-photobooth.png";
-
-
-    document.body.appendChild(
-      link
-    );
-
-
-    link.click();
-
-
-    link.remove();
-
-
-    /*
-      Also show the actual image as a fallback.
-    */
-
-    const fallback=
-      document
-        .getElementById(
-          "saveFallback"
-        );
-
-
-    const saveImage=
-      document
-        .getElementById(
-          "saveImage"
-        );
-
-
-    saveImage.src=
-      finalBlobUrl;
-
-
-    fallback.style.display=
-      "block";
-
-
-    button.textContent=
-      "✓ Saved / Open Image Below";
-
-
-    /*
-      On mobile browsers where automatic downloads
-      are blocked, the image below can still be
-      opened and saved manually.
-    */
-
-    setTimeout(
-      ()=>{
-        window.open(
-          finalBlobUrl,
-          "_blank"
-        );
-      },
-      500
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Save error:",
-      error
-    );
-
-
-    alert(
-      "The image was created but your browser blocked the automatic save. Use the image shown below to save it."
-    );
-
-  }finally{
-
-    button.disabled=false;
-
-  }
+return;
 
 }
 
 
-/* =========================================================
-   RENDER FINAL CANVAS
-========================================================= */
+try{
 
-async function renderFinalCanvas(){
 
-  /*
-    Output dimensions.
-    This creates a long photobooth strip.
-  */
+await waitForImages(
+strip
+);
 
-  const W=900;
 
-  const PHOTO_W=820;
-  const PHOTO_H=
-    PHOTO_W*5/4;
+const canvas=
+await html2canvas(
+strip,
+{
+scale:3,
+backgroundColor:null,
+useCORS:true,
+logging:false
+}
+);
 
-  const SIDE=40;
 
-  const TOP=75;
+const link=
+document.createElement("a");
 
-  const GAP=18;
 
-  const CAPTION_H=120;
+const safeYou=
+(yourName||"you")
+.replace(
+/[^a-z0-9]/gi,
+"-"
+);
 
 
-  const count=
-    photos.length;
+const safePartner=
+(partnerName||"love")
+.replace(
+/[^a-z0-9]/gi,
+"-"
+);
 
 
-  const H=
-    TOP+
-    count*PHOTO_H+
-    (count-1)*GAP+
-    CAPTION_H+
-    45;
+link.download=
+"our-little-photobooth-"+
+safeYou+
+"-love-"+
+safePartner+
+".png";
 
 
-  const canvas=
-    document.createElement(
-      "canvas"
-    );
+link.href=
+canvas.toDataURL(
+"image/png"
+);
 
 
-  canvas.width=W;
+document.body.appendChild(
+link
+);
 
-  canvas.height=H;
 
+link.click();
 
-  const ctx=
-    canvas.getContext(
-      "2d"
-    );
 
+setTimeout(
+()=>{
+link.remove();
+},
+1000
+);
 
-  /*
-    Background.
-  */
 
-  drawThemeBackground(
-    ctx,
-    W,
-    H,
-    selectedDesign
-  );
+const status=
+document.getElementById(
+"finalSaveStatus"
+);
 
 
-  /*
-    Theme header.
-  */
+if(status){
 
-  drawThemeHeader(
-    ctx,
-    W,
-    selectedDesign
-  );
-
-
-  /*
-    Draw every photo.
-  */
-
-  for(
-    let i=0;
-    i<photos.length;
-    i++
-  ){
-
-    const image=
-      await loadImage(
-        photos[i]
-      );
-
-
-    const x=
-      (W-PHOTO_W)/2;
-
-
-    const y=
-      TOP+
-      i*(PHOTO_H+GAP);
-
-
-    drawPhotoToCanvas(
-      ctx,
-      image,
-      x,
-      y,
-      PHOTO_W,
-      PHOTO_H,
-      selectedDesign
-    );
-
-  }
-
-
-  /*
-    Draw stickers/text from the editable DOM.
-  */
-
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
-
-
-  const stripRect=
-    strip
-      .getBoundingClientRect();
-
-
-  strip
-    .querySelectorAll(
-      ".decor"
-    )
-    .forEach(element=>{
-
-      const rect=
-        element
-          .getBoundingClientRect();
-
-
-      const centerX=
-        rect.left+
-        rect.width/2;
-
-
-      const centerY=
-        rect.top+
-        rect.height/2;
-
-
-      const percentX=
-        (
-          (centerX-
-            stripRect.left)/
-          stripRect.width
-        );
-
-
-      const percentY=
-        (
-          (centerY-
-            stripRect.top)/
-          stripRect.height
-        );
-
-
-      const canvasX=
-        percentX*W;
-
-
-      /*
-        The editable DOM uses the entire strip height.
-        Map it to the canvas.
-      */
-
-      const canvasY=
-        percentY*H;
-
-
-      ctx.save();
-
-
-      ctx.textAlign=
-        "center";
-
-      ctx.textBaseline=
-        "middle";
-
-
-      let fontSize=
-        38;
-
-
-      if(
-        element.classList.contains(
-          "text-decor"
-        )
-      ){
-
-        fontSize=25;
-
-      }
-
-
-      ctx.font=
-        fontSize+
-        "px Georgia";
-
-
-      /*
-        Soft white sticker backing for text.
-      */
-
-      if(
-        element.classList.contains(
-          "text-decor"
-        )
-      ){
-
-        const padding=9;
-
-        const metrics=
-          ctx.measureText(
-            element.textContent
-          );
-
-
-        const bw=
-          metrics.width+
-          padding*2;
-
-
-        const bh=
-          fontSize+
-          padding;
-
-
-        ctx.fillStyle=
-          "rgba(255,255,255,.88)";
-
-
-        roundRect(
-          ctx,
-          canvasX-bw/2,
-          canvasY-bh/2,
-          bw,
-          bh,
-          10
-        );
-
-
-        ctx.fill();
-
-
-      }
-
-
-      ctx.fillStyle=
-        "#49363e";
-
-
-      ctx.fillText(
-        element.textContent,
-        canvasX,
-        canvasY
-      );
-
-
-      ctx.restore();
-
-    });
-
-
-  /*
-    ONE SINGLE NAME CAPTION.
-  */
-
-  const captionY=
-    H-55;
-
-
-  ctx.save();
-
-
-  ctx.textAlign=
-    "center";
-
-  ctx.textBaseline=
-    "middle";
-
-
-  ctx.fillStyle=
-    getThemeTextColor(
-      selectedDesign
-    );
-
-
-  ctx.font=
-    "bold 42px Georgia";
-
-
-  ctx.fillText(
-    yourName+
-    " ♡ "+
-    (partnerName||"Them"),
-    W/2,
-    captionY
-  );
-
-
-  ctx.restore();
-
-
-  /*
-    Convert canvas to PNG blob.
-  */
-
-  return new Promise(
-    resolve=>{
-
-      canvas.toBlob(
-        blob=>{
-          resolve(blob);
-        },
-        "image/png"
-      );
-
-    }
-  );
+status.textContent=
+"✓ Saved ♡";
 
 }
 
 
-/* =========================================================
-   LOAD IMAGE
-========================================================= */
+}catch(error){
 
-function loadImage(src){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const image=
-        new Image();
+console.error(
+"Save error:",
+error
+);
 
 
-      image.onload=
-        ()=>{
-          resolve(image);
-        };
+alert(
+"Your browser blocked the automatic download. Please allow downloads for this site and try again ♡"
+);
 
-
-      image.onerror=
-        reject;
-
-
-      image.src=src;
-
-    }
-  );
+}
 
 }
 
 
-/* =========================================================
-   PHOTO CANVAS
-========================================================= */
-
-function drawPhotoToCanvas(
-  ctx,
-  img,
-  x,
-  y,
-  w,
-  h,
-  theme
-){
-
-  /*
-    Theme border.
-  */
-
-  ctx.save();
-
-
-  const border=
-    getThemeBorder(theme);
-
-
-  if(border){
-
-    ctx.fillStyle=
-      border;
-
-    roundRect(
-      ctx,
-      x-8,
-      y-8,
-      w+16,
-      h+16,
-      18
-    );
-
-    ctx.fill();
-
-  }
-
-
-  /*
-    Clip image.
-  */
-
-  roundRect(
-    ctx,
-    x,
-    y,
-    w,
-    h,
-    14
-  );
-
-
-  ctx.clip();
-
-
-  const ratio=
-    Math.max(
-      w/img.width,
-      h/img.height
-    );
-
-
-  const nw=
-    img.width*ratio;
-
-
-  const nh=
-    img.height*ratio;
-
-
-  const dx=
-    x+(w-nw)/2;
-
-
-  const dy=
-    y+(h-nh)/2;
-
-
-  if(theme==="retro" ||
-     theme==="vintage"){
-
-    ctx.filter=
-      "sepia(.4) saturate(.8)";
-
-  }
-
-
-  ctx.drawImage(
-    img,
-    dx,
-    dy,
-    nw,
-    nh
-  );
-
-
-  ctx.filter=
-    "none";
-
-
-  ctx.restore();
-
-}
-
-
-/* =========================================================
-   THEME BACKGROUND
-========================================================= */
-
-function drawThemeBackground(
-  ctx,
-  W,
-  H,
-  theme
-){
-
-  let bg="#fff0f6";
-
-
-  if(theme==="retro")
-    bg="#c89470";
-
-  if(theme==="scrapbook")
-    bg="#ead8c0";
-
-  if(theme==="y2k"){
-
-    const gradient=
-      ctx.createLinearGradient(
-        0,
-        0,
-        W,
-        H
-      );
-
-    gradient.addColorStop(
-      0,
-      "#a8d6ed"
-    );
-
-    gradient.addColorStop(
-      .5,
-      "#d9c8f0"
-    );
-
-    gradient.addColorStop(
-      1,
-      "#f2b9d7"
-    );
-
-    bg=gradient;
-
-  }
-
-
-  if(theme==="strawberry")
-    bg="#fff0e9";
-
-  if(theme==="lace")
-    bg="#ead8e3";
-
-  if(theme==="postcard")
-    bg="#e6cdb5";
-
-  if(theme==="floral")
-    bg="#f7e7dc";
-
-  if(theme==="dreamy"){
-
-    const gradient=
-      ctx.createLinearGradient(
-        0,
-        0,
-        0,
-        H
-      );
-
-    gradient.addColorStop(
-      0,
-      "#bfcce7"
-    );
-
-    gradient.addColorStop(
-      1,
-      "#ead8ee"
-    );
-
-    bg=gradient;
-
-  }
-
-
-  if(theme==="vintage"){
-
-    bg="#d0b39f";
-
-  }
-
-
-  ctx.fillStyle=bg;
-
-
-  ctx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /*
-    Small decorative header.
-  */
-
-  ctx.save();
-
-
-  ctx.textAlign=
-    "center";
-
-
-  ctx.fillStyle=
-    getThemeTextColor(
-      theme
-    );
-
-
-  ctx.font=
-    "22px Georgia";
-
-
-  const header=
-    getThemeHeader(
-      theme
-    );
-
-
-  ctx.fillText(
-    header,
-    W/2,
-    40
-  );
-
-
-  ctx.restore();
-
-}
-
-
-/* =========================================================
-   THEME HEADER
-========================================================= */
-
-function getThemeHeader(theme){
-
-  const headers={
-
-    coquette:"♡ ୨୧ 🎀 ୨୧ ♡",
-
-    retro:"MEMORIES • 1990s • LOVE",
-
-    scrapbook:"♡ OUR LITTLE MOMENTS ♡",
-
-    y2k:"★ BABY ★ ANGEL ★ 2000 ★",
-
-    strawberry:"🍓 strawberry kisses 🍓",
-
-    lace:"୨୧ love letter ୨୧",
-
-    postcard:"POSTCARD FROM US ♡",
-
-    floral:"✿ 🌸 love grows here 🌸 ✿",
-
-    dreamy:"☁︎ DREAMING OF YOU ☁︎",
-
-    vintage:"♡ VINTAGE LOVE ♡"
-
-  };
-
-
-  return headers[theme] ||
-    "♡ OUR LITTLE MOMENTS ♡";
-
-}
-
-
-/* =========================================================
-   THEME COLORS
-========================================================= */
-
-function getThemeTextColor(theme){
-
-  if(
-    theme==="dreamy" ||
-    theme==="y2k"
-  ){
-
-    return "#ffffff";
-
-  }
-
-
-  if(theme==="retro")
-    return "#5c3d30";
-
-
-  if(theme==="scrapbook")
-    return "#785b4c";
-
-
-  if(theme==="postcard")
-    return "#704b39";
-
-
-  if(theme==="vintage")
-    return "#654b3d";
-
-
-  return "#49363e";
-
-}
-
-
-function getThemeBorder(theme){
-
-  const borders={
-
-    coquette:"#efb6c9",
-    retro:"#76503e",
-    scrapbook:"#a98267",
-    y2k:"#ffffff",
-    strawberry:"#e76572",
-    lace:"#a87b96",
-    postcard:"#956c52",
-    floral:"#d19aaa",
-    dreamy:"#ffffff",
-    vintage:"#806351"
-
-  };
-
-
-  return borders[theme] ||
-    "#efb6c9";
-
-}
-
-
-/* =========================================================
-   ROUNDED RECT
-========================================================= */
-
-function roundRect(
-  ctx,
-  x,
-  y,
-  w,
-  h,
-  r
-){
-
-  ctx.beginPath();
-
-  ctx.moveTo(
-    x+r,
-    y
-  );
-
-  ctx.lineTo(
-    x+w-r,
-    y
-  );
-
-  ctx.quadraticCurveTo(
-    x+w,
-    y,
-    x+w,
-    y+r
-  );
-
-  ctx.lineTo(
-    x+w,
-    y+h-r
-  );
-
-  ctx.quadraticCurveTo(
-    x+w,
-    y+h,
-    x+w-r,
-    y+h
-  );
-
-  ctx.lineTo(
-    x+r,
-    y+h
-  );
-
-  ctx.quadraticCurveTo(
-    x,
-    y+h,
-    x,
-    y+h-r
-  );
-
-  ctx.lineTo(
-    x,
-    y+r
-  );
-
-  ctx.quadraticCurveTo(
-    x,
-    y,
-    x+r,
-    y
-  );
-
-  ctx.closePath();
-
-}
-
-
-/* =========================================================
-   CLEANUP
-========================================================= */
+/* =====================================================
+CLEANUP
+===================================================== */
 
 window.addEventListener(
-  "beforeunload",
-  ()=>{
-
-    if(readinessTimer){
-
-      clearInterval(
-        readinessTimer
-      );
-
-    }
+"beforeunload",
+()=>{
 
 
-    if(connectionRetryTimer){
+if(cameraStream){
 
-      clearTimeout(
-        connectionRetryTimer
-      );
+cameraStream
+.getTracks()
+.forEach(
+track=>
+track.stop()
+);
 
-    }
-
-
-    if(cameraStream){
-
-      cameraStream
-        .getTracks()
-        .forEach(
-          track=>
-            track.stop()
-        );
-
-    }
+}
 
 
-    if(peerConnection){
-
-      peerConnection.close();
-
-    }
+if(peerConnection)
+peerConnection.close();
 
 
-    if(roomChannel){
-
-      roomChannel.unsubscribe();
-
-    }
+if(roomChannel)
+roomChannel.unsubscribe();
 
 
-    if(signalChannel){
+if(webrtcChannel)
+webrtcChannel.unsubscribe();
 
-      signalChannel.unsubscribe();
-
-    }
-
-
-    if(finalBlobUrl){
-
-      URL.revokeObjectURL(
-        finalBlobUrl
-      );
-
-    }
-
-  }
+}
 );
 
 </script>
