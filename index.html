@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Little World 💗</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Trebuchet MS", Arial, sans-serif;
+      background: #fff7fa;
+      color: #5d4650;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding: 25px;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* WELCOME */
+
+    .welcome {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 20% 20%, #ffdce8 0 7%, transparent 8%),
+        radial-gradient(circle at 80% 80%, #f5dff0 0 8%, transparent 9%),
+        #fff7fa;
+    }
+
+    .welcome-card {
+      width: min(620px, 100%);
+      background: rgba(255,255,255,.92);
+      padding: 45px 30px;
+      border-radius: 35px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(120,70,90,.12);
+    }
+
+    .heart-logo {
+      font-size: 55px;
+      color: #d88ba4;
+    }
+
+    .small-title {
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      color: #b47a8d;
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, serif;
+    }
+
+    h1 {
+      font-size: clamp(45px, 10vw, 75px);
+      margin: 10px 0;
+      line-height: .95;
+    }
+
+    h1 span,
+    h2 span {
+      color: #c77994;
+    }
+
+    .description {
+      color: #917d85;
+      line-height: 1.6;
+    }
+
+    .form {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .form label {
+      display: block;
+      margin-bottom: 15px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .form input {
+      display: block;
+      width: 100%;
+      margin-top: 7px;
+      padding: 14px;
+      border: 1px solid #ead8df;
+      border-radius: 15px;
+      outline: none;
+      background: #fffafb;
+    }
+
+    .primary {
+      width: 100%;
+      border: none;
+      background: #bd718a;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 16px;
+      font-weight: bold;
+      box-shadow: 0 10px 25px rgba(189,113,138,.25);
+    }
+
+    .primary:hover {
+      transform: translateY(-2px);
+    }
+
+    /* TOP */
+
+    .topbar {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 65px;
+    }
+
+    .brand {
+      font-family: Georgia, serif;
+      font-size: 20px;
+    }
+
+    .icon {
+      border: none;
+      background: white;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      box-shadow: 0 7px 20px rgba(100,60,75,.1);
+    }
+
+    /* HOME */
+
+    .home-container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .home-title {
+      text-align: center;
+      padding: 45px 15px;
+    }
+
+    .home-title h2 {
+      font-size: clamp(38px, 8vw, 60px);
+      margin: 5px;
+    }
+
+    .room {
+      display: inline-block;
+      margin-top: 15px;
+      background: white;
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 190px;
+      border: none;
+      border-radius: 25px;
+      padding: 22px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      box-shadow: 0 15px 35px rgba(90,60,70,.1);
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-icon {
+      font-size: 38px;
+      margin-bottom: auto;
+    }
+
+    .card h3 {
+      font-family: Georgia, serif;
+      font-size: 23px;
+      margin: 5px 0;
+    }
+
+    .card p {
+      margin: 0;
+      color: #806e76;
+      font-size: 12px;
+    }
+
+    .pink { background:#f9dfe7; }
+    .cream { background:#fff0d2; }
+    .purple { background:#eee3f7; }
+    .green { background:#dff0e9; }
+
+    /* PHOTOBOOTH */
+
+    .content {
+      max-width: 1050px;
+      margin: auto;
+      background: #fffdfc;
+      border-radius: 30px;
+      padding: 30px;
+      box-shadow: 0 15px 50px rgba(100,60,75,.1);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .step h2 {
+      font-size: 42px;
+      margin-bottom: 5px;
+    }
+
+    .muted {
+      color: #927e86;
+    }
+
+    .strip-options {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 15px;
+      margin: 30px 0;
+    }
+
+    .strip {
+      background: white;
+      border: 2px solid #eee0e5;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .strip.selected {
+      border-color: #d78da3;
+      background: #fff2f6;
+    }
+
+    .strip strong {
+      display: block;
+      font-size: 40px;
+      font-family: Georgia, serif;
+    }
+
+    .templates {
+      display: grid;
+      grid-template-columns: repeat(5,1fr);
+      gap: 14px;
+      margin: 25px 0;
+    }
+
+    .template {
+      border: 2px solid transparent;
+      border-radius: 18px;
+      overflow: hidden;
+      background: white;
+      padding: 0;
+    }
+
+    .template.selected {
+      border-color: #d78da3;
+    }
+
+    .template-preview {
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-family: Georgia, serif;
+      gap: 8px;
+    }
+
+    .template-name {
+      padding: 10px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    /* CAMERA */
+
+    .camera {
+      background: #30282c;
+      min-height: 420px;
+      border-radius: 25px;
+      overflow: hidden;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin: 25px 0;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 420px;
+    }
+
+    .camera-message {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      background: linear-gradient(135deg,#4b3540,#2b2528);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .camera-message .camera-icon {
+      font-size: 55px;
+    }
+
+    .partner {
+      background: #3e3036;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .partner span {
+      font-size: 60px;
+    }
+
+    .partner small {
+      color: #cdbbc3;
+    }
+
+    .camera-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .shutter {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 7px solid #e3b0c0;
+      background: white;
+      color: #c76f8c;
+      font-size: 30px;
+    }
+
+    .secondary {
+      border: 1px solid #e6d9de;
+      background: white;
+      padding: 12px 17px;
+      border-radius: 14px;
+    }
+
+    /* EDITOR */
+
+    .editor {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 25px;
+    }
+
+    .strip-editor-area {
+      min-height: 650px;
+      background: #f7eef1;
+      border-radius: 25px;
+      display: grid;
+      place-items: center;
+      padding: 25px;
+    }
+
+    .photo-strip {
+      width: 280px;
+      background: #fff0f5;
+      padding: 17px;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(80,50,60,.15);
+      overflow: hidden;
+    }
+
+    .photo-strip img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+
+    .strip-caption {
+      text-align: center;
+      font-family: Georgia, serif;
+      font-size: 14px;
+      padding: 8px;
+    }
+
+    .decor {
+      position: absolute;
+      z-index: 10;
+      font-size: 32px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .decor-text {
+      font-family: Georgia, serif;
+      font-size: 18px;
+      background: rgba(255,255,255,.7);
+      padding: 5px 8px;
+      border-radius: 8px;
+    }
+
+    .tools {
+      background: white;
+      border-radius: 25px;
+      padding: 20px;
+    }
+
+    .tool-section {
+      border-bottom: 1px solid #eee1e5;
+      padding: 15px 0;
+    }
+
+    .tool-section b {
+      font-size: 12px;
+    }
+
+    .stickers {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .sticker {
+      border: 1px solid #eadde1;
+      background: white;
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 22px;
+    }
+
+    .tools input {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px solid #e8dce1;
+      border-radius: 12px;
+    }
+
+    /* LETTERS */
+
+    .simple {
+      max-width: 800px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(90,60,70,.1);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      border: 1px solid #eadde1;
+      border-radius: 15px;
+      padding: 15px;
+      resize: vertical;
+      outline: none;
+    }
+
+    .letter {
+      margin-top: 15px;
+      background: #fff0f4;
+      border-radius: 18px;
+      padding: 18px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+    }
+
+    /* MEMORIES */
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 15px;
+    }
+
+    .memory {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(90,60,70,.08);
+    }
+
+    .memory img {
+      width: 100%;
+      display: block;
+    }
+
+    .memory p {
+      padding: 10px;
+      font-size: 12px;
+    }
+
+    .empty {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 50px;
+      color: #97858c;
+    }
+
+    @media(max-width:800px) {
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .templates {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .strip-options {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .editor {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media(max-width:500px) {
+
+      .page {
+        padding: 12px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome-card {
+        padding: 35px 20px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .step h2 {
+        font-size: 34px;
+      }
+
+      .camera {
+        min-height: 300px;
+      }
+
+      video {
+        min-height: 300px;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- WELCOME -->
+
+<section id="welcome" class="page active welcome">
+
+  <div class="welcome-card">
+
+    <div class="heart-logo">♡</div>
+
+    <div class="small-title">
+      a tiny place for two
+    </div>
+
+    <h1>
+      Our Little<br>
+      <span>World</span>
+    </h1>
+
+    <p class="description">
+      A cozy little place for your letters, memories,
+      silly pictures, and all the moments that make
+      the distance feel smaller.
+    </p>
+
+    <div class="form">
+
+      <label>
+        Your name
+        <input id="yourName" placeholder="Your name">
+      </label>
+
+      <label>
+        Partner's name
+        <input id="partnerName" placeholder="Their name">
+      </label>
+
+      <label>
+        Room code
+        <input id="roomCode" placeholder="OURWORLD">
+      </label>
+
+    </div>
+
+    <button class="primary" onclick="enterWorld()">
+      Enter our world →
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- HOME -->
+
+<section id="home" class="page">
+
+  <div class="topbar">
+
+    <button class="icon" onclick="showPage('welcome')">
+      ←
+    </button>
+
+    <div class="brand">
+      our little ♡ world
+    </div>
+
+    <div></div>
+
+  </div>
+
+  <div class="home-container">
+
+    <div class="home-title">
+
+      <div class="small-title">
+        welcome home
+      </div>
+
+      <h2>
+        <span id="homeYou">You</span>
+        &
+        <span id="homePartner">Them</span>
+      </h2>
+
+      <p class="description">
+        Same love. Different places. One little world.
+      </p>
+
+      <div class="room">
+        ROOM:
+        <b id="homeRoom">OURWORLD</b>
+      </div>
+
+    </div>
+
+
+    <div class="cards">
+
+      <button class="card pink"
+              onclick="openPhotobooth()">
+
+        <div class="card-icon">
+          📸
+        </div>
+
+        <h3>Photobooth</h3>
+
+        <p>
+          Make an aesthetic photo strip together.
+        </p>
+
+      </button>
+
+
+      <button class="card cream"
+              onclick="showPage('letters')">
+
+        <div class="card-icon">
+          💌
+        </div>
+
+        <h3>Love Letters</h3>
+
+        <p>
+          Leave a little note for them.
+        </p>
+
+      </button>
+
+
+      <button class="card purple"
+              onclick="showPage('memories'); loadMemories()">
+
+        <div class="card-icon">
+          🖼️
+        </div>
+
+        <h3>Our Memories</h3>
+
+        <p>
+          Keep your favorite little moments.
+        </p>
+
+      </button>
+
+
+      <button class="card green"
+              onclick="showPage('distance')">
+
+        <div class="card-icon">
+          🌎
+        </div>
+
+        <h3>Our Distance</h3>
+
+        <p>
+          Different places, same little world.
+        </p>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PHOTOBOOTH -->
+
+<section id="photobooth" class="page">
+
+  <div class="topbar">
+
+    <button class="icon" onclick="showPage('home')">
+      ←
+    </button>
+
+    <div class="brand">
+      photobooth ♡
+    </div>
+
+    <div id="stepNumber">
+      1 / 3
+    </div>
+
+  </div>
+
+
+  <div class="content">
+
+    <!-- STEP 1 -->
+
+    <div class="step active" id="step1">
+
+      <div class="small-title">
+        first, choose
+      </div>
+
+      <h2>
+        How many photos?
+      </h2>
+
+      <p class="muted">
+        Pick the rhythm of your strip.
+      </p>
+
+
+      <div class="strip-options">
+
+        <button class="strip selected"
+                onclick="selectStrip(2,this)">
+
+          <strong>2</strong>
+          classic
+
+        </button>
+
+
+        <button class="strip"
+                onclick="selectStrip(3,this)">
+
+          <strong>3</strong>
+          sweet
+
+        </button>
+
+
+        <button class="strip"
+                onclick="selectStrip(4,this)">
+
+          <strong>4</strong>
+          classic +
+
+        </button>
+
+
+        <button class="strip"
+                onclick="selectStrip(6,this)">
+
+          <strong>6</strong>
+          long strip
+
+        </button>
+
+      </div>
+
+
+      <button class="primary"
+              onclick="nextStep(2)">
+
+        Choose a style →
+
+      </button>
+
+    </div>
+
+
+    <!-- STEP 2 -->
+
+    <div class="step" id="step2">
+
+      <div class="small-title">
+        make it yours
+      </div>
+
+      <h2>
+        Choose a vibe
+      </h2>
+
+      <p class="muted">
+        Pick the aesthetic for your little strip.
+      </p>
+
+
+      <div class="templates">
+
+        <button class="template selected"
+                onclick="selectTemplate('coquette',this)">
+
+          <div class="template-preview"
+               style="background:#fff0f5;color:#9b6578">
+
+            🎀
+            <br>
+            ♡ ♡ ♡
+
+          </div>
+
+          <div class="template-name">
+            Coquette Sweet
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('retro',this)">
+
+          <div class="template-preview"
+               style="background:#e9c8a8;color:#684a39">
+
+            📻
+            <br>
+            ✿ ★
+
+          </div>
+
+          <div class="template-name">
+            Retro 70s
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('y2k',this)">
+
+          <div class="template-preview"
+               style="background:#e8e4f5;color:#675b91">
+
+            💿
+            <br>
+            ✦ ♡
+
+          </div>
+
+          <div class="template-name">
+            Y2K
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('strawberry',this)">
+
+          <div class="template-preview"
+               style="background:#ffe8e3;color:#a94e58">
+
+            🍓
+            <br>
+            🌸 ♡
+
+          </div>
+
+          <div class="template-name">
+            Strawberry Picnic
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('letter',this)">
+
+          <div class="template-preview"
+               style="background:#f6ecdf;color:#796055">
+
+            💌
+            <br>
+            ✉ ♡
+
+          </div>
+
+          <div class="template-name">
+            Love Letter
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('vintage',this)">
+
+          <div class="template-preview"
+               style="background:#eee2d8;color:#80675d">
+
+            🌷
+            <br>
+            ✿ ♡
+
+          </div>
+
+          <div class="template-name">
+            Vintage Romance
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('kawaii',this)">
+
+          <div class="template-preview"
+               style="background:#eaf2fa;color:#65849a">
+
+            🧸
+            <br>
+            ♡ ⭐
+
+          </div>
+
+          <div class="template-name">
+            Kawaii
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('dreamy',this)">
+
+          <div class="template-preview"
+               style="background:#e9eafa;color:#6b70a0">
+
+            ☁️
+            <br>
+            ☾ ✦
+
+          </div>
+
+          <div class="template-name">
+            Dreamy
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('indie',this)">
+
+          <div class="template-preview"
+               style="background:#ece5d9;color:#66594c">
+
+            🎧
+            <br>
+            ✎ ✦
+
+          </div>
+
+          <div class="template-name">
+            Indie Scrapbook
+          </div>
+
+        </button>
+
+
+        <button class="template"
+                onclick="selectTemplate('dark',this)">
+
+          <div class="template-preview"
+               style="background:#e4dadd;color:#4d3944">
+
+            🖤
+            <br>
+            🥀 ✦
+
+          </div>
+
+          <div class="template-name">
+            Dark Romance
+          </div>
+
+        </button>
+
+      </div>
+
+
+      <button class="secondary"
+              onclick="nextStep(1)">
+
+        ← Back
+
+      </button>
+
+      <button class="primary"
+              onclick="nextStep(3)"
+              style="margin-top:10px">
+
+        Open photobooth →
+
+      </button>
+
+    </div>
+
+
+    <!-- STEP 3 -->
+
+    <div class="step" id="step3">
+
+      <div class="small-title">
+        your little studio
+      </div>
+
+      <h2>
+        Let's take pictures 📸
+      </h2>
+
+      <p class="muted">
+        In the connected version, your partner's live camera
+        will appear beside yours.
+      </p>
+
+
+      <div class="camera">
+
+        <div class="camera-message"
+             id="cameraMessage">
+
+          <div class="camera-icon">
+            📷
+          </div>
+
+          <b>
+            Your camera
+          </b>
+
+          <p>
+            Allow camera access to start.
+          </p>
+
+          <button class="primary"
+                  onclick="startCamera()"
+                  style="max-width:250px">
+
+            Start camera
+
+          </button>
+
+        </div>
+
+
+        <video id="cameraVideo"
+               autoplay
+               playsinline>
+        </video>
+
+
+        <div class="partner">
+
+          <span>
+            ♡
+          </span>
+
+          <b id="cameraPartner">
+            Partner
+          </b>
+
+          <small>
+            Waiting for partner…
+          </small>
+
+        </div>
+
+      </div>
+
+
+      <div class="camera-buttons">
+
+        <button class="secondary"
+                onclick="stopCamera()">
+
+          Stop
+
+        </button>
+
+
+        <button class="shutter"
+                onclick="takePhoto()">
+
+          ●
+
+        </button>
+
+
+        <span id="photoCount">
+          0 / 2
+        </span>
+
+      </div>
+
+
+      <div id="photoPreview"></div>
+
+
+      <button id="editButton"
+              class="primary"
+              onclick="openEditor()"
+              disabled>
+
+        Edit my strip →
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- EDITOR -->
+
+<section id="editor" class="page">
+
+  <div class="topbar">
+
+    <button class="icon"
+            onclick="showPage('photobooth')">
+
+      ←
+
+    </button>
+
+    <div class="brand">
+      design your strip ✦
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="content editor">
+
+    <div class="strip-editor-area">
+
+      <div id="photoStrip"
+           class="photo-strip">
+
+        <div id="stripPhotos"></div>
+
+        <div class="strip-caption">
+          <span id="captionNames">
+            You ♡ Them
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="tools">
+
+      <div class="tool-section">
+
+        <b>
+          Stickers ✨
+        </b>
+
+        <div class="stickers">
+
+          <button class="sticker" onclick="addSticker('🎀')">🎀</button>
+          <button class="sticker" onclick="addSticker('♡')">♡</button>
+          <button class="sticker" onclick="addSticker('♥')">♥</button>
+          <button class="sticker" onclick="addSticker('✦')">✦</button>
+          <button class="sticker" onclick="addSticker('⭐')">⭐</button>
+          <button class="sticker" onclick="addSticker('🌷')">🌷</button>
+          <button class="sticker" onclick="addSticker('🌸')">🌸</button>
+          <button class="sticker" onclick="addSticker('🍓')">🍓</button>
+          <button class="sticker" onclick="addSticker('🧸')">🧸</button>
+          <button class="sticker" onclick="addSticker('☁️')">☁️</button>
+          <button class="sticker" onclick="addSticker('💌')">💌</button>
+          <button class="sticker" onclick="addSticker('🎧')">🎧</button>
+          <button class="sticker" onclick="addSticker('🥀')">🥀</button>
+          <button class="sticker" onclick="addSticker('🦋')">🦋</button>
+
+        </div>
+
+      </div>
+
+
+      <div class="tool-section">
+
+        <b>
+          Add your own text 💬
+        </b>
+
+        <input id="customText"
+               placeholder="our little moment ♡">
+
+        <button class="secondary"
+                onclick="addText()"
+                style="margin-top:8px">
+
+          Add text
+
+        </button>
+
+      </div>
+
+
+      <div class="tool-section">
+
+        <b>
+          Background 🎨
+        </b>
+
+        <div class="stickers">
+
+          <button class="sticker"
+                  onclick="changeBackground('#fff0f5')">
+            🎀
+          </button>
+
+          <button class="sticker"
+                  onclick="changeBackground('#e9c8a8')">
+            📻
+          </button>
+
+          <button class="sticker"
+                  onclick="changeBackground('#e9e5f5')">
+            💿
+          </button>
+
+          <button class="sticker"
+                  onclick="changeBackground('#ffe8e3')">
+            🍓
+          </button>
+
+          <button class="sticker"
+                  onclick="changeBackground('#f6ecdf')">
+            💌
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button class="primary"
+              onclick="saveMemory()">
+
+        ♡ Save to Our Memories
+
+      </button>
+
+
+      <button class="secondary"
+              onclick="downloadPhoto()"
+              style="width:100%;margin-top:10px">
+
+        Download strip
+
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- LETTERS -->
+
+<section id="letters" class="page">
+
+  <div class="topbar">
+
+    <button class="icon"
+            onclick="showPage('home')">
+
+      ←
+
+    </button>
+
+    <div class="brand">
+      love letters 💌
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="simple">
+
+    <div class="small-title">
+      for whenever you miss them
+    </div>
+
+    <h2>
+      Leave a little letter 💌
+    </h2>
+
+    <textarea id="letter"
+              placeholder="Write something for them..."></textarea>
+
+    <button class="primary"
+            onclick="saveLetter()">
+
+      Seal the letter ♡
+
+    </button>
+
+    <div id="lettersList"></div>
+
+  </div>
+
+</section>
+
+
+<!-- MEMORIES -->
+
+<section id="memories" class="page">
+
+  <div class="topbar">
+
+    <button class="icon"
+            onclick="showPage('home')">
+
+      ←
+
+    </button>
+
+    <div class="brand">
+      our memories 🖼️
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="simple">
+
+    <div class="small-title">
+      little moments, kept close
+    </div>
+
+    <h2>
+      Our scrapbook
+    </h2>
+
+    <div id="memoryGrid"
+         class="memory-grid">
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- DISTANCE -->
+
+<section id="distance" class="page">
+
+  <div class="topbar">
+
+    <button class="icon"
+            onclick="showPage('home')">
+
+      ←
+
+    </button>
+
+    <div class="brand">
+      our distance 🌎
+    </div>
+
+    <div></div>
+
+  </div>
+
+
+  <div class="simple"
+       style="text-align:center">
+
+    <div style="font-size:70px">
+      🌎
+    </div>
+
+    <div class="small-title">
+      apart, but connected
+    </div>
+
+    <h2>
+      Different places.<br>
+      <span>One little world.</span>
+    </h2>
+
+    <p class="description">
+      Your real-time distance counter can be connected
+      once we add the backend.
+    </p>
+
+    <h2>
+      <span id="distanceYou">You</span>
+      ♡
+      <span id="distanceThem">Them</span>
+    </h2>
+
+  </div>
+
+</section>
+
+
+<script>
+
+let yourName = "";
+let partnerName = "";
+let roomCode = "";
+
+let selectedStrip = 2;
+let selectedTemplate = "coquette";
+
+let photos = [];
+
+let stream = null;
+
+
+/* PAGE */
+
+function showPage(id) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => page.classList.remove("active"));
+
+  document
+    .getElementById(id)
+    .classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* ENTER */
+
+function enterWorld() {
+
+  yourName =
+    document.getElementById("yourName").value.trim()
+    || "You";
+
+  partnerName =
+    document.getElementById("partnerName").value.trim()
+    || "Your person";
+
+  roomCode =
+    document.getElementById("roomCode").value.trim().toUpperCase()
+    || "OURWORLD";
+
+  document.getElementById("homeYou").textContent = yourName;
+
+  document.getElementById("homePartner").textContent =
+    partnerName;
+
+  document.getElementById("homeRoom").textContent =
+    roomCode;
+
+  document.getElementById("cameraPartner").textContent =
+    partnerName;
+
+  document.getElementById("captionNames").textContent =
+    yourName + " ♡ " + partnerName;
+
+  document.getElementById("distanceYou").textContent =
+    yourName;
+
+  document.getElementById("distanceThem").textContent =
+    partnerName;
+
+  localStorage.setItem(
+    "ourWorldProfile",
+    JSON.stringify({
+      yourName,
+      partnerName,
+      roomCode
+    })
+  );
+
+  showPage("home");
+
+}
+
+
+/* PHOTOBOOTH */
+
+function openPhotobooth() {
+
+  photos = [];
+
+  document.getElementById("photoCount").textContent =
+    "0 / " + selectedStrip;
+
+  document.getElementById("editButton").disabled = true;
+
+  document.getElementById("photoPreview").innerHTML = "";
+
+  showPage("photobooth");
+
+  nextStep(1);
+
+}
+
+
+function selectStrip(number, button) {
+
+  selectedStrip = number;
+
+  document
+    .querySelectorAll(".strip")
+    .forEach(x => x.classList.remove("selected"));
+
+  button.classList.add("selected");
+
+  document.getElementById("photoCount").textContent =
+    "0 / " + selectedStrip;
+
+}
+
+
+function selectTemplate(template, button) {
+
+  selectedTemplate = template;
+
+  document
+    .querySelectorAll(".template")
+    .forEach(x => x.classList.remove("selected"));
+
+  button.classList.add("selected");
+
+}
+
+
+function nextStep(number) {
+
+  document
+    .querySelectorAll(".step")
+    .forEach(x => x.classList.remove("active"));
+
+  document
+    .getElementById("step" + number)
+    .classList.add("active");
+
+  document.getElementById("stepNumber").textContent =
+    number + " / 3";
+
+}
+
+
+/* CAMERA */
+
+async function startCamera() {
+
+  try {
+
+    stream =
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:false
+      });
+
+    document.getElementById("cameraVideo").srcObject =
+      stream;
+
+    document.getElementById("cameraMessage").style.display =
+      "none";
+
+  }
+
+  catch(error) {
+
+    alert(
+      "Camera access was blocked. Please allow camera permission and try again."
+    );
+
+  }
+
+}
+
+
+function stopCamera() {
+
+  if(stream) {
+
+    stream
+      .getTracks()
+      .forEach(track => track.stop());
+
+    stream = null;
+
+  }
+
+  document.getElementById("cameraVideo").srcObject =
+    null;
+
+  document.getElementById("cameraMessage").style.display =
+    "flex";
+
+}
+
+
+/* TAKE PHOTO */
+
+function takePhoto() {
+
+  if(!stream) {
+
+    alert("Start your camera first.");
+
+    return;
+
+  }
+
+  if(photos.length >= selectedStrip) {
+
+    alert("Your strip is already full!");
+
+    return;
+
+  }
+
+
+  let number = 3;
+
+  const countdown =
+    document.createElement("div");
+
+  countdown.style.position = "fixed";
+  countdown.style.inset = "0";
+  countdown.style.display = "grid";
+  countdown.style.placeItems = "center";
+  countdown.style.fontSize = "100px";
+  countdown.style.color = "white";
+  countdown.style.fontWeight = "bold";
+  countdown.style.zIndex = "999";
+  countdown.style.textShadow = "0 5px 20px #000";
+
+  document.body.appendChild(countdown);
+
+
+  countdown.textContent = number;
+
+
+  const timer =
+    setInterval(() => {
+
+      number--;
+
+      if(number > 0) {
+
+        countdown.textContent = number;
+
+      }
+
+      else {
+
+        clearInterval(timer);
+
+        countdown.remove();
+
+        capturePhoto();
+
+      }
+
+    },700);
+
+}
+
+
+function capturePhoto() {
+
+  const video =
+    document.getElementById("cameraVideo");
+
+  const canvas =
+    document.createElement("canvas");
+
+  canvas.width =
+    video.videoWidth || 640;
+
+  canvas.height =
+    video.videoHeight || 480;
+
+  const context =
+    canvas.getContext("2d");
+
+  context.drawImage(
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const image =
+    canvas.toDataURL("image/jpeg",.9);
+
+  photos.push(image);
+
+  document.getElementById("photoCount").textContent =
+    photos.length + " / " + selectedStrip;
+
+
+  const preview =
+    document.createElement("img");
+
+  preview.src = image;
+
+  preview.style.width = "70px";
+  preview.style.height = "80px";
+  preview.style.objectFit = "cover";
+  preview.style.borderRadius = "8px";
+  preview.style.marginRight = "6px";
+
+  document
+    .getElementById("photoPreview")
+    .appendChild(preview);
+
+
+  if(photos.length >= selectedStrip) {
+
+    document.getElementById("editButton").disabled =
+      false;
+
+  }
+
+}
+
+
+/* EDITOR */
+
+function openEditor() {
+
+  if(photos.length === 0) {
+
+    alert("Take some photos first!");
+
+    return;
+
+  }
+
+  buildStrip();
+
+  showPage("editor");
+
+}
+
+
+function buildStrip() {
+
+  const strip =
+    document.getElementById("photoStrip");
+
+  const photosContainer =
+    document.getElementById("stripPhotos");
+
+  photosContainer.innerHTML = "";
+
+
+  const colors = {
+
+    coquette:"#fff0f5",
+    retro:"#e9c8a8",
+    y2k:"#e9e5f5",
+    strawberry:"#ffe8e3",
+    letter:"#f6ecdf",
+    vintage:"#eee2d8",
+    kawaii:"#eaf2fa",
+    dreamy:"#e9eafa",
+    indie:"#ece5d9",
+    dark:"#e4dadd"
+
+  };
+
+
+  strip.style.background =
+    colors[selectedTemplate]
+    || "#fff0f5";
+
+
+  photos.forEach(photo => {
+
+    const image =
+      document.createElement("img");
+
+    image.src = photo;
+
+    photosContainer.appendChild(image);
+
+  });
+
+}
+
+
+/* STICKERS */
+
+function addSticker(symbol) {
+
+  const sticker =
+    document.createElement("div");
+
+  sticker.className =
+    "decor";
+
+  sticker.textContent =
+    symbol;
+
+  sticker.style.left =
+    Math.random()*70 + "%";
+
+  sticker.style.top =
+    Math.random()*80 + "%";
+
+
+  document
+    .getElementById("photoStrip")
+    .appendChild(sticker);
+
+
+  makeDraggable(sticker);
+
+}
+
+
+/* TEXT */
+
+function addText() {
+
+  const text =
+    document
+      .getElementById("customText")
+      .value
+      .trim();
+
+  if(!text) {
+
+    return;
+
+  }
+
+
+  const element =
+    document.createElement("div");
+
+  element.className =
+    "decor decor-text";
+
+  element.textContent =
+    text;
+
+  element.style.left =
+    "20%";
+
+  element.style.top =
+    "50%";
+
+
+  document
+    .getElementById("photoStrip")
+    .appendChild(element);
+
+
+  makeDraggable(element);
+
+  document.getElementById("customText").value =
+    "";
+
+}
+
+
+/* DRAG */
+
+function makeDraggable(element) {
+
+  let startX;
+  let startY;
+
+  let originalLeft;
+  let originalTop;
+
+
+  function start(event) {
+
+    event.preventDefault();
+
+    const point =
+      event.touches
+      ? event.touches[0]
+      : event;
+
+
+    startX =
+      point.clientX;
+
+    startY =
+      point.clientY;
+
+
+    originalLeft =
+      parseFloat(element.style.left)
+      || 0;
+
+    originalTop =
+      parseFloat(element.style.top)
+      || 0;
+
+
+    document.addEventListener(
+      "mousemove",
+      move
+    );
+
+    document.addEventListener(
+      "mouseup",
+      end
+    );
+
+    document.addEventListener(
+      "touchmove",
+      move,
+      {passive:false}
+    );
+
+    document.addEventListener(
+      "touchend",
+      end
+    );
+
+  }
+
+
+  function move(event) {
+
+    event.preventDefault();
+
+    const point =
+      event.touches
+      ? event.touches[0]
+      : event;
+
+
+    const strip =
+      document
+        .getElementById("photoStrip")
+        .getBoundingClientRect();
+
+
+    const x =
+      (point.clientX-startX)
+      / strip.width
+      * 100;
+
+
+    const y =
+      (point.clientY-startY)
+      / strip.height
+      * 100;
+
+
+    element.style.left =
+      Math.max(
+        0,
+        Math.min(
+          90,
+          originalLeft+x
+        )
+      ) + "%";
+
+
+    element.style.top =
+      Math.max(
+        0,
+        Math.min(
+          90,
+          originalTop+y
+        )
+      ) + "%";
+
+  }
+
+
+  function end() {
+
+    document.removeEventListener(
+      "mousemove",
+      move
+    );
+
+    document.removeEventListener(
+      "mouseup",
+      end
+    );
+
+    document.removeEventListener(
+      "touchmove",
+      move
+    );
+
+    document.removeEventListener(
+      "touchend",
+      end
+    );
+
+  }
+
+
+  element.addEventListener(
+    "mousedown",
+    start
+  );
+
+  element.addEventListener(
+    "touchstart",
+    start,
+    {passive:false}
+  );
+
+}
+
+
+/* BACKGROUND */
+
+function changeBackground(color) {
+
+  document
+    .getElementById("photoStrip")
+    .style.background =
+    color;
+
+}
+
+
+/* SAVE MEMORY */
+
+function saveMemory() {
+
+  if(photos.length === 0) {
+
+    return;
+
+  }
+
+
+  const memories =
+    JSON.parse(
+      localStorage.getItem("ourWorldMemories")
+      || "[]"
+    );
+
+
+  memories.unshift({
+
+    image:photos[0],
+
+    title:
+      yourName +
+      " ♡ " +
+      partnerName,
+
+    date:
+      new Date().toLocaleDateString()
+
+  });
+
+
+  localStorage.setItem(
+    "ourWorldMemories",
+    JSON.stringify(memories)
+  );
+
+
+  alert(
+    "Saved to Our Memories! ♡"
+  );
+
+}
+
+
+/* DOWNLOAD */
+
+function downloadPhoto() {
+
+  if(photos.length === 0) {
+
+    return;
+
+  }
+
+
+  const link =
+    document.createElement("a");
+
+  link.href =
+    photos[0];
+
+  link.download =
+    "our-little-world-photo.jpg";
+
+  link.click();
+
+}
+
+
+/* LETTERS */
+
+function saveLetter() {
+
+  const text =
+    document
+      .getElementById("letter")
+      .value
+      .trim();
+
+
+  if(!text) {
+
+    alert("Write a little letter first 💌");
+
+    return;
+
+  }
+
+
+  const letters =
+    JSON.parse(
+      localStorage.getItem("ourWorldLetters")
+      || "[]"
+    );
+
+
+  letters.unshift({
+
+    text:text,
+
+    date:
+      new Date().toLocaleString()
+
+  });
+
+
+  localStorage.setItem(
+    "ourWorldLetters",
+    JSON.stringify(letters)
+  );
+
+
+  document.getElementById("letter").value =
+    "";
+
+  loadLetters();
+
+}
+
+
+function loadLetters() {
+
+  const letters =
+    JSON.parse(
+      localStorage.getItem("ourWorldLetters")
+      || "[]"
+    );
+
+
+  const list =
+    document.getElementById("lettersList");
+
+
+  list.innerHTML =
+    "";
+
+
+  if(letters.length === 0) {
+
+    list.innerHTML =
+      '<div class="empty">No letters yet. Write the first one 💌</div>';
+
+    return;
+
+  }
+
+
+  letters.forEach(letter => {
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "letter";
+
+    div.innerHTML =
+      letter.text +
+      "<br><small>" +
+      letter.date +
+      "</small>";
+
+    list.appendChild(div);
+
+  });
+
+}
+
+
+/* MEMORIES */
+
+function loadMemories() {
+
+  const memories =
+    JSON.parse(
+      localStorage.getItem("ourWorldMemories")
+      || "[]"
+    );
+
+
+  const grid =
+    document.getElementById("memoryGrid");
+
+
+  grid.innerHTML =
+    "";
+
+
+  if(memories.length === 0) {
+
+    grid.innerHTML =
+      '<div class="empty">Your scrapbook is waiting for its first moment. 📸</div>';
+
+    return;
+
+  }
+
+
+  memories.forEach(memory => {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "memory";
+
+    card.innerHTML =
+      `
+        <img src="${memory.image}">
+        <p>
+          ${memory.title}<br>
+          <small>${memory.date}</small>
+        </p>
+      `;
+
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+/* LOAD SAVED PROFILE */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    const profile =
+      JSON.parse(
+        localStorage.getItem("ourWorldProfile")
+        || "null"
+      );
+
+
+    if(profile) {
+
+      document.getElementById("yourName").value =
+        profile.yourName || "";
+
+      document.getElementById("partnerName").value =
+        profile.partnerName || "";
+
+      document.getElementById("roomCode").value =
+        profile.roomCode || "";
+
+    }
+
+
+    loadLetters();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
