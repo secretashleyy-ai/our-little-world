@@ -585,30 +585,32 @@ h2 span{
 .final-strip{
   position:relative;
   width:310px;
-  padding:13px;
+  aspect-ratio:3/5;
   box-shadow:0 20px 50px #51363f35;
   overflow:hidden;
 }
 
-/*
-  IMPORTANT:
-  Every photo fills its entire 4:5 area.
-  object-fit:cover removes empty/black space.
-*/
+.final-strip .photo-slot{
+  position:absolute;
+  overflow:hidden;
+  z-index:2;
+}
 
-.final-strip img{
+.final-strip .photo-slot img{
   display:block;
   width:100%;
-  height:auto;
-  aspect-ratio:4/5;
+  height:100%;
   object-fit:cover;
   object-position:center;
-  margin:0 0 8px 0;
 }
 
 .final-strip-title{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:3%;
+  z-index:5;
   text-align:center;
-  padding:14px 3px 7px;
   font-size:20px;
   font-weight:bold;
   color:#49363e;
@@ -3129,41 +3131,71 @@ function getDesignName(name){
 
 
 /* =========================================================
-DESIGN PREVIEW
+   DESIGN PREVIEW
 ========================================================= */
 
 function renderDesignPreview(){
 
-  const preview=
-    document.getElementById(
-      "designPreview"
-    );
+  const preview =
+    document.getElementById("designPreview");
 
-  preview.className=
-    "final-strip theme-"+selectedDesign;
+  preview.className =
+    "final-strip theme-" + selectedDesign;
 
-  preview.innerHTML="";
+  preview.innerHTML = "";
 
-  photos.filter(Boolean).forEach(image=>{
+  /*
+    Photo slots.
+    These are percentage positions so the photos
+    stay inside the strip and fill the blank areas.
+  */
 
-    const img=
+  const slots = [
+    { left:13, top:8,  width:74, height:18 },
+    { left:13, top:30, width:74, height:18 },
+    { left:13, top:52, width:74, height:18 }
+  ];
+
+  photos.filter(Boolean).forEach((image, i) => {
+
+    if(!slots[i]) return;
+
+    const slot =
+      document.createElement("div");
+
+    slot.className = "photo-slot";
+
+    slot.style.left =
+      slots[i].left + "%";
+
+    slot.style.top =
+      slots[i].top + "%";
+
+    slot.style.width =
+      slots[i].width 6+ "%";
+
+    slot.style.height =
+      slots[i].height + "%";
+
+    const img =
       document.createElement("img");
 
-    img.src=image;
+    img.src = image;
 
-    preview.appendChild(img);
+    slot.appendChild(img);
+    preview.appendChild(slot);
   });
 
-  const title=
+  const title =
     document.createElement("div");
 
-  title.className=
+  title.className =
     "final-strip-title";
 
-  title.textContent=
-    yourName+
-    " ♡ "+
-    (partnerName||"Them");
+  title.textContent =
+    yourName +
+    " ♡ " +
+    (partnerName || "Them");
 
   preview.appendChild(title);
 }
@@ -3678,49 +3710,25 @@ async function saveStrip(){
 
 
 /* =========================================================
-RENDER FINAL CANVAS
+   RENDER FINAL CANVAS
 ========================================================= */
 
 async function renderFinalCanvas(){
 
-  /*
-    Tall final photobooth strip.
-  */
+  const W = 900;
+  const H = 1500;
 
-  const W=900;
-
-  const PHOTO_W=820;
-
-  const PHOTO_H=
-    PHOTO_W*5/4;
-
-  const TOP=75;
-
-  const GAP=18;
-
-  const CAPTION_H=120;
-
-  const count=
-    photos.length;
-
-  const H=
-    TOP+
-    count*PHOTO_H+
-    (count-1)*GAP+
-    CAPTION_H+
-    45;
-
-  const canvas=
+  const canvas =
     document.createElement("canvas");
 
-  canvas.width=W;
-  canvas.height=H;
+  canvas.width = W;
+  canvas.height = H;
 
-  const ctx=
+  const ctx =
     canvas.getContext("2d");
 
   /*
-    Theme background.
+    Theme background
   */
 
   drawThemeBackground(
@@ -3731,7 +3739,7 @@ async function renderFinalCanvas(){
   );
 
   /*
-    Theme header.
+    Theme header / decorations
   */
 
   drawThemeHeader(
@@ -3741,172 +3749,189 @@ async function renderFinalCanvas(){
   );
 
   /*
-    Photos.
+    PHOTO SLOTS
+    These correspond to the blank areas
+    in the template.
   */
 
-  for(
-    let i=0;
-    i<photos.length;
-    i++
-  ){
+  const slots = [
+    {
+      left: 0.13,
+      top: 0.08,
+      width: 0.74,
+      height: 0.18
+    },
+    {
+      left: 0.13,
+      top: 0.30,
+      width: 0.74,
+      height: 0.18
+    },
+    {
+      left: 0.13,
+      top: 0.52,
+      width: 0.74,
+      height: 0.18
+    }
+  ];
 
-    const image=
-      await loadImage(
-        photos[i]
-      );
+  for(let i = 0; i < photos.length; i++){
 
-    const x=
-      (W-PHOTO_W)/2;
+    if(!photos[i]) continue;
+    if(!slots[i]) continue;
 
-    const y=
-      TOP+
-      i*(PHOTO_H+GAP);
+    const image =
+      await loadImage(photos[i]);
+
+    const slot = slots[i];
+
+    const x =
+      W * slot.left;
+
+    const y =
+      H * slot.top;
+
+    const w =
+      W * slot.width;
+
+    const h =
+      H * slot.height;
 
     drawPhotoToCanvas(
       ctx,
       image,
       x,
       y,
-      PHOTO_W,
-      PHOTO_H,
+      w,
+      h,
       selectedDesign
     );
   }
 
   /*
-    Draw stickers and text.
+    Draw stickers and text
   */
 
-  const strip=
-    document.getElementById(
-      "photoStrip"
-    );
+  const strip =
+    document.getElementById("photoStrip");
 
-  const stripRect=
-    strip.getBoundingClientRect();
+  if(strip){
 
-  strip.querySelectorAll(".decor")
-    .forEach(element=>{
+    const stripRect =
+      strip.getBoundingClientRect();
 
-      const rect=
-        element.getBoundingClientRect();
+    strip.querySelectorAll(".decor")
+      .forEach(element=>{
 
-      const centerX=
-        rect.left+
-        rect.width/2;
+        const rect =
+          element.getBoundingClientRect();
 
-      const centerY=
-        rect.top+
-        rect.height/2;
+        const centerX =
+          rect.left +
+          rect.width / 2;
 
-      const percentX=
-        (centerX-stripRect.left)/
-        stripRect.width;
+        const centerY =
+          rect.top +
+          rect.height / 2;
 
-      const percentY=
-        (centerY-stripRect.top)/
-        stripRect.height;
+        const percentX =
+          (centerX - stripRect.left) /
+          stripRect.width;
 
-      const canvasX=
-        percentX*W;
+        const percentY =
+          (centerY - stripRect.top) /
+          stripRect.height;
 
-      const canvasY=
-        percentY*H;
+        const canvasX =
+          percentX * W;
 
-      ctx.save();
+        const canvasY =
+          percentY * H;
 
-      ctx.textAlign="center";
-      ctx.textBaseline="middle";
+        ctx.save();
 
-      let fontSize=38;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
 
-      if(
-        element.classList.contains(
-          "text-decor"
-        )
-      ){
+        let fontSize = 38;
 
-        fontSize=25;
-      }
+        if(
+          element.classList.contains("text-decor")
+        ){
+          fontSize = 25;
+        }
 
-      ctx.font=
-        fontSize+
-        "px Georgia";
+        ctx.font =
+          fontSize + "px Georgia";
 
-      if(
-        element.classList.contains(
-          "text-decor"
-        )
-      ){
+        if(
+          element.classList.contains("text-decor")
+        ){
 
-        const padding=9;
+          const padding = 9;
 
-        const metrics=
-          ctx.measureText(
-            element.textContent
+          const metrics =
+            ctx.measureText(
+              element.textContent
+            );
+
+          const bw =
+            metrics.width +
+            padding * 2;
+
+          const bh =
+            fontSize +
+            padding;
+
+          ctx.fillStyle =
+            "rgba(255,255,255,.88)";
+
+          roundRect(
+            ctx,
+            canvasX - bw / 2,
+            canvasY - bh / 2,
+            bw,
+            bh,
+            10
           );
 
-        const bw=
-          metrics.width+
-          padding*2;
+          ctx.fill();
+        }
 
-        const bh=
-          fontSize+
-          padding;
+        ctx.fillStyle =
+          "#49363e";
 
-        ctx.fillStyle=
-          "rgba(255,255,255,.88)";
-
-        roundRect(
-          ctx,
-          canvasX-bw/2,
-          canvasY-bh/2,
-          bw,
-          bh,
-          10
+        ctx.fillText(
+          element.textContent,
+          canvasX,
+          canvasY
         );
 
-        ctx.fill();
-      }
-
-      ctx.fillStyle=
-        "#49363e";
-
-      ctx.fillText(
-        element.textContent,
-        canvasX,
-        canvasY
-      );
-
-      ctx.restore();
-    });
+        ctx.restore();
+      });
+  }
 
   /*
-    ONE NAME LINE ONLY.
+    ONE NAME LINE
   */
-
-  const captionY=
-    H-55;
 
   ctx.save();
 
-  ctx.textAlign="center";
-  ctx.textBaseline="middle";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 
-  ctx.fillStyle=
-    getThemeTextColor(
-      selectedDesign
-    );
+  ctx.fillStyle =
+    getThemeTextColor(selectedDesign);
 
-  ctx.font=
+  ctx.font =
     "bold 42px Georgia";
 
   ctx.fillText(
-    yourName+
-    " ♡ "+
-    (partnerName||"Them"),
-    W/2,
-    captionY
+    yourName +
+    " ♡ " +
+    (partnerName || "Them"),
+    W / 2,
+    H - 55
   );
 
   ctx.restore();
@@ -3919,28 +3944,7 @@ async function renderFinalCanvas(){
       },
       "image/png"
     );
-  });
-}
 
-
-/* =========================================================
-LOAD IMAGE
-========================================================= */
-
-function loadImage(src){
-
-  return new Promise((resolve,reject)=>{
-
-    const image=
-      new Image();
-
-    image.onload=()=>{
-      resolve(image);
-    };
-
-    image.onerror=reject;
-
-    image.src=src;
   });
 }
 
