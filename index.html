@@ -1,30 +1,42 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Our Little Photobooth ♡</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<title>Our Little Photobooth ♡</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
 *{box-sizing:border-box}
 
 :root{
-  --pink:#d97899;
-  --dark:#49363e;
+  --pink:#d87998;
+  --rose:#b85f7d;
+  --dark:#4b3940;
   --cream:#fff8f5;
-  --line:#ead9df;
+  --line:#ead7df;
 }
 
 body{
   margin:0;
+  color:var(--dark);
   font-family:Georgia,serif;
   background:
-    radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
-    radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
+    radial-gradient(circle at 10% 15%,#f2cdd9 0 3px,transparent 4px),
+    radial-gradient(circle at 90% 30%,#e8d1db 0 3px,transparent 4px),
     #fff8fa;
   background-size:90px 90px;
-  color:var(--dark);
 }
 
-button,input{font:inherit}
-button{cursor:pointer}
+button,input{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
 
 .page{
   display:none;
@@ -32,7 +44,9 @@ button{cursor:pointer}
   padding:12px;
 }
 
-.page.active{display:block}
+.page.active{
+  display:block;
+}
 
 .card{
   width:min(600px,100%);
@@ -46,7 +60,7 @@ button{cursor:pointer}
 }
 
 .logo{
-  font-size:60px;
+  font-size:62px;
   color:var(--pink);
 }
 
@@ -59,12 +73,14 @@ button{cursor:pointer}
 }
 
 h1{
-  font-size:58px;
+  font-size:55px;
   line-height:.9;
   margin:12px 0 18px;
 }
 
-h1 span,h2 span{color:var(--pink)}
+h1 span,h2 span{
+  color:var(--pink);
+}
 
 .desc,.muted{
   font-family:Arial,sans-serif;
@@ -132,7 +148,7 @@ h1 span,h2 span{color:var(--pink)}
 }
 
 .content{
-  max-width:1150px;
+  max-width:1100px;
   margin:20px auto;
   padding:28px;
   background:#fffdfd;
@@ -141,37 +157,17 @@ h1 span,h2 span{color:var(--pink)}
   box-shadow:0 20px 60px #533b4614;
 }
 
-.step{display:none}
-.step.active{display:block}
+.step{
+  display:none;
+}
+
+.step.active{
+  display:block;
+}
 
 .step h2{
   font-size:40px;
   margin:8px 0;
-}
-
-.strip-options{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin:28px 0;
-}
-
-.strip-option{
-  padding:22px 12px;
-  border:2px solid var(--line);
-  border-radius:22px;
-  background:white;
-}
-
-.strip-option.selected{
-  border-color:var(--pink);
-  background:#fff0f5;
-}
-
-.strip-option strong{
-  display:block;
-  font-size:42px;
-  color:var(--pink);
 }
 
 /* CAMERA */
@@ -188,14 +184,13 @@ h1 span,h2 span{color:var(--pink)}
 .video-box{
   position:relative;
   background:#30262b;
-  min-height:320px;
   border-radius:20px;
   overflow:hidden;
 }
 
 .video-box video{
   width:100%;
-  height:320px;
+  aspect-ratio:4/5;
   object-fit:cover;
   display:block;
   background:#30262b;
@@ -212,6 +207,7 @@ h1 span,h2 span{color:var(--pink)}
   color:white;
   font-family:Arial,sans-serif;
   font-size:11px;
+  z-index:5;
 }
 
 .waiting{
@@ -226,10 +222,18 @@ h1 span,h2 span{color:var(--pink)}
   font-family:Arial,sans-serif;
   text-align:center;
   padding:20px;
+  z-index:4;
 }
 
 .waiting .heart{
   font-size:55px;
+}
+
+.camera-status{
+  text-align:center;
+  margin:12px 0;
+  font-family:Arial,sans-serif;
+  font-size:12px;
 }
 
 .camera-buttons{
@@ -250,11 +254,13 @@ h1 span,h2 span{color:var(--pink)}
   font-size:22px;
 }
 
-#photoPreview{text-align:center}
+#photoPreview{
+  text-align:center;
+}
 
 #photoPreview img{
-  width:80px;
-  height:100px;
+  width:65px;
+  aspect-ratio:4/5;
   object-fit:cover;
   margin:5px;
   border-radius:8px;
@@ -262,35 +268,11 @@ h1 span,h2 span{color:var(--pink)}
 
 /* DESIGN PICKER */
 
-.design-toolbar{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:12px 0;
-  margin-bottom:15px;
-}
-
-.category-btn{
-  white-space:nowrap;
-  border:1px solid #e6d5dc;
-  background:white;
-  border-radius:30px;
-  padding:9px 15px;
-  font-size:12px;
-}
-
-.category-btn.active{
-  background:#f5d9e3;
-  border-color:#ce7e99;
-}
-
 .design-grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:14px;
-  max-height:650px;
-  overflow-y:auto;
-  padding:5px;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin:25px 0;
 }
 
 .design-card{
@@ -309,467 +291,383 @@ h1 span,h2 span{color:var(--pink)}
 }
 
 .design-preview{
-  position:relative;
-  height:270px;
+  aspect-ratio:4/5;
   display:flex;
   flex-direction:column;
-  gap:5px;
-  padding:8px;
+  gap:3px;
+  padding:7px;
   overflow:hidden;
+  position:relative;
 }
 
-.design-preview .mini-photo{
+.design-preview img{
   width:100%;
-  aspect-ratio:4/5;
+  flex:1;
   min-height:0;
   object-fit:cover;
   display:block;
-  flex:1;
 }
 
 .design-name{
-  font-size:11px;
+  font-size:12px;
   font-weight:bold;
   padding:8px 2px 4px;
-  text-align:center;
 }
 
-/* =========================
-   25 PINTEREST TEMPLATES
-========================= */
+/* PINTEREST STYLE DESIGNS */
 
-.tpl-coquette{
-  background:#fce6ef;
-  border:5px solid #d38aa2;
-  box-shadow:inset 0 0 0 5px #fff7fa;
+.theme-coquette{
+  background:#f8dce7;
+  border:8px solid #fff;
+  box-shadow:inset 0 0 0 2px #c97998;
 }
 
-.tpl-coquette:after{
-  content:"୨୧  love notes  ୨୧";
+.theme-coquette:after{
+  content:"♡ ୨୧ ♡";
   position:absolute;
-  bottom:7px;
+  bottom:3px;
+  left:0;
+  right:0;
+  text-align:center;
+  color:#b85d7e;
+  font-size:15px;
+}
+
+.theme-coquette img{
+  border:2px solid #d98aa6;
+}
+
+.theme-pinkfilm{
+  background:#f3e2d9;
+  border:9px solid #f8efe8;
+  box-shadow:inset 0 0 0 3px #a76c59;
+}
+
+.theme-pinkfilm:before{
+  content:"LOVE IS A FILM";
+  position:absolute;
+  top:3px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:7px;
+  letter-spacing:2px;
+  color:#805648;
+  z-index:5;
+}
+
+.theme-pinkfilm img{
+  border:1px solid #896052;
+  filter:sepia(.2) contrast(1.05);
+}
+
+.theme-vintage{
+  background:#d4b69b;
+  border:9px solid #735444;
+  box-shadow:inset 0 0 0 3px #e9d5bd;
+}
+
+.theme-vintage:after{
+  content:"♡ MEMORIES ♡";
+  position:absolute;
+  bottom:4px;
   left:0;
   right:0;
   text-align:center;
   font-size:10px;
-  color:#9c526e;
+  letter-spacing:2px;
+  color:#684938;
 }
 
-.tpl-ballet{
-  background:#eee4eb;
-  border:5px double #a67f99;
+.theme-vintage img{
+  border:2px solid #6e4c3c;
+  filter:sepia(.55) saturate(.75);
 }
 
-.tpl-ballet:after{
-  content:"♡ danse avec moi ♡";
+.theme-scrapbook{
+  background:#ead9bf;
+  border:8px dashed #a47758;
+}
+
+.theme-scrapbook:after{
+  content:"little moments";
   position:absolute;
-  bottom:6px;
-  width:100%;
+  bottom:4px;
+  left:0;
+  right:0;
   text-align:center;
-  font-style:italic;
-  color:#806477;
+  font-size:12px;
+  transform:rotate(-2deg);
+  color:#805d4b;
+}
+
+.theme-scrapbook img{
+  border:5px solid white;
+  box-shadow:2px 3px 0 #96745c;
+}
+
+.theme-y2k{
+  background:linear-gradient(135deg,#a7dced,#e8c9ec,#f4afd1);
+  border:7px solid white;
+  box-shadow:0 0 12px #b5e7ff;
+}
+
+.theme-y2k:after{
+  content:"♡ BABY ♡";
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
+  text-align:center;
+  color:white;
+  font-family:Arial,sans-serif;
+  font-weight:bold;
+  letter-spacing:2px;
+  text-shadow:1px 1px 3px #6f6290;
+}
+
+.theme-y2k img{
+  border:2px solid white;
+  box-shadow:0 0 7px #fff;
+}
+
+.theme-strawberry{
+  background:#fff0e8;
+  border:7px solid #d95768;
+}
+
+.theme-strawberry:after{
+  content:"🍓 strawberry days 🍓";
+  position:absolute;
+  bottom:3px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:9px;
+  color:#c34f5d;
+}
+
+.theme-strawberry img{
+  border:2px solid #e36573;
+}
+
+.theme-lace{
+  background:#eadbe5;
+  border:8px double #9c718e;
+}
+
+.theme-lace:after{
+  content:"♡";
+  position:absolute;
+  bottom:1px;
+  left:0;
+  right:0;
+  text-align:center;
+  color:#9c718e;
+  font-size:17px;
+}
+
+.theme-lace img{
+  border:3px solid white;
+}
+
+.theme-postcard{
+  background:#e2c6a9;
+  border:9px solid #79523e;
+}
+
+.theme-postcard:before{
+  content:"WISH YOU WERE HERE";
+  position:absolute;
+  top:3px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-family:Arial,sans-serif;
+  font-size:7px;
+  letter-spacing:1px;
+  color:#704b38;
+  z-index:5;
+}
+
+.theme-postcard img{
+  border:2px solid #704b39;
+}
+
+.theme-floral{
+  background:#f4dfdc;
+  border:8px solid #c78998;
+}
+
+.theme-floral:after{
+  content:"✿  with love  ✿";
+  position:absolute;
+  bottom:3px;
+  left:0;
+  right:0;
+  text-align:center;
+  color:#a36a79;
+  font-size:11px;
+}
+
+.theme-floral img{
+  border:2px solid #c78998;
+}
+
+.theme-dreamy{
+  background:linear-gradient(#c5d0e9,#ead8ef);
+  border:7px solid white;
+}
+
+.theme-dreamy:after{
+  content:"☁︎ dream together ☁︎";
+  position:absolute;
+  bottom:3px;
+  left:0;
+  right:0;
+  text-align:center;
+  color:white;
+  text-shadow:0 1px 4px #8c83a0;
   font-size:10px;
 }
 
-.tpl-loveletter{
-  background:#f3e5d4;
-  border:8px solid #b88467;
-}
-
-.tpl-loveletter:before{
-  content:"LOVE LETTER";
-  position:absolute;
-  top:8px;
-  left:10px;
-  font-size:8px;
-  letter-spacing:2px;
-  color:#704b3b;
-}
-
-.tpl-film{
-  background:#222;
-  border:8px solid #111;
-  padding:14px;
-}
-
-.tpl-film .mini-photo{
-  border:2px solid #ddd;
-}
-
-.tpl-film:after{
-  content:"KODAK • 1997 • LOVE";
-  color:white;
-  font-family:monospace;
-  font-size:7px;
-  text-align:center;
-  padding-top:4px;
-}
-
-.tpl-90s{
-  background:#d6c1a8;
-  border:7px solid #704d3c;
-}
-
-.tpl-90s .mini-photo{
-  filter:sepia(.35) contrast(1.12);
-  border:3px solid #f0d8bd;
-}
-
-.tpl-editorial{
-  background:#eee9df;
-  border:1px solid #222;
-  padding:12px;
-}
-
-.tpl-editorial:before{
-  content:"US TWO";
-  font-family:Arial,sans-serif;
-  font-weight:bold;
-  font-size:17px;
-  letter-spacing:5px;
-  text-align:center;
-  padding-bottom:8px;
-}
-
-.tpl-editorial:after{
-  content:"a little archive of us";
-  font-family:Arial,sans-serif;
-  font-size:7px;
-  text-align:center;
-  padding-top:5px;
-}
-
-.tpl-y2k{
-  background:linear-gradient(135deg,#a8ddf4,#e0bff0,#f4b8d8);
-  border:5px solid white;
-  box-shadow:0 0 15px #b8d9ff;
-}
-
-.tpl-y2k .mini-photo{
+.theme-dreamy img{
+  border-radius:9px;
   border:2px solid white;
 }
 
-.tpl-y2k:after{
-  content:"♡ xoxo ♡";
-  color:white;
-  text-shadow:1px 1px #9d69b2;
-  text-align:center;
-  font-size:12px;
+.theme-ballet{
+  background:#f4dbe7;
+  border:8px solid #fff;
+  box-shadow:inset 0 0 0 2px #c88da5;
 }
 
-.tpl-strawberry{
-  background:#fff0e7;
-  border:7px solid #df6674;
-}
-
-.tpl-strawberry .mini-photo{
-  border:3px solid #df6674;
-}
-
-.tpl-strawberry:after{
-  content:"🍓 strawberry days 🍓";
-  text-align:center;
-  color:#c34e5d;
-  font-size:9px;
-}
-
-.tpl-teddy{
-  background:#ead8bd;
-  border:8px solid #9a704e;
-}
-
-.tpl-teddy:after{
-  content:"🧸 our tiny memories 🧸";
-  text-align:center;
-  color:#76523b;
-  font-size:9px;
-}
-
-.tpl-floral{
-  background:#f7e4df;
-  border:6px solid #c98998;
-}
-
-.tpl-floral:after{
-  content:"✿ bloom with me ✿";
-  text-align:center;
-  color:#a15c70;
-  font-size:10px;
-}
-
-.tpl-lace{
-  background:#eee1ea;
-  border:9px double #a47894;
-}
-
-.tpl-lace:before{
-  content:"♡";
+.theme-ballet:after{
+  content:"୨୧  ballet club  ୨୧";
   position:absolute;
-  top:4px;
-  left:8px;
-  font-size:18px;
-}
-
-.tpl-postcard{
-  background:#e7cfb8;
-  border:8px solid #986d51;
-}
-
-.tpl-postcard:after{
-  content:"POSTCARD FROM OUR HEART";
+  bottom:3px;
+  left:0;
+  right:0;
   text-align:center;
-  font-family:monospace;
-  font-size:7px;
-  color:#704b39;
-}
-
-.tpl-airmail{
-  background:#fffaf0;
-  border:7px solid #d76b71;
-  box-shadow:inset 0 0 0 4px #6b9eb2;
-}
-
-.tpl-airmail:after{
-  content:"♡ WISH YOU WERE HERE ♡";
-  text-align:center;
-  color:#a04f56;
-  font-size:8px;
-  padding-top:4px;
-}
-
-.tpl-scrapbook{
-  background:#dfc8aa;
-  border:8px dashed #927056;
-}
-
-.tpl-scrapbook .mini-photo{
-  border:4px solid white;
-  box-shadow:2px 3px 0 #9c765d;
-}
-
-.tpl-scrapbook:after{
-  content:"little pieces of us";
-  text-align:center;
-  font-family:cursive;
+  color:#a76c84;
   font-size:10px;
-  transform:rotate(-2deg);
 }
 
-.tpl-ticket{
-  background:#f0dfc2;
-  border:4px dashed #936b49;
+.theme-ballet img{
+  border:2px solid #c78ca5;
 }
 
-.tpl-ticket:before{
-  content:"ADMIT TWO";
-  font-family:monospace;
-  font-size:9px;
+.theme-newspaper{
+  background:#eee6d5;
+  border:8px solid #3e3a35;
+}
+
+.theme-newspaper:before{
+  content:"THE LOVE EDITION";
+  position:absolute;
+  top:2px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-family:Georgia,serif;
   font-weight:bold;
-  text-align:center;
-  padding:4px;
-}
-
-.tpl-ticket:after{
-  content:"♡ FOREVER PASS ♡";
-  text-align:center;
-  font-size:8px;
-}
-
-.tpl-cafe{
-  background:#f2e8d9;
-  border:4px solid #876750;
-}
-
-.tpl-cafe:before{
-  content:"CAFÉ • TWO";
-  font-family:monospace;
-  font-size:10px;
-  letter-spacing:3px;
-  text-align:center;
-  padding:5px;
-}
-
-.tpl-cafe:after{
-  content:"thank you for staying";
-  text-align:center;
-  font-family:cursive;
   font-size:9px;
+  color:#393632;
+  z-index:5;
 }
 
-.tpl-darkromance{
-  background:#30242a;
-  border:5px solid #b58a91;
+.theme-newspaper img{
+  border:2px solid #3f3a34;
+  filter:grayscale(.45) contrast(1.05);
 }
 
-.tpl-darkromance .mini-photo{
-  border:2px solid #d8b3ba;
-  filter:contrast(1.1) saturate(.75);
+.theme-diary{
+  background:#d7b8a9;
+  border:8px solid #6d4e43;
 }
 
-.tpl-darkromance:after{
-  content:"TO MY FAVORITE PERSON";
-  color:#e7c8ce;
+.theme-diary:after{
+  content:"dear diary,";
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
   text-align:center;
-  font-size:8px;
-  letter-spacing:2px;
-}
-
-.tpl-pastel{
-  background:linear-gradient(#f8dce8,#dceaf5);
-  border:6px solid white;
-}
-
-.tpl-pastel:after{
-  content:"soft days ♡";
-  text-align:center;
-  color:#a76f88;
-  font-size:10px;
-}
-
-.tpl-butterfly{
-  background:#e5d9ef;
-  border:6px solid #a889bd;
-}
-
-.tpl-butterfly:after{
-  content:"🦋  fluttering memories  🦋";
-  text-align:center;
-  color:#785e8e;
-  font-size:8px;
-}
-
-.tpl-journal{
-  background:#efe4d2;
-  border:5px solid #ad8865;
-}
-
-.tpl-journal:before{
-  content:"DEAR DIARY,";
-  font-family:cursive;
-  font-size:12px;
-  padding:4px;
-}
-
-.tpl-journal:after{
-  content:"today i remembered us ♡";
-  text-align:center;
-  font-family:cursive;
-  font-size:8px;
-}
-
-.tpl-magazine{
-  background:#f4d3d9;
-  border:5px solid #111;
-}
-
-.tpl-magazine:before{
-  content:"LOVE";
-  font-family:Arial,sans-serif;
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:7px;
-  text-align:center;
-}
-
-.tpl-magazine:after{
-  content:"THE SPECIAL ISSUE • 2026";
-  text-align:center;
-  font-size:7px;
-}
-
-.tpl-polaroid{
-  background:#ddd1c5;
-  border:7px solid #fff;
-  box-shadow:3px 4px 0 #947d70;
-}
-
-.tpl-polaroid .mini-photo{
-  border:5px solid white;
-}
-
-.tpl-polaroid:after{
-  content:"us ♡";
-  font-family:cursive;
-  text-align:center;
+  font-style:italic;
+  color:#64483d;
   font-size:13px;
-  padding-top:2px;
 }
 
-.tpl-punk{
-  background:#252225;
-  border:5px solid #111;
-  box-shadow:inset 0 0 0 3px #e4d4cf;
+.theme-diary img{
+  border:2px solid #725448;
 }
 
-.tpl-punk .mini-photo{
-  filter:grayscale(.3) contrast(1.2);
-  border:2px solid #eee;
+.theme-brownie{
+  background:#c9a487;
+  border:9px solid #654333;
 }
 
-.tpl-punk:after{
-  content:"♡ NO RULES, JUST US ♡";
-  color:white;
+.theme-brownie:after{
+  content:"FOREVER ♡";
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
   text-align:center;
-  font-family:monospace;
-  font-size:7px;
+  color:#f5dfca;
+  letter-spacing:2px;
+  font-size:10px;
 }
 
-.tpl-dreamy{
-  background:linear-gradient(150deg,#bbcce9,#e7d5ec,#f5dbe5);
-  border:5px solid white;
+.theme-brownie img{
+  border:2px solid #80543d;
+  filter:sepia(.25);
 }
 
-.tpl-dreamy:after{
-  content:"somewhere between dreams & us";
-  color:white;
-  text-shadow:0 1px 4px #6d6480;
+.theme-minimal{
+  background:#f7f1ec;
+  border:8px solid #eee3da;
+}
+
+.theme-minimal:after{
+  content:"♡ our moment";
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
   text-align:center;
-  font-size:8px;
+  font-size:11px;
+  color:#8b7770;
 }
 
-.tpl-music{
-  background:#d9d0eb;
-  border:6px solid #735f89;
+.theme-minimal img{
+  border:1px solid #d7c8c0;
 }
 
-.tpl-music:before{
-  content:"SIDE A  ♫  SIDE B";
-  font-family:monospace;
-  font-size:8px;
+.theme-redfilm{
+  background:#8d3843;
+  border:9px solid #531d26;
+}
+
+.theme-redfilm:after{
+  content:"LOVE, LOVE, LOVE";
+  position:absolute;
+  bottom:4px;
+  left:0;
+  right:0;
   text-align:center;
-  padding:5px;
-}
-
-.tpl-music:after{
-  content:"our little soundtrack ♡";
-  text-align:center;
+  color:#f8d6d5;
   font-size:9px;
+  letter-spacing:1px;
 }
 
-.tpl-vintage{
-  background:
-    repeating-linear-gradient(
-      0deg,
-      #d8c2ac 0 7px,
-      #c6aa91 7px 14px
-    );
-  border:9px solid #725746;
+.theme-redfilm img{
+  border:2px solid #e4b5b4;
+  filter:sepia(.15) contrast(1.1);
 }
 
-.tpl-vintage .mini-photo{
-  filter:sepia(.55) saturate(.75) contrast(1.05);
-  border:3px solid #f0dfca;
-}
-
-.tpl-vintage:after{
-  content:"MEMORIES • EST. FOREVER";
-  text-align:center;
-  font-family:monospace;
-  color:#604939;
-  font-size:7px;
-}
-
-/* FINAL STRIP */
+/* FINAL */
 
 .final-preview-wrap{
   display:flex;
@@ -777,179 +675,31 @@ h1 span,h2 span{color:var(--pink)}
   padding:25px;
   background:#f7edf1;
   border-radius:25px;
-  overflow:auto;
 }
 
 .final-strip{
   position:relative;
-  width:330px;
-  padding:14px;
+  width:310px;
+  padding:13px;
   box-shadow:0 20px 50px #51363f35;
   overflow:hidden;
 }
 
-.final-strip .photo-slot{
-  position:relative;
+.final-strip img{
+  display:block;
   width:100%;
   aspect-ratio:4/5;
-  margin-bottom:9px;
-  overflow:hidden;
-}
-
-.final-strip .photo-slot img{
-  width:100%;
-  height:100%;
   object-fit:cover;
-  display:block;
+  margin-bottom:8px;
 }
 
 .final-strip-title{
   text-align:center;
-  padding:10px 3px 6px;
+  padding:12px 3px 7px;
   font-size:17px;
 }
 
-/* TEMPLATE FINAL THEMES */
-
-.final-strip.tpl-coquette{
-  background:#fce6ef;
-  border:7px solid #d38aa2;
-  box-shadow:inset 0 0 0 5px #fff7fa,0 20px 50px #51363f35;
-}
-
-.final-strip.tpl-ballet{
-  background:#eee4eb;
-  border:7px double #a67f99;
-}
-
-.final-strip.tpl-loveletter{
-  background:#f3e5d4;
-  border:9px solid #b88467;
-}
-
-.final-strip.tpl-film{
-  background:#222;
-  border:10px solid #111;
-  color:white;
-}
-
-.final-strip.tpl-90s{
-  background:#d6c1a8;
-  border:9px solid #704d3c;
-}
-
-.final-strip.tpl-editorial{
-  background:#eee9df;
-  border:2px solid #222;
-}
-
-.final-strip.tpl-y2k{
-  background:linear-gradient(135deg,#a8ddf4,#e0bff0,#f4b8d8);
-  border:7px solid white;
-}
-
-.final-strip.tpl-strawberry{
-  background:#fff0e7;
-  border:9px solid #df6674;
-}
-
-.final-strip.tpl-teddy{
-  background:#ead8bd;
-  border:10px solid #9a704e;
-}
-
-.final-strip.tpl-floral{
-  background:#f7e4df;
-  border:8px solid #c98998;
-}
-
-.final-strip.tpl-lace{
-  background:#eee1ea;
-  border:11px double #a47894;
-}
-
-.final-strip.tpl-postcard{
-  background:#e7cfb8;
-  border:11px solid #986d51;
-}
-
-.final-strip.tpl-airmail{
-  background:#fffaf0;
-  border:9px solid #d76b71;
-  box-shadow:inset 0 0 0 5px #6b9eb2,0 20px 50px #51363f35;
-}
-
-.final-strip.tpl-scrapbook{
-  background:#dfc8aa;
-  border:10px dashed #927056;
-}
-
-.final-strip.tpl-ticket{
-  background:#f0dfc2;
-  border:6px dashed #936b49;
-}
-
-.final-strip.tpl-cafe{
-  background:#f2e8d9;
-  border:6px solid #876750;
-}
-
-.final-strip.tpl-darkromance{
-  background:#30242a;
-  border:7px solid #b58a91;
-  color:#e7c8ce;
-}
-
-.final-strip.tpl-pastel{
-  background:linear-gradient(#f8dce8,#dceaf5);
-  border:8px solid white;
-}
-
-.final-strip.tpl-butterfly{
-  background:#e5d9ef;
-  border:8px solid #a889bd;
-}
-
-.final-strip.tpl-journal{
-  background:#efe4d2;
-  border:7px solid #ad8865;
-}
-
-.final-strip.tpl-magazine{
-  background:#f4d3d9;
-  border:7px solid #111;
-}
-
-.final-strip.tpl-polaroid{
-  background:#ddd1c5;
-  border:9px solid white;
-  box-shadow:3px 4px 0 #947d70,0 20px 50px #51363f35;
-}
-
-.final-strip.tpl-punk{
-  background:#252225;
-  border:7px solid #111;
-  color:white;
-}
-
-.final-strip.tpl-dreamy{
-  background:linear-gradient(150deg,#bbcce9,#e7d5ec,#f5dbe5);
-  border:7px solid white;
-}
-
-.final-strip.tpl-music{
-  background:#d9d0eb;
-  border:8px solid #735f89;
-}
-
-.final-strip.tpl-vintage{
-  background:repeating-linear-gradient(
-    0deg,#d8c2ac 0 7px,#c6aa91 7px 14px
-  );
-  border:11px solid #725746;
-}
-
-/* DECORATIONS */
+/* STICKERS */
 
 .sticker-bar{
   display:flex;
@@ -978,141 +728,149 @@ h1 span,h2 span{color:var(--pink)}
   transform:translate(-50%,-50%);
 }
 
-.decor:active{cursor:grabbing}
+.decor:active{
+  cursor:grabbing;
+}
 
 .text-decor{
   font-size:17px;
   padding:5px 9px;
   background:#fff9;
   border-radius:8px;
-  white-space:nowrap;
 }
 
-.edit-tools{
+.action-row{
   display:flex;
   gap:8px;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin:15px 0;
+  margin-top:15px;
 }
 
-.text-row{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-}
-
-.text-row input{
+.action-row button{
   flex:1;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:12px;
-}
-
-.small-btn{
-  border:1px solid #e1d0d7;
-  background:white;
-  border-radius:12px;
-  padding:10px 14px;
 }
 
 /* RESPONSIVE */
 
-@media(max-width:900px){
+@media(max-width:850px){
   .design-grid{
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:repeat(3,1fr);
   }
 }
 
-@media(max-width:700px){
-  .content{padding:18px}
-
-  .step h2{font-size:31px}
-
-  .design-grid{
-    grid-template-columns:repeat(3,1fr);
-    max-height:580px;
+@media(max-width:600px){
+  .content{
+    padding:18px;
   }
 
-  .design-preview{
-    height:230px;
+  .step h2{
+    font-size:31px;
   }
 
   .camera{
     grid-template-columns:1fr 1fr;
-  }
-
-  .video-box,
-  .video-box video{
-    height:230px;
-    min-height:230px;
-  }
-}
-
-@media(max-width:500px){
-  .strip-options{
-    grid-template-columns:1fr 1fr;
+    gap:5px;
+    padding:5px;
   }
 
   .design-grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .design-preview{
-    height:220px;
-  }
-
-  .final-strip{
-    width:290px;
-  }
-
-  .text-row{
-    flex-direction:column;
-  }
-}
-
-@media(max-width:380px){
-  .design-preview{
-    height:200px;
-  }
-
   .final-strip{
     width:270px;
   }
 }
-</style></head><body><!-- WELCOME --><section id="welcome" class="page active">
-<div class="card"><div class="logo">♡</div>
-<div class="mini">a tiny place for two</div><h1>
+
+@media(max-width:400px){
+  .design-preview{
+    min-height:180px;
+  }
+
+  .final-strip{
+    width:255px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME -->
+
+<section id="welcome" class="page active">
+<div class="card">
+
+<div class="logo">♡</div>
+
+<div class="mini">a tiny place for two</div>
+
+<h1>
 Our Little<br>
 <span>Photobooth</span>
-</h1><p class="desc">
+</h1>
+
+<p class="desc">
 Take pictures together even when you're far apart.
-</p><div class="field">
-<label>Your name
+</p>
+
+<div class="field">
+<label>
+Your name
 <input id="yourName" placeholder="Your name">
 </label>
-</div><div class="field">
-<label>Partner's name
+</div>
+
+<div class="field">
+<label>
+Partner's name
 <input id="partnerName" placeholder="Their name">
 </label>
-</div><div class="field">
-<label>Shared room code
+</div>
+
+<div class="field">
+<label>
+Shared room code
 <input id="roomCode" placeholder="OURWORLD">
 </label>
-</div><button class="primary" onclick="enterWorld()">
+</div>
+
+<button class="primary" onclick="enterWorld()">
 Enter Our World ♡
-</button><p id="connectionMessage"></p></div>
-</section><!-- HOME --><section id="home" class="page"><div class="topbar">
+</button>
+
+<p id="connectionMessage"></p>
+
+</div>
+</section>
+
+
+<!-- HOME -->
+
+<section id="home" class="page">
+
+<div class="topbar">
 <button class="back" onclick="showPage('welcome')">←</button>
 <div>our little ♡ world</div>
 <div></div>
-</div><div class="content"><div style="text-align:center;padding:30px 10px"><div class="mini">welcome home</div><h2>
+</div>
+
+<div class="content">
+
+<div style="text-align:center;padding:30px 10px">
+
+<div class="mini">welcome home</div>
+
+<h2>
 <span id="displayYou">You</span>
 ♡
 <span id="displayPartner">Them</span>
-</h2><p class="desc">
+</h2>
+
+<p class="desc">
 Same love. Different places. One little photobooth.
-</p><div style="
+</p>
+
+<div style="
 display:inline-block;
 padding:10px 18px;
 background:#fff;
@@ -1123,87 +881,211 @@ font-size:11px
 ">
 ROOM:
 <b id="displayRoom">---</b>
-</div><p id="partnerStatus" class="muted">
-⚪ Waiting for partner...
-</p><button class="primary" onclick="openPhotobooth()">
-📸 Open Photobooth
-</button></div>
 </div>
-</section><!-- PHOTOBOOTH --><section id="photobooth" class="page"><div class="topbar"><button class="back" onclick="showPage('home')">←</button>
 
-<div>photobooth ♡</div><div id="stepNumber">1 / 5</div></div><div class="content"><!-- STEP 1 --><div id="step1" class="step active"><div class="mini">01 · choose</div><h2>How many photos?</h2><p class="muted">
-Choose how many 4:5 photos you want in your strip.
-</p><div class="strip-options"><button class="strip-option selected"
-onclick="selectStrip(2,this)">
-<strong>2</strong>
-classic
+<p id="partnerStatus" class="muted">
+⚪ Waiting for partner...
+</p>
+
+<button class="primary" onclick="openPhotobooth()">
+📸 Open Photobooth
 </button>
 
-<button class="strip-option"
-onclick="selectStrip(3,this)">
-<strong>3</strong>
-sweet
+</div>
+
+</div>
+</section>
+
+
+<!-- PHOTOBOOTH -->
+
+<section id="photobooth" class="page">
+
+<div class="topbar">
+<button class="back" onclick="showPage('home')">←</button>
+<div>photobooth ♡</div>
+<div id="stepNumber">1 / 5</div>
+</div>
+
+<div class="content">
+
+
+<!-- STEP 1 -->
+
+<div id="step1" class="step active">
+
+<div class="mini">01 · choose</div>
+
+<h2>How many photos?</h2>
+
+<p class="muted">
+Every photo is captured in a <b>4:5 portrait ratio</b>.
+</p>
+
+<div class="design-grid" style="grid-template-columns:repeat(4,1fr)">
+
+<button class="design-card selected" onclick="selectStrip(2,this)">
+<div style="font-size:38px;color:#c96d8b">2</div>
+<div class="design-name">Classic</div>
 </button>
 
-<button class="strip-option"
-onclick="selectStrip(4,this)">
-<strong>4</strong>
-classic +
+<button class="design-card" onclick="selectStrip(3,this)">
+<div style="font-size:38px;color:#c96d8b">3</div>
+<div class="design-name">Sweet</div>
 </button>
 
-<button class="strip-option"
-onclick="selectStrip(6,this)">
-<strong>6</strong>
-long
+<button class="design-card" onclick="selectStrip(4,this)">
+<div style="font-size:38px;color:#c96d8b">4</div>
+<div class="design-name">Classic +</div>
 </button>
 
-</div><button class="primary" onclick="nextStep(2)">
+<button class="design-card" onclick="selectStrip(6,this)">
+<div style="font-size:38px;color:#c96d8b">6</div>
+<div class="design-name">Long</div>
+</button>
+
+</div>
+
+<button class="primary" onclick="nextStep(2)">
 Take Photos →
-</button></div><!-- STEP 2 --><div id="step2" class="step"><div class="mini">02 · camera</div><h2>Let's take pictures 📸</h2><p class="muted">
-Every photo is captured in a 4:5 portrait ratio.
-</p><div class="camera"><div class="video-box"><video id="myCamera"
-autoplay
-playsinline
-muted></video>
+</button>
+
+</div>
+
+
+<!-- STEP 2 -->
+
+<div id="step2" class="step">
+
+<div class="mini">02 · camera</div>
+
+<h2>Let's take pictures 📸</h2>
+
+<p class="muted">
+Both cameras should appear here when connected.
+</p>
+
+<div class="camera">
+
+<div class="video-box">
+
+<video id="myCamera" autoplay playsinline muted></video>
 
 <div class="video-label">
 You · <span id="cameraYouName">You</span>
-</div></div><div class="video-box"><video id="partnerVideo"
-autoplay
-playsinline></video>
+</div>
 
-<div id="partnerWaiting" class="waiting"><div class="heart">♡</div><b id="partnerCameraText">
+</div>
+
+<div class="video-box">
+
+<video id="partnerVideo" autoplay playsinline></video>
+
+<div id="partnerWaiting" class="waiting">
+
+<div class="heart">♡</div>
+
+<b id="partnerCameraText">
 Waiting for partner...
-</b><p>
-They need to open the same room.
-</p></div><div class="video-label">
+</b>
+
+<p>
+Open this same room on your partner's phone.
+</p>
+
+</div>
+
+<div class="video-label">
 Partner · <span id="cameraPartnerName">Them</span>
-</div></div></div><div class="camera-buttons"><button class="secondary" onclick="startCamera()">
+</div>
+
+</div>
+
+</div>
+
+<div id="cameraStatus" class="camera-status">
+⚪ Camera not started
+</div>
+
+<div class="camera-buttons">
+
+<button class="secondary" onclick="startCamera()">
 Start Camera
-</button><button class="shutter" onclick="takePhoto()">
+</button>
+
+<button class="shutter" onclick="takePhoto()">
 ●
-</button><span id="photoCount">
+</button>
+
+<span id="photoCount">
 0 / 2
-</span></div><div id="photoPreview"></div><button id="photosDoneButton"
+</span>
+
+</div>
+
+<div id="photoPreview"></div>
+
+<button
+id="photosDoneButton"
 class="primary"
 onclick="nextStep(3)"
 disabled>
 Choose Design →
 </button>
 
-</div><!-- STEP 3 --><div id="step3" class="step"><div class="mini">03 · pinterest template collection</div><h2>Find your perfect design ✨</h2><p class="muted">
-Tap through the templates. Your real photos appear inside every design.
-</p><div id="categoryBar" class="design-toolbar"></div><div id="designGrid" class="design-grid"></div><div class="final-preview-wrap"><div id="designPreview" class="final-strip"></div></div><div style="margin-top:18px"><button class="secondary" onclick="nextStep(2)">
-← Retake
-</button><button class="primary"
+</div>
+
+
+<!-- STEP 3 -->
+
+<div id="step3" class="step">
+
+<div class="mini">03 · pinterest designs</div>
+
+<h2>Pick your photobooth ♡</h2>
+
+<p class="muted">
+Tap a design to preview your actual photos.
+</p>
+
+<div id="designGrid" class="design-grid"></div>
+
+<div class="final-preview-wrap">
+<div id="designPreview" class="final-strip"></div>
+</div>
+
+<button
+class="primary"
 onclick="chooseDesign()"
-style="margin-top:10px">
+style="margin-top:18px">
 ♡ Use This Design
 </button>
 
-</div></div><!-- STEP 4 --><div id="step4" class="step"><div class="mini">04 · decorate</div><h2>Make it yours ✨</h2><p class="muted">
-Add stickers and text. Drag anything anywhere on your photobooth.
-</p><div class="sticker-bar"><button class="sticker-choice" onclick="addSticker('🎀')">🎀</button>
+<button
+class="secondary"
+onclick="nextStep(2)"
+style="margin-top:10px;width:100%">
+← Retake
+</button>
+
+</div>
+
+
+<!-- STEP 4 -->
+
+<div id="step4" class="step">
+
+<div class="mini">04 · decorate</div>
+
+<h2>Make it yours ✨</h2>
+
+<p class="muted">
+Add stickers or a little message. Drag anything anywhere.
+</p>
+
+<div class="sticker-bar">
+
+<button class="sticker-choice" onclick="addSticker('🎀')">🎀</button>
 <button class="sticker-choice" onclick="addSticker('♡')">♡</button>
 <button class="sticker-choice" onclick="addSticker('♥')">♥</button>
 <button class="sticker-choice" onclick="addSticker('✦')">✦</button>
@@ -1218,48 +1100,85 @@ Add stickers and text. Drag anything anywhere on your photobooth.
 <button class="sticker-choice" onclick="addSticker('✿')">✿</button>
 <button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
 <button class="sticker-choice" onclick="addSticker('☾')">☾</button>
-<button class="sticker-choice" onclick="addSticker('☀')">☀</button>
-<button class="sticker-choice" onclick="addSticker('🍒')">🍒</button>
-<button class="sticker-choice" onclick="addSticker('🎧')">🎧</button>
-<button class="sticker-choice" onclick="addSticker('📷')">📷</button>
-<button class="sticker-choice" onclick="addSticker('🪽')">🪽</button>
+<button class="sticker-choice" onclick="addSticker('⋆')">⋆</button>
 
-</div><div class="edit-tools"><button class="small-btn" onclick="undoEdit()">
-↩ Undo
-</button><button class="small-btn" onclick="resetDecorations()">
-↻ Reset
-</button><button class="small-btn" onclick="removeSelected()">
-🗑 Remove
-</button></div><div class="final-preview-wrap"><div id="photoStrip" class="final-strip"></div></div><div class="text-row"><input
-id="customText"
-placeholder="our little moment ♡">
+</div>
+
+<div class="final-preview-wrap">
+<div id="photoStrip" class="final-strip"></div>
+</div>
+
+<div class="field">
+<input id="customText" placeholder="our little moment ♡">
+</div>
+
+<div class="action-row">
 
 <button class="secondary" onclick="addText()">
-Add
-</button></div><button class="primary"
+Add Text
+</button>
+
+<button class="secondary" onclick="undoDecoration()">
+↩ Undo
+</button>
+
+<button class="secondary" onclick="resetDecorations()">
+Reset
+</button>
+
+</div>
+
+<button
+class="primary"
 onclick="nextStep(5)"
 style="margin-top:18px">
 See Final Strip →
 </button>
 
-</div><!-- STEP 5 --><div id="step5" class="step"><div class="mini">05 · your memory</div><h2>It's ready. ♡</h2><p class="muted">
+</div>
+
+
+<!-- STEP 5 -->
+
+<div id="step5" class="step">
+
+<div class="mini">05 · your memory</div>
+
+<h2>It's ready. ♡</h2>
+
+<p class="muted">
 Your Pinterest-style photobooth memory is finished.
-</p><div class="final-preview-wrap"><div id="savedPreview" class="final-strip"></div></div><button class="primary"
+</p>
+
+<div class="final-preview-wrap">
+<div id="savedPreview" class="final-strip"></div>
+</div>
+
+<button
+class="primary"
 onclick="saveStrip()"
 style="margin-top:18px">
 💾 Save Photo
 </button>
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="nextStep(4)"
 style="margin-top:10px;width:100%">
 ← Add More
 </button>
 
-</div></div>
-</section><script>
+</div>
 
-/* SUPABASE */
+</div>
+</section>
+
+
+<script>
+
+/* =====================================================
+SUPABASE
+===================================================== */
 
 const SUPABASE_URL =
 "https://pqmnwuwkdgvlmsxbizmp.supabase.co";
@@ -1273,7 +1192,10 @@ SUPABASE_URL,
 SUPABASE_KEY
 );
 
-/* VARIABLES */
+
+/* =====================================================
+STATE
+===================================================== */
 
 let yourName="";
 let partnerName="";
@@ -1281,17 +1203,21 @@ let roomCode="";
 
 let selectedStrip=2;
 let selectedDesign="coquette";
-let selectedCategory="all";
 
 let photos=[];
-let editHistory=[];
-let selectedDecor=null;
+let decorationHistory=[];
 
 let cameraStream=null;
 let peerConnection=null;
-let signalingChannel=null;
 
-const currentUserId=crypto.randomUUID();
+let signalingChannel=null;
+let roomChannel=null;
+
+let isCaller=false;
+let remoteDescriptionSet=false;
+
+const currentUserId=
+crypto.randomUUID();
 
 const rtcConfig={
 iceServers:[
@@ -1300,142 +1226,34 @@ iceServers:[
 ]
 };
 
-/* 25 DESIGNS */
+
+/*
+MORE PINTEREST-STYLE DESIGNS
+*/
 
 const designs=[
-{
-id:"coquette",
-name:"🎀 Coquette Ribbon",
-category:"romantic"
-},
-{
-id:"ballet",
-name:"🩰 Balletcore",
-category:"romantic"
-},
-{
-id:"loveletter",
-name:"💌 Love Letter",
-category:"romantic"
-},
-{
-id:"film",
-name:"🎞️ Black Film",
-category:"film"
-},
-{
-id:"90s",
-name:"📷 90s Film",
-category:"film"
-},
-{
-id:"editorial",
-name:"📰 Editorial",
-category:"editorial"
-},
-{
-id:"y2k",
-name:"💿 Y2K Flash",
-category:"editorial"
-},
-{
-id:"strawberry",
-name:"🍓 Strawberry",
-category:"cute"
-},
-{
-id:"teddy",
-name:"🧸 Teddy Diary",
-category:"cute"
-},
-{
-id:"floral",
-name:"🌷 Vintage Floral",
-category:"romantic"
-},
-{
-id:"lace",
-name:"🦢 Lace",
-category:"romantic"
-},
-{
-id:"postcard",
-name:"📮 Old Postcard",
-category:"vintage"
-},
-{
-id:"airmail",
-name:"✈️ Airmail",
-category:"vintage"
-},
-{
-id:"scrapbook",
-name:"📒 Messy Scrapbook",
-category:"scrapbook"
-},
-{
-id:"ticket",
-name:"🎟️ Forever Ticket",
-category:"vintage"
-},
-{
-id:"cafe",
-name:"☕ Café Receipt",
-category:"vintage"
-},
-{
-id:"darkromance",
-name:"🥀 Dark Romance",
-category:"romantic"
-},
-{
-id:"pastel",
-name:"🧁 Soft Pastel",
-category:"cute"
-},
-{
-id:"butterfly",
-name:"🦋 Butterfly Garden",
-category:"cute"
-},
-{
-id:"journal",
-name:"📓 Dear Diary",
-category:"scrapbook"
-},
-{
-id:"magazine",
-name:"💗 Pink Magazine",
-category:"editorial"
-},
-{
-id:"polaroid",
-name:"🖼️ Polaroid",
-category:"film"
-},
-{
-id:"punk",
-name:"🧷 Punk Scrap",
-category:"scrapbook"
-},
-{
-id:"dreamy",
-name:"☁️ Dreamy Sky",
-category:"cute"
-},
-{
-id:"music",
-name:"🎧 Mixtape",
-category:"editorial"
-},
-{
-id:"vintage",
-name:"🌹 Vintage Booth",
-category:"vintage"
-}
+"coquette",
+"pinkfilm",
+"vintage",
+"scrapbook",
+"y2k",
+"strawberry",
+"lace",
+"postcard",
+"floral",
+"dreamy",
+"ballet",
+"newspaper",
+"diary",
+"brownie",
+"minimal",
+"redfilm"
 ];
 
-/* PAGE */
+
+/* =====================================================
+PAGE
+===================================================== */
 
 function showPage(id){
 
@@ -1453,69 +1271,110 @@ window.scrollTo(0,0);
 
 }
 
-/* ENTER */
+
+/* =====================================================
+ENTER ROOM
+===================================================== */
 
 async function enterWorld(){
 
 yourName=
-document.getElementById("yourName").value.trim();
+document.getElementById("yourName")
+.value.trim();
 
 partnerName=
-document.getElementById("partnerName").value.trim();
+document.getElementById("partnerName")
+.value.trim();
 
 roomCode=
-document.getElementById("roomCode").value.trim().toUpperCase();
+document.getElementById("roomCode")
+.value.trim()
+.toUpperCase();
 
 if(!yourName){
+
 alert("Please enter your name ♡");
 return;
+
 }
 
 if(!roomCode){
+
 alert("Please enter a room code ♡");
 return;
+
 }
 
-document.getElementById("connectionMessage").textContent=
-"Connecting...";
+document
+.getElementById("connectionMessage")
+.textContent="Connecting...";
 
-const {data,error}=
-await supabaseClient
+
+/*
+We use a generated ID so two people
+can use the same room.
+*/
+
+const {error}=await supabaseClient
 .from("rooms")
 .insert({
 room_code:roomCode,
 user_name:yourName
-})
-.select()
-.single();
+});
 
 if(error){
+
 console.error(error);
 
 alert(
-"Could not join the room. Check your Supabase rooms table and permissions."
+"Could not join the room. Please check your Supabase rooms table."
 );
 
 return;
+
 }
 
-document.getElementById("displayYou").textContent=yourName;
-document.getElementById("displayPartner").textContent=partnerName||"Them";
-document.getElementById("displayRoom").textContent=roomCode;
-document.getElementById("cameraYouName").textContent=yourName;
-document.getElementById("cameraPartnerName").textContent=partnerName||"Them";
+document
+.getElementById("displayYou")
+.textContent=yourName;
+
+document
+.getElementById("displayPartner")
+.textContent=
+partnerName||"Them";
+
+document
+.getElementById("displayRoom")
+.textContent=roomCode;
+
+document
+.getElementById("cameraYouName")
+.textContent=yourName;
+
+document
+.getElementById("cameraPartnerName")
+.textContent=
+partnerName||"Them";
 
 showPage("home");
+
 startRoomListener();
 
 }
 
-/* ROOM */
+
+/* =====================================================
+ROOM LISTENER
+===================================================== */
 
 function startRoomListener(){
 
+if(roomChannel)
+return;
+
+roomChannel=
 supabaseClient
-.channel("room-"+roomCode)
+.channel("room-presence-"+roomCode)
 
 .on(
 "postgres_changes",
@@ -1525,8 +1384,8 @@ schema:"public",
 table:"rooms",
 filter:"room_code=eq."+roomCode
 },
-async()=>{
-await checkRoom();
+()=>{
+checkRoom();
 }
 )
 
@@ -1535,6 +1394,11 @@ await checkRoom();
 checkRoom();
 
 }
+
+
+/* =====================================================
+CHECK ROOM
+===================================================== */
 
 async function checkRoom(){
 
@@ -1545,42 +1409,57 @@ await supabaseClient
 .eq("room_code",roomCode);
 
 if(error){
+
 console.error(error);
 return;
+
 }
 
-const others=(data||[])
-.filter(row=>row.user_name!==yourName);
+const others=
+(data||[])
+.filter(row=>
+row.user_name!==yourName
+);
 
 if(others.length){
 
-document.getElementById("partnerStatus").textContent=
+document
+.getElementById("partnerStatus")
+.textContent=
 "🟢 "+others[0].user_name+" is here ♡";
 
-document.getElementById("partnerCameraText").textContent=
+document
+.getElementById("partnerCameraText")
+.textContent=
 "Connecting...";
 
 startSignaling();
 
 }else{
 
-document.getElementById("partnerStatus").textContent=
+document
+.getElementById("partnerStatus")
+.textContent=
 "⚪ Waiting for partner...";
 
 }
 
 }
 
-/* WEBRTC */
+
+/* =====================================================
+SIGNALING
+===================================================== */
 
 function startSignaling(){
 
-if(signalingChannel)return;
+if(signalingChannel)
+return;
 
 signalingChannel=
 supabaseClient
 .channel(
-"webrtc-"+roomCode+"-"+currentUserId
+"signals-"+roomCode+"-"+currentUserId
 )
 
 .on(
@@ -1595,29 +1474,42 @@ async payload=>{
 
 const signal=payload.new;
 
-if(signal.sender===currentUserId)return;
+if(
+signal.sender===currentUserId
+)return;
+
+console.log("Received signal:",signal.type);
 
 await handleSignal(signal);
 
 }
 )
 
-.subscribe(
-async status=>{
+.subscribe(async status=>{
+
+console.log(
+"Signaling:",
+status
+);
 
 if(status==="SUBSCRIBED"){
 
 await createPeerConnection();
-await decideCaller();
+
+await determineCaller();
 
 }
 
-}
-);
+});
 
 }
 
-async function decideCaller(){
+
+/* =====================================================
+CALLER
+===================================================== */
+
+async function determineCaller(){
 
 const {data,error}=
 await supabaseClient
@@ -1626,43 +1518,125 @@ await supabaseClient
 .eq("room_code",roomCode)
 .order("id",{ascending:true});
 
-if(error||!data||data.length<2)return;
+if(error){
 
-if(data[0].user_name===yourName){
-await createOffer();
+console.error(error);
+return;
+
+}
+
+if(!data || data.length<2)
+return;
+
+
+/*
+The first person in the room becomes caller.
+*/
+
+isCaller=
+data[0].user_name===yourName;
+
+if(isCaller){
+
+/*
+Small delay gives the other browser
+time to subscribe to signaling.
+*/
+
+setTimeout(
+createOffer,
+1200
+);
+
 }
 
 }
+
+
+/* =====================================================
+PEER CONNECTION
+===================================================== */
 
 async function createPeerConnection(){
 
-if(peerConnection)return;
+if(peerConnection)
+return;
 
 peerConnection=
-new RTCPeerConnection(rtcConfig);
+new RTCPeerConnection(
+rtcConfig
+);
+
+
+/*
+Add local camera if already active.
+*/
 
 if(cameraStream){
 
-cameraStream.getTracks().forEach(track=>{
-peerConnection.addTrack(track,cameraStream);
+cameraStream
+.getTracks()
+.forEach(track=>{
+
+peerConnection.addTrack(
+track,
+cameraStream
+);
+
 });
 
 }
 
-peerConnection.ontrack=event=>{
 
-const video=document.getElementById("partnerVideo");
+/*
+REMOTE CAMERA
+*/
 
-video.srcObject=event.streams[0];
+peerConnection.ontrack=
+event=>{
 
-document.getElementById("partnerWaiting").style.display="none";
+console.log(
+"Remote video received"
+);
 
-document.getElementById("partnerStatus").textContent=
-"🟢 Live together ♡";
+const video=
+document.getElementById(
+"partnerVideo"
+);
+
+if(event.streams[0]){
+
+video.srcObject=
+event.streams[0];
+
+video.play()
+.catch(()=>{});
+
+}
+
+document
+.getElementById("partnerWaiting")
+.style.display="none";
+
+document
+.getElementById("partnerStatus")
+.textContent=
+"🟢 Cameras connected ♡";
+
+document
+.getElementById("cameraStatus")
+.textContent=
+"🟢 You are connected with your partner";
 
 };
 
-peerConnection.onicecandidate=async event=>{
+
+/*
+ICE
+*/
+
+peerConnection.onicecandidate=
+async event=>{
 
 if(event.candidate){
 
@@ -1675,14 +1649,49 @@ event.candidate.toJSON()
 
 };
 
-peerConnection.onconnectionstatechange=()=>{
 
-if(peerConnection.connectionState==="connected"){
+/*
+STATE
+*/
 
-document.getElementById("partnerWaiting").style.display="none";
+peerConnection.onconnectionstatechange=
+()=>{
 
-document.getElementById("partnerStatus").textContent=
-"🟢 Live together ♡";
+const state=
+peerConnection.connectionState;
+
+console.log(
+"WebRTC:",
+state
+);
+
+if(state==="connected"){
+
+document
+.getElementById("partnerWaiting")
+.style.display="none";
+
+document
+.getElementById("partnerStatus")
+.textContent=
+"🟢 Cameras connected ♡";
+
+document
+.getElementById("cameraStatus")
+.textContent=
+"🟢 Connected";
+
+}
+
+if(
+state==="failed"||
+state==="disconnected"
+){
+
+document
+.getElementById("cameraStatus")
+.textContent=
+"🟠 Connection interrupted — reconnecting...";
 
 }
 
@@ -1690,15 +1699,23 @@ document.getElementById("partnerStatus").textContent=
 
 }
 
+
+/* =====================================================
+OFFER
+===================================================== */
+
 async function createOffer(){
 
 if(!peerConnection)
 await createPeerConnection();
 
+try{
+
 const offer=
 await peerConnection.createOffer();
 
-await peerConnection.setLocalDescription(offer);
+await peerConnection
+.setLocalDescription(offer);
 
 await sendSignal(
 "offer",
@@ -1708,7 +1725,21 @@ sdp:offer.sdp
 }
 );
 
+}catch(error){
+
+console.error(
+"Offer error:",
+error
+);
+
 }
+
+}
+
+
+/* =====================================================
+HANDLE SIGNAL
+===================================================== */
 
 async function handleSignal(signal){
 
@@ -1719,14 +1750,21 @@ try{
 
 if(signal.type==="offer"){
 
-await peerConnection.setRemoteDescription(
-new RTCSessionDescription(signal.data)
+await peerConnection
+.setRemoteDescription(
+new RTCSessionDescription(
+signal.data
+)
 );
 
-const answer=
-await peerConnection.createAnswer();
+remoteDescriptionSet=true;
 
-await peerConnection.setLocalDescription(answer);
+const answer=
+await peerConnection
+.createAnswer();
+
+await peerConnection
+.setLocalDescription(answer);
 
 await sendSignal(
 "answer",
@@ -1738,29 +1776,53 @@ sdp:answer.sdp
 
 }
 
+
 else if(signal.type==="answer"){
 
-await peerConnection.setRemoteDescription(
-new RTCSessionDescription(signal.data)
+await peerConnection
+.setRemoteDescription(
+new RTCSessionDescription(
+signal.data
+)
 );
+
+remoteDescriptionSet=true;
 
 }
 
+
 else if(signal.type==="candidate"){
 
-await peerConnection.addIceCandidate(
-new RTCIceCandidate(signal.data)
+if(
+remoteDescriptionSet
+){
+
+await peerConnection
+.addIceCandidate(
+new RTCIceCandidate(
+signal.data
+)
 );
+
+}
 
 }
 
 }catch(error){
 
-console.error("WebRTC error:",error);
+console.error(
+"Signal handling error:",
+error
+);
 
 }
 
 }
+
+
+/* =====================================================
+SEND SIGNAL
+===================================================== */
 
 async function sendSignal(type,data){
 
@@ -1774,32 +1836,76 @@ type:type,
 data:data
 });
 
-if(error)
-console.error("SIGNAL ERROR:",error);
+if(error){
+
+console.error(
+"Signal database error:",
+error
+);
 
 }
 
-/* CAMERA */
+}
+
+
+/* =====================================================
+CAMERA
+===================================================== */
 
 async function startCamera(){
 
 try{
 
+document
+.getElementById("cameraStatus")
+.textContent=
+"🟡 Requesting camera...";
+
 cameraStream=
 await navigator.mediaDevices.getUserMedia({
-video:{facingMode:"user"},
+video:{
+facingMode:"user",
+width:{ideal:800},
+height:{ideal:1000},
+aspectRatio:0.8
+},
 audio:false
 });
 
-document.getElementById("myCamera").srcObject=cameraStream;
+const video=
+document.getElementById("myCamera");
 
-if(peerConnection){
+video.srcObject=
+cameraStream;
 
-const track=cameraStream.getVideoTracks()[0];
+await video.play();
+
+
+/*
+Create WebRTC if needed.
+*/
+
+if(!peerConnection){
+
+await createPeerConnection();
+
+}else{
+
+/*
+Replace existing track.
+*/
+
+const track=
+cameraStream
+.getVideoTracks()[0];
 
 const sender=
-peerConnection.getSenders()
-.find(s=>s.track?.kind==="video");
+peerConnection
+.getSenders()
+.find(
+s=>s.track &&
+s.track.kind==="video"
+);
 
 if(sender){
 
@@ -1807,41 +1913,70 @@ await sender.replaceTrack(track);
 
 }else{
 
-peerConnection.addTrack(track,cameraStream);
+peerConnection.addTrack(
+track,
+cameraStream
+);
 
 }
 
 }
+
+
+/*
+Now make sure signaling is active.
+*/
 
 startSignaling();
 
+document
+.getElementById("cameraStatus")
+.textContent=
+"🟢 Your camera is ready";
+
 }catch(error){
 
-console.error(error);
+console.error(
+"Camera error:",
+error
+);
 
-alert("Please allow camera access in your browser.");
+document
+.getElementById("cameraStatus")
+.textContent=
+"🔴 Camera permission needed";
+
+alert(
+"Camera access was blocked. Please allow camera access for this website, then press Start Camera again."
+);
 
 }
 
 }
 
-/* PHOTOBOOTH */
+
+/* =====================================================
+PHOTO STRIP
+===================================================== */
 
 function openPhotobooth(){
 
 photos=[];
 
-selectedDesign="coquette";
+decorationHistory=[];
 
-editHistory=[];
-selectedDecor=null;
-
-document.getElementById("photoCount").textContent=
+document
+.getElementById("photoCount")
+.textContent=
 "0 / "+selectedStrip;
 
-document.getElementById("photoPreview").innerHTML="";
+document
+.getElementById("photoPreview")
+.innerHTML="";
 
-document.getElementById("photosDoneButton").disabled=true;
+document
+.getElementById("photosDoneButton")
+.disabled=true;
 
 showPage("photobooth");
 
@@ -1849,33 +1984,60 @@ nextStep(1);
 
 }
 
+
+/* =====================================================
+STRIP COUNT
+===================================================== */
+
 function selectStrip(number,button){
 
 selectedStrip=number;
 
-document.querySelectorAll(".strip-option")
-.forEach(x=>x.classList.remove("selected"));
+document
+.querySelectorAll("#step1 .design-card")
+.forEach(x=>{
+x.classList.remove("selected");
+});
 
 button.classList.add("selected");
 
-document.getElementById("photoCount").textContent=
-photos.length+" / "+selectedStrip;
+document
+.getElementById("photoCount")
+.textContent=
+photos.length+
+" / "+
+selectedStrip;
 
 }
 
+
+/* =====================================================
+NEXT STEP
+===================================================== */
+
 function nextStep(number){
 
-document.querySelectorAll(".step")
-.forEach(x=>x.classList.remove("active"));
+document
+.querySelectorAll(".step")
+.forEach(x=>{
+x.classList.remove("active");
+});
 
-document.getElementById("step"+number).classList.add("active");
+document
+.getElementById(
+"step"+number
+)
+.classList.add("active");
 
-document.getElementById("stepNumber").textContent=
+document
+.getElementById("stepNumber")
+.textContent=
 number+" / 5";
 
 if(number===2){
 
-if(!cameraStream)startCamera();
+if(!cameraStream)
+startCamera();
 
 startSignaling();
 
@@ -1883,7 +2045,6 @@ startSignaling();
 
 if(number===3){
 
-buildCategoryBar();
 buildDesignPicker();
 
 }
@@ -1902,27 +2063,39 @@ copyFinalPreview();
 
 }
 
-/* TAKE PHOTO */
+
+/* =====================================================
+TAKE PHOTO
+===================================================== */
 
 function takePhoto(){
 
 if(!cameraStream){
 
-alert("Start your camera first.");
+alert(
+"Press Start Camera first."
+);
+
 return;
 
 }
 
-if(photos.length>=selectedStrip){
+if(
+photos.length>=selectedStrip
+){
 
-alert("Your strip is already full!");
+alert(
+"Your strip is already full!"
+);
+
 return;
 
 }
 
 let count=3;
 
-const overlay=document.createElement("div");
+const overlay=
+document.createElement("div");
 
 overlay.style.position="fixed";
 overlay.style.inset="0";
@@ -1933,11 +2106,14 @@ overlay.style.background="#0009";
 overlay.style.color="white";
 overlay.style.font="bold 100px Georgia";
 
-document.body.appendChild(overlay);
+document.body.appendChild(
+overlay
+);
 
 overlay.textContent=count;
 
-const timer=setInterval(()=>{
+const timer=
+setInterval(()=>{
 
 count--;
 
@@ -1948,7 +2124,9 @@ overlay.textContent=count;
 }else{
 
 clearInterval(timer);
+
 overlay.remove();
+
 capturePhoto();
 
 }
@@ -1957,40 +2135,43 @@ capturePhoto();
 
 }
 
-/* CAPTURE 4:5 */
+
+/* =====================================================
+CAPTURE 4:5
+===================================================== */
 
 function capturePhoto(){
 
-const video=document.getElementById("myCamera");
+const video=
+document.getElementById(
+"myCamera"
+);
 
-const canvas=document.createElement("canvas");
+const canvas=
+document.createElement("canvas");
 
-/* TRUE 4:5 PHOTO */
+/*
+4:5 exact ratio.
+*/
 
 canvas.width=800;
 canvas.height=1000;
 
-const ctx=canvas.getContext("2d");
-
-ctx.save();
-
-ctx.translate(800,0);
-ctx.scale(-1,1);
-
-/* crop camera into 4:5 */
+const ctx=
+canvas.getContext("2d");
 
 const vw=video.videoWidth;
 const vh=video.videoHeight;
 
 const targetRatio=4/5;
-const sourceRatio=vw/vh;
+const videoRatio=vw/vh;
 
 let sx=0;
 let sy=0;
 let sw=vw;
 let sh=vh;
 
-if(sourceRatio>targetRatio){
+if(videoRatio>targetRatio){
 
 sw=vh*targetRatio;
 sx=(vw-sw)/2;
@@ -2002,41 +2183,74 @@ sy=(vh-sh)/2;
 
 }
 
+ctx.save();
+
+ctx.translate(800,0);
+ctx.scale(-1,1);
+
 ctx.drawImage(
 video,
-sx,sy,sw,sh,
-0,0,800,1000
+sx,
+sy,
+sw,
+sh,
+0,
+0,
+800,
+1000
 );
 
 ctx.restore();
 
 const image=
-canvas.toDataURL("image/jpeg",.94);
+canvas.toDataURL(
+"image/jpeg",
+.94
+);
 
 photos.push(image);
 
-document.getElementById("photoCount").textContent=
-photos.length+" / "+selectedStrip;
+document
+.getElementById("photoCount")
+.textContent=
+photos.length+
+" / "+
+selectedStrip;
 
 updatePhotoThumbnails();
 
-if(photos.length>=selectedStrip){
+if(
+photos.length>=selectedStrip
+){
 
-document.getElementById("photosDoneButton").disabled=false;
+document
+.getElementById(
+"photosDoneButton"
+)
+.disabled=false;
 
 }
 
 }
+
+
+/* =====================================================
+THUMBNAILS
+===================================================== */
 
 function updatePhotoThumbnails(){
 
-const preview=document.getElementById("photoPreview");
+const preview=
+document.getElementById(
+"photoPreview"
+);
 
 preview.innerHTML="";
 
 photos.forEach(image=>{
 
-const img=document.createElement("img");
+const img=
+document.createElement("img");
 
 img.src=image;
 
@@ -2046,104 +2260,83 @@ preview.appendChild(img);
 
 }
 
-/* CATEGORY BAR */
 
-function buildCategoryBar(){
-
-const bar=document.getElementById("categoryBar");
-
-bar.innerHTML="";
-
-const cats=[
-["all","All"],
-["romantic","🎀 Romantic"],
-["cute","🌸 Cute"],
-["vintage","📜 Vintage"],
-["film","🎞️ Film"],
-["editorial","📰 Editorial"],
-["scrapbook","📒 Scrapbook"]
-];
-
-cats.forEach(([id,label])=>{
-
-const button=document.createElement("button");
-
-button.className=
-"category-btn"+
-(id===selectedCategory?" active":"");
-
-button.textContent=label;
-
-button.onclick=()=>{
-
-selectedCategory=id;
-
-buildCategoryBar();
-buildDesignPicker();
-
-};
-
-bar.appendChild(button);
-
-});
-
-}
-
-/* DESIGN PICKER */
+/* =====================================================
+DESIGN PICKER
+===================================================== */
 
 function buildDesignPicker(){
 
-const grid=document.getElementById("designGrid");
+const grid=
+document.getElementById(
+"designGrid"
+);
 
 grid.innerHTML="";
 
-const filtered=
-selectedCategory==="all"
-?designs
-:designs.filter(x=>x.category===selectedCategory);
+designs.forEach(name=>{
 
-filtered.forEach(design=>{
-
-const card=document.createElement("button");
+const card=
+document.createElement("button");
 
 card.className=
 "design-card"+
-(design.id===selectedDesign?" selected":"");
+(name===selectedDesign
+?" selected":"");
 
-const preview=document.createElement("div");
+const preview=
+document.createElement("div");
 
 preview.className=
-"design-preview tpl-"+design.id;
+"design-preview theme-"+name;
 
 photos.forEach(image=>{
 
-const img=document.createElement("img");
+const img=
+document.createElement("img");
 
-img.className="mini-photo";
 img.src=image;
 
 preview.appendChild(img);
 
 });
 
-const label=document.createElement("div");
+const label=
+document.createElement("div");
 
 label.className="design-name";
-label.textContent=design.name;
+
+label.textContent=
+getDesignName(name);
 
 card.appendChild(preview);
 card.appendChild(label);
 
 card.onclick=()=>{
 
-selectedDesign=design.id;
+selectedDesign=name;
 
-document.querySelectorAll(".design-card")
-.forEach(x=>x.classList.remove("selected"));
+document
+.querySelectorAll("#designGrid .design-card")
+.forEach(x=>{
+x.classList.remove("selected");
+});
 
 card.classList.add("selected");
 
 renderDesignPreview();
+
+};
+
+card.onmouseenter=()=>{
+
+if(window.innerWidth>600){
+
+selectedDesign=name;
+
+renderDesignPreview();
+
+}
 
 };
 
@@ -2155,50 +2348,85 @@ renderDesignPreview();
 
 }
 
-/* PREVIEW */
+
+/* =====================================================
+DESIGN NAMES
+===================================================== */
+
+function getDesignName(name){
+
+const names={
+coquette:"🎀 Coquette",
+pinkfilm:"🎞 Pink Film",
+vintage:"📷 Vintage",
+scrapbook:"📒 Scrapbook",
+y2k:"💿 Y2K",
+strawberry:"🍓 Strawberry",
+lace:"🕊 Lace",
+postcard:"💌 Postcard",
+floral:"🌸 Floral",
+dreamy:"☁️ Dreamy",
+ballet:"🩰 Ballet",
+newspaper:"📰 Newspaper",
+diary:"📔 Diary",
+brownie:"🤎 Brownie",
+minimal:"♡ Minimal",
+redfilm:"♥ Red Film"
+};
+
+return names[name]||name;
+
+}
+
+
+/* =====================================================
+DESIGN PREVIEW
+===================================================== */
 
 function renderDesignPreview(){
 
-const preview=document.getElementById("designPreview");
+const preview=
+document.getElementById(
+"designPreview"
+);
 
 preview.className=
-"final-strip tpl-"+selectedDesign;
+"final-strip theme-"+selectedDesign;
 
 preview.innerHTML="";
 
 photos.forEach(image=>{
 
-const slot=document.createElement("div");
-
-slot.className="photo-slot";
-
-const img=document.createElement("img");
+const img=
+document.createElement("img");
 
 img.src=image;
 
-slot.appendChild(img);
-
-preview.appendChild(slot);
+preview.appendChild(img);
 
 });
 
-const title=document.createElement("div");
+const title=
+document.createElement("div");
 
-title.className="final-strip-title";
+title.className=
+"final-strip-title";
 
 title.textContent=
-yourName+" ♡ "+(partnerName||"Them");
+yourName+
+" ♡ "+
+(partnerName||"Them");
 
 preview.appendChild(title);
 
 }
 
-/* CHOOSE DESIGN */
+
+/* =====================================================
+CHOOSE DESIGN
+===================================================== */
 
 function chooseDesign(){
-
-editHistory=[];
-selectedDecor=null;
 
 buildFinalStrip();
 
@@ -2206,112 +2434,59 @@ nextStep(4);
 
 }
 
-/* FINAL STRIP */
+
+/* =====================================================
+BUILD FINAL STRIP
+===================================================== */
 
 function buildFinalStrip(){
 
-const strip=document.getElementById("photoStrip");
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 strip.className=
-"final-strip tpl-"+selectedDesign;
+"final-strip theme-"+
+selectedDesign;
 
 strip.innerHTML="";
 
 photos.forEach(image=>{
 
-const slot=document.createElement("div");
-
-slot.className="photo-slot";
-
-const img=document.createElement("img");
+const img=
+document.createElement("img");
 
 img.src=image;
 
-slot.appendChild(img);
-
-strip.appendChild(slot);
+strip.appendChild(img);
 
 });
 
-const title=document.createElement("div");
+const title=
+document.createElement("div");
 
-title.className="final-strip-title";
+title.className=
+"final-strip-title";
 
 title.textContent=
-yourName+" ♡ "+(partnerName||"Them");
+yourName+
+" ♡ "+
+(partnerName||"Them");
 
 strip.appendChild(title);
 
 }
 
-/* HISTORY */
 
-function saveHistory(){
-
-const strip=document.getElementById("photoStrip");
-
-editHistory.push(strip.innerHTML);
-
-if(editHistory.length>30)
-editHistory.shift();
-
-}
-
-function undoEdit(){
-
-if(editHistory.length===0){
-
-alert("Nothing to undo yet ♡");
-return;
-
-}
-
-const strip=document.getElementById("photoStrip");
-
-strip.innerHTML=editHistory.pop();
-
-restoreDecorEvents();
-
-selectedDecor=null;
-
-}
-
-function resetDecorations(){
-
-const strip=document.getElementById("photoStrip");
-
-saveHistory();
-
-strip.querySelectorAll(".decor").forEach(x=>x.remove());
-
-selectedDecor=null;
-
-}
-
-function removeSelected(){
-
-if(!selectedDecor){
-
-alert("Tap a sticker or text first ♡");
-return;
-
-}
-
-saveHistory();
-
-selectedDecor.remove();
-
-selectedDecor=null;
-
-}
-
-/* STICKERS */
+/* =====================================================
+ADD STICKER
+===================================================== */
 
 function addSticker(symbol){
 
-saveHistory();
-
-const sticker=document.createElement("div");
+const sticker=
+document.createElement("div");
 
 sticker.className="decor";
 
@@ -2323,93 +2498,124 @@ sticker.style.left=
 sticker.style.top=
 (10+Math.random()*80)+"%";
 
-const strip=document.getElementById("photoStrip");
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 strip.appendChild(sticker);
 
-makeMovable(sticker,strip);
+decorationHistory.push(sticker);
 
-selectDecor(sticker);
+makeMovable(
+sticker,
+strip
+);
 
 }
 
-/* TEXT */
+
+/* =====================================================
+ADD TEXT
+===================================================== */
 
 function addText(){
 
-const input=document.getElementById("customText");
+const input=
+document.getElementById(
+"customText"
+);
 
-const value=input.value.trim();
+const value=
+input.value.trim();
 
-if(!value)return;
+if(!value)
+return;
 
-saveHistory();
+const text=
+document.createElement("div");
 
-const text=document.createElement("div");
-
-text.className="decor text-decor";
+text.className=
+"decor text-decor";
 
 text.textContent=value;
 
 text.style.left="50%";
 text.style.top="50%";
 
-const strip=document.getElementById("photoStrip");
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 strip.appendChild(text);
 
-makeMovable(text,strip);
+decorationHistory.push(text);
 
-selectDecor(text);
+makeMovable(
+text,
+strip
+);
 
 input.value="";
 
 }
 
-/* SELECT */
 
-function selectDecor(element){
+/* =====================================================
+MOVABLE
+===================================================== */
 
-if(selectedDecor)
-selectedDecor.style.outline="";
-
-selectedDecor=element;
-
-element.style.outline="2px dashed #d97899";
-
-}
-
-/* DRAG */
-
-function makeMovable(element,container){
+function makeMovable(
+element,
+container
+){
 
 let dragging=false;
 
-function move(clientX,clientY){
+function move(
+clientX,
+clientY
+){
 
-const rect=container.getBoundingClientRect();
+const rect=
+container.getBoundingClientRect();
 
-let x=((clientX-rect.left)/rect.width)*100;
-let y=((clientY-rect.top)/rect.height)*100;
+let x=
+((clientX-rect.left)/
+rect.width)*100;
 
-x=Math.max(4,Math.min(96,x));
-y=Math.max(2,Math.min(98,y));
+let y=
+((clientY-rect.top)/
+rect.height)*100;
 
-element.style.left=x+"%";
-element.style.top=y+"%";
+x=Math.max(
+4,
+Math.min(96,x)
+);
+
+y=Math.max(
+3,
+Math.min(97,y)
+);
+
+element.style.left=
+x+"%";
+
+element.style.top=
+y+"%";
 
 }
 
-element.addEventListener("click",()=>{
-selectDecor(element);
-});
+
+/* TOUCH */
 
 element.addEventListener(
 "touchstart",
 e=>{
 
 dragging=true;
-selectDecor(element);
+
 e.preventDefault();
 
 },
@@ -2420,13 +2626,18 @@ element.addEventListener(
 "touchmove",
 e=>{
 
-if(!dragging)return;
+if(!dragging)
+return;
 
 e.preventDefault();
 
-const t=e.touches[0];
+const t=
+e.touches[0];
 
-move(t.clientX,t.clientY);
+move(
+t.clientX,
+t.clientY
+);
 
 },
 {passive:false}
@@ -2434,82 +2645,137 @@ move(t.clientX,t.clientY);
 
 element.addEventListener(
 "touchend",
-()=>dragging=false
+()=>{
+dragging=false;
+}
 );
 
-element.addEventListener("mousedown",e=>{
+
+/* MOUSE */
+
+element.addEventListener(
+"mousedown",
+e=>{
 
 dragging=true;
-selectDecor(element);
+
 e.preventDefault();
 
-});
+}
+);
 
-document.addEventListener("mousemove",e=>{
+document.addEventListener(
+"mousemove",
+e=>{
 
-if(dragging)
-move(e.clientX,e.clientY);
+if(dragging){
 
-});
-
-document.addEventListener("mouseup",()=>dragging=false);
+move(
+e.clientX,
+e.clientY
+);
 
 }
 
-/* RESTORE UNDO ELEMENTS */
+}
+);
 
-function restoreDecorEvents(){
-
-const strip=document.getElementById("photoStrip");
-
-strip.querySelectorAll(".decor").forEach(element=>{
-
-makeMovable(element,strip);
-
-});
+document.addEventListener(
+"mouseup",
+()=>{
+dragging=false;
+}
+);
 
 }
 
-/* FINAL PREVIEW */
+
+/* =====================================================
+UNDO
+===================================================== */
+
+function undoDecoration(){
+
+if(!decorationHistory.length){
+
+return;
+
+}
+
+const last=
+decorationHistory.pop();
+
+if(last && last.parentNode){
+
+last.parentNode.removeChild(last);
+
+}
+
+}
+
+
+/* =====================================================
+RESET
+===================================================== */
+
+function resetDecorations(){
+
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
+strip
+.querySelectorAll(".decor")
+.forEach(x=>{
+x.remove();
+});
+
+decorationHistory=[];
+
+}
+
+
+/* =====================================================
+FINAL PREVIEW
+===================================================== */
 
 function copyFinalPreview(){
 
-const source=document.getElementById("photoStrip");
-const target=document.getElementById("savedPreview");
+const source=
+document.getElementById(
+"photoStrip"
+);
 
-target.innerHTML=source.innerHTML;
-target.className=source.className;
+const target=
+document.getElementById(
+"savedPreview"
+);
+
+target.innerHTML=
+source.innerHTML;
+
+target.className=
+source.className;
 
 }
 
-/* SAVE */
+
+/* =====================================================
+SAVE
+===================================================== */
 
 async function saveStrip(){
 
-if(typeof html2canvas==="undefined"){
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
-const script=document.createElement("script");
+if(!strip)
+return;
 
-script.src=
-"https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
-
-script.onload=async()=>{
-await actuallySaveStrip();
-};
-
-document.head.appendChild(script);
-
-}else{
-
-await actuallySaveStrip();
-
-}
-
-}
-
-async function actuallySaveStrip(){
-
-const strip=document.getElementById("photoStrip");
+try{
 
 const canvas=
 await html2canvas(
@@ -2517,38 +2783,64 @@ strip,
 {
 scale:3,
 backgroundColor:null,
-useCORS:true
+useCORS:true,
+logging:false
 }
 );
 
-const link=document.createElement("a");
+const link=
+document.createElement("a");
 
 link.download=
 "our-little-photobooth.png";
 
 link.href=
-canvas.toDataURL("image/png");
+canvas.toDataURL(
+"image/png"
+);
 
 link.click();
 
+}catch(error){
+
+console.error(error);
+
+alert(
+"Something went wrong while saving the photo."
+);
+
 }
 
-/* CLEANUP */
+}
 
-window.addEventListener("beforeunload",()=>{
+
+/* =====================================================
+CLEANUP
+===================================================== */
+
+window.addEventListener(
+"beforeunload",
+()=>{
 
 if(cameraStream){
 
-cameraStream.getTracks().forEach(track=>{
+cameraStream
+.getTracks()
+.forEach(track=>{
 track.stop();
 });
 
 }
 
-if(peerConnection)
+if(peerConnection){
+
 peerConnection.close();
+
+}
 
 });
 
-</script></body>
+</script>
+
+</body>
 </html>
