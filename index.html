@@ -6,798 +6,1155 @@
 <title>Our Little Photobooth ♡</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
 
 :root{
-  --pink:#d87998;
-  --rose:#b85f7d;
-  --dark:#4b3940;
-  --cream:#fff8f5;
-  --line:#ead7df;
+--pink:#d97899;
+--pink2:#b9577a;
+--dark:#49363e;
+--cream:#fff8f5;
+--line:#ead9df;
 }
 
 body{
-  margin:0;
-  color:var(--dark);
-  font-family:Georgia,serif;
-  background:
-    radial-gradient(circle at 10% 15%,#f2cdd9 0 3px,transparent 4px),
-    radial-gradient(circle at 90% 30%,#e8d1db 0 3px,transparent 4px),
-    #fff8fa;
-  background-size:90px 90px;
+margin:0;
+font-family:Georgia,serif;
+background:
+radial-gradient(circle at 10% 10%,#f7dbe5 0 3px,transparent 4px),
+radial-gradient(circle at 90% 30%,#ead4df 0 3px,transparent 4px),
+#fff8fa;
+background-size:90px 90px;
+color:var(--dark);
 }
 
-button,input{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input{font:inherit}
+button{cursor:pointer}
 
 .page{
-  display:none;
-  min-height:100vh;
-  padding:12px;
+display:none;
+min-height:100vh;
+padding:12px;
 }
 
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
 .card{
-  width:min(600px,100%);
-  margin:5vh auto;
-  padding:38px 28px;
-  background:#fffdfd;
-  border:1px solid var(--line);
-  border-radius:35px;
-  text-align:center;
-  box-shadow:0 25px 70px #68445220;
+width:min(600px,100%);
+margin:5vh auto;
+padding:38px 28px;
+background:#fffdfd;
+border:1px solid var(--line);
+border-radius:35px;
+text-align:center;
+box-shadow:0 25px 70px #68445220;
 }
 
 .logo{
-  font-size:62px;
-  color:var(--pink);
+font-size:60px;
+color:var(--pink);
 }
 
 .mini{
-  font-family:Arial,sans-serif;
-  font-size:10px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#ad7084;
+font-family:Arial,sans-serif;
+font-size:10px;
+letter-spacing:3px;
+text-transform:uppercase;
+color:#ad7084;
 }
 
 h1{
-  font-size:55px;
-  line-height:.9;
-  margin:12px 0 18px;
+font-size:58px;
+line-height:.9;
+margin:12px 0 18px;
 }
 
-h1 span,h2 span{
-  color:var(--pink);
+h1 span,
+h2 span{
+color:var(--pink);
 }
 
-.desc,.muted{
-  font-family:Arial,sans-serif;
-  line-height:1.6;
-  color:#88747c;
+.desc,
+.muted{
+font-family:Arial,sans-serif;
+line-height:1.6;
+color:#88747c;
 }
 
 .field{
-  text-align:left;
-  margin:16px 0;
+text-align:left;
+margin:16px 0;
 }
 
 .field label{
-  font-family:Arial,sans-serif;
-  font-size:12px;
-  font-weight:bold;
+font-family:Arial,sans-serif;
+font-size:12px;
+font-weight:bold;
 }
 
 .field input{
-  width:100%;
-  padding:14px;
-  margin-top:7px;
-  border:1px solid var(--line);
-  border-radius:15px;
-  background:#fffafa;
-  outline:none;
+width:100%;
+padding:14px;
+margin-top:7px;
+border:1px solid var(--line);
+border-radius:15px;
+background:#fffafa;
+outline:none;
+}
+
+.field input:focus{
+border-color:#d97899;
+box-shadow:0 0 0 3px #d9789918;
 }
 
 .primary{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:16px;
-  background:linear-gradient(135deg,#c96d8b,#b85d7e);
-  color:white;
-  font-family:Arial,sans-serif;
-  font-weight:bold;
-  box-shadow:0 10px 25px #b85d7e25;
+width:100%;
+padding:15px;
+border:0;
+border-radius:16px;
+background:linear-gradient(135deg,#c96d8b,#b85d7e);
+color:white;
+font-family:Arial,sans-serif;
+font-weight:bold;
+box-shadow:0 10px 25px #b85d7e25;
+}
+
+.primary:disabled{
+opacity:.45;
+cursor:not-allowed;
 }
 
 .secondary{
-  padding:12px 18px;
-  border:1px solid #dfd0d7;
-  border-radius:14px;
-  background:white;
-  color:#654e57;
+padding:12px 18px;
+border:1px solid #dfd0d7;
+border-radius:14px;
+background:white;
+color:#654e57;
 }
 
 .topbar{
-  height:58px;
-  max-width:1100px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  font-family:Arial,sans-serif;
+height:58px;
+max-width:1100px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+font-family:Arial,sans-serif;
 }
 
 .back{
-  width:42px;
-  height:42px;
-  border:1px solid #e5d7dd;
-  border-radius:50%;
-  background:white;
+width:42px;
+height:42px;
+border:1px solid #e5d7dd;
+border-radius:50%;
+background:white;
 }
 
 .content{
-  max-width:1100px;
-  margin:20px auto;
-  padding:28px;
-  background:#fffdfd;
-  border:1px solid var(--line);
-  border-radius:30px;
-  box-shadow:0 20px 60px #533b4614;
+max-width:1100px;
+margin:20px auto;
+padding:28px;
+background:#fffdfd;
+border:1px solid var(--line);
+border-radius:30px;
+box-shadow:0 20px 60px #533b4614;
 }
 
-.step{
-  display:none;
-}
-
-.step.active{
-  display:block;
-}
+.step{display:none}
+.step.active{display:block}
 
 .step h2{
-  font-size:40px;
-  margin:8px 0;
+font-size:40px;
+margin:8px 0;
 }
 
-/* CAMERA */
+
+/* =========================
+STRIP OPTIONS
+========================= */
+
+.strip-options{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+margin:28px 0;
+}
+
+.strip-option{
+padding:22px 12px;
+border:2px solid var(--line);
+border-radius:22px;
+background:white;
+}
+
+.strip-option.selected{
+border-color:var(--pink);
+background:#fff0f5;
+}
+
+.strip-option strong{
+display:block;
+font-size:42px;
+color:var(--pink);
+}
+
+
+/* =========================
+CAMERA
+========================= */
 
 .camera{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  background:#211b1e;
-  padding:10px;
-  border-radius:28px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+background:#211b1e;
+padding:10px;
+border-radius:28px;
+overflow:hidden;
 }
 
 .video-box{
-  position:relative;
-  background:#30262b;
-  border-radius:20px;
-  overflow:hidden;
+position:relative;
+background:#30262b;
+min-height:320px;
+border-radius:20px;
+overflow:hidden;
 }
 
 .video-box video{
-  width:100%;
-  aspect-ratio:4/5;
-  object-fit:cover;
-  display:block;
-  background:#30262b;
-  transform:scaleX(-1);
+width:100%;
+height:320px;
+object-fit:cover;
+display:block;
+background:#30262b;
+transform:scaleX(-1);
+}
+
+#partnerVideo{
+transform:scaleX(-1);
 }
 
 .video-label{
-  position:absolute;
-  bottom:10px;
-  left:10px;
-  padding:7px 12px;
-  border-radius:20px;
-  background:#0009;
-  color:white;
-  font-family:Arial,sans-serif;
-  font-size:11px;
-  z-index:5;
+position:absolute;
+bottom:10px;
+left:10px;
+padding:7px 12px;
+border-radius:20px;
+background:#0009;
+color:white;
+font-family:Arial,sans-serif;
+font-size:11px;
+z-index:5;
 }
 
 .waiting{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  color:white;
-  background:#3d3037;
-  font-family:Arial,sans-serif;
-  text-align:center;
-  padding:20px;
-  z-index:4;
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+color:white;
+background:#3d3037;
+font-family:Arial,sans-serif;
+text-align:center;
+padding:20px;
+z-index:4;
 }
 
 .waiting .heart{
-  font-size:55px;
+font-size:55px;
+}
+
+.connection-dot{
+display:inline-block;
+width:8px;
+height:8px;
+border-radius:50%;
+background:#d97899;
+margin-right:5px;
 }
 
 .camera-status{
-  text-align:center;
-  margin:12px 0;
-  font-family:Arial,sans-serif;
-  font-size:12px;
+font-family:Arial,sans-serif;
+font-size:12px;
+text-align:center;
+color:#8b737d;
+margin-top:10px;
 }
 
 .camera-buttons{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:16px;
-  margin:20px 0;
-  flex-wrap:wrap;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:16px;
+margin:20px 0;
+flex-wrap:wrap;
 }
 
 .shutter{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  border:7px solid #e3b3c2;
-  background:white;
-  font-size:22px;
+width:70px;
+height:70px;
+border-radius:50%;
+border:7px solid #e3b3c2;
+background:white;
+font-size:22px;
 }
 
 #photoPreview{
-  text-align:center;
+text-align:center;
 }
 
 #photoPreview img{
-  width:65px;
-  aspect-ratio:4/5;
-  object-fit:cover;
-  margin:5px;
-  border-radius:8px;
+width:75px;
+height:94px;
+object-fit:cover;
+margin:5px;
+border-radius:8px;
 }
 
-/* DESIGN PICKER */
+
+/* =========================
+DESIGN PICKER
+========================= */
 
 .design-grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:15px;
-  margin:25px 0;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
+margin:25px 0;
 }
 
 .design-card{
-  border:2px solid transparent;
-  background:white;
-  border-radius:18px;
-  padding:7px;
-  transition:.2s;
-  box-shadow:0 8px 20px #51363f12;
+border:2px solid transparent;
+background:#fff;
+border-radius:20px;
+padding:8px;
+transition:.2s;
+box-shadow:0 8px 20px #51363f12;
+overflow:hidden;
 }
 
 .design-card:hover,
 .design-card.selected{
-  transform:translateY(-4px);
-  border-color:var(--pink);
+transform:translateY(-5px);
+border-color:var(--pink);
+box-shadow:0 15px 30px #b85d7e22;
 }
 
 .design-preview{
-  aspect-ratio:4/5;
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-  padding:7px;
-  overflow:hidden;
-  position:relative;
+position:relative;
+width:100%;
+aspect-ratio:4/5;
+display:flex;
+flex-direction:column;
+gap:4px;
+padding:9px;
+overflow:hidden;
 }
 
 .design-preview img{
-  width:100%;
-  flex:1;
-  min-height:0;
-  object-fit:cover;
-  display:block;
+width:100%;
+flex:1;
+min-height:0;
+object-fit:cover;
+display:block;
 }
 
 .design-name{
-  font-size:12px;
-  font-weight:bold;
-  padding:8px 2px 4px;
+font-size:12px;
+font-weight:bold;
+padding:8px 2px 5px;
 }
 
-/* PINTEREST STYLE DESIGNS */
+
+/* =========================
+PHOTOBOOTH DESIGN THEMES
+========================= */
+
+/* COQUETTE */
 
 .theme-coquette{
-  background:#f8dce7;
-  border:8px solid #fff;
-  box-shadow:inset 0 0 0 2px #c97998;
+background:
+radial-gradient(circle,#f1a8c0 1px,transparent 2px),
+#fff0f6;
+background-size:14px 14px;
+border:5px solid #d889a3;
+}
+
+.theme-coquette:before{
+content:"♡  🎀  ♡";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-size:12px;
+color:#c66588;
+z-index:5;
 }
 
 .theme-coquette:after{
-  content:"♡ ୨୧ ♡";
-  position:absolute;
-  bottom:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:#b85d7e;
-  font-size:15px;
+content:"♡";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-size:18px;
+color:#c66588;
+z-index:5;
 }
 
 .theme-coquette img{
-  border:2px solid #d98aa6;
+border:2px solid #efb6c9;
 }
 
-.theme-pinkfilm{
-  background:#f3e2d9;
-  border:9px solid #f8efe8;
-  box-shadow:inset 0 0 0 3px #a76c59;
+
+/* FILM STRIP */
+
+.theme-film{
+background:#171416;
+border:8px solid #171416;
 }
 
-.theme-pinkfilm:before{
-  content:"LOVE IS A FILM";
-  position:absolute;
-  top:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-family:Arial,sans-serif;
-  font-size:7px;
-  letter-spacing:2px;
-  color:#805648;
-  z-index:5;
+.theme-film:before{
+content:"♡  FRAME 01  •  35MM  •  ♡";
+position:absolute;
+top:1px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:7px;
+letter-spacing:1px;
+color:#fff;
+z-index:5;
 }
 
-.theme-pinkfilm img{
-  border:1px solid #896052;
-  filter:sepia(.2) contrast(1.05);
+.theme-film:after{
+content:"OUR LITTLE MOMENT  •  2026";
+position:absolute;
+bottom:2px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:6px;
+letter-spacing:1px;
+color:#fff;
+z-index:5;
 }
 
-.theme-vintage{
-  background:#d4b69b;
-  border:9px solid #735444;
-  box-shadow:inset 0 0 0 3px #e9d5bd;
+.theme-film img{
+border:2px solid #fff;
 }
 
-.theme-vintage:after{
-  content:"♡ MEMORIES ♡";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:10px;
-  letter-spacing:2px;
-  color:#684938;
-}
 
-.theme-vintage img{
-  border:2px solid #6e4c3c;
-  filter:sepia(.55) saturate(.75);
-}
+/* SCRAPBOOK */
 
 .theme-scrapbook{
-  background:#ead9bf;
-  border:8px dashed #a47758;
+background:#e8d7bd;
+border:7px dashed #98755e;
+}
+
+.theme-scrapbook:before{
+content:"✦ little memories ✦";
+position:absolute;
+top:2px;
+left:0;
+right:0;
+text-align:center;
+font-size:9px;
+color:#765545;
+z-index:5;
 }
 
 .theme-scrapbook:after{
-  content:"little moments";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:12px;
-  transform:rotate(-2deg);
-  color:#805d4b;
+content:"♡  ✿  ୨୧";
+position:absolute;
+bottom:1px;
+left:0;
+right:0;
+text-align:center;
+font-size:13px;
+color:#765545;
+z-index:5;
 }
 
 .theme-scrapbook img{
-  border:5px solid white;
-  box-shadow:2px 3px 0 #96745c;
+border:4px solid white;
+box-shadow:2px 3px 0 #9c765d;
 }
 
+
+/* Y2K */
+
 .theme-y2k{
-  background:linear-gradient(135deg,#a7dced,#e8c9ec,#f4afd1);
-  border:7px solid white;
-  box-shadow:0 0 12px #b5e7ff;
+background:
+linear-gradient(135deg,#a8d6ed,#d9c8f0,#f2b9d7);
+border:5px solid white;
+}
+
+.theme-y2k:before{
+content:"★ LOVE CONNECTION ★";
+position:absolute;
+top:5px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-weight:bold;
+font-size:8px;
+color:#fff;
+text-shadow:1px 1px #8d6a9d;
+z-index:5;
 }
 
 .theme-y2k:after{
-  content:"♡ BABY ♡";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:white;
-  font-family:Arial,sans-serif;
-  font-weight:bold;
-  letter-spacing:2px;
-  text-shadow:1px 1px 3px #6f6290;
+content:"♡ 2000s BABY ♡";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:8px;
+font-weight:bold;
+color:#fff;
+z-index:5;
 }
 
 .theme-y2k img{
-  border:2px solid white;
-  box-shadow:0 0 7px #fff;
+border:2px solid white;
+box-shadow:0 0 10px #fff;
 }
 
+
+/* STRAWBERRY */
+
 .theme-strawberry{
-  background:#fff0e8;
-  border:7px solid #d95768;
+background:
+radial-gradient(circle at 20% 10%,#e76572 0 2px,transparent 3px),
+#fff0e9;
+background-size:25px 25px;
+border:5px solid #e76572;
+}
+
+.theme-strawberry:before{
+content:"🍓 SWEET MEMORIES 🍓";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-size:8px;
+z-index:5;
 }
 
 .theme-strawberry:after{
-  content:"🍓 strawberry days 🍓";
-  position:absolute;
-  bottom:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:9px;
-  color:#c34f5d;
+content:"♡ strawberry kiss ♡";
+position:absolute;
+bottom:2px;
+left:0;
+right:0;
+text-align:center;
+font-size:8px;
+color:#d14e61;
+z-index:5;
 }
 
 .theme-strawberry img{
-  border:2px solid #e36573;
+border:2px solid #e76572;
 }
 
+
+/* LACE */
+
 .theme-lace{
-  background:#eadbe5;
-  border:8px double #9c718e;
+background:
+radial-gradient(circle at center,#ead8e3 0 40%,#d9bdcd 41% 43%,transparent 44%);
+background-size:24px 24px;
+border:7px double #a87b96;
+}
+
+.theme-lace:before{
+content:"୨୧  WITH LOVE  ୨୧";
+position:absolute;
+top:4px;
+left:0;
+right:0;
+text-align:center;
+font-size:8px;
+color:#8c637b;
+z-index:5;
 }
 
 .theme-lace:after{
-  content:"♡";
-  position:absolute;
-  bottom:1px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:#9c718e;
-  font-size:17px;
+content:"♡";
+position:absolute;
+bottom:2px;
+left:0;
+right:0;
+text-align:center;
+font-size:16px;
+color:#8c637b;
+z-index:5;
 }
 
 .theme-lace img{
-  border:3px solid white;
+border:3px solid white;
 }
 
+
+/* POSTCARD */
+
 .theme-postcard{
-  background:#e2c6a9;
-  border:9px solid #79523e;
+background:#e6cdb5;
+border:8px solid #956c52;
 }
 
 .theme-postcard:before{
-  content:"WISH YOU WERE HERE";
-  position:absolute;
-  top:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-family:Arial,sans-serif;
-  font-size:7px;
-  letter-spacing:1px;
-  color:#704b38;
-  z-index:5;
+content:"LOVE POSTCARD";
+position:absolute;
+top:4px;
+left:6px;
+font-family:Arial,sans-serif;
+font-weight:bold;
+font-size:8px;
+letter-spacing:1px;
+color:#704b39;
+z-index:5;
+}
+
+.theme-postcard:after{
+content:"wish you were here ♡";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Georgia,serif;
+font-style:italic;
+font-size:9px;
+color:#704b39;
+z-index:5;
 }
 
 .theme-postcard img{
-  border:2px solid #704b39;
+border:2px solid #704b39;
 }
 
+
+/* FLORAL */
+
 .theme-floral{
-  background:#f4dfdc;
-  border:8px solid #c78998;
+background:
+radial-gradient(circle at 10% 10%,#d19aaa 0 3px,transparent 4px),
+radial-gradient(circle at 90% 90%,#e5b7c5 0 3px,transparent 4px),
+#f7e7dc;
+background-size:30px 30px;
+border:7px solid #d19aaa;
+}
+
+.theme-floral:before{
+content:"✿  BLOOM WITH ME  ✿";
+position:absolute;
+top:2px;
+left:0;
+right:0;
+text-align:center;
+font-size:8px;
+color:#a85f76;
+z-index:5;
 }
 
 .theme-floral:after{
-  content:"✿  with love  ✿";
-  position:absolute;
-  bottom:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:#a36a79;
-  font-size:11px;
+content:"🌷  ♡  🌷";
+position:absolute;
+bottom:1px;
+left:0;
+right:0;
+text-align:center;
+font-size:11px;
+z-index:5;
 }
 
 .theme-floral img{
-  border:2px solid #c78998;
+border:2px solid #d19aaa;
 }
 
+
+/* DREAMY */
+
 .theme-dreamy{
-  background:linear-gradient(#c5d0e9,#ead8ef);
-  border:7px solid white;
+background:
+linear-gradient(135deg,#bfcce7,#ead8ee,#f7d9e7);
+border:5px solid white;
+}
+
+.theme-dreamy:before{
+content:"☁  dreamy little memory  ☁";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-size:8px;
+color:white;
+text-shadow:0 1px 4px #777;
+z-index:5;
 }
 
 .theme-dreamy:after{
-  content:"☁︎ dream together ☁︎";
-  position:absolute;
-  bottom:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:white;
-  text-shadow:0 1px 4px #8c83a0;
-  font-size:10px;
+content:"✦  stay close  ✦";
+position:absolute;
+bottom:2px;
+left:0;
+right:0;
+text-align:center;
+font-size:8px;
+color:white;
+z-index:5;
 }
 
 .theme-dreamy img{
-  border-radius:9px;
-  border:2px solid white;
+border-radius:10px;
 }
 
-.theme-ballet{
-  background:#f4dbe7;
-  border:8px solid #fff;
-  box-shadow:inset 0 0 0 2px #c88da5;
+
+/* VINTAGE */
+
+.theme-vintage{
+background:
+repeating-linear-gradient(
+45deg,
+#d6bdab 0 8px,
+#c2a48d 8px 16px
+);
+border:8px solid #806351;
 }
 
-.theme-ballet:after{
-  content:"୨୧  ballet club  ୨୧";
-  position:absolute;
-  bottom:3px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:#a76c84;
-  font-size:10px;
+.theme-vintage:before{
+content:"EST. 2026  •  A LITTLE LOVE STORY";
+position:absolute;
+top:4px;
+left:0;
+right:0;
+text-align:center;
+font-family:Georgia,serif;
+font-size:7px;
+letter-spacing:1px;
+color:#5f493d;
+z-index:5;
 }
 
-.theme-ballet img{
-  border:2px solid #c78ca5;
+.theme-vintage:after{
+content:"♡ forever favorite ♡";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Georgia,serif;
+font-style:italic;
+font-size:9px;
+color:#5f493d;
+z-index:5;
 }
 
-.theme-newspaper{
-  background:#eee6d5;
-  border:8px solid #3e3a35;
+.theme-vintage img{
+filter:sepia(.55) saturate(.75);
+border:2px solid #f0dfca;
 }
 
-.theme-newspaper:before{
-  content:"THE LOVE EDITION";
-  position:absolute;
-  top:2px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-family:Georgia,serif;
-  font-weight:bold;
-  font-size:9px;
-  color:#393632;
-  z-index:5;
+
+/* POLAROID */
+
+.theme-polaroid{
+background:#f8f5ec;
+border:8px solid #fff;
+box-shadow:inset 0 0 0 1px #ddd3c5;
 }
 
-.theme-newspaper img{
-  border:2px solid #3f3a34;
-  filter:grayscale(.45) contrast(1.05);
+.theme-polaroid:before{
+content:"♡ OUR DAY ♡";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:7px;
+letter-spacing:2px;
+color:#777;
+z-index:5;
 }
+
+.theme-polaroid:after{
+content:"love, always.";
+position:absolute;
+bottom:4px;
+left:0;
+right:0;
+text-align:center;
+font-family:cursive;
+font-size:10px;
+color:#6b5c58;
+z-index:5;
+}
+
+.theme-polaroid img{
+border:1px solid #ddd;
+}
+
+
+/* CUTE DIARY */
 
 .theme-diary{
-  background:#d7b8a9;
-  border:8px solid #6d4e43;
+background:#f7e8d9;
+border:5px solid #c68d9f;
+}
+
+.theme-diary:before{
+content:"DEAR DIARY ♡";
+position:absolute;
+top:4px;
+left:0;
+right:0;
+text-align:center;
+font-family:cursive;
+font-size:11px;
+color:#9b5f74;
+z-index:5;
 }
 
 .theme-diary:after{
-  content:"dear diary,";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-style:italic;
-  color:#64483d;
-  font-size:13px;
+content:"today was a good day ✿";
+position:absolute;
+bottom:2px;
+left:0;
+right:0;
+text-align:center;
+font-family:cursive;
+font-size:8px;
+color:#9b5f74;
+z-index:5;
 }
 
 .theme-diary img{
-  border:2px solid #725448;
+border:3px solid white;
 }
 
-.theme-brownie{
-  background:#c9a487;
-  border:9px solid #654333;
+
+/* BLACK & WHITE */
+
+.theme-editorial{
+background:#111;
+border:8px solid #111;
 }
 
-.theme-brownie:after{
-  content:"FOREVER ♡";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:#f5dfca;
-  letter-spacing:2px;
-  font-size:10px;
+.theme-editorial:before{
+content:"LOVE / ISSUE 01";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:7px;
+letter-spacing:2px;
+color:white;
+z-index:5;
 }
 
-.theme-brownie img{
-  border:2px solid #80543d;
-  filter:sepia(.25);
+.theme-editorial:after{
+content:"TOGETHER, SOMEWHERE";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:7px;
+letter-spacing:2px;
+color:white;
+z-index:5;
 }
 
-.theme-minimal{
-  background:#f7f1ec;
-  border:8px solid #eee3da;
+.theme-editorial img{
+filter:grayscale(1) contrast(1.05);
+border:2px solid white;
 }
 
-.theme-minimal:after{
-  content:"♡ our moment";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:11px;
-  color:#8b7770;
+
+/* PINK CAM */
+
+.theme-pinkcam{
+background:
+linear-gradient(#f6c4d5,#fff0f5);
+border:6px solid #d97899;
 }
 
-.theme-minimal img{
-  border:1px solid #d7c8c0;
+.theme-pinkcam:before{
+content:"♡ PINK CAM ♡";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:8px;
+font-weight:bold;
+letter-spacing:2px;
+color:#bd5f80;
+z-index:5;
 }
 
-.theme-redfilm{
-  background:#8d3843;
-  border:9px solid #531d26;
+.theme-pinkcam:after{
+content:"SMILE! ୨୧";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-size:9px;
+color:#bd5f80;
+z-index:5;
 }
 
-.theme-redfilm:after{
-  content:"LOVE, LOVE, LOVE";
-  position:absolute;
-  bottom:4px;
-  left:0;
-  right:0;
-  text-align:center;
-  color:#f8d6d5;
-  font-size:9px;
-  letter-spacing:1px;
+.theme-pinkcam img{
+border:3px solid white;
 }
 
-.theme-redfilm img{
-  border:2px solid #e4b5b4;
-  filter:sepia(.15) contrast(1.1);
+
+/* CAFE */
+
+.theme-cafe{
+background:#e9d6c5;
+border:7px solid #8b6754;
 }
 
-/* FINAL */
+.theme-cafe:before{
+content:"COFFEE & MEMORIES";
+position:absolute;
+top:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:7px;
+letter-spacing:1px;
+color:#604536;
+z-index:5;
+}
+
+.theme-cafe:after{
+content:"☕︎  one sweet memory  ♡";
+position:absolute;
+bottom:3px;
+left:0;
+right:0;
+text-align:center;
+font-family:Georgia,serif;
+font-size:8px;
+color:#604536;
+z-index:5;
+}
+
+.theme-cafe img{
+border:2px solid #8b6754;
+}
+
+
+/* =========================
+FINAL STRIP
+========================= */
 
 .final-preview-wrap{
-  display:flex;
-  justify-content:center;
-  padding:25px;
-  background:#f7edf1;
-  border-radius:25px;
+display:flex;
+justify-content:center;
+padding:25px;
+background:#f7edf1;
+border-radius:25px;
 }
 
 .final-strip{
-  position:relative;
-  width:310px;
-  padding:13px;
-  box-shadow:0 20px 50px #51363f35;
-  overflow:hidden;
+position:relative;
+width:310px;
+aspect-ratio:auto;
+padding:13px;
+box-shadow:0 20px 50px #51363f35;
+overflow:hidden;
 }
 
 .final-strip img{
-  display:block;
-  width:100%;
-  aspect-ratio:4/5;
-  object-fit:cover;
-  margin-bottom:8px;
+display:block;
+width:100%;
+aspect-ratio:4/5;
+object-fit:cover;
+margin-bottom:8px;
 }
 
 .final-strip-title{
-  text-align:center;
-  padding:12px 3px 7px;
-  font-size:17px;
+position:relative;
+z-index:10;
+text-align:center;
+padding:12px 3px 7px;
+font-size:17px;
 }
 
-/* STICKERS */
+
+/* =========================
+STICKERS
+========================= */
 
 .sticker-bar{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding:8px 3px 16px;
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:8px 3px 16px;
 }
 
 .sticker-choice{
-  flex:0 0 auto;
-  width:52px;
-  height:52px;
-  border:1px solid #eadde2;
-  border-radius:15px;
-  background:#fff8fa;
-  font-size:26px;
+flex:0 0 auto;
+width:52px;
+height:52px;
+border:1px solid #eadde2;
+border-radius:15px;
+background:#fff8fa;
+font-size:26px;
 }
 
 .decor{
-  position:absolute;
-  z-index:50;
-  font-size:32px;
-  cursor:grab;
-  user-select:none;
-  touch-action:none;
-  transform:translate(-50%,-50%);
+position:absolute;
+z-index:50;
+font-size:32px;
+cursor:grab;
+user-select:none;
+touch-action:none;
+transform:translate(-50%,-50%);
 }
 
 .decor:active{
-  cursor:grabbing;
+cursor:grabbing;
 }
 
 .text-decor{
-  font-size:17px;
-  padding:5px 9px;
-  background:#fff9;
-  border-radius:8px;
+font-size:17px;
+padding:5px 9px;
+background:#fff9;
+border-radius:8px;
 }
 
-.action-row{
-  display:flex;
-  gap:8px;
-  margin-top:15px;
+
+/* =========================
+TOOLS
+========================= */
+
+.edit-tools{
+display:flex;
+gap:8px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:14px;
 }
 
-.action-row button{
-  flex:1;
+.tool-btn{
+padding:10px 14px;
+border-radius:13px;
+border:1px solid #e3d3da;
+background:white;
+font-family:Arial,sans-serif;
+font-size:12px;
 }
 
-/* RESPONSIVE */
+
+/* =========================
+RESPONSIVE
+========================= */
 
 @media(max-width:850px){
-  .design-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+
+.design-grid{
+grid-template-columns:repeat(3,1fr);
+}
+
 }
 
 @media(max-width:600px){
-  .content{
-    padding:18px;
-  }
 
-  .step h2{
-    font-size:31px;
-  }
+.page{
+padding:8px;
+}
 
-  .camera{
-    grid-template-columns:1fr 1fr;
-    gap:5px;
-    padding:5px;
-  }
+.content{
+padding:18px;
+}
 
-  .design-grid{
-    grid-template-columns:repeat(2,1fr);
-  }
+.step h2{
+font-size:31px;
+}
 
-  .final-strip{
-    width:270px;
-  }
+.strip-options{
+grid-template-columns:1fr 1fr;
+}
+
+.camera{
+grid-template-columns:1fr 1fr;
+}
+
+.video-box,
+.video-box video,
+.waiting{
+height:230px;
+min-height:230px;
+}
+
+.design-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.design-preview{
+height:auto;
+aspect-ratio:4/5;
+}
+
+.final-strip{
+width:270px;
+}
+
 }
 
 @media(max-width:400px){
-  .design-preview{
-    min-height:180px;
-  }
 
-  .final-strip{
-    width:255px;
-  }
+.camera{
+gap:5px;
+padding:5px;
+}
+
+.video-box video{
+height:205px;
+}
+
+.final-strip{
+width:250px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<!-- WELCOME -->
+
+<!-- =========================
+WELCOME
+========================= -->
 
 <section id="welcome" class="page active">
+
 <div class="card">
 
 <div class="logo">♡</div>
@@ -816,21 +1173,21 @@ Take pictures together even when you're far apart.
 <div class="field">
 <label>
 Your name
-<input id="yourName" placeholder="Your name">
+<input id="yourName" placeholder="Your name" autocomplete="off">
 </label>
 </div>
 
 <div class="field">
 <label>
 Partner's name
-<input id="partnerName" placeholder="Their name">
+<input id="partnerName" placeholder="Their name" autocomplete="off">
 </label>
 </div>
 
 <div class="field">
 <label>
 Shared room code
-<input id="roomCode" placeholder="OURWORLD">
+<input id="roomCode" placeholder="OURWORLD" autocomplete="off">
 </label>
 </div>
 
@@ -838,20 +1195,26 @@ Shared room code
 Enter Our World ♡
 </button>
 
-<p id="connectionMessage"></p>
+<p id="connectionMessage" class="muted"></p>
 
 </div>
 </section>
 
 
-<!-- HOME -->
+<!-- =========================
+HOME
+========================= -->
 
 <section id="home" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('welcome')">←</button>
+
 <div>our little ♡ world</div>
+
 <div></div>
+
 </div>
 
 <div class="content">
@@ -897,14 +1260,20 @@ ROOM:
 </section>
 
 
-<!-- PHOTOBOOTH -->
+<!-- =========================
+PHOTOBOOTH
+========================= -->
 
 <section id="photobooth" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('home')">←</button>
+
 <div>photobooth ♡</div>
+
 <div id="stepNumber">1 / 5</div>
+
 </div>
 
 <div class="content">
@@ -919,29 +1288,33 @@ ROOM:
 <h2>How many photos?</h2>
 
 <p class="muted">
-Every photo is captured in a <b>4:5 portrait ratio</b>.
+Choose how many 4:5 photos you want in your strip.
 </p>
 
-<div class="design-grid" style="grid-template-columns:repeat(4,1fr)">
+<div class="strip-options">
 
-<button class="design-card selected" onclick="selectStrip(2,this)">
-<div style="font-size:38px;color:#c96d8b">2</div>
-<div class="design-name">Classic</div>
+<button class="strip-option selected"
+onclick="selectStrip(2,this)">
+<strong>2</strong>
+classic
 </button>
 
-<button class="design-card" onclick="selectStrip(3,this)">
-<div style="font-size:38px;color:#c96d8b">3</div>
-<div class="design-name">Sweet</div>
+<button class="strip-option"
+onclick="selectStrip(3,this)">
+<strong>3</strong>
+sweet
 </button>
 
-<button class="design-card" onclick="selectStrip(4,this)">
-<div style="font-size:38px;color:#c96d8b">4</div>
-<div class="design-name">Classic +</div>
+<button class="strip-option"
+onclick="selectStrip(4,this)">
+<strong>4</strong>
+classic +
 </button>
 
-<button class="design-card" onclick="selectStrip(6,this)">
-<div style="font-size:38px;color:#c96d8b">6</div>
-<div class="design-name">Long</div>
+<button class="strip-option"
+onclick="selectStrip(6,this)">
+<strong>6</strong>
+long
 </button>
 
 </div>
@@ -962,14 +1335,19 @@ Take Photos →
 <h2>Let's take pictures 📸</h2>
 
 <p class="muted">
-Both cameras should appear here when connected.
+Keep this page open while you're both taking photos.
 </p>
 
 <div class="camera">
 
 <div class="video-box">
 
-<video id="myCamera" autoplay playsinline muted></video>
+<video
+id="myCamera"
+autoplay
+playsinline
+muted>
+</video>
 
 <div class="video-label">
 You · <span id="cameraYouName">You</span>
@@ -979,7 +1357,11 @@ You · <span id="cameraYouName">You</span>
 
 <div class="video-box">
 
-<video id="partnerVideo" autoplay playsinline></video>
+<video
+id="partnerVideo"
+autoplay
+playsinline>
+</video>
 
 <div id="partnerWaiting" class="waiting">
 
@@ -990,7 +1372,7 @@ Waiting for partner...
 </b>
 
 <p>
-Open this same room on your partner's phone.
+Open the same room on their phone.
 </p>
 
 </div>
@@ -1004,16 +1386,19 @@ Partner · <span id="cameraPartnerName">Them</span>
 </div>
 
 <div id="cameraStatus" class="camera-status">
-⚪ Camera not started
+<span class="connection-dot"></span>
+Connecting room...
 </div>
 
 <div class="camera-buttons">
 
-<button class="secondary" onclick="startCamera()">
+<button class="secondary"
+onclick="startCamera()">
 Start Camera
 </button>
 
-<button class="shutter" onclick="takePhoto()">
+<button class="shutter"
+onclick="takePhoto()">
 ●
 </button>
 
@@ -1040,33 +1425,38 @@ Choose Design →
 
 <div id="step3" class="step">
 
-<div class="mini">03 · pinterest designs</div>
+<div class="mini">03 · choose your design</div>
 
-<h2>Pick your photobooth ♡</h2>
+<h2>Pick your photobooth look ✨</h2>
 
 <p class="muted">
-Tap a design to preview your actual photos.
+Tap a design. On desktop, hover over one to preview your actual photos.
 </p>
 
 <div id="designGrid" class="design-grid"></div>
 
 <div class="final-preview-wrap">
-<div id="designPreview" class="final-strip"></div>
+
+<div id="designPreview"
+class="final-strip">
 </div>
 
-<button
-class="primary"
+</div>
+
+<div style="margin-top:18px">
+
+<button class="secondary"
+onclick="nextStep(2)">
+← Retake
+</button>
+
+<button class="primary"
 onclick="chooseDesign()"
-style="margin-top:18px">
+style="margin-top:10px">
 ♡ Use This Design
 </button>
 
-<button
-class="secondary"
-onclick="nextStep(2)"
-style="margin-top:10px;width:100%">
-← Retake
-</button>
+</div>
 
 </div>
 
@@ -1075,12 +1465,12 @@ style="margin-top:10px;width:100%">
 
 <div id="step4" class="step">
 
-<div class="mini">04 · decorate</div>
+<div class="mini">04 · make it yours</div>
 
-<h2>Make it yours ✨</h2>
+<h2>Add your little details ✨</h2>
 
 <p class="muted">
-Add stickers or a little message. Drag anything anywhere.
+Tap a sticker or add text, then drag it anywhere on the strip.
 </p>
 
 <div class="sticker-bar">
@@ -1099,37 +1489,55 @@ Add stickers or a little message. Drag anything anywhere.
 <button class="sticker-choice" onclick="addSticker('🦋')">🦋</button>
 <button class="sticker-choice" onclick="addSticker('✿')">✿</button>
 <button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
-<button class="sticker-choice" onclick="addSticker('☾')">☾</button>
-<button class="sticker-choice" onclick="addSticker('⋆')">⋆</button>
+<button class="sticker-choice" onclick="addSticker('☕')">☕</button>
+<button class="sticker-choice" onclick="addSticker('📷')">📷</button>
 
 </div>
 
 <div class="final-preview-wrap">
-<div id="photoStrip" class="final-strip"></div>
+
+<div id="photoStrip"
+class="final-strip">
 </div>
 
-<div class="field">
-<input id="customText" placeholder="our little moment ♡">
 </div>
 
-<div class="action-row">
+<div class="edit-tools">
 
-<button class="secondary" onclick="addText()">
-Add Text
-</button>
-
-<button class="secondary" onclick="undoDecoration()">
+<button class="tool-btn" onclick="undoLast()">
 ↩ Undo
 </button>
 
-<button class="secondary" onclick="resetDecorations()">
-Reset
+<button class="tool-btn" onclick="resetDecorations()">
+↻ Reset
 </button>
 
 </div>
 
-<button
-class="primary"
+<div class="text-row" style="
+display:flex;
+gap:8px;
+margin-top:14px;
+">
+
+<input
+id="customText"
+placeholder="our little moment ♡"
+style="
+flex:1;
+padding:12px;
+border:1px solid var(--line);
+border-radius:12px;
+">
+
+<button class="secondary"
+onclick="addText()">
+Add
+</button>
+
+</div>
+
+<button class="primary"
 onclick="nextStep(5)"
 style="margin-top:18px">
 See Final Strip →
@@ -1147,28 +1555,31 @@ See Final Strip →
 <h2>It's ready. ♡</h2>
 
 <p class="muted">
-Your Pinterest-style photobooth memory is finished.
+Your little photobooth memory is finished.
 </p>
 
 <div class="final-preview-wrap">
-<div id="savedPreview" class="final-strip"></div>
+
+<div id="savedPreview"
+class="final-strip">
 </div>
 
-<button
-class="primary"
+</div>
+
+<button class="primary"
 onclick="saveStrip()"
 style="margin-top:18px">
 💾 Save Photo
 </button>
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="nextStep(4)"
 style="margin-top:10px;width:100%">
 ← Add More
 </button>
 
 </div>
+
 
 </div>
 </section>
@@ -1194,47 +1605,71 @@ SUPABASE_KEY
 
 
 /* =====================================================
-STATE
+USER / ROOM
 ===================================================== */
 
 let yourName="";
 let partnerName="";
 let roomCode="";
 
-let selectedStrip=2;
-let selectedDesign="coquette";
-
-let photos=[];
-let decorationHistory=[];
-
-let cameraStream=null;
-let peerConnection=null;
-
-let signalingChannel=null;
-let roomChannel=null;
-
-let isCaller=false;
-let remoteDescriptionSet=false;
-
-const currentUserId=
+const currentUserId =
 crypto.randomUUID();
+
+let realtimeChannel=null;
+let realtimeReady=false;
+
+let remoteUserId=null;
+
+
+/* =====================================================
+WEBRTC
+===================================================== */
+
+let peerConnection=null;
+let cameraStream=null;
+
+let pendingCandidates=[];
+
+let makingOffer=false;
 
 const rtcConfig={
 iceServers:[
-{urls:"stun:stun.l.google.com:19302"},
-{urls:"stun:stun1.l.google.com:19302"}
+{
+urls:"stun:stun.l.google.com:19302"
+},
+{
+urls:"stun:stun1.l.google.com:19302"
+},
+{
+urls:"stun:stun2.l.google.com:19302"
+},
+{
+urls:"stun:stun3.l.google.com:19302"
+}
 ]
 };
 
 
-/*
-MORE PINTEREST-STYLE DESIGNS
-*/
+/* =====================================================
+PHOTO VARIABLES
+===================================================== */
+
+let selectedStrip=2;
+
+let selectedDesign="coquette";
+
+let photos=[];
+
+let decorationHistory=[];
+
+
+/* =====================================================
+DESIGNS
+===================================================== */
 
 const designs=[
 "coquette",
-"pinkfilm",
-"vintage",
+"film",
 "scrapbook",
 "y2k",
 "strawberry",
@@ -1242,12 +1677,12 @@ const designs=[
 "postcard",
 "floral",
 "dreamy",
-"ballet",
-"newspaper",
+"vintage",
+"polaroid",
 "diary",
-"brownie",
-"minimal",
-"redfilm"
+"editorial",
+"pinkcam",
+"cafe"
 ];
 
 
@@ -1273,22 +1708,28 @@ window.scrollTo(0,0);
 
 
 /* =====================================================
-ENTER ROOM
+ENTER WORLD
 ===================================================== */
 
 async function enterWorld(){
 
 yourName=
-document.getElementById("yourName")
-.value.trim();
+document
+.getElementById("yourName")
+.value
+.trim();
 
 partnerName=
-document.getElementById("partnerName")
-.value.trim();
+document
+.getElementById("partnerName")
+.value
+.trim();
 
 roomCode=
-document.getElementById("roomCode")
-.value.trim()
+document
+.getElementById("roomCode")
+.value
+.trim()
 .toUpperCase();
 
 if(!yourName){
@@ -1307,32 +1748,12 @@ return;
 
 document
 .getElementById("connectionMessage")
-.textContent="Connecting...";
+textContent="";
 
-
-/*
-We use a generated ID so two people
-can use the same room.
-*/
-
-const {error}=await supabaseClient
-.from("rooms")
-.insert({
-room_code:roomCode,
-user_name:yourName
-});
-
-if(error){
-
-console.error(error);
-
-alert(
-"Could not join the room. Please check your Supabase rooms table."
-);
-
-return;
-
-}
+document
+.getElementById("connectionMessage")
+textContent=
+"Joining your private room...";
 
 document
 .getElementById("displayYou")
@@ -1358,145 +1779,159 @@ partnerName||"Them";
 
 showPage("home");
 
-startRoomListener();
+await connectToRoom();
 
 }
 
 
 /* =====================================================
-ROOM LISTENER
+SUPABASE BROADCAST ROOM
 ===================================================== */
 
-function startRoomListener(){
+async function connectToRoom(){
 
-if(roomChannel)
-return;
+if(realtimeChannel){
 
-roomChannel=
-supabaseClient
-.channel("room-presence-"+roomCode)
-
-.on(
-"postgres_changes",
-{
-event:"INSERT",
-schema:"public",
-table:"rooms",
-filter:"room_code=eq."+roomCode
-},
-()=>{
-checkRoom();
-}
-)
-
-.subscribe();
-
-checkRoom();
-
-}
-
-
-/* =====================================================
-CHECK ROOM
-===================================================== */
-
-async function checkRoom(){
-
-const {data,error}=
+try{
 await supabaseClient
-.from("rooms")
-.select("*")
-.eq("room_code",roomCode);
+.removeChannel(realtimeChannel);
+}catch(e){}
 
-if(error){
-
-console.error(error);
-return;
+realtimeChannel=null;
 
 }
 
-const others=
-(data||[])
-.filter(row=>
-row.user_name!==yourName
+realtimeReady=false;
+
+const topic=
+"photobooth-room-"+roomCode;
+
+realtimeChannel=
+supabaseClient.channel(
+topic,
+{
+config:{
+broadcast:{
+self:false,
+ack:true
+}
+}
+}
 );
 
-if(others.length){
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"🟢 "+others[0].user_name+" is here ♡";
+/*
+All WebRTC signaling travels through this
+Broadcast channel.
+
+No call_signals table is needed.
+*/
+
+realtimeChannel.on(
+"broadcast",
+{event:"webrtc"},
+async message=>{
+
+const payload=
+message.payload;
+
+if(!payload)
+return;
+
+if(payload.sender===currentUserId)
+return;
+
+await handleWebRTCMessage(
+payload
+);
+
+}
+);
+
+realtimeChannel.on(
+"broadcast",
+{event:"room-presence"},
+message=>{
+
+const payload=
+message.payload;
+
+if(!payload)
+return;
+
+if(payload.sender===currentUserId)
+return;
+
+if(payload.type==="hello"){
+
+remoteUserId=
+payload.sender;
+
+updatePartnerStatus(
+"🟢 Partner is in the room"
+);
 
 document
 .getElementById("partnerCameraText")
 .textContent=
-"Connecting...";
+"Partner connected ♡";
 
-startSignaling();
-
-}else{
-
-document
-.getElementById("partnerStatus")
-.textContent=
-"⚪ Waiting for partner...";
-
-}
-
-}
-
-
-/* =====================================================
-SIGNALING
-===================================================== */
-
-function startSignaling(){
-
-if(signalingChannel)
-return;
-
-signalingChannel=
-supabaseClient
-.channel(
-"signals-"+roomCode+"-"+currentUserId
-)
-
-.on(
-"postgres_changes",
-{
-event:"INSERT",
-schema:"public",
-table:"call_signals",
-filter:"room_code=eq."+roomCode
-},
-async payload=>{
-
-const signal=payload.new;
+/*
+Only one side becomes caller.
+This prevents both phones from
+creating offers at the same time.
+*/
 
 if(
-signal.sender===currentUserId
-)return;
+currentUserId <
+payload.sender
+){
 
-console.log("Received signal:",signal.type);
-
-await handleSignal(signal);
+createOffer();
 
 }
-)
 
-.subscribe(async status=>{
+}
+
+}
+);
+
+realtimeChannel.subscribe(
+async status=>{
 
 console.log(
-"Signaling:",
+"Realtime status:",
 status
 );
 
 if(status==="SUBSCRIBED"){
 
-await createPeerConnection();
+realtimeReady=true;
 
-await determineCaller();
+updatePartnerStatus(
+"🟢 Room connected · waiting for partner"
+);
+
+await broadcastRoomMessage({
+type:"hello",
+sender:currentUserId,
+name:yourName
+});
+
+}
+else if(
+status==="CHANNEL_ERROR"||
+status==="TIMED_OUT"
+){
+
+updatePartnerStatus(
+"🔴 Room connection failed"
+);
+
+console.error(
+"Realtime connection failed:",
+status
+);
 
 }
 
@@ -1506,46 +1941,32 @@ await determineCaller();
 
 
 /* =====================================================
-CALLER
+BROADCAST ROOM MESSAGE
 ===================================================== */
 
-async function determineCaller(){
+async function broadcastRoomMessage(
+payload
+){
 
-const {data,error}=
-await supabaseClient
-.from("rooms")
-.select("id,user_name")
-.eq("room_code",roomCode)
-.order("id",{ascending:true});
-
-if(error){
-
-console.error(error);
+if(
+!realtimeChannel||
+!realtimeReady
+)
 return;
 
-}
+try{
 
-if(!data || data.length<2)
-return;
+await realtimeChannel.send({
+type:"broadcast",
+event:"room-presence",
+payload
+});
 
+}catch(error){
 
-/*
-The first person in the room becomes caller.
-*/
-
-isCaller=
-data[0].user_name===yourName;
-
-if(isCaller){
-
-/*
-Small delay gives the other browser
-time to subscribe to signaling.
-*/
-
-setTimeout(
-createOffer,
-1200
+console.error(
+"Room broadcast error:",
+error
 );
 
 }
@@ -1554,13 +1975,63 @@ createOffer,
 
 
 /* =====================================================
-PEER CONNECTION
+SEND WEBRTC SIGNAL
+===================================================== */
+
+async function sendWebRTC(
+type,
+data
+){
+
+if(
+!realtimeChannel||
+!realtimeReady
+)
+return;
+
+try{
+
+const response=
+await realtimeChannel.send({
+
+type:"broadcast",
+
+event:"webrtc",
+
+payload:{
+sender:currentUserId,
+type:type,
+data:data
+}
+
+});
+
+console.log(
+"Sent WebRTC:",
+type,
+response
+);
+
+}catch(error){
+
+console.error(
+"WebRTC broadcast error:",
+error
+);
+
+}
+
+}
+
+
+/* =====================================================
+CREATE PEER
 ===================================================== */
 
 async function createPeerConnection(){
 
 if(peerConnection)
-return;
+return peerConnection;
 
 peerConnection=
 new RTCPeerConnection(
@@ -1569,7 +2040,7 @@ rtcConfig
 
 
 /*
-Add local camera if already active.
+Add local camera if already available.
 */
 
 if(cameraStream){
@@ -1589,14 +2060,14 @@ cameraStream
 
 
 /*
-REMOTE CAMERA
+Receive partner camera.
 */
 
 peerConnection.ontrack=
 event=>{
 
 console.log(
-"Remote video received"
+"Remote track received"
 );
 
 const video=
@@ -1604,13 +2075,10 @@ document.getElementById(
 "partnerVideo"
 );
 
-if(event.streams[0]){
+if(event.streams&&event.streams[0]){
 
 video.srcObject=
 event.streams[0];
-
-video.play()
-.catch(()=>{});
 
 }
 
@@ -1621,18 +2089,17 @@ document
 document
 .getElementById("partnerStatus")
 .textContent=
-"🟢 Cameras connected ♡";
+"🟢 Live together ♡";
 
-document
-.getElementById("cameraStatus")
-.textContent=
-"🟢 You are connected with your partner";
+updateCameraStatus(
+"🟢 Both cameras connected"
+);
 
 };
 
 
 /*
-ICE
+ICE candidates.
 */
 
 peerConnection.onicecandidate=
@@ -1640,7 +2107,7 @@ async event=>{
 
 if(event.candidate){
 
-await sendSignal(
+await sendWebRTC(
 "candidate",
 event.candidate.toJSON()
 );
@@ -1651,7 +2118,7 @@ event.candidate.toJSON()
 
 
 /*
-STATE
+Connection state.
 */
 
 peerConnection.onconnectionstatechange=
@@ -1661,7 +2128,7 @@ const state=
 peerConnection.connectionState;
 
 console.log(
-"WebRTC:",
+"WebRTC state:",
 state
 );
 
@@ -1671,15 +2138,17 @@ document
 .getElementById("partnerWaiting")
 .style.display="none";
 
-document
-.getElementById("partnerStatus")
-.textContent=
-"🟢 Cameras connected ♡";
+updateCameraStatus(
+"🟢 Live together"
+);
 
-document
-.getElementById("cameraStatus")
-.textContent=
-"🟢 Connected";
+}
+
+if(state==="connecting"){
+
+updateCameraStatus(
+"🟡 Connecting cameras..."
+);
 
 }
 
@@ -1688,40 +2157,90 @@ state==="failed"||
 state==="disconnected"
 ){
 
-document
-.getElementById("cameraStatus")
-.textContent=
-"🟠 Connection interrupted — reconnecting...";
+updateCameraStatus(
+"🟠 Camera connection interrupted"
+);
+
+}
+
+if(state==="closed"){
+
+updateCameraStatus(
+"⚪ Connection closed"
+);
 
 }
 
 };
 
+
+/*
+ICE connection state.
+*/
+
+peerConnection.oniceconnectionstatechange=
+()=>{
+
+console.log(
+"ICE state:",
+peerConnection.iceConnectionState
+);
+
+};
+
+
+/*
+Negotiation event.
+
+We intentionally do not automatically
+create offers here. The hello system
+chooses one caller.
+*/
+
+return peerConnection;
+
 }
 
 
 /* =====================================================
-OFFER
+CREATE OFFER
 ===================================================== */
 
 async function createOffer(){
 
-if(!peerConnection)
-await createPeerConnection();
+if(makingOffer)
+return;
+
+makingOffer=true;
 
 try{
+
+await createPeerConnection();
+
+
+/*
+If camera was started after the peer
+was created, make sure the track exists.
+*/
+
+await ensureLocalTrack();
+
 
 const offer=
 await peerConnection.createOffer();
 
-await peerConnection
-.setLocalDescription(offer);
+await peerConnection.setLocalDescription(
+offer
+);
 
-await sendSignal(
+await sendWebRTC(
 "offer",
 {
-type:offer.type,
-sdp:offer.sdp
+type:
+peerConnection.localDescription.type,
+
+sdp:
+peerConnection.localDescription.sdp
 }
 );
 
@@ -1732,76 +2251,151 @@ console.error(
 error
 );
 
+}finally{
+
+makingOffer=false;
+
 }
 
 }
 
 
 /* =====================================================
-HANDLE SIGNAL
+CREATE ANSWER
 ===================================================== */
 
-async function handleSignal(signal){
-
-if(!peerConnection)
-await createPeerConnection();
+async function createAnswer(){
 
 try{
 
-if(signal.type==="offer"){
+await createPeerConnection();
 
-await peerConnection
-.setRemoteDescription(
-new RTCSessionDescription(
-signal.data
-)
-);
-
-remoteDescriptionSet=true;
+await ensureLocalTrack();
 
 const answer=
-await peerConnection
-.createAnswer();
+await peerConnection.createAnswer();
 
-await peerConnection
-.setLocalDescription(answer);
+await peerConnection.setLocalDescription(
+answer
+);
 
-await sendSignal(
+await sendWebRTC(
 "answer",
 {
-type:answer.type,
-sdp:answer.sdp
+type:
+peerConnection.localDescription.type,
+
+sdp:
+peerConnection.localDescription.sdp
 }
+);
+
+}catch(error){
+
+console.error(
+"Answer error:",
+error
 );
 
 }
 
+}
 
-else if(signal.type==="answer"){
+
+/* =====================================================
+HANDLE WEBRTC
+===================================================== */
+
+async function handleWebRTCMessage(
+message
+){
+
+try{
+
+await createPeerConnection();
+
+
+/*
+OFFER
+*/
+
+if(message.type==="offer"){
+
+console.log(
+"Received offer"
+);
 
 await peerConnection
 .setRemoteDescription(
 new RTCSessionDescription(
-signal.data
+message.data
 )
 );
 
-remoteDescriptionSet=true;
+await flushPendingCandidates();
+
+await createAnswer();
+
+return;
 
 }
 
 
-else if(signal.type==="candidate"){
+/*
+ANSWER
+*/
+
+if(message.type==="answer"){
+
+console.log(
+"Received answer"
+);
+
+await peerConnection
+.setRemoteDescription(
+new RTCSessionDescription(
+message.data
+)
+);
+
+await flushPendingCandidates();
+
+return;
+
+}
+
+
+/*
+ICE CANDIDATE
+*/
+
+if(message.type==="candidate"){
+
+const candidate=
+new RTCIceCandidate(
+message.data
+);
+
+
+/*
+Sometimes ICE arrives before the
+remote description. Queue it.
+*/
 
 if(
-remoteDescriptionSet
+peerConnection.remoteDescription&&
+peerConnection.remoteDescription.type
 ){
 
 await peerConnection
 .addIceCandidate(
-new RTCIceCandidate(
-signal.data
-)
+candidate
+);
+
+}else{
+
+pendingCandidates.push(
+candidate
 );
 
 }
@@ -1811,7 +2405,7 @@ signal.data
 }catch(error){
 
 console.error(
-"Signal handling error:",
+"WebRTC handling error:",
 error
 );
 
@@ -1821,26 +2415,84 @@ error
 
 
 /* =====================================================
-SEND SIGNAL
+FLUSH ICE
 ===================================================== */
 
-async function sendSignal(type,data){
+async function flushPendingCandidates(){
 
-const {error}=
-await supabaseClient
-.from("call_signals")
-.insert({
-room_code:roomCode,
-sender:currentUserId,
-type:type,
-data:data
-});
+if(!peerConnection)
+return;
 
-if(error){
+const candidates=
+pendingCandidates.splice(
+0
+);
+
+for(
+const candidate of candidates
+){
+
+try{
+
+await peerConnection
+.addIceCandidate(
+candidate
+);
+
+}catch(error){
 
 console.error(
-"Signal database error:",
+"ICE candidate error:",
 error
+);
+
+}
+
+}
+
+}
+
+
+/* =====================================================
+ENSURE LOCAL TRACK
+===================================================== */
+
+async function ensureLocalTrack(){
+
+if(!cameraStream)
+return;
+
+if(!peerConnection)
+return;
+
+const track=
+cameraStream
+.getVideoTracks()[0];
+
+if(!track)
+return;
+
+const senders=
+peerConnection.getSenders();
+
+const existing=
+senders.find(
+sender=>
+sender.track&&
+sender.track.kind==="video"
+);
+
+if(existing){
+
+await existing.replaceTrack(
+track
+);
+
+}else{
+
+peerConnection.addTrack(
+track,
+cameraStream
 );
 
 }
@@ -1856,83 +2508,78 @@ async function startCamera(){
 
 try{
 
-document
-.getElementById("cameraStatus")
-.textContent=
-"🟡 Requesting camera...";
+if(
+!navigator.mediaDevices||
+!navigator.mediaDevices.getUserMedia
+){
+
+alert(
+"Your browser does not allow camera access here. Make sure the site is opened over HTTPS."
+);
+
+return;
+
+}
+
 
 cameraStream=
-await navigator.mediaDevices.getUserMedia({
+await navigator
+.mediaDevices
+.getUserMedia({
+
 video:{
 facingMode:"user",
-width:{ideal:800},
-height:{ideal:1000},
-aspectRatio:0.8
+width:{
+ideal:1280
 },
+height:{
+ideal:720
+}
+},
+
 audio:false
+
 });
 
+
 const video=
-document.getElementById("myCamera");
+document.getElementById(
+"myCamera"
+);
 
 video.srcObject=
 cameraStream;
 
 await video.play();
 
+updateCameraStatus(
+"🟢 Your camera is ready"
+);
+
 
 /*
-Create WebRTC if needed.
+Create peer after camera exists.
 */
-
-if(!peerConnection){
 
 await createPeerConnection();
 
-}else{
-
-/*
-Replace existing track.
-*/
-
-const track=
-cameraStream
-.getVideoTracks()[0];
-
-const sender=
-peerConnection
-.getSenders()
-.find(
-s=>s.track &&
-s.track.kind==="video"
-);
-
-if(sender){
-
-await sender.replaceTrack(track);
-
-}else{
-
-peerConnection.addTrack(
-track,
-cameraStream
-);
-
-}
-
-}
+await ensureLocalTrack();
 
 
 /*
-Now make sure signaling is active.
+If we're the caller, create offer again
+so the camera track is included.
 */
 
-startSignaling();
+if(
+remoteUserId&&
+currentUserId <
+remoteUserId
+){
 
-document
-.getElementById("cameraStatus")
-.textContent=
-"🟢 Your camera is ready";
+await createOffer();
+
+}
 
 }catch(error){
 
@@ -1941,13 +2588,8 @@ console.error(
 error
 );
 
-document
-.getElementById("cameraStatus")
-.textContent=
-"🔴 Camera permission needed";
-
 alert(
-"Camera access was blocked. Please allow camera access for this website, then press Start Camera again."
+"Camera access was blocked. Please allow camera permission in your browser settings and try again."
 );
 
 }
@@ -1956,12 +2598,47 @@ alert(
 
 
 /* =====================================================
-PHOTO STRIP
+STATUS
+===================================================== */
+
+function updatePartnerStatus(
+text
+){
+
+const el=
+document.getElementById(
+"partnerStatus"
+);
+
+if(el)
+el.textContent=text;
+
+}
+
+function updateCameraStatus(
+text
+){
+
+const el=
+document.getElementById(
+"cameraStatus"
+);
+
+if(el)
+el.textContent=text;
+
+}
+
+
+/* =====================================================
+OPEN PHOTOBOOTH
 ===================================================== */
 
 function openPhotobooth(){
 
 photos=[];
+
+selectedDesign="coquette";
 
 decorationHistory=[];
 
@@ -1986,20 +2663,27 @@ nextStep(1);
 
 
 /* =====================================================
-STRIP COUNT
+STRIP SELECT
 ===================================================== */
 
-function selectStrip(number,button){
+function selectStrip(
+number,
+button
+){
 
 selectedStrip=number;
 
 document
-.querySelectorAll("#step1 .design-card")
+.querySelectorAll(".strip-option")
 .forEach(x=>{
-x.classList.remove("selected");
+x.classList.remove(
+"selected"
+);
 });
 
-button.classList.add("selected");
+button.classList.add(
+"selected"
+);
 
 document
 .getElementById("photoCount")
@@ -2012,7 +2696,7 @@ selectedStrip;
 
 
 /* =====================================================
-NEXT STEP
+STEP
 ===================================================== */
 
 function nextStep(number){
@@ -2020,7 +2704,9 @@ function nextStep(number){
 document
 .querySelectorAll(".step")
 .forEach(x=>{
-x.classList.remove("active");
+x.classList.remove(
+"active"
+);
 });
 
 document
@@ -2039,7 +2725,14 @@ if(number===2){
 if(!cameraStream)
 startCamera();
 
-startSignaling();
+if(
+!realtimeChannel||
+!realtimeReady
+){
+
+connectToRoom();
+
+}
 
 }
 
@@ -2073,7 +2766,7 @@ function takePhoto(){
 if(!cameraStream){
 
 alert(
-"Press Start Camera first."
+"Start your camera first."
 );
 
 return;
@@ -2137,7 +2830,8 @@ capturePhoto();
 
 
 /* =====================================================
-CAPTURE 4:5
+CAPTURE PHOTO
+4:5
 ===================================================== */
 
 function capturePhoto(){
@@ -2148,10 +2842,13 @@ document.getElementById(
 );
 
 const canvas=
-document.createElement("canvas");
+document.createElement(
+"canvas"
+);
+
 
 /*
-4:5 exact ratio.
+EXACT 4:5
 */
 
 canvas.width=800;
@@ -2160,33 +2857,60 @@ canvas.height=1000;
 const ctx=
 canvas.getContext("2d");
 
-const vw=video.videoWidth;
-const vh=video.videoHeight;
 
-const targetRatio=4/5;
-const videoRatio=vw/vh;
-
-let sx=0;
-let sy=0;
-let sw=vw;
-let sh=vh;
-
-if(videoRatio>targetRatio){
-
-sw=vh*targetRatio;
-sx=(vw-sw)/2;
-
-}else{
-
-sh=vw/targetRatio;
-sy=(vh-sh)/2;
-
-}
+/*
+Mirror camera image.
+*/
 
 ctx.save();
 
-ctx.translate(800,0);
-ctx.scale(-1,1);
+ctx.translate(
+800,
+0
+);
+
+ctx.scale(
+-1,
+1
+);
+
+
+/*
+Crop the video into 4:5
+without stretching.
+*/
+
+const videoRatio=
+video.videoWidth/
+video.videoHeight;
+
+const targetRatio=
+4/5;
+
+let sx=0;
+let sy=0;
+let sw=video.videoWidth;
+let sh=video.videoHeight;
+
+if(videoRatio>targetRatio){
+
+sw=
+video.videoHeight*
+targetRatio;
+
+sx=
+(video.videoWidth-sw)/2;
+
+}else{
+
+sh=
+video.videoWidth/
+targetRatio;
+
+sy=
+(video.videoHeight-sh)/2;
+
+}
 
 ctx.drawImage(
 video,
@@ -2205,7 +2929,7 @@ ctx.restore();
 const image=
 canvas.toDataURL(
 "image/jpeg",
-.94
+.92
 );
 
 photos.push(image);
@@ -2262,6 +2986,37 @@ preview.appendChild(img);
 
 
 /* =====================================================
+DESIGN NAMES
+===================================================== */
+
+function getDesignName(name){
+
+const names={
+
+coquette:"🎀 Coquette",
+film:"🎞️ 35mm Film",
+scrapbook:"📒 Scrapbook",
+y2k:"💿 Y2K",
+strawberry:"🍓 Strawberry",
+lace:"୨୧ Lace",
+postcard:"💌 Love Postcard",
+floral:"🌷 Floral",
+dreamy:"☁️ Dreamy",
+vintage:"📻 Vintage",
+polaroid:"📷 Polaroid",
+diary:"📔 Dear Diary",
+editorial:"🖤 Editorial",
+pinkcam:"🎀 Pink Cam",
+cafe:"☕ Café Memory"
+
+};
+
+return names[name]||name;
+
+}
+
+
+/* =====================================================
 DESIGN PICKER
 ===================================================== */
 
@@ -2281,14 +3036,22 @@ document.createElement("button");
 
 card.className=
 "design-card"+
-(name===selectedDesign
-?" selected":"");
+(
+name===selectedDesign
+?" selected"
+:""
+);
 
 const preview=
 document.createElement("div");
 
 preview.className=
 "design-preview theme-"+name;
+
+
+/*
+Actual 4:5 photos.
+*/
 
 photos.forEach(image=>{
 
@@ -2301,10 +3064,12 @@ preview.appendChild(img);
 
 });
 
+
 const label=
 document.createElement("div");
 
-label.className="design-name";
+label.className=
+"design-name";
 
 label.textContent=
 getDesignName(name);
@@ -2312,27 +3077,53 @@ getDesignName(name);
 card.appendChild(preview);
 card.appendChild(label);
 
+
+/*
+Tap.
+*/
+
 card.onclick=()=>{
 
 selectedDesign=name;
 
 document
-.querySelectorAll("#designGrid .design-card")
+.querySelectorAll(".design-card")
 .forEach(x=>{
-x.classList.remove("selected");
+x.classList.remove(
+"selected"
+);
 });
 
-card.classList.add("selected");
+card.classList.add(
+"selected"
+);
 
 renderDesignPreview();
 
 };
+
+
+/*
+Desktop hover.
+*/
 
 card.onmouseenter=()=>{
 
 if(window.innerWidth>600){
 
 selectedDesign=name;
+
+document
+.querySelectorAll(".design-card")
+.forEach(x=>{
+x.classList.remove(
+"selected"
+);
+});
+
+card.classList.add(
+"selected"
+);
 
 renderDesignPreview();
 
@@ -2350,36 +3141,6 @@ renderDesignPreview();
 
 
 /* =====================================================
-DESIGN NAMES
-===================================================== */
-
-function getDesignName(name){
-
-const names={
-coquette:"🎀 Coquette",
-pinkfilm:"🎞 Pink Film",
-vintage:"📷 Vintage",
-scrapbook:"📒 Scrapbook",
-y2k:"💿 Y2K",
-strawberry:"🍓 Strawberry",
-lace:"🕊 Lace",
-postcard:"💌 Postcard",
-floral:"🌸 Floral",
-dreamy:"☁️ Dreamy",
-ballet:"🩰 Ballet",
-newspaper:"📰 Newspaper",
-diary:"📔 Diary",
-brownie:"🤎 Brownie",
-minimal:"♡ Minimal",
-redfilm:"♥ Red Film"
-};
-
-return names[name]||name;
-
-}
-
-
-/* =====================================================
 DESIGN PREVIEW
 ===================================================== */
 
@@ -2391,7 +3152,8 @@ document.getElementById(
 );
 
 preview.className=
-"final-strip theme-"+selectedDesign;
+"final-strip theme-"+
+selectedDesign;
 
 preview.innerHTML="";
 
@@ -2429,6 +3191,8 @@ CHOOSE DESIGN
 function chooseDesign(){
 
 buildFinalStrip();
+
+decorationHistory=[];
 
 nextStep(4);
 
@@ -2480,10 +3244,30 @@ strip.appendChild(title);
 
 
 /* =====================================================
+DECORATION HISTORY
+===================================================== */
+
+function recordDecoration(
+element
+){
+
+decorationHistory.push(
+element
+);
+
+}
+
+
+/* =====================================================
 ADD STICKER
 ===================================================== */
 
 function addSticker(symbol){
+
+const strip=
+document.getElementById(
+"photoStrip"
+);
 
 const sticker=
 document.createElement("div");
@@ -2498,14 +3282,11 @@ sticker.style.left=
 sticker.style.top=
 (10+Math.random()*80)+"%";
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
-
 strip.appendChild(sticker);
 
-decorationHistory.push(sticker);
+recordDecoration(
+sticker
+);
 
 makeMovable(
 sticker,
@@ -2532,6 +3313,11 @@ input.value.trim();
 if(!value)
 return;
 
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
 const text=
 document.createElement("div");
 
@@ -2543,14 +3329,11 @@ text.textContent=value;
 text.style.left="50%";
 text.style.top="50%";
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
-
 strip.appendChild(text);
 
-decorationHistory.push(text);
+recordDecoration(
+text
+);
 
 makeMovable(
 text,
@@ -2563,7 +3346,7 @@ input.value="";
 
 
 /* =====================================================
-MOVABLE
+MOVABLE DECORATION
 ===================================================== */
 
 function makeMovable(
@@ -2582,16 +3365,20 @@ const rect=
 container.getBoundingClientRect();
 
 let x=
-((clientX-rect.left)/
-rect.width)*100;
+(
+(clientX-rect.left)/
+rect.width
+)*100;
 
 let y=
-((clientY-rect.top)/
-rect.height)*100;
+(
+(clientY-rect.top)/
+rect.height
+)*100;
 
 x=Math.max(
-4,
-Math.min(96,x)
+5,
+Math.min(95,x)
 );
 
 y=Math.max(
@@ -2608,7 +3395,9 @@ y+"%";
 }
 
 
-/* TOUCH */
+/*
+Touch.
+*/
 
 element.addEventListener(
 "touchstart",
@@ -2619,7 +3408,9 @@ dragging=true;
 e.preventDefault();
 
 },
-{passive:false}
+{
+passive:false
+}
 );
 
 element.addEventListener(
@@ -2631,27 +3422,33 @@ return;
 
 e.preventDefault();
 
-const t=
+const touch=
 e.touches[0];
 
 move(
-t.clientX,
-t.clientY
+touch.clientX,
+touch.clientY
 );
 
 },
-{passive:false}
+{
+passive:false
+}
 );
 
 element.addEventListener(
 "touchend",
 ()=>{
+
 dragging=false;
+
 }
 );
 
 
-/* MOUSE */
+/*
+Mouse.
+*/
 
 element.addEventListener(
 "mousedown",
@@ -2664,28 +3461,54 @@ e.preventDefault();
 }
 );
 
-document.addEventListener(
-"mousemove",
+const mouseMove=
 e=>{
 
-if(dragging){
+if(!dragging)
+return;
 
 move(
 e.clientX,
 e.clientY
 );
 
-}
+};
 
-}
+const mouseUp=
+()=>{
+
+dragging=false;
+
+};
+
+document.addEventListener(
+"mousemove",
+mouseMove
 );
 
 document.addEventListener(
 "mouseup",
-()=>{
-dragging=false;
-}
+mouseUp
 );
+
+
+/*
+Store cleanup functions on element.
+*/
+
+element._cleanup=()=>{
+
+document.removeEventListener(
+"mousemove",
+mouseMove
+);
+
+document.removeEventListener(
+"mouseup",
+mouseUp
+);
+
+};
 
 }
 
@@ -2694,9 +3517,11 @@ dragging=false;
 UNDO
 ===================================================== */
 
-function undoDecoration(){
+function undoLast(){
 
-if(!decorationHistory.length){
+if(
+decorationHistory.length===0
+){
 
 return;
 
@@ -2705,9 +3530,12 @@ return;
 const last=
 decorationHistory.pop();
 
-if(last && last.parentNode){
+if(last){
 
-last.parentNode.removeChild(last);
+if(last._cleanup)
+last._cleanup();
+
+last.remove();
 
 }
 
@@ -2727,8 +3555,13 @@ document.getElementById(
 
 strip
 .querySelectorAll(".decor")
-.forEach(x=>{
-x.remove();
+.forEach(element=>{
+
+if(element._cleanup)
+element._cleanup();
+
+element.remove();
+
 });
 
 decorationHistory=[];
@@ -2737,7 +3570,7 @@ decorationHistory=[];
 
 
 /* =====================================================
-FINAL PREVIEW
+COPY FINAL PREVIEW
 ===================================================== */
 
 function copyFinalPreview(){
@@ -2752,28 +3585,74 @@ document.getElementById(
 "savedPreview"
 );
 
-target.innerHTML=
-source.innerHTML;
+target.innerHTML="";
 
 target.className=
 source.className;
+
+
+/*
+Clone everything.
+*/
+
+Array
+.from(source.children)
+.forEach(child=>{
+
+target.appendChild(
+child.cloneNode(true)
+);
+
+});
 
 }
 
 
 /* =====================================================
-SAVE
+SAVE PHOTO
 ===================================================== */
 
 async function saveStrip(){
+
+if(
+typeof html2canvas==="undefined"
+){
+
+const script=
+document.createElement("script");
+
+script.src=
+"https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
+
+script.onload=async()=>{
+
+await actuallySaveStrip();
+
+};
+
+document.head.appendChild(
+script
+);
+
+}else{
+
+await actuallySaveStrip();
+
+}
+
+}
+
+
+/* =====================================================
+ACTUAL SAVE
+===================================================== */
+
+async function actuallySaveStrip(){
 
 const strip=
 document.getElementById(
 "photoStrip"
 );
-
-if(!strip)
-return;
 
 try{
 
@@ -2803,10 +3682,13 @@ link.click();
 
 }catch(error){
 
-console.error(error);
+console.error(
+"Save error:",
+error
+);
 
 alert(
-"Something went wrong while saving the photo."
+"Something went wrong while saving the photo. Please try again."
 );
 
 }
@@ -2838,7 +3720,17 @@ peerConnection.close();
 
 }
 
-});
+if(realtimeChannel){
+
+supabaseClient
+.removeChannel(
+realtimeChannel
+);
+
+}
+
+}
+);
 
 </script>
 
