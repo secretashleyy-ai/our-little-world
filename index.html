@@ -233,7 +233,7 @@ h2 span{
 }
 
 .video-box.partner video{
-  transform:none;
+  transform:scaleX(-1);
 }
 
 .video-label{
@@ -1481,8 +1481,8 @@ function createCombinedPhoto(localImage, remoteImage, record){
         rightImage=local;
       }
 
-      drawRoundedImage(ctx, leftImage, startX, startY, cardW, cardH, 22);
-      drawRoundedImage(ctx, rightImage, startX + cardW + gap, startY, cardW, cardH, 22);
+      drawRoundedImageMirrored(ctx, leftImage, startX, startY, cardW, cardH, 22);
+      drawRoundedImageMirrored(ctx, rightImage, startX + cardW + gap, startY, cardW, cardH, 22);
 
       resolve(canvas.toDataURL("image/jpeg", .9));
     }
@@ -1494,7 +1494,7 @@ function createCombinedPhoto(localImage, remoteImage, record){
   });
 }
 
-function drawRoundedImage(ctx, img, x, y, w, h, radius){
+function drawRoundedImageMirrored(ctx, img, x, y, w, h, radius){
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(x+radius, y);
@@ -1515,7 +1515,10 @@ function drawRoundedImage(ctx, img, x, y, w, h, radius){
   const dx=x+(w-nw)/2;
   const dy=y+(h-nh)/2;
 
-  ctx.drawImage(img, dx, dy, nw, nh);
+  ctx.translate(dx + nw, dy);
+  ctx.scale(-1, 1);
+
+  ctx.drawImage(img, 0, 0, nw, nh);
   ctx.restore();
 }
 
