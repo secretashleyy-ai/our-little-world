@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Our Little World ♡</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -18,7 +18,6 @@ color:#55434b;
 }
 
 button,input,textarea{font:inherit}
-
 button{cursor:pointer}
 
 .page{
@@ -107,7 +106,6 @@ background:#b96d87;
 color:white;
 font-family:Arial,sans-serif;
 font-weight:bold;
-box-shadow:0 8px 20px #b96d8726;
 }
 
 .secondary{
@@ -189,11 +187,6 @@ display:flex;
 flex-direction:column;
 justify-content:flex-end;
 box-shadow:0 18px 40px #543b4512;
-transition:.2s;
-}
-
-.menu-card:hover{
-transform:translateY(-3px);
 }
 
 .menu-card .emoji{
@@ -220,23 +213,16 @@ background-size:18px 18px;
 }
 
 .letters{
-background:
-repeating-linear-gradient(0deg,#fff3df,#fff3df 20px,#f1dfc7 21px);
+background:repeating-linear-gradient(
+0deg,#fff3df,#fff3df 20px,#f1dfc7 21px);
 }
 
 .memories{
-background:
-linear-gradient(135deg,#eee3f7 25%,transparent 25%),
-linear-gradient(315deg,#eee3f7 25%,transparent 25%),
-#faf5ff;
-background-size:35px 35px;
+background:#f4effa;
 }
 
 .distance{
-background:
-radial-gradient(circle at 30% 30%,#fff 2px,transparent 3px),
-#dfeee8;
-background-size:30px 30px;
+background:#e5f1ec;
 }
 
 .content{
@@ -312,10 +298,6 @@ position:relative;
 overflow:hidden;
 }
 
-/* =========================
-   DECORATED TEMPLATE PREVIEWS
-========================= */
-
 .coquette{
 background:
 radial-gradient(circle at 15px 15px,#d68aa2 0 2px,transparent 3px),
@@ -324,7 +306,7 @@ background-size:30px 30px;
 }
 
 .coquette:before{
-content:"🎀  ♡  🎀  ♡";
+content:"🎀 ♡ 🎀 ♡";
 position:absolute;
 left:10px;
 right:10px;
@@ -334,17 +316,13 @@ text-align:center;
 }
 
 .retro{
-background:
-repeating-linear-gradient(
-90deg,
-#b87955 0 5px,
-#d6a27f 5px 10px
-);
+background:repeating-linear-gradient(
+90deg,#b87955 0 5px,#d6a27f 5px 10px);
 border:9px solid #76503e;
 }
 
 .retro:after{
-content:"★  1970s  ★";
+content:"★ 1970s ★";
 position:absolute;
 left:12px;
 right:12px;
@@ -353,42 +331,12 @@ transform:translateY(-50%);
 background:#f4d4a8;
 padding:10px 4px;
 text-align:center;
-font-size:15px;
 color:#674431;
 }
 
 .scrapbook{
 background:#f1dfc7;
-}
-
-.scrapbook:before,
-.scrapbook:after{
-content:"";
-position:absolute;
-width:90px;
-height:110px;
-background:#fff;
-box-shadow:0 5px 12px #0002;
-}
-
-.scrapbook:before{
-left:15px;
-top:25px;
-transform:rotate(-8deg);
-}
-
-.scrapbook:after{
-right:15px;
-bottom:20px;
-transform:rotate(8deg);
-}
-
-.scrapbook{
 border:8px dashed #b58d6d;
-}
-
-.scrapbook .fake{
-display:block;
 }
 
 .y2k{
@@ -398,34 +346,11 @@ linear-gradient(135deg,#b9d8ec,#d9c9ef,#f3c6dd);
 background-size:24px 24px,100% 100%;
 }
 
-.y2k:after{
-content:"✦ ✧ Y2K ✧ ✦";
-position:absolute;
-bottom:18px;
-left:10px;
-right:10px;
-text-align:center;
-font-size:20px;
-font-weight:bold;
-color:#735f91;
-}
-
 .strawberry{
 background:
 radial-gradient(circle at 30px 25px,#e75f6d 0 7px,transparent 8px),
-radial-gradient(circle at 65px 65px,#e75f6d 0 6px,transparent 7px),
 #fff0e9;
-background-size:85px 85px;
-}
-
-.strawberry:after{
-content:"🍓  ♡  🍓";
-position:absolute;
-bottom:15px;
-left:0;
-right:0;
-text-align:center;
-font-size:27px;
+background-size:70px 70px;
 }
 
 .lace{
@@ -436,111 +361,27 @@ background-size:18px 18px;
 border:9px double #b98ca2;
 }
 
-.lace:after{
-content:"♡  delicate days  ♡";
-position:absolute;
-bottom:18px;
-left:5px;
-right:5px;
-text-align:center;
-font-style:italic;
-color:#8c6174;
-}
-
 .postcard{
 background:#e8d2b9;
 border:10px solid #9f755c;
 }
 
-.postcard:before{
-content:"LOVE MAIL";
-position:absolute;
-top:22px;
-left:15px;
-right:15px;
-border-bottom:2px solid #9f755c;
-padding-bottom:8px;
-font-size:15px;
-letter-spacing:4px;
-color:#795746;
-}
-
-.postcard:after{
-content:"♡  ✉  ♡";
-position:absolute;
-bottom:20px;
-left:0;
-right:0;
-text-align:center;
-font-size:25px;
-}
-
 .floral{
 background:
-radial-gradient(circle at 20px 20px,#d88da2 0 4px,transparent 5px),
-radial-gradient(circle at 45px 45px,#f1b6c7 0 5px,transparent 6px),
+radial-gradient(circle,#d88da2 0 4px,transparent 5px),
 #f7e9dc;
-background-size:70px 70px;
+background-size:60px 60px;
 border:7px solid #d3a0ae;
 }
 
-.floral:after{
-content:"🌸  🌿  🌸  🌿";
-position:absolute;
-bottom:13px;
-left:0;
-right:0;
-text-align:center;
-font-size:24px;
-}
-
 .dreamy{
-background:
-radial-gradient(circle at 20% 30%,#fff 0 12px,transparent 13px),
-radial-gradient(circle at 70% 60%,#fff 0 15px,transparent 16px),
-linear-gradient(#c9d2ec,#e9d9ee);
-}
-
-.dreamy:after{
-content:"☁︎  ✦  ☾  ✦  ☁︎";
-position:absolute;
-bottom:18px;
-left:0;
-right:0;
-text-align:center;
-font-size:27px;
-color:#777798;
+background:linear-gradient(#c9d2ec,#e9d9ee);
 }
 
 .vintage{
-background:
-repeating-linear-gradient(
-45deg,
-#d9c3b1 0 8px,
-#c7aa94 8px 16px
-);
+background:repeating-linear-gradient(
+45deg,#d9c3b1 0 8px,#c7aa94 8px 16px);
 border:9px solid #876b59;
-}
-
-.vintage:after{
-content:"EST. LOVE • ALWAYS";
-position:absolute;
-bottom:15px;
-left:0;
-right:0;
-text-align:center;
-font-size:13px;
-letter-spacing:2px;
-color:#634d40;
-}
-
-/* ========================= */
-
-.template-name{
-padding:11px;
-font-family:Arial,sans-serif;
-font-size:11px;
-font-weight:bold;
 }
 
 .camera{
@@ -567,6 +408,7 @@ height:280px;
 object-fit:cover;
 display:block;
 background:#292126;
+transform:none;
 }
 
 .video-label{
@@ -600,7 +442,6 @@ z-index:2;
 
 .waiting .heart{
 font-size:50px;
-margin-bottom:10px;
 }
 
 .camera-buttons{
@@ -619,6 +460,101 @@ border:7px solid #e3b3c2;
 background:white;
 font-size:22px;
 }
+
+#photoPreview{
+text-align:center;
+}
+
+#photoPreview img{
+width:70px;
+height:88px;
+object-fit:cover;
+margin:5px;
+border-radius:8px;
+}
+
+#editButton:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+
+/* ================= PHOTO EDITOR ================= */
+
+.photo-editor{
+max-width:650px;
+margin:20px auto;
+padding:18px;
+background:white;
+border-radius:30px;
+box-shadow:0 20px 60px #51363f18;
+}
+
+.sticker-bar{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:8px 3px 16px;
+-webkit-overflow-scrolling:touch;
+}
+
+.sticker-choice{
+flex:0 0 auto;
+width:52px;
+height:52px;
+border:1px solid #eadde2;
+border-radius:15px;
+background:#fff8fa;
+font-size:26px;
+}
+
+.sticker-choice:active{
+transform:scale(.9);
+}
+
+.edit-photo-area{
+position:relative;
+width:min(430px,100%);
+margin:auto;
+display:flex;
+justify-content:center;
+background:#f7edf1;
+border-radius:25px;
+padding:15px;
+overflow:hidden;
+}
+
+.edit-photo{
+display:block;
+width:100%;
+max-width:400px;
+aspect-ratio:4/5;
+object-fit:cover;
+border-radius:8px;
+}
+
+.photo-sticker{
+position:absolute;
+font-size:42px;
+z-index:5;
+user-select:none;
+pointer-events:none;
+}
+
+.edit-instruction{
+text-align:center;
+font-family:Arial,sans-serif;
+font-size:12px;
+color:#967e88;
+padding:8px 0 15px;
+}
+
+.save-photo{
+margin-top:18px;
+}
+
+
+/* ================= FINAL STRIP ================= */
 
 .editor{
 display:grid;
@@ -643,30 +579,26 @@ width:290px;
 padding:14px;
 overflow:hidden;
 box-shadow:0 20px 45px #51363f35;
-transition:.2s;
 }
 
 .photo-strip img{
 display:block;
 width:100%;
-aspect-ratio:4/3;
+aspect-ratio:4/5;
 object-fit:cover;
-margin-bottom:7px;
+margin-bottom:8px;
 }
 
 .strip-title{
 text-align:center;
-padding:12px 5px 7px;
+padding:13px 5px 8px;
 font-size:16px;
-letter-spacing:.5px;
 }
 
 .decor{
 position:absolute;
 z-index:20;
 font-size:30px;
-cursor:move;
-user-select:none;
 }
 
 .decor-text{
@@ -703,19 +635,6 @@ background:white;
 font-size:22px;
 }
 
-.tools input,
-textarea{
-width:100%;
-padding:12px;
-border:1px solid #e5d9de;
-border-radius:12px;
-}
-
-textarea{
-min-height:220px;
-resize:vertical;
-}
-
 .simple{
 max-width:800px;
 margin:40px auto;
@@ -723,6 +642,14 @@ padding:30px;
 border-radius:30px;
 background:white;
 box-shadow:0 15px 45px #583c4715;
+}
+
+textarea{
+width:100%;
+min-height:220px;
+padding:12px;
+border:1px solid #e5d9de;
+border-radius:12px;
 }
 
 .letter-note{
@@ -733,6 +660,9 @@ background:#fff3f6;
 white-space:pre-wrap;
 line-height:29px;
 }
+
+
+/* ================= MOBILE ================= */
 
 @media(max-width:850px){
 
@@ -751,6 +681,10 @@ grid-template-columns:1fr;
 }
 
 @media(max-width:550px){
+
+.page{
+padding:10px;
+}
 
 .menu{
 grid-template-columns:1fr;
@@ -772,7 +706,7 @@ min-height:210px;
 }
 
 .content{
-padding:20px;
+padding:18px;
 }
 
 .step h2{
@@ -789,7 +723,15 @@ height:130px;
 }
 
 .photo-strip{
-width:260px;
+width:250px;
+}
+
+.photo-strip img{
+aspect-ratio:4/5;
+}
+
+.edit-photo-area{
+padding:10px;
 }
 
 }
@@ -797,6 +739,9 @@ width:260px;
 </head>
 
 <body>
+
+
+<!-- ================= WELCOME ================= -->
 
 <section id="welcome" class="page active home">
 
@@ -847,12 +792,18 @@ Enter Our World ♡
 </section>
 
 
+<!-- ================= HOME ================= -->
+
 <section id="home" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('welcome')">←</button>
+
 <div>our little ♡ world</div>
+
 <div></div>
+
 </div>
 
 <div class="home-content">
@@ -913,15 +864,23 @@ ROOM:
 </section>
 
 
+<!-- ================= PHOTOBOOTH ================= -->
+
 <section id="photobooth" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('home')">←</button>
+
 <div>photobooth ♡</div>
+
 <div id="stepNumber">1 / 3</div>
+
 </div>
 
 <div class="content">
+
+<!-- STEP 1 -->
 
 <div id="step1" class="step active">
 
@@ -962,6 +921,8 @@ Choose design →
 </div>
 
 
+<!-- STEP 2 -->
+
 <div id="step2" class="step">
 
 <div class="mini">choose your aesthetic</div>
@@ -974,52 +935,52 @@ Choose design →
 
 <button class="template selected" onclick="selectTemplate('coquette',this)">
 <div class="preview coquette"></div>
-<div class="template-name">🎀 Coquette</div>
+<div>🎀 Coquette</div>
 </button>
 
 <button class="template" onclick="selectTemplate('retro',this)">
 <div class="preview retro"></div>
-<div class="template-name">📻 Retro Film</div>
+<div>📻 Retro Film</div>
 </button>
 
 <button class="template" onclick="selectTemplate('scrapbook',this)">
 <div class="preview scrapbook"></div>
-<div class="template-name">📒 Scrapbook</div>
+<div>📒 Scrapbook</div>
 </button>
 
 <button class="template" onclick="selectTemplate('y2k',this)">
 <div class="preview y2k"></div>
-<div class="template-name">💿 Y2K</div>
+<div>💿 Y2K</div>
 </button>
 
 <button class="template" onclick="selectTemplate('strawberry',this)">
 <div class="preview strawberry"></div>
-<div class="template-name">🍓 Strawberry</div>
+<div>🍓 Strawberry</div>
 </button>
 
 <button class="template" onclick="selectTemplate('lace',this)">
 <div class="preview lace"></div>
-<div class="template-name">🕊️ Lace</div>
+<div>🕊️ Lace</div>
 </button>
 
 <button class="template" onclick="selectTemplate('postcard',this)">
 <div class="preview postcard"></div>
-<div class="template-name">💌 Postcard</div>
+<div>💌 Postcard</div>
 </button>
 
 <button class="template" onclick="selectTemplate('floral',this)">
 <div class="preview floral"></div>
-<div class="template-name">🌸 Floral</div>
+<div>🌸 Floral</div>
 </button>
 
 <button class="template" onclick="selectTemplate('dreamy',this)">
 <div class="preview dreamy"></div>
-<div class="template-name">☁️ Dreamy</div>
+<div>☁️ Dreamy</div>
 </button>
 
 <button class="template" onclick="selectTemplate('vintage',this)">
 <div class="preview vintage"></div>
-<div class="template-name">🌷 Vintage</div>
+<div>🌷 Vintage</div>
 </button>
 
 </div>
@@ -1034,6 +995,8 @@ Open photobooth →
 
 </div>
 
+
+<!-- STEP 3 -->
 
 <div id="step3" class="step">
 
@@ -1089,13 +1052,15 @@ Partner · <span id="cameraPartnerName">Them</span>
 Start Camera
 </button>
 
-<button class="shutter" onclick="takePhoto()">●</button>
+<button class="shutter" onclick="takePhoto()">
+●
+</button>
 
 <span id="photoCount">0 / 2</span>
 
 </div>
 
-<div id="photoPreview" style="text-align:center"></div>
+<div id="photoPreview"></div>
 
 <button id="editButton" class="primary" onclick="openEditor()" disabled>
 Design My Strip →
@@ -1106,6 +1071,66 @@ Design My Strip →
 </div>
 </section>
 
+
+<!-- ================= PHOTO EDITOR ================= -->
+
+<section id="photoEditor" class="page">
+
+<div class="topbar">
+
+<button class="back" onclick="backToCamera()">←</button>
+
+<div>decorate your photo ✨</div>
+
+<div></div>
+
+</div>
+
+<div class="photo-editor">
+
+<div class="mini" style="text-align:center">
+add a little something ♡
+</div>
+
+<div class="sticker-bar">
+
+<button class="sticker-choice" onclick="putPhotoSticker('🎀')">🎀</button>
+<button class="sticker-choice" onclick="putPhotoSticker('♡')">♡</button>
+<button class="sticker-choice" onclick="putPhotoSticker('♥')">♥</button>
+<button class="sticker-choice" onclick="putPhotoSticker('✦')">✦</button>
+<button class="sticker-choice" onclick="putPhotoSticker('☆')">☆</button>
+<button class="sticker-choice" onclick="putPhotoSticker('🌷')">🌷</button>
+<button class="sticker-choice" onclick="putPhotoSticker('🌸')">🌸</button>
+<button class="sticker-choice" onclick="putPhotoSticker('🍓')">🍓</button>
+<button class="sticker-choice" onclick="putPhotoSticker('🧸')">🧸</button>
+<button class="sticker-choice" onclick="putPhotoSticker('☁️')">☁️</button>
+<button class="sticker-choice" onclick="putPhotoSticker('💌')">💌</button>
+<button class="sticker-choice" onclick="putPhotoSticker('🦋')">🦋</button>
+<button class="sticker-choice" onclick="putPhotoSticker('✿')">✿</button>
+<button class="sticker-choice" onclick="putPhotoSticker('୨୧')">୨୧</button>
+
+</div>
+
+<div class="edit-instruction">
+Tap a sticker above to add it to your photo.
+</div>
+
+<div class="edit-photo-area" id="editPhotoArea">
+
+<img id="editingPhoto" class="edit-photo">
+
+</div>
+
+<button class="primary save-photo" onclick="saveEditedPhoto()">
+💾 Save Photo
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= FINAL EDITOR ================= -->
 
 <section id="editor" class="page">
 
@@ -1155,8 +1180,6 @@ Design My Strip →
 <button class="sticker" onclick="addSticker('☁️')">☁️</button>
 <button class="sticker" onclick="addSticker('💌')">💌</button>
 <button class="sticker" onclick="addSticker('🦋')">🦋</button>
-<button class="sticker" onclick="addSticker('✿')">✿</button>
-<button class="sticker" onclick="addSticker('୨୧')">୨୧</button>
 
 </div>
 
@@ -1175,16 +1198,23 @@ Add text
 </div>
 
 </div>
+
 </div>
 </section>
 
 
+<!-- ================= LETTERS ================= -->
+
 <section id="letters" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('home')">←</button>
+
 <div>love letters 💌</div>
+
 <div></div>
+
 </div>
 
 <div class="simple">
@@ -1202,15 +1232,22 @@ Save Letter 💌
 <div id="lettersList"></div>
 
 </div>
+
 </section>
 
+
+<!-- ================= MEMORIES ================= -->
 
 <section id="memories" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('home')">←</button>
+
 <div>our memories 🖼️</div>
+
 <div></div>
+
 </div>
 
 <div class="simple">
@@ -1224,15 +1261,22 @@ Your favorite little moments belong here. ♡
 </p>
 
 </div>
+
 </section>
 
+
+<!-- ================= DISTANCE ================= -->
 
 <section id="distance" class="page">
 
 <div class="topbar">
+
 <button class="back" onclick="showPage('home')">←</button>
+
 <div>our distance 🌎</div>
+
 <div></div>
+
 </div>
 
 <div class="simple" style="text-align:center">
@@ -1256,6 +1300,7 @@ Different places. Same little world.
 </div>
 
 </div>
+
 </section>
 
 
@@ -1290,6 +1335,7 @@ let selectedStrip=2;
 let selectedTemplate="coquette";
 
 let photos=[];
+let currentPhotoIndex=0;
 
 let cameraStream=null;
 let peerConnection=null;
@@ -1297,15 +1343,10 @@ let signalingChannel=null;
 
 const currentUserId=crypto.randomUUID();
 
-
 const rtcConfig={
 iceServers:[
-{
-urls:"stun:stun.l.google.com:19302"
-},
-{
-urls:"stun:stun1.l.google.com:19302"
-}
+{urls:"stun:stun.l.google.com:19302"},
+{urls:"stun:stun1.l.google.com:19302"}
 ]
 };
 
@@ -1343,22 +1384,17 @@ roomCode=
 document.getElementById("roomCode").value.trim().toUpperCase();
 
 if(!yourName){
-
 alert("Please enter your name ♡");
 return;
-
 }
 
 if(!roomCode){
-
 alert("Please enter a room code ♡");
 return;
-
 }
 
 document.getElementById("connectionMessage")
 .textContent="Connecting...";
-
 
 const {data,error}=
 await supabaseClient
@@ -1370,7 +1406,6 @@ user_name:yourName
 .select()
 .single();
 
-
 if(error){
 
 console.error(error);
@@ -1380,26 +1415,25 @@ alert(
 );
 
 return;
-
 }
 
+document.getElementById("displayYou")
+.textContent=yourName;
 
-document.getElementById("displayYou").textContent=
-yourName;
+document.getElementById("displayPartner")
+.textContent=partnerName||"Them";
 
-document.getElementById("displayPartner").textContent=
-partnerName||"Them";
+document.getElementById("displayRoom")
+.textContent=roomCode;
 
-document.getElementById("displayRoom").textContent=
-roomCode;
+document.getElementById("cameraYouName")
+.textContent=yourName;
 
-document.getElementById("cameraYouName").textContent=
-yourName;
+document.getElementById("cameraPartnerName")
+.textContent=partnerName||"Them";
 
-document.getElementById("cameraPartnerName").textContent=
-partnerName||"Them";
-
-document.getElementById("stripNames").textContent=
+document.getElementById("stripNames")
+.textContent=
 yourName+" ♡ "+(partnerName||"Them");
 
 showPage("home");
@@ -1410,15 +1444,14 @@ startRoomListener();
 
 
 /* =====================================================
-ROOM LISTENER
+ROOM
 ===================================================== */
 
-async function startRoomListener(){
-
-await checkRoom();
+function startRoomListener(){
 
 supabaseClient
 .channel("room-"+roomCode)
+
 .on(
 "postgres_changes",
 {
@@ -1431,7 +1464,10 @@ async()=>{
 await checkRoom();
 }
 )
+
 .subscribe();
+
+checkRoom();
 
 }
 
@@ -1445,14 +1481,11 @@ await supabaseClient
 .eq("room_code",roomCode);
 
 if(error){
-
 console.error(error);
 return;
-
 }
 
-const otherUsers=
-(data||[])
+const otherUsers=(data||[])
 .filter(row=>row.user_name!==yourName);
 
 if(otherUsers.length){
@@ -1462,8 +1495,7 @@ document.getElementById("partnerStatus")
 "🟢 "+otherUsers[0].user_name+" is here ♡";
 
 document.getElementById("partnerCameraText")
-.textContent=
-"Connecting...";
+.textContent="Connecting...";
 
 startSignaling();
 
@@ -1479,7 +1511,7 @@ document.getElementById("partnerStatus")
 
 
 /* =====================================================
-WEBRTC SIGNALING
+WEBRTC
 ===================================================== */
 
 function startSignaling(){
@@ -1488,7 +1520,9 @@ if(signalingChannel)return;
 
 signalingChannel=
 supabaseClient
-.channel("webrtc-"+roomCode+"-"+currentUserId)
+.channel(
+"webrtc-"+roomCode+"-"+currentUserId
+)
 .on(
 "postgres_changes",
 {
@@ -1507,7 +1541,8 @@ await handleSignal(signal);
 
 }
 )
-.subscribe(async status=>{
+.subscribe(
+async status=>{
 
 if(status==="SUBSCRIBED"){
 
@@ -1516,7 +1551,8 @@ await decideCaller();
 
 }
 
-});
+}
+);
 
 }
 
@@ -1541,10 +1577,6 @@ await createOffer();
 }
 
 
-/* =====================================================
-PEER CONNECTION
-===================================================== */
-
 async function createPeerConnection(){
 
 if(peerConnection)return;
@@ -1552,20 +1584,13 @@ if(peerConnection)return;
 peerConnection=
 new RTCPeerConnection(rtcConfig);
 
-
 if(cameraStream){
 
-cameraStream
-.getTracks()
-.forEach(track=>{
-peerConnection.addTrack(
-track,
-cameraStream
-);
+cameraStream.getTracks().forEach(track=>{
+peerConnection.addTrack(track,cameraStream);
 });
 
 }
-
 
 peerConnection.ontrack=event=>{
 
@@ -1576,13 +1601,12 @@ document.getElementById("partnerWaiting")
 .style.display="none";
 
 document.getElementById("partnerStatus")
-.textContent=
-"🟢 Live together ♡";
+.textContent="🟢 Live together ♡";
 
 };
 
-
-peerConnection.onicecandidate=async event=>{
+peerConnection.onicecandidate=
+async event=>{
 
 if(event.candidate){
 
@@ -1595,7 +1619,6 @@ event.candidate.toJSON()
 
 };
 
-
 peerConnection.onconnectionstatechange=()=>{
 
 if(peerConnection.connectionState==="connected"){
@@ -1604,8 +1627,7 @@ document.getElementById("partnerWaiting")
 .style.display="none";
 
 document.getElementById("partnerStatus")
-.textContent=
-"🟢 Live together ♡";
+.textContent="🟢 Live together ♡";
 
 }
 
@@ -1716,15 +1738,21 @@ try{
 
 cameraStream=
 await navigator.mediaDevices.getUserMedia({
+
 video:{
 facingMode:"user"
 },
+
 audio:false
+
 });
 
-document.getElementById("myCamera")
-.srcObject=cameraStream;
+const video=
+document.getElementById("myCamera");
 
+video.style.transform="none";
+
+video.srcObject=cameraStream;
 
 if(peerConnection){
 
@@ -1766,12 +1794,13 @@ alert(
 
 
 /* =====================================================
-PHOTOBOOTH
+PHOTOBOOTHE FLOW
 ===================================================== */
 
 function openPhotobooth(){
 
 photos=[];
+currentPhotoIndex=0;
 
 document.getElementById("photoCount")
 .textContent="0 / "+selectedStrip;
@@ -1800,7 +1829,7 @@ button.classList.add("selected");
 
 document.getElementById("photoCount")
 .textContent=
-"0 / "+selectedStrip;
+photos.length+" / "+selectedStrip;
 
 }
 
@@ -1889,7 +1918,6 @@ overlay.textContent=count;
 
 clearInterval(timer);
 overlay.remove();
-
 capturePhoto();
 
 }
@@ -1899,6 +1927,10 @@ capturePhoto();
 }
 
 
+/* =====================================================
+CAPTURE
+===================================================== */
+
 function capturePhoto(){
 
 const video=
@@ -1907,59 +1939,248 @@ document.getElementById("myCamera");
 const canvas=
 document.createElement("canvas");
 
-canvas.width=1000;
-canvas.height=750;
+/*
+PORTRAIT:
+4:5
+*/
+
+canvas.width=800;
+canvas.height=1000;
 
 const ctx=
 canvas.getContext("2d");
 
-/* NOT MIRRORED */
+/*
+NO MIRRORING.
+*/
+
 ctx.drawImage(
 video,
 0,
 0,
-1000,
-750
+800,
+1000
 );
 
 const image=
 canvas.toDataURL(
 "image/jpeg",
-0.92
+.92
 );
 
-photos.push(image);
+/*
+Do NOT put it in photos yet.
+
+The user must press
+SAVE PHOTO first.
+*/
+
+currentEditingImage=image;
+
+document.getElementById("editingPhoto")
+.src=image;
+
+document.getElementById("editPhotoArea")
+.querySelectorAll(".photo-sticker")
+.forEach(x=>x.remove());
+
+showPage("photoEditor");
+
+}
+
+
+/* =====================================================
+PHOTO EDITOR
+===================================================== */
+
+let currentEditingImage=null;
+
+function putPhotoSticker(symbol){
+
+const sticker=
+document.createElement("div");
+
+sticker.className="photo-sticker";
+
+sticker.textContent=symbol;
+
+/*
+Random but attractive position
+inside the photo.
+*/
+
+sticker.style.left=
+(10+Math.random()*70)+"%";
+
+sticker.style.top=
+(10+Math.random()*75)+"%";
+
+document.getElementById("editPhotoArea")
+.appendChild(sticker);
+
+}
+
+
+/*
+SAVE PHOTO
+
+This is the important new part.
+
+When they tap Save Photo,
+the edited photo is flattened
+into one image and added to
+the final strip.
+*/
+
+function saveEditedPhoto(){
+
+if(!currentEditingImage)return;
+
+const area=
+document.getElementById("editPhotoArea");
+
+const stickers=
+area.querySelectorAll(".photo-sticker");
+
+const canvas=
+document.createElement("canvas");
+
+canvas.width=800;
+canvas.height=1000;
+
+const ctx=
+canvas.getContext("2d");
+
+const image=
+new Image();
+
+image.onload=()=>{
+
+ctx.drawImage(
+image,
+0,
+0,
+800,
+1000
+);
+
+/*
+Add every sticker to the
+saved image.
+*/
+
+stickers.forEach(sticker=>{
+
+const rect=
+sticker.getBoundingClientRect();
+
+const areaRect=
+area.getBoundingClientRect();
+
+const x=
+((rect.left-areaRect.left)/
+areaRect.width)*800;
+
+const y=
+((rect.top-areaRect.top)/
+areaRect.height)*1000;
+
+const size=
+(rect.width/
+areaRect.width)*800;
+
+ctx.font=
+Math.max(25,size)+"px serif";
+
+ctx.textAlign="left";
+ctx.textBaseline="top";
+
+ctx.fillText(
+sticker.textContent,
+x,
+y
+);
+
+});
+
+const saved=
+canvas.toDataURL(
+"image/jpeg",
+.94
+);
+
+photos.push(saved);
+
+currentEditingImage=null;
 
 document.getElementById("photoCount")
 .textContent=
 photos.length+" / "+selectedStrip;
 
-const preview=
-document.createElement("img");
-
-preview.src=image;
-
-preview.style.width="75px";
-preview.style.height="65px";
-preview.style.objectFit="cover";
-preview.style.margin="5px";
-preview.style.borderRadius="8px";
-
-document.getElementById("photoPreview")
-.appendChild(preview);
+updatePhotoThumbnails();
 
 if(photos.length>=selectedStrip){
 
 document.getElementById("editButton")
 .disabled=false;
 
+showPage("photobooth");
+
+alert("Your photo was saved! ♡ Your strip is ready.");
+
+}else{
+
+showPage("photobooth");
+
 }
+
+};
+
+image.src=currentEditingImage;
 
 }
 
 
 /* =====================================================
-EDITOR
+BACK FROM PHOTO EDITOR
+===================================================== */
+
+function backToCamera(){
+
+currentEditingImage=null;
+
+showPage("photobooth");
+
+}
+
+
+/* =====================================================
+THUMBNAILS
+===================================================== */
+
+function updatePhotoThumbnails(){
+
+const preview=
+document.getElementById("photoPreview");
+
+preview.innerHTML="";
+
+photos.forEach(image=>{
+
+const img=
+document.createElement("img");
+
+img.src=image;
+
+preview.appendChild(img);
+
+});
+
+}
+
+
+/* =====================================================
+FINAL STRIP
 ===================================================== */
 
 function openEditor(){
@@ -1973,7 +2194,8 @@ container.innerHTML="";
 
 photos.forEach(image=>{
 
-const img=document.createElement("img");
+const img=
+document.createElement("img");
 
 img.src=image;
 
@@ -1985,10 +2207,8 @@ document.getElementById("stripNames")
 .textContent=
 yourName+" ♡ "+(partnerName||"Them");
 
-
 const strip=
 document.getElementById("photoStrip");
-
 
 const designs={
 
@@ -2045,7 +2265,7 @@ border:"8px solid #d3a0ae"
 
 dreamy:{
 background:
-"radial-gradient(circle at 20% 30%,#fff 0 11px,transparent 12px),linear-gradient(#c9d2ec,#e9d9ee)",
+"linear-gradient(#c9d2ec,#e9d9ee)",
 border:"7px solid #a7acd1"
 },
 
@@ -2057,17 +2277,12 @@ border:"10px solid #876b59"
 
 };
 
-const design=
-designs[selectedTemplate];
+const design=designs[selectedTemplate];
 
-strip.style.background=
-design.background;
-
+strip.style.background=design.background;
 strip.style.backgroundSize=
 design.backgroundSize||"auto";
-
-strip.style.border=
-design.border;
+strip.style.border=design.border;
 
 showPage("editor");
 
@@ -2075,7 +2290,7 @@ showPage("editor");
 
 
 /* =====================================================
-STICKERS
+FINAL STRIP STICKERS
 ===================================================== */
 
 function addSticker(symbol){
@@ -2099,10 +2314,6 @@ document.getElementById("photoStrip")
 }
 
 
-/* =====================================================
-TEXT
-===================================================== */
-
 function addText(){
 
 const value=
@@ -2114,8 +2325,7 @@ if(!value)return;
 const text=
 document.createElement("div");
 
-text.className=
-"decor decor-text";
+text.className="decor decor-text";
 
 text.textContent=value;
 
@@ -2186,9 +2396,7 @@ document.createElement("div");
 div.className="letter-note";
 
 div.textContent=
-letter.text+
-"\n\n"+
-letter.date;
+letter.text+"\n\n"+letter.date;
 
 list.appendChild(div);
 
@@ -2199,23 +2407,23 @@ list.appendChild(div);
 loadLetters();
 
 
+/* =====================================================
+CLEANUP
+===================================================== */
+
 window.addEventListener(
 "beforeunload",
 ()=>{
 
 if(cameraStream){
 
-cameraStream
-.getTracks()
+cameraStream.getTracks()
 .forEach(track=>track.stop());
 
 }
 
-if(peerConnection){
-
+if(peerConnection)
 peerConnection.close();
-
-}
 
 }
 );
