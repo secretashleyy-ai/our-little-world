@@ -233,7 +233,7 @@ h2 span{
 }
 
 .video-box.partner video{
-  transform:none;
+  transform:scaleX(-1);
 }
 
 .video-label{
@@ -1401,7 +1401,7 @@ async function captureLocalForShot(shotId, shotIndex){
     sh=vw/targetRatio; sy=(vh-sh)/2;
   }
 
-  // Mirror local video image so capture matches exact camera feed preview
+  // Mirror local video image horizontally so captured photo matches mirror camera preview
   ctx.save();
   ctx.translate(width, 0);
   ctx.scale(-1, 1);
@@ -1478,14 +1478,21 @@ function createCombinedPhoto(localImage, remoteImage, record){
 
       let leftImage=local;
       let rightImage=remote;
+      let mirrorLeft = false;
+      let mirrorRight = true;
 
+      // Keep positions consistent between both users (Deterministically assign Left/Right based on clientId)
       if(record.remoteSender && String(record.remoteSender).localeCompare(String(clientId))<0){
         leftImage=remote;
         rightImage=local;
+        mirrorLeft = true;
+        mirrorRight = false;
       }
 
-      drawRoundedImage(ctx, leftImage, gap, gap, cardW, cardH, 20);
-      drawRoundedImage(ctx, rightImage, gap*2 + cardW, gap, cardW, cardH, 20);
+      // Draw left stream (mirrored)
+      drawRoundedImage(ctx, leftImage, gap, gap, cardW, cardH, 20, mirrorLeft);
+      // Draw right stream (mirrored)
+      drawRoundedImage(ctx, rightImage, gap*2 + cardW, gap, cardW, cardH, 20, mirrorRight);
 
       resolve(canvas.toDataURL("image/jpeg", .9));
     }
@@ -1497,7 +1504,7 @@ function createCombinedPhoto(localImage, remoteImage, record){
   });
 }
 
-function drawRoundedImage(ctx, img, x, y, w, h, radius){
+function drawRoundedImage(ctx, img, x, y, w, h, radius, mirror = false){
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(x+radius, y);
@@ -1518,7 +1525,14 @@ function drawRoundedImage(ctx, img, x, y, w, h, radius){
   const dx=x+(w-nw)/2;
   const dy=y+(h-nh)/2;
 
-  ctx.drawImage(img, dx, dy, nw, nh);
+  if(mirror){
+    ctx.translate(x + w/2, y + h/2);
+    ctx.scale(-1, 1);
+    ctx.drawImage(img, -nw/2, -nh/2, nw, nh);
+  } else {
+    ctx.drawImage(img, dx, dy, nw, nh);
+  }
+
   ctx.restore();
 }
 
@@ -1940,7 +1954,6 @@ function roundRect(ctx, x, y, w, h, r){
   ctx.lineTo(x+w, y+h-r);
   ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
   ctx.lineTo(x+r, y+h);
-  ctx.quadraticCurveTo(x, y+h, x, y+h-radius?y+h-r:y+h-r);
   ctx.quadraticCurveTo(x, y+h, x, y+h-r);
   ctx.lineTo(x, y+r);
   ctx.quadraticCurveTo(x, y, x+r, y);
