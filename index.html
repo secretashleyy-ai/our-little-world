@@ -233,7 +233,7 @@ h2 span{
 }
 
 .video-box.partner video{
-  transform:scaleX(-1);
+  transform:none;
 }
 
 .video-label{
@@ -568,7 +568,7 @@ h2 span{
 .final-strip img{
   display:block;
   width:100%;
-  aspect-ratio:5/3;
+  aspect-ratio:2/1;
   object-fit:cover;
   margin-bottom:8px;
 }
@@ -1379,15 +1379,19 @@ async function captureLocalForShot(shotId, shotIndex){
   if(!video.videoWidth || !video.videoHeight){ shutterBusy=false; return; }
 
   const canvas=document.createElement("canvas");
+  const videoBox = video.parentElement;
+  const rect = videoBox.getBoundingClientRect();
+  
+  // Use actual rendering aspect ratio of video boxes
   const width=500;
-  const height=400;
+  const height=Math.round(500 * (rect.height / rect.width));
   canvas.width=width;
   canvas.height=height;
 
   const ctx=canvas.getContext("2d");
   const vw=video.videoWidth;
   const vh=video.videoHeight;
-  const targetRatio=5/4;
+  const targetRatio=width/height;
   const videoRatio=vw/vh;
 
   let sx=0, sy=0, sw=vw, sh=vh;
@@ -1397,6 +1401,7 @@ async function captureLocalForShot(shotId, shotIndex){
     sh=vw/targetRatio; sy=(vh-sh)/2;
   }
 
+  // Mirror local video image so capture matches exact camera feed preview
   ctx.save();
   ctx.translate(width, 0);
   ctx.scale(-1, 1);
@@ -1459,19 +1464,17 @@ function createCombinedPhoto(localImage, remoteImage, record){
 
       const canvas=document.createElement("canvas");
       const W=1000;
-      const H=600;
+      const H=500; // Match 2:1 side-by-side aspect ratio
       canvas.width=W;
       canvas.height=H;
 
       const ctx=canvas.getContext("2d");
-      ctx.fillStyle="#fff8fa";
+      ctx.fillStyle="#211b1e"; // Camera background tint
       ctx.fillRect(0, 0, W, H);
 
-      const cardW=450;
-      const cardH=520;
-      const gap=20;
-      const startX=(W - (cardW*2 + gap))/2;
-      const startY=(H - cardH)/2;
+      const gap=10;
+      const cardW=(W - gap*3)/2;
+      const cardH=H - gap*2;
 
       let leftImage=local;
       let rightImage=remote;
@@ -1481,8 +1484,8 @@ function createCombinedPhoto(localImage, remoteImage, record){
         rightImage=local;
       }
 
-      drawRoundedImageMirrored(ctx, leftImage, startX, startY, cardW, cardH, 22);
-      drawRoundedImageMirrored(ctx, rightImage, startX + cardW + gap, startY, cardW, cardH, 22);
+      drawRoundedImage(ctx, leftImage, gap, gap, cardW, cardH, 20);
+      drawRoundedImage(ctx, rightImage, gap*2 + cardW, gap, cardW, cardH, 20);
 
       resolve(canvas.toDataURL("image/jpeg", .9));
     }
@@ -1494,7 +1497,7 @@ function createCombinedPhoto(localImage, remoteImage, record){
   });
 }
 
-function drawRoundedImageMirrored(ctx, img, x, y, w, h, radius){
+function drawRoundedImage(ctx, img, x, y, w, h, radius){
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(x+radius, y);
@@ -1515,10 +1518,7 @@ function drawRoundedImageMirrored(ctx, img, x, y, w, h, radius){
   const dx=x+(w-nw)/2;
   const dy=y+(h-nh)/2;
 
-  ctx.translate(dx + nw, dy);
-  ctx.scale(-1, 1);
-
-  ctx.drawImage(img, 0, 0, nw, nh);
+  ctx.drawImage(img, dx, dy, nw, nh);
   ctx.restore();
 }
 
@@ -1753,7 +1753,7 @@ async function autoSaveStrip(){
 async function renderFinalCanvas(){
   const W = 900;
   const PHOTO_W = 820;
-  const PHOTO_H = PHOTO_W * 600 / 1000;
+  const PHOTO_H = PHOTO_W / 2; // Match exact 2:1 ratio from camera layout
 
   const TOP = 75;
   const GAP = 18;
@@ -1940,6 +1940,7 @@ function roundRect(ctx, x, y, w, h, r){
   ctx.lineTo(x+w, y+h-r);
   ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
   ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-radius?y+h-r:y+h-r);
   ctx.quadraticCurveTo(x, y+h, x, y+h-r);
   ctx.lineTo(x, y+r);
   ctx.quadraticCurveTo(x, y, x+r, y);
