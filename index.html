@@ -1,1002 +1,1760 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Our Little World ♡</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script><style>
-*{box-sizing:border-box}
+
+<title>Our Little Photobooth ♡</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
 
 body{
-margin:0;
-font-family:Georgia,serif;
-background:#fff7fa;
-color:#55434b;
+    margin:0;
+    min-height:100vh;
+    font-family:Arial,sans-serif;
+    color:#4d3941;
+    background:#fff8fa;
 }
 
-button,input,textarea{font:inherit}
-button{cursor:pointer}
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.97);
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    opacity:.35;
+    background:
+        radial-gradient(circle at 10% 15%,#f3b7c9 0 2px,transparent 3px),
+        radial-gradient(circle at 80% 25%,#e7b5ca 0 2px,transparent 3px),
+        radial-gradient(circle at 30% 85%,#efc5d4 0 2px,transparent 3px),
+        radial-gradient(circle at 90% 80%,#eab8cc 0 2px,transparent 3px);
+    background-size:100px 100px;
+}
+
+/* =========================
+   PAGES
+========================= */
 
 .page{
-display:none;
-min-height:100vh;
-padding:16px;
+    display:none;
+    min-height:100vh;
+    position:relative;
+    z-index:1;
 }
 
-.page.active{display:block}
+.page.active{
+    display:block;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.welcome{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+.welcome-card{
+    width:min(520px,100%);
+    padding:45px 30px;
+    text-align:center;
+    background:#fff;
+    border:2px solid #f0dce4;
+    border-radius:38px;
+    box-shadow:0 30px 80px #7e52651c;
+}
+
+.welcome-heart{
+    font-size:70px;
+    animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-8px)}
+}
+
+.small-title{
+    font-size:11px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:#b66d86;
+    font-weight:bold;
+}
+
+.welcome-card h1{
+    margin:15px 0;
+    font-family:Georgia,serif;
+    font-size:60px;
+    line-height:.9;
+    color:#49363e;
+}
+
+.welcome-card h1 span{
+    color:#c36e8c;
+}
+
+.welcome-card p{
+    color:#907b83;
+    line-height:1.7;
+}
+
+.form{
+    text-align:left;
+    margin-top:28px;
+}
+
+.form label{
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    margin:15px 0;
+}
+
+.form input{
+    display:block;
+    width:100%;
+    margin-top:7px;
+    padding:15px 16px;
+    border:1px solid #ead8df;
+    border-radius:16px;
+    outline:none;
+    background:#fffafb;
+}
+
+.form input:focus{
+    border-color:#c97892;
+}
+
+.main-button{
+    width:100%;
+    border:0;
+    border-radius:18px;
+    padding:16px;
+    background:#bd718b;
+    color:white;
+    font-weight:bold;
+    box-shadow:0 10px 25px #b866821f;
+}
+
+#connectionMessage{
+    font-size:12px;
+}
+
+/* =========================
+   HOME
+========================= */
 
 .home{
-display:flex;
-align-items:center;
-justify-content:center;
-background:
-radial-gradient(circle at 10% 20%,#f6cddd 0 3px,transparent 4px),
-radial-gradient(circle at 80% 30%,#ead0df 0 3px,transparent 4px),
-radial-gradient(circle at 60% 80%,#efd8e4 0 2px,transparent 3px),
-#fff8fb;
-background-size:75px 75px;
-}
-
-.card{
-width:min(580px,100%);
-padding:40px 28px;
-background:#fffdfd;
-border:1px solid #ead7df;
-border-radius:35px;
-text-align:center;
-box-shadow:0 25px 70px #68445220;
+    padding:20px;
 }
 
-.logo{
-font-size:60px;
-color:#b96883;
+.nav{
+    max-width:1100px;
+    margin:auto;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.mini{
-font-family:Arial,sans-serif;
-font-size:10px;
-letter-spacing:3px;
-text-transform:uppercase;
-color:#ad7084;
+.logo-small{
+    font-family:Georgia,serif;
+    font-size:20px;
 }
 
-h1{
-font-size:58px;
-line-height:.9;
-margin:12px 0 18px;
+.room-pill{
+    padding:9px 15px;
+    background:white;
+    border:1px solid #eadce2;
+    border-radius:30px;
+    font-size:11px;
 }
 
-h1 span,h2 span{color:#b96883}
+.home-hero{
+    max-width:1100px;
+    margin:50px auto 35px;
+    text-align:center;
+}
+
+.home-hero .tiny{
+    color:#b66d86;
+    letter-spacing:3px;
+    font-size:10px;
+    text-transform:uppercase;
+}
+
+.home-hero h2{
+    font-family:Georgia,serif;
+    font-size:55px;
+    margin:12px 0;
+}
+
+.home-hero h2 span{
+    color:#c16d8b;
+}
+
+.partner-status{
+    width:max-content;
+    max-width:100%;
+    margin:15px auto;
+    padding:10px 17px;
+    border-radius:30px;
+    background:white;
+    border:1px solid #eadce2;
+    font-size:12px;
+}
+
+.home-grid{
+    max-width:1100px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.home-card{
+    min-height:230px;
+    padding:25px;
+    border:1px solid #eadce2;
+    border-radius:30px;
+    text-align:left;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 18px 50px #6b465313;
+    transition:.2s;
+}
 
-.desc{
-font-family:Arial,sans-serif;
-line-height:1.6;
-color:#88747c;
+.home-card:hover{
+    transform:translateY(-4px);
 }
 
-.field{
-text-align:left;
-margin:16px 0;
+.home-card .icon{
+    font-size:48px;
 }
 
-.field label{
-font-family:Arial,sans-serif;
-font-size:12px;
-font-weight:bold;
+.home-card h3{
+    font-family:Georgia,serif;
+    font-size:28px;
+    margin:20px 0 8px;
 }
 
-.field input{
-width:100%;
-padding:14px;
-margin-top:7px;
-border:1px solid #e7d7de;
-border-radius:15px;
-background:#fffafa;
-outline:none;
+.home-card p{
+    color:#826f77;
+    font-size:13px;
 }
 
-.field input:focus{
-border-color:#c47791;
-box-shadow:0 0 0 4px #c4779118;
+.booth-card{
+    background:#ffeef4;
 }
 
-.primary{
-width:100%;
-padding:15px;
-border:0;
-border-radius:16px;
-background:linear-gradient(135deg,#c87591,#ad5f7b);
-color:white;
-font-family:Arial,sans-serif;
-font-weight:bold;
-box-shadow:0 10px 25px #b9688328;
+.letter-card{
+    background:#fff4dc;
 }
 
-.secondary{
-padding:12px 18px;
-border:1px solid #dfd0d7;
-border-radius:14px;
-background:#fff;
-color:#654e57;
+.memory-card{
+    background:#f2edff;
 }
 
-.topbar{
-height:58px;
-max-width:1120px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:space-between;
-font-family:Arial,sans-serif;
+.distance-card{
+    background:#e7f4ee;
 }
 
-.back{
-width:42px;
-height:42px;
-border:1px solid #e5d7dd;
-border-radius:50%;
-background:white;
+/* =========================
+   PHOTOBOOTH
+========================= */
+
+.booth-page{
+    padding:15px;
+}
+
+.booth-nav{
+    max-width:1200px;
+    margin:auto;
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
-.home-content{
-max-width:1100px;
-margin:auto;
+.back-button{
+    width:43px;
+    height:43px;
+    border:1px solid #e5d6dd;
+    border-radius:50%;
+    background:white;
 }
 
-.title{
-text-align:center;
-padding:35px 10px;
+.live-pill{
+    padding:8px 14px;
+    border-radius:30px;
+    background:white;
+    border:1px solid #eadce2;
+    font-size:11px;
 }
+
+.booth-wrapper{
+    max-width:1200px;
+    margin:15px auto 50px;
+}
+
+/* top progress */
 
-.title h2{
-font-size:48px;
-margin:12px 0;
+.progress{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:15px 0 25px;
 }
 
-.room{
-display:inline-block;
-padding:9px 16px;
-border-radius:30px;
-background:white;
-border:1px solid #eadde2;
-font-family:Arial,sans-serif;
-font-size:11px;
+.progress-dot{
+    width:9px;
+    height:9px;
+    border-radius:50%;
+    background:#ead9df;
 }
 
-.status{
-width:max-content;
-max-width:100%;
-margin:15px auto;
-padding:9px 17px;
-border-radius:30px;
-background:white;
-border:1px solid #eadde2;
-font-family:Arial,sans-serif;
-font-size:12px;
+.progress-dot.active{
+    width:28px;
+    border-radius:20px;
+    background:#bd718b;
 }
 
-.menu{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:17px;
+/* stages */
+
+.booth-stage{
+    display:none;
 }
 
-.menu-card{
-min-height:215px;
-padding:22px;
-border:1px solid #e5d5dc;
-border-radius:30px;
-text-align:left;
-display:flex;
-flex-direction:column;
-justify-content:flex-end;
-box-shadow:0 18px 40px #543b4512;
-transition:.2s;
+.booth-stage.active{
+    display:block;
 }
 
-.menu-card:hover{
-transform:translateY(-4px);
-box-shadow:0 25px 50px #543b4520;
+/* =========================
+   CHOOSE STRIP
+========================= */
+
+.choice-card{
+    max-width:850px;
+    margin:auto;
+    padding:35px;
+    background:white;
+    border:1px solid #eadce2;
+    border-radius:35px;
+    box-shadow:0 25px 65px #63414d12;
 }
 
-.menu-card .emoji{
-font-size:40px;
-margin-bottom:auto;
+.choice-card h1{
+    font-family:Georgia,serif;
+    font-size:45px;
+    margin:10px 0;
 }
 
-.menu-card h3{
-font-size:24px;
-margin:5px 0;
+.choice-card p{
+    color:#8d7880;
 }
 
-.menu-card p{
-font-family:Arial,sans-serif;
-font-size:12px;
-color:#806d75;
+.strip-choice-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+    margin:28px 0;
 }
 
-.booth{
-background:
-radial-gradient(circle,#fff 2px,transparent 3px),
-linear-gradient(135deg,#f8dce7,#f5e8ed);
-background-size:18px 18px,100% 100%;
+.strip-choice{
+    border:2px solid #eee0e5;
+    background:#fffafb;
+    border-radius:22px;
+    padding:22px 10px;
 }
 
-.letters{
-background:repeating-linear-gradient(
-0deg,#fff3df,#fff3df 20px,#f1dfc7 21px);
+.strip-choice.selected{
+    border-color:#c0718c;
+    background:#fff0f5;
 }
 
-.memories{
-background:linear-gradient(135deg,#eee8f8,#f8f1fb);
+.strip-number{
+    display:block;
+    font-family:Georgia,serif;
+    font-size:45px;
+    color:#bd718b;
 }
 
-.distance{
-background:linear-gradient(135deg,#e0f0ea,#f2faf5);
+.continue-button{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:16px;
+    background:#bd718b;
+    color:white;
+    font-weight:bold;
 }
+
+/* =========================
+   DESIGN CHOOSER
+========================= */
 
-.content{
-max-width:1120px;
-margin:25px auto;
-padding:30px;
-background:#fffdfd;
-border:1px solid #eadde2;
-border-radius:30px;
-box-shadow:0 20px 60px #533b4614;
+.design-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin:28px 0;
 }
 
-.step{display:none}
-.step.active{display:block}
+.design-card{
+    background:white;
+    border:2px solid transparent;
+    border-radius:23px;
+    overflow:hidden;
+    padding:0 0 12px;
+}
 
-.step h2{
-font-size:40px;
-margin:8px 0;
+.design-card.selected{
+    border-color:#bd718b;
 }
 
-.muted{
-font-family:Arial,sans-serif;
-color:#917d85;
+.design-preview{
+    height:170px;
+    position:relative;
 }
 
-.strip-options{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:15px;
-margin:28px 0;
+.design-name{
+    padding:10px 5px 0;
+    font-size:13px;
+    font-weight:bold;
 }
 
-.strip-option{
-padding:22px 12px;
-border:2px solid #eadde2;
-border-radius:22px;
-background:white;
+.design-sub{
+    font-size:10px;
+    color:#97838a;
+    margin-top:4px;
 }
+
+/* many designs */
 
-.strip-option.selected{
-border-color:#c47791;
-background:#fff0f5;
+.d-pink{
+    background:
+    radial-gradient(circle at 20px 20px,#d77d9a 0 3px,transparent 4px),
+    #fff0f5;
+    background-size:45px 45px;
 }
 
-.strip-option strong{
-display:block;
-font-size:42px;
+.d-pink:after{
+    content:"♡  🎀  ♡";
+    position:absolute;
+    bottom:20px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:25px;
 }
 
-.templates{
-display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:15px;
-margin:25px 0;
+.d-film{
+    background:linear-gradient(135deg,#d3aa89,#8c6959);
 }
 
-.template{
-border:2px solid transparent;
-border-radius:22px;
-overflow:hidden;
-background:white;
-padding:0 0 10px;
-box-shadow:0 8px 20px #51363f0d;
+.d-film:after{
+    content:"LOVE FILM";
+    position:absolute;
+    left:12px;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    padding:12px 5px;
+    background:#f3dfc0;
+    text-align:center;
+    font-family:Georgia,serif;
 }
 
-.template.selected{
-border-color:#b96883;
+.d-blue{
+    background:
+    radial-gradient(circle,#fff 2px,transparent 3px),
+    linear-gradient(135deg,#bcd9eb,#d9c8ed);
+    background-size:25px 25px,100% 100%;
 }
 
-.preview{
-height:155px;
-position:relative;
-overflow:hidden;
+.d-blue:after{
+    content:"✦ ☆ ✦";
+    position:absolute;
+    bottom:20px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:25px;
 }
 
-.coquette{
-background:
-radial-gradient(circle at 15px 15px,#d68aa2 0 2px,transparent 3px),
-#fff1f6;
-background-size:30px 30px;
+.d-strawberry{
+    background:#fff0e7;
 }
 
-.coquette:before{
-content:"🎀 ♡ 🎀 ♡";
-position:absolute;
-left:10px;
-right:10px;
-bottom:15px;
-font-size:27px;
-text-align:center;
+.d-strawberry:after{
+    content:"🍓  ♡  🍓";
+    position:absolute;
+    top:50%;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:30px;
 }
 
-.retro{
-background:repeating-linear-gradient(
-90deg,#b87955 0 5px,#d6a27f 5px 10px);
-border:9px solid #76503e;
+.d-lace{
+    background:
+    radial-gradient(circle,#fff 0 7px,transparent 8px),
+    #ead7e1;
+    background-size:18px 18px;
+    border:8px double #b78ba1;
 }
 
-.retro:after{
-content:"★ 1970s ★";
-position:absolute;
-left:12px;
-right:12px;
-top:50%;
-transform:translateY(-50%);
-background:#f4d4a8;
-padding:10px 4px;
-text-align:center;
-color:#674431;
+.d-green{
+    background:linear-gradient(135deg,#d5e9dc,#f7f1dc);
 }
 
-.scrapbook{
-background:#f1dfc7;
-border:8px dashed #b58d6d;
+.d-green:after{
+    content:"🌷 ♡ 🌿";
+    position:absolute;
+    bottom:20px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:25px;
 }
 
-.scrapbook:after{
-content:"♡  ✦  memories  ✦  ♡";
-position:absolute;
-bottom:15px;
-left:0;
-right:0;
-text-align:center;
-font-size:13px;
+.d-purple{
+    background:linear-gradient(135deg,#cfc3e8,#f1d5e6);
 }
 
-.y2k{
-background:
-radial-gradient(circle,#fff 2px,transparent 3px),
-linear-gradient(135deg,#b9d8ec,#d9c9ef,#f3c6dd);
-background-size:24px 24px,100% 100%;
+.d-purple:after{
+    content:"☁︎ ✦ ♡ ✦ ☁︎";
+    position:absolute;
+    bottom:20px;
+    left:0;
+    right:0;
+    text-align:center;
 }
 
-.strawberry{
-background:
-radial-gradient(circle at 30px 25px,#e75f6d 0 7px,transparent 8px),
-#fff0e9;
-background-size:70px 70px;
+.d-brown{
+    background:
+    repeating-linear-gradient(
+        45deg,
+        #d5bba6 0 10px,
+        #c3a28a 10px 20px
+    );
 }
 
-.lace{
-background:
-radial-gradient(circle,#fff 0 8px,transparent 9px),
-#ead6e1;
-background-size:18px 18px;
-border:9px double #b98ca2;
+.d-brown:after{
+    content:"♡ OUR DAY ♡";
+    position:absolute;
+    top:50%;
+    left:10px;
+    right:10px;
+    padding:10px;
+    background:#f5e7d3;
+    text-align:center;
 }
 
-.postcard{
-background:#e8d2b9;
-border:10px solid #9f755c;
+.d-red{
+    background:#f7d8dc;
 }
 
-.floral{
-background:
-radial-gradient(circle,#d88da2 0 4px,transparent 5px),
-#f7e9dc;
-background-size:60px 60px;
-border:7px solid #d3a0ae;
+.d-red:after{
+    content:"♥ ♥ ♥";
+    position:absolute;
+    top:50%;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:30px;
 }
 
-.dreamy{
-background:
-radial-gradient(circle at 25% 30%,#fff 0 3px,transparent 4px),
-linear-gradient(#c9d2ec,#e9d9ee);
+.d-yellow{
+    background:
+    radial-gradient(circle,#d9a94e 0 3px,transparent 4px),
+    #fff0bc;
+    background-size:30px 30px;
 }
 
-.vintage{
-background:repeating-linear-gradient(
-45deg,#d9c3b1 0 8px,#c7aa94 8px 16px);
-border:9px solid #876b59;
+.d-yellow:after{
+    content:"☀︎ happy little moments ☀︎";
+    position:absolute;
+    bottom:18px;
+    left:0;
+    right:0;
+    text-align:center;
+    font-size:12px;
 }
 
-.candy{
-background:
-radial-gradient(circle,#fff 0 5px,transparent 6px),
-linear-gradient(135deg,#ffd5df,#ffc6d9,#d9c8ef);
-background-size:35px 35px,100% 100%;
+.design-actions{
+    display:flex;
+    gap:10px;
 }
 
-.midnight{
-background:
-radial-gradient(circle,#fff 0 2px,transparent 3px),
-linear-gradient(135deg,#26233e,#554c73);
-background-size:28px 28px,100% 100%;
+.secondary-button{
+    padding:14px 20px;
+    border:1px solid #e4d5dc;
+    border-radius:15px;
+    background:white;
 }
 
-.picnic{
-background:
-repeating-linear-gradient(
-45deg,#fff 0 12px,#efb9c4 12px 24px);
+/* =========================
+   CAMERA
+========================= */
+
+.camera-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
 }
 
-.camera{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
-background:#292126;
-padding:10px;
-border-radius:28px;
-overflow:hidden;
+.camera-card{
+    background:#1f1a1d;
+    border-radius:30px;
+    padding:10px;
+    box-shadow:0 25px 60px #321d271c;
 }
 
-.video-box{
-position:relative;
-background:#292126;
-min-height:330px;
-border-radius:20px;
-overflow:hidden;
+.camera-title{
+    padding:10px 10px 14px;
+    color:white;
+    font-size:12px;
+    display:flex;
+    justify-content:space-between;
 }
 
-.video-box video{
-width:100%;
-height:330px;
-object-fit:cover;
-display:block;
-background:#292126;
+.camera-screen{
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    aspect-ratio:4/5;
+    background:#33292e;
 }
+
+.camera-screen video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 
-#myCamera{
-transform:scaleX(-1);
+    /* TRUE MIRROR */
+    transform:scaleX(-1);
 }
 
-.video-label{
-position:absolute;
-bottom:10px;
-left:10px;
-padding:7px 12px;
-border-radius:20px;
-background:#0008;
-color:white;
-font-family:Arial,sans-serif;
-font-size:11px;
-z-index:5;
+.camera-screen video.partner{
+    transform:none;
 }
 
-.waiting{
-height:100%;
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-color:white;
-background:linear-gradient(135deg,#3d3037,#58424d);
-font-family:Arial,sans-serif;
-text-align:center;
-padding:20px;
-position:absolute;
-inset:0;
-z-index:4;
+.camera-waiting{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    color:white;
+    background:#352b30;
+    z-index:5;
+    padding:20px;
 }
 
-.waiting .heart{
-font-size:55px;
-animation:heartbeat 1.5s infinite;
+.camera-waiting .big-heart{
+    font-size:60px;
+    animation:float 2.5s infinite;
 }
 
-@keyframes heartbeat{
-50%{transform:scale(1.15)}
+.camera-waiting p{
+    font-size:12px;
+    color:#d8cdd1;
 }
 
-.camera-buttons{
-display:flex;
-justify-content:center;
-align-items:center;
-gap:18px;
-margin:20px 0;
-flex-wrap:wrap;
+.camera-controls{
+    margin:22px auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:20px;
 }
 
 .shutter{
-width:70px;
-height:70px;
-border-radius:50%;
-border:7px solid #e3b3c2;
-background:white;
-font-size:22px;
-box-shadow:0 8px 20px #51363f20;
+    width:78px;
+    height:78px;
+    border-radius:50%;
+    border:8px solid #edc0ce;
+    background:white;
+    font-size:20px;
 }
 
-#photoPreview{
-text-align:center;
+.photo-count{
+    min-width:65px;
+    font-size:12px;
+    color:#836f77;
 }
 
-#photoPreview img{
-width:70px;
-height:88px;
-object-fit:cover;
-margin:5px;
-border-radius:8px;
-border:3px solid white;
-box-shadow:0 4px 12px #0002;
+.camera-actions{
+    text-align:center;
 }
 
-#editButton:disabled{
-opacity:.5;
-cursor:not-allowed;
+/* =========================
+   PHOTO PREVIEWS
+========================= */
+
+.preview-row{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin:15px;
 }
 
-.photo-editor{
-max-width:700px;
-margin:20px auto;
-padding:18px;
-background:white;
-border-radius:30px;
-box-shadow:0 20px 60px #51363f18;
+.preview-row img{
+    width:65px;
+    height:82px;
+    object-fit:cover;
+    border-radius:8px;
 }
 
-.sticker-bar{
-display:flex;
-gap:8px;
-overflow-x:auto;
-padding:8px 3px 16px;
+/* =========================
+   FINAL EDITOR
+========================= */
+
+.editor-layout{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:25px;
 }
 
-.sticker-choice{
-flex:0 0 auto;
-width:52px;
-height:52px;
-border:1px solid #eadde2;
-border-radius:15px;
-background:#fff8fa;
-font-size:26px;
-}
-
-.edit-photo-area{
-position:relative;
-width:min(430px,100%);
-margin:auto;
-display:flex;
-justify-content:center;
-background:#f7edf1;
-border-radius:25px;
-padding:15px;
-overflow:hidden;
-}
-
-.edit-photo{
-display:block;
-width:100%;
-max-width:400px;
-aspect-ratio:4/5;
-object-fit:cover;
-border-radius:8px;
-}
-
-.photo-sticker{
-position:absolute;
-font-size:42px;
-z-index:5;
-pointer-events:none;
-}
-
-.edit-instruction{
-text-align:center;
-font-family:Arial,sans-serif;
-font-size:12px;
-color:#967e88;
-padding:8px 0 15px;
-}
-
-.save-photo{
-margin-top:18px;
-}
-
-.editor{
-display:grid;
-grid-template-columns:1fr 330px;
-gap:25px;
-}
-
-.stage{
-display:grid;
-place-items:center;
-padding:30px;
-border-radius:25px;
-background:
-radial-gradient(circle,#fff 2px,transparent 3px),
-#f8edf1;
-background-size:25px 25px;
-min-height:500px;
+.strip-zone{
+    min-height:650px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    border-radius:35px;
+    background:
+    radial-gradient(circle,#fff 2px,transparent 3px),
+    #f6e8ee;
+    background-size:25px 25px;
 }
 
 .photo-strip{
-position:relative;
-width:290px;
-padding:14px;
-overflow:hidden;
-box-shadow:0 20px 45px #51363f35;
-background:#fff1f6;
+    position:relative;
+    width:285px;
+    padding:14px;
+    background:#fff1f5;
+    box-shadow:0 25px 60px #57313f35;
+    overflow:hidden;
 }
 
-.photo-strip img{
-display:block;
-width:100%;
-aspect-ratio:4/5;
-object-fit:cover;
-margin-bottom:8px;
+.strip-photos img{
+    display:block;
+    width:100%;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    margin-bottom:8px;
 }
 
-.strip-title{
-text-align:center;
-padding:13px 5px 8px;
-font-size:16px;
+.strip-footer{
+    text-align:center;
+    font-family:Georgia,serif;
+    font-size:16px;
+    padding:12px 5px 8px;
 }
 
 .decor{
-position:absolute;
-z-index:20;
-font-size:30px;
+    position:absolute;
+    z-index:20;
+    font-size:32px;
+    user-select:none;
 }
 
 .decor-text{
-padding:5px 9px;
-background:#fff9;
-border-radius:8px;
-font-size:17px;
+    padding:5px 9px;
+    background:#ffffffdd;
+    border-radius:8px;
+    font-size:15px;
 }
 
-.tools{
-padding:20px;
-border-radius:25px;
-background:white;
-box-shadow:0 10px 30px #563b4514;
+.editor-tools{
+    padding:22px;
+    background:white;
+    border:1px solid #eadce2;
+    border-radius:30px;
+    box-shadow:0 20px 50px #5e414a12;
 }
 
-.tool-section{
-padding:15px 0;
-border-bottom:1px solid #eee0e5;
+.tool-title{
+    font-family:Georgia,serif;
+    font-size:22px;
+    margin-bottom:15px;
 }
 
-.stickers{
-display:flex;
-flex-wrap:wrap;
-gap:7px;
-margin-top:10px;
+.sticker-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:7px;
 }
 
-.sticker{
-padding:8px;
-border:1px solid #e7dbe0;
-border-radius:10px;
-background:white;
-font-size:22px;
+.sticker-button{
+    height:48px;
+    border:1px solid #eadde2;
+    border-radius:12px;
+    background:#fff9fb;
+    font-size:23px;
 }
 
-.sync-note{
-margin:10px 0;
-padding:10px 13px;
-border-radius:12px;
-background:#fff2f6;
-font-family:Arial,sans-serif;
-font-size:11px;
-color:#8c6875;
+.text-input{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    border:1px solid #eadce2;
+    border-radius:13px;
+    outline:none;
 }
 
-.simple{
-max-width:800px;
-margin:40px auto;
-padding:30px;
-border-radius:30px;
-background:white;
-box-shadow:0 15px 45px #583c4715;
+.tool-divider{
+    border:0;
+    border-top:1px solid #eee2e6;
+    margin:22px 0;
 }
 
-textarea{
-width:100%;
-min-height:220px;
-padding:12px;
-border:1px solid #e5d9de;
-border-radius:12px;
+.save-button{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:16px;
+    background:#bd718b;
+    color:white;
+    font-weight:bold;
 }
 
-.letter-note{
-margin-top:15px;
-padding:20px;
-border-radius:18px;
-background:#fff3f6;
-white-space:pre-wrap;
-line-height:29px;
+/* =========================
+   OTHER PAGES
+========================= */
+
+.simple-page{
+    max-width:850px;
+    margin:40px auto;
+    padding:30px;
+    background:white;
+    border-radius:30px;
+    border:1px solid #eadce2;
 }
 
-@media(max-width:950px){
-
-.templates{
-grid-template-columns:repeat(3,1fr);
+.simple-page textarea{
+    width:100%;
+    min-height:220px;
+    padding:15px;
+    border:1px solid #e4d8dd;
+    border-radius:15px;
 }
 
-.menu{
-grid-template-columns:1fr 1fr;
+.letter{
+    margin-top:15px;
+    padding:20px;
+    border-radius:18px;
+    background:#fff2f5;
+    white-space:pre-wrap;
 }
 
-.editor{
-grid-template-columns:1fr;
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:850px){
+
+    .home-grid{
+        grid-template-columns:1fr;
+    }
+
+    .design-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .editor-layout{
+        grid-template-columns:1fr;
+    }
+
+    .camera-layout{
+        grid-template-columns:1fr;
+    }
+
+    .strip-zone{
+        min-height:500px;
+    }
 }
 
+@media(max-width:550px){
+
+    .welcome-card{
+        padding:35px 20px;
+    }
+
+    .welcome-card h1{
+        font-size:48px;
+    }
+
+    .home-hero h2{
+        font-size:42px;
+    }
+
+    .choice-card{
+        padding:22px 17px;
+    }
+
+    .choice-card h1{
+        font-size:35px;
+    }
+
+    .strip-choice-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .design-grid{
+        gap:9px;
+    }
+
+    .design-preview{
+        height:120px;
+    }
+
+    .photo-strip{
+        width:250px;
+    }
+
+    .strip-zone{
+        padding:15px;
+    }
+
+    .camera-controls{
+        gap:12px;
+    }
 }
+</style>
+</head>
 
-@media(max-width:600px){
+<body>
 
-.page{
-padding:10px;
-}
+<!-- =====================================================
+WELCOME
+===================================================== -->
 
-.menu{
-grid-template-columns:1fr;
-}
+<section id="welcome" class="page active welcome">
 
-.templates{
-grid-template-columns:1fr 1fr;
-gap:10px;
-}
+<div class="welcome-card">
 
-.preview{
-height:125px;
-}
+<div class="welcome-heart">♡</div>
 
-.strip-options{
-grid-template-columns:1fr 1fr;
-}
+<div class="small-title">
+a tiny place for two
+</div>
 
-.camera{
-grid-template-columns:1fr 1fr;
-}
-
-.video-box,
-.video-box video{
-height:230px;
-min-height:230px;
-}
-
-.content{
-padding:18px;
-}
-
-.step h2{
-font-size:32px;
-}
-
-.photo-strip{
-width:250px;
-}
-
-.stage{
-padding:18px;
-}
-
-}
-
-</style></head><body><!-- WELCOME --><section id="welcome" class="page active home"><div class="card"><div class="logo">♡</div><div class="mini">a tiny place for two</div><h1>
+<h1>
 Our Little<br>
-<span>World</span>
-</h1><p class="desc">
-A little corner of the internet for two people
-who are far apart but still want to make memories together.
-</p><div class="field">
+<span>Photobooth</span>
+</h1>
+
+<p>
+Take pictures together even when you're far apart.
+Choose a room, turn on your cameras, and make a little strip.
+</p>
+
+<div class="form">
+
 <label>
 Your name
-<input id="yourName" placeholder="Your name">
+<input id="yourName" placeholder="e.g. Ashley">
 </label>
-</div><div class="field">
+
 <label>
 Partner's name
-<input id="partnerName" placeholder="Their name">
+<input id="partnerName" placeholder="e.g. Love">
 </label>
-</div><div class="field">
+
 <label>
 Shared room code
 <input id="roomCode" placeholder="OURWORLD">
 </label>
-</div><button class="primary" onclick="enterWorld()">
-Enter Our World ♡
-</button><p id="connectionMessage"></p></div>
-</section><!-- HOME --><section id="home" class="page"><div class="topbar"><button class="back" onclick="showPage('welcome')">←</button>
 
-<div>our little ♡ world</div><div id="onlineDot">●</div></div><div class="home-content"><div class="title"><div class="mini">welcome home</div><h2>
+<button class="main-button" onclick="enterWorld()">
+Enter Our World ♡
+</button>
+
+<p id="connectionMessage"></p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+HOME
+===================================================== -->
+
+<section id="home" class="page home">
+
+<div class="nav">
+
+<div class="logo-small">
+our little ♡ world
+</div>
+
+<div class="room-pill">
+ROOM · <b id="displayRoom">---</b>
+</div>
+
+</div>
+
+<div class="home-hero">
+
+<div class="tiny">
+welcome home
+</div>
+
+<h2>
 <span id="displayYou">You</span>
 ♡
 <span id="displayPartner">Them</span>
-</h2><p class="desc">
-Same love. Different places. One little world.
-</p><div class="room">
-ROOM:
-<b id="displayRoom">---</b>
-</div><div id="partnerStatus" class="status">
+</h2>
+
+<p>
+Same room. Different screens. One little world.
+</p>
+
+<div id="partnerStatus" class="partner-status">
 ⚪ Waiting for partner...
-</div></div><div class="menu"><button class="menu-card booth" onclick="openPhotobooth()">
-<div class="emoji">📸</div>
-<h3>Photobooth</h3>
-<p>Take cute pictures together and decorate your strip.</p>
-</button><button class="menu-card letters" onclick="navigateShared('letters')">
-<div class="emoji">💌</div>
-<h3>Love Letters</h3>
-<p>Leave a little message for them.</p>
-</button><button class="menu-card memories" onclick="navigateShared('memories')">
-<div class="emoji">🖼️</div>
-<h3>Memories</h3>
-<p>Keep your favorite moments.</p>
-</button><button class="menu-card distance" onclick="navigateShared('distance')">
-<div class="emoji">🌎</div>
-<h3>Our Distance</h3>
-<p>Different places. Still together.</p>
-</button></div>
 </div>
-</section><!-- PHOTOBOOTH --><section id="photobooth" class="page"><div class="topbar"><button class="back" onclick="navigateShared('home')">←</button>
 
-<div>photobooth ♡</div><div id="stepNumber">1 / 3</div></div><div class="content"><div id="step1" class="step active"><div class="mini">first, choose</div><h2>Choose your strip size.</h2><p class="muted">This choice is shared with your partner.</p><div class="strip-options"><button class="strip-option selected" onclick="selectStrip(2,this)">
-<strong>2</strong>
+</div>
+
+<div class="home-grid">
+
+<button class="home-card booth-card" onclick="openPhotobooth()">
+
+<div class="icon">📸</div>
+
+<h3>
+Photobooth
+</h3>
+
+<p>
+Take pictures together and create your shared strip.
+</p>
+
+</button>
+
+<button class="home-card letter-card" onclick="showPage('letters')">
+
+<div class="icon">💌</div>
+
+<h3>
+Love Letters
+</h3>
+
+<p>
+Leave a tiny message for your favorite person.
+</p>
+
+</button>
+
+<button class="home-card memory-card" onclick="showPage('memories')">
+
+<div class="icon">🖼️</div>
+
+<h3>
+Memories
+</h3>
+
+<p>
+A little place for your favorite moments.
+</p>
+
+</button>
+
+<button class="home-card distance-card" onclick="showPage('distance')">
+
+<div class="icon">🌎</div>
+
+<h3>
+Our Distance
+</h3>
+
+<p>
+Different places, same little world.
+</p>
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PHOTOBOOTH
+===================================================== -->
+
+<section id="photobooth" class="page booth-page">
+
+<div class="booth-nav">
+
+<button class="back-button" onclick="showPage('home')">
+←
+</button>
+
+<div>
+📸 our photobooth
+</div>
+
+<div class="live-pill">
+ROOM · <span id="boothRoom">---</span>
+</div>
+
+</div>
+
+<div class="booth-wrapper">
+
+<div class="progress">
+
+<div id="dot1" class="progress-dot active"></div>
+<div id="dot2" class="progress-dot"></div>
+<div id="dot3" class="progress-dot"></div>
+
+</div>
+
+
+<!-- ================= STEP 1 ================= -->
+
+<div id="boothStep1" class="booth-stage active">
+
+<div class="choice-card">
+
+<div class="small-title">
+step one
+</div>
+
+<h1>
+How many pictures?
+</h1>
+
+<p>
+Pick how long you want your photobooth strip to be.
+</p>
+
+<div class="strip-choice-grid">
+
+<button class="strip-choice selected"
+onclick="selectStrip(2,this)">
+<span class="strip-number">2</span>
+short & sweet
+</button>
+
+<button class="strip-choice"
+onclick="selectStrip(3,this)">
+<span class="strip-number">3</span>
+little moment
+</button>
+
+<button class="strip-choice"
+onclick="selectStrip(4,this)">
+<span class="strip-number">4</span>
 classic
-</button><button class="strip-option" onclick="selectStrip(3,this)">
-<strong>3</strong>
-sweet
-</button><button class="strip-option" onclick="selectStrip(4,this)">
-<strong>4</strong>
-classic +
-</button><button class="strip-option" onclick="selectStrip(6,this)">
-<strong>6</strong>
-long
-</button></div><button class="primary" onclick="nextStep(2)">
-Choose design →
-</button></div><div id="step2" class="step"><div class="mini">choose your aesthetic</div><h2>Pick your vibe.</h2><p class="muted">Your partner sees the design you choose too.</p><div class="templates"><button class="template selected" onclick="selectTemplate('coquette',this)">
-<div class="preview coquette"></div>
-<div>🎀 Coquette</div>
-</button><button class="template" onclick="selectTemplate('retro',this)">
-<div class="preview retro"></div>
-<div>📻 Retro Film</div>
-</button><button class="template" onclick="selectTemplate('scrapbook',this)">
-<div class="preview scrapbook"></div>
-<div>📒 Scrapbook</div>
-</button><button class="template" onclick="selectTemplate('y2k',this)">
-<div class="preview y2k"></div>
-<div>💿 Y2K</div>
-</button><button class="template" onclick="selectTemplate('strawberry',this)">
-<div class="preview strawberry"></div>
-<div>🍓 Strawberry</div>
-</button><button class="template" onclick="selectTemplate('lace',this)">
-<div class="preview lace"></div>
-<div>🕊️ Lace</div>
-</button><button class="template" onclick="selectTemplate('postcard',this)">
-<div class="preview postcard"></div>
-<div>💌 Postcard</div>
-</button><button class="template" onclick="selectTemplate('floral',this)">
-<div class="preview floral"></div>
-<div>🌸 Floral</div>
-</button><button class="template" onclick="selectTemplate('dreamy',this)">
-<div class="preview dreamy"></div>
-<div>☁️ Dreamy</div>
-</button><button class="template" onclick="selectTemplate('vintage',this)">
-<div class="preview vintage"></div>
-<div>🌷 Vintage</div>
-</button><button class="template" onclick="selectTemplate('candy',this)">
-<div class="preview candy"></div>
-<div>🍬 Candy</div>
-</button><button class="template" onclick="selectTemplate('midnight',this)">
-<div class="preview midnight"></div>
-<div>🌙 Midnight</div>
-</button><button class="template" onclick="selectTemplate('picnic',this)">
-<div class="preview picnic"></div>
-<div>🧺 Picnic</div>
-</button></div><button class="secondary" onclick="nextStep(1)">
+</button>
+
+<button class="strip-choice"
+onclick="selectStrip(6,this)">
+<span class="strip-number">6</span>
+long story
+</button>
+
+</div>
+
+<button class="continue-button"
+onclick="goBoothStep(2)">
+Choose a design →
+</button>
+
+</div>
+
+</div>
+
+
+<!-- ================= STEP 2 ================= -->
+
+<div id="boothStep2" class="booth-stage">
+
+<div class="choice-card">
+
+<div class="small-title">
+step two
+</div>
+
+<h1>
+Pick your vibe.
+</h1>
+
+<p>
+Choose the look for your little strip.
+</p>
+
+<div class="design-grid">
+
+<button class="design-card selected"
+onclick="selectDesign('pink',this)">
+<div class="design-preview d-pink"></div>
+<div class="design-name">🎀 Pink Bow</div>
+<div class="design-sub">cute & soft</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('film',this)">
+<div class="design-preview d-film"></div>
+<div class="design-name">🎞️ Film</div>
+<div class="design-sub">vintage camera</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('blue',this)">
+<div class="design-preview d-blue"></div>
+<div class="design-name">☁️ Dreamy</div>
+<div class="design-sub">soft blue</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('strawberry',this)">
+<div class="design-preview d-strawberry"></div>
+<div class="design-name">🍓 Strawberry</div>
+<div class="design-sub">sweet</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('lace',this)">
+<div class="design-preview d-lace"></div>
+<div class="design-name">🕊️ Lace</div>
+<div class="design-sub">romantic</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('green',this)">
+<div class="design-preview d-green"></div>
+<div class="design-name">🌿 Garden</div>
+<div class="design-sub">fresh</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('purple',this)">
+<div class="design-preview d-purple"></div>
+<div class="design-name">💜 Cloudy</div>
+<div class="design-sub">dreamy</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('brown',this)">
+<div class="design-preview d-brown"></div>
+<div class="design-name">📻 Retro</div>
+<div class="design-sub">old film</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('red',this)">
+<div class="design-preview d-red"></div>
+<div class="design-name">♥ Cherry</div>
+<div class="design-sub">bold cute</div>
+</button>
+
+<button class="design-card"
+onclick="selectDesign('yellow',this)">
+<div class="design-preview d-yellow"></div>
+<div class="design-name">☀️ Sunny</div>
+<div class="design-sub">happy</div>
+</button>
+
+</div>
+
+<div class="design-actions">
+
+<button class="secondary-button"
+onclick="goBoothStep(1)">
 ← Back
-</button><button class="primary" onclick="nextStep(3)" style="margin-top:10px">
-Open photobooth →
-</button></div><div id="step3" class="step"><div class="mini">your shared studio</div><h2>Let's take pictures 📸</h2><p class="muted">
-Camera only — no microphone.
-</p><div class="camera"><div class="video-box"><video id="myCamera" autoplay playsinline muted></video>
+</button>
 
-<div class="video-label">
-You · <span id="cameraYouName">You</span>
-</div></div><div class="video-box"><video id="partnerVideo" autoplay playsinline></video>
+<button class="continue-button"
+onclick="goBoothStep(3)">
+Open camera →
+</button>
 
-<div id="partnerWaiting" class="waiting"><div class="heart">♡</div><b id="partnerCameraText">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- ================= STEP 3 ================= -->
+
+<div id="boothStep3" class="booth-stage">
+
+<div class="choice-card">
+
+<div class="small-title">
+step three
+</div>
+
+<h1>
+Say cheese! 📸
+</h1>
+
+<p>
+Your camera is mirrored so it feels like looking in a mirror.
+</p>
+
+<div class="camera-layout">
+
+<div class="camera-card">
+
+<div class="camera-title">
+
+<span>
+YOU · <b id="cameraYouName">You</b>
+</span>
+
+<span>● LIVE</span>
+
+</div>
+
+<div class="camera-screen">
+
+<video
+id="myCamera"
+autoplay
+playsinline
+muted>
+</video>
+
+</div>
+
+</div>
+
+
+<div class="camera-card">
+
+<div class="camera-title">
+
+<span>
+PARTNER · <b id="cameraPartnerName">Them</b>
+</span>
+
+<span>♡</span>
+
+</div>
+
+<div class="camera-screen">
+
+<video
+id="partnerVideo"
+class="partner"
+autoplay
+playsinline>
+</video>
+
+<div id="partnerWaiting"
+class="camera-waiting">
+
+<div class="big-heart">♡</div>
+
+<b>
 Waiting for partner...
-</b><p>
-When they open the same room,
-their camera will appear here.
-</p></div><div class="video-label">
-Partner · <span id="cameraPartnerName">Them</span>
-</div></div></div><div class="camera-buttons"><button class="secondary" onclick="startCamera()">
-Start Camera
-</button><button class="shutter" onclick="takePhoto()">
+</b>
+
+<p>
+They need to open the same room.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="camera-controls">
+
+<div class="photo-count"
+id="photoCount">
+0 / 2
+</div>
+
+<button class="shutter"
+onclick="takePhoto()">
 ●
-</button><span id="photoCount">0 / 2</span>
+</button>
 
-</div><div id="photoPreview"></div><button id="editButton" class="primary" onclick="openEditor()" disabled>
+</div>
+
+<div class="preview-row"
+id="photoPreview">
+</div>
+
+<div class="camera-actions">
+
+<button class="secondary-button"
+onclick="startCamera()">
+Enable Camera
+</button>
+
+<button id="editButton"
+class="continue-button"
+onclick="openEditor()"
+disabled
+style="margin-top:10px">
 Design Our Strip →
-</button></div></div>
-</section><!-- PHOTO EDITOR --><section id="photoEditor" class="page"><div class="topbar"><button class="back" onclick="backToCamera()">←</button>
+</button>
 
-<div>decorate your photo ✨</div><div></div></div><div class="photo-editor"><div class="mini" style="text-align:center">
-add a little something ♡
-</div><div class="sticker-bar"><button class="sticker-choice" onclick="putPhotoSticker('🎀')">🎀</button>
-<button class="sticker-choice" onclick="putPhotoSticker('♡')">♡</button>
-<button class="sticker-choice" onclick="putPhotoSticker('♥')">♥</button>
-<button class="sticker-choice" onclick="putPhotoSticker('✦')">✦</button>
-<button class="sticker-choice" onclick="putPhotoSticker('☆')">☆</button>
-<button class="sticker-choice" onclick="putPhotoSticker('🌷')">🌷</button>
-<button class="sticker-choice" onclick="putPhotoSticker('🌸')">🌸</button>
-<button class="sticker-choice" onclick="putPhotoSticker('🍓')">🍓</button>
-<button class="sticker-choice" onclick="putPhotoSticker('🧸')">🧸</button>
-<button class="sticker-choice" onclick="putPhotoSticker('☁️')">☁️</button>
-<button class="sticker-choice" onclick="putPhotoSticker('💌')">💌</button>
-<button class="sticker-choice" onclick="putPhotoSticker('🦋')">🦋</button>
-<button class="sticker-choice" onclick="putPhotoSticker('✿')">✿</button>
-<button class="sticker-choice" onclick="putPhotoSticker('୨୧')">୨୧</button>
+</div>
 
-</div><div class="edit-instruction">
-Tap a sticker above to add it to this photo.
-</div><div class="edit-photo-area" id="editPhotoArea">
-<img id="editingPhoto" class="edit-photo">
-</div><button class="primary save-photo" onclick="saveEditedPhoto()">
-💾 Save Photo
-</button></div>
-</section><!-- FINAL EDITOR --><section id="editor" class="page"><div class="topbar"><button class="back" onclick="navigateShared('photobooth')">←</button>
+</div>
 
-<div>design our strip ✦</div><div></div></div><div class="content editor"><div class="stage"><div id="photoStrip" class="photo-strip"><div id="stripPhotos"></div><div id="stripDecorations"></div><div class="strip-title">
-<span id="stripNames">You ♡ Them</span>
-</div></div></div><div class="tools"><div class="sync-note">
-♡ This strip is shared. Changes you make here can appear on your partner's screen too.
-</div><div class="tool-section"><b>Stickers ✨</b>
+</div>
 
-<div class="stickers"><button class="sticker" onclick="addSticker('🎀')">🎀</button>
-<button class="sticker" onclick="addSticker('♡')">♡</button>
-<button class="sticker" onclick="addSticker('♥')">♥</button>
-<button class="sticker" onclick="addSticker('✦')">✦</button>
-<button class="sticker" onclick="addSticker('☆')">☆</button>
-<button class="sticker" onclick="addSticker('🌷')">🌷</button>
-<button class="sticker" onclick="addSticker('🌸')">🌸</button>
-<button class="sticker" onclick="addSticker('🍓')">🍓</button>
-<button class="sticker" onclick="addSticker('🧸')">🧸</button>
-<button class="sticker" onclick="addSticker('☁️')">☁️</button>
-<button class="sticker" onclick="addSticker('💌')">💌</button>
-<button class="sticker" onclick="addSticker('🦋')">🦋</button>
-<button class="sticker" onclick="addSticker('✿')">✿</button>
-<button class="sticker" onclick="addSticker('୨୧')">୨୧</button>
-<button class="sticker" onclick="addSticker('🍒')">🍒</button>
-<button class="sticker" onclick="addSticker('🫧')">🫧</button>
-<button class="sticker" onclick="addSticker('⭐')">⭐</button>
-<button class="sticker" onclick="addSticker('🌙')">🌙</button>
+</div>
 
-</div></div><div class="tool-section"><b>Add text</b>
+</section>
 
-<input id="customText" placeholder="our little moment ♡"><button class="secondary" onclick="addText()" style="margin-top:8px">
+
+<!-- =====================================================
+EDITOR
+===================================================== -->
+
+<section id="editor" class="page booth-page">
+
+<div class="booth-nav">
+
+<button class="back-button"
+onclick="showPage('photobooth')">
+←
+</button>
+
+<div>
+✨ our shared strip
+</div>
+
+<div class="live-pill">
+SYNCED ♡
+</div>
+
+</div>
+
+<div class="booth-wrapper">
+
+<div class="editor-layout">
+
+<div class="strip-zone">
+
+<div
+id="photoStrip"
+class="photo-strip">
+
+<div
+id="stripPhotos"
+class="strip-photos">
+</div>
+
+<div
+id="stripFooter"
+class="strip-footer">
+<span id="stripNames">
+You ♡ Them
+</span>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="editor-tools">
+
+<div class="tool-title">
+Decorate together ✨
+</div>
+
+<p style="font-size:12px;color:#927d85">
+Both of you can add decorations to the strip.
+</p>
+
+<div class="sticker-grid">
+
+<button class="sticker-button"
+onclick="addSticker('🎀')">🎀</button>
+
+<button class="sticker-button"
+onclick="addSticker('♡')">♡</button>
+
+<button class="sticker-button"
+onclick="addSticker('♥')">♥</button>
+
+<button class="sticker-button"
+onclick="addSticker('✦')">✦</button>
+
+<button class="sticker-button"
+onclick="addSticker('☆')">☆</button>
+
+<button class="sticker-button"
+onclick="addSticker('🌷')">🌷</button>
+
+<button class="sticker-button"
+onclick="addSticker('🌸')">🌸</button>
+
+<button class="sticker-button"
+onclick="addSticker('🍓')">🍓</button>
+
+<button class="sticker-button"
+onclick="addSticker('🧸')">🧸</button>
+
+<button class="sticker-button"
+onclick="addSticker('☁️')">☁️</button>
+
+<button class="sticker-button"
+onclick="addSticker('💌')">💌</button>
+
+<button class="sticker-button"
+onclick="addSticker('🦋')">🦋</button>
+
+<button class="sticker-button"
+onclick="addSticker('✿')">✿</button>
+
+<button class="sticker-button"
+onclick="addSticker('୨୧')">୨୧</button>
+
+<button class="sticker-button"
+onclick="addSticker('🍒')">🍒</button>
+
+<button class="sticker-button"
+onclick="addSticker('⭐')">⭐</button>
+
+</div>
+
+<hr class="tool-divider">
+
+<div class="tool-title">
+Add a little text
+</div>
+
+<input
+id="customText"
+class="text-input"
+placeholder="our little moment ♡">
+
+<button
+class="secondary-button"
+onclick="addText()"
+style="width:100%;margin-top:8px">
 Add text
-</button></div><div class="tool-section"><button class="primary" onclick="saveStrip()">
-💾 Save Final Strip
-</button></div></div></div>
-</section><!-- LETTERS --><section id="letters" class="page"><div class="topbar"><button class="back" onclick="navigateShared('home')">←</button>
+</button>
 
-<div>love letters 💌</div><div></div></div><div class="simple"><div class="mini">for whenever you miss them</div><h2>Write a little letter.</h2><textarea id="letterInput" placeholder="Dear you..."></textarea><button class="primary" onclick="sendLetter()" style="margin-top:10px">
+<hr class="tool-divider">
+
+<button
+class="save-button"
+onclick="saveStrip()">
+💾 Save Photo Strip
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LETTERS
+===================================================== -->
+
+<section id="letters" class="page home">
+
+<div class="nav">
+
+<button class="back-button"
+onclick="showPage('home')">
+←
+</button>
+
+<div>
+💌 love letters
+</div>
+
+<div></div>
+
+</div>
+
+<div class="simple-page">
+
+<div class="small-title">
+for whenever you miss them
+</div>
+
+<h1 style="font-family:Georgia,serif">
+Write a little letter.
+</h1>
+
+<textarea
+id="letterInput"
+placeholder="Dear you..."></textarea>
+
+<button
+class="main-button"
+onclick="sendLetter()"
+style="margin-top:10px">
 Save Letter 💌
-</button><div id="lettersList"></div></div></section><!-- MEMORIES --><section id="memories" class="page"><div class="topbar"><button class="back" onclick="navigateShared('home')">←</button>
+</button>
 
-<div>our memories 🖼️</div><div></div></div><div class="simple"><div class="mini">little moments</div><h2>Our scrapbook</h2><p class="desc">
-Your favorite little moments belong here. ♡
-</p></div></section><!-- DISTANCE --><section id="distance" class="page"><div class="topbar"><button class="back" onclick="navigateShared('home')">←</button>
+<div id="lettersList"></div>
 
-<div>our distance 🌎</div><div></div></div><div class="simple" style="text-align:center"><div style="font-size:70px">🌎</div><div class="mini">apart, but connected</div><h2>
-<span id="distanceYou">You</span>
+</div>
+
+</section>
+
+
+<!-- =====================================================
+MEMORIES
+===================================================== -->
+
+<section id="memories" class="page home">
+
+<div class="nav">
+
+<button class="back-button"
+onclick="showPage('home')">
+←
+</button>
+
+<div>
+🖼️ memories
+</div>
+
+<div></div>
+
+</div>
+
+<div class="simple-page"
+style="text-align:center">
+
+<div style="font-size:70px">
+🖼️
+</div>
+
+<div class="small-title">
+your little scrapbook
+</div>
+
+<h1 style="font-family:Georgia,serif">
+Our Memories
+</h1>
+
+<p style="color:#907b83">
+Your favorite moments can live here. ♡
+</p>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+DISTANCE
+===================================================== -->
+
+<section id="distance" class="page home">
+
+<div class="nav">
+
+<button class="back-button"
+onclick="showPage('home')">
+←
+</button>
+
+<div>
+🌎 our distance
+</div>
+
+<div></div>
+
+</div>
+
+<div class="simple-page"
+style="text-align:center">
+
+<div style="font-size:80px">
+🌎
+</div>
+
+<div class="small-title">
+apart but connected
+</div>
+
+<h1 style="font-family:Georgia,serif">
+
+<span id="distanceYou">
+You
+</span>
+
 ♡
-<span id="distancePartner">Them</span>
-</h2><p class="desc">
+
+<span id="distancePartner">
+Them
+</span>
+
+</h1>
+
+<p style="color:#907b83">
 Different places. Same little world.
-</p><div style="font-size:40px">
+</p>
+
+<div style="font-size:40px">
 ♡ ✦ ♡ ✦ ♡
-</div></div></section><script>
+</div>
+
+</div>
+
+</section>
+
+
+<script>
 
 /* =====================================================
 SUPABASE
@@ -1016,44 +1774,49 @@ SUPABASE_KEY
 
 
 /* =====================================================
-USER / ROOM
+USER VARIABLES
 ===================================================== */
+
+let yourName = "";
+let partnerName = "";
+let roomCode = "";
+
+let selectedStrip = 2;
+let selectedDesign = "pink";
+
+let photos = [];
+
+let cameraStream = null;
+let peerConnection = null;
+let signalingChannel = null;
+let dataChannel = null;
 
 const currentUserId =
 crypto.randomUUID();
 
-let yourName="";
-let partnerName="";
-let roomCode="";
+let sharedDecorations = [];
 
-let roomChannel=null;
-let partnerOnline=false;
+let sharedPage = "home";
 
-let cameraStream=null;
-let peerConnection=null;
-
-const rtcConfig={
-iceServers:[
-{urls:"stun:stun.l.google.com:19302"},
-{urls:"stun:stun1.l.google.com:19302"}
-]
-};
+let receivedPartnerPhotos = [];
 
 
 /* =====================================================
-SHARED STATE
+WEBRTC
 ===================================================== */
 
-let sharedState={
-page:"home",
-step:1,
-selectedStrip:2,
-selectedTemplate:"coquette",
-photos:[],
-decorations:[]
-};
+const rtcConfig = {
 
-let updatingFromRemote=false;
+    iceServers:[
+        {
+            urls:"stun:stun.l.google.com:19302"
+        },
+        {
+            urls:"stun:stun1.l.google.com:19302"
+        }
+    ]
+
+};
 
 
 /* =====================================================
@@ -1062,635 +1825,630 @@ PAGE
 
 function showPage(id){
 
-document.querySelectorAll(".page")
-.forEach(p=>p.classList.remove("active"));
+    document.querySelectorAll(".page")
+        .forEach(page =>
+            page.classList.remove("active")
+        );
 
-const target=document.getElementById(id);
+    const page =
+        document.getElementById(id);
 
-if(target)
-target.classList.add("active");
+    if(page)
+        page.classList.add("active");
 
-window.scrollTo(0,0);
+    window.scrollTo(0,0);
 
 }
 
 
 /* =====================================================
-ENTER ROOM
+ENTER WORLD
 ===================================================== */
 
 async function enterWorld(){
 
-yourName=
-document.getElementById("yourName")
-.value.trim();
+    yourName =
+        document.getElementById("yourName")
+        .value.trim();
 
-partnerName=
-document.getElementById("partnerName")
-.value.trim();
+    partnerName =
+        document.getElementById("partnerName")
+        .value.trim();
 
-roomCode=
-document.getElementById("roomCode")
-.value.trim()
-.toUpperCase();
+    roomCode =
+        document.getElementById("roomCode")
+        .value.trim()
+        .toUpperCase();
 
-if(!yourName){
+    if(!yourName){
 
-alert("Please enter your name ♡");
-return;
+        alert("Please enter your name ♡");
+        return;
 
-}
+    }
 
-if(!roomCode){
+    if(!roomCode){
 
-alert("Please enter a room code ♡");
-return;
+        alert("Please enter a room code ♡");
+        return;
 
-}
+    }
 
-document.getElementById("connectionMessage")
-.textContent="Connecting to your little world...";
-
-
-/*
-We keep the existing rooms table.
-*/
-
-const {error}=await supabaseClient
-.from("rooms")
-.insert({
-room_code:roomCode,
-user_name:yourName
-});
-
-if(error){
-
-/*
-A duplicate row isn't fatal.
-The important part is joining the realtime room.
-*/
-
-console.warn("Room insert:",error);
-
-}
-
-setupNames();
-
-await connectRoom();
+    document.getElementById(
+        "connectionMessage"
+    ).textContent =
+        "Connecting to your little world...";
 
 
-/*
-Give the room a moment to sync.
-*/
+    const {data,error} =
+        await supabaseClient
+        .from("rooms")
+        .insert({
 
-showPage("home");
+            room_code:roomCode,
+            user_name:yourName
 
-}
+        })
+        .select()
+        .single();
 
 
-/* =====================================================
-NAMES
-===================================================== */
+    if(error){
 
-function setupNames(){
+        console.error(error);
 
-document.getElementById("displayYou")
-.textContent=yourName;
+        alert(
+            "Could not join the room. Check your Supabase table permissions."
+        );
 
-document.getElementById("displayPartner")
-.textContent=partnerName||"Them";
+        return;
 
-document.getElementById("displayRoom")
-.textContent=roomCode;
+    }
 
-document.getElementById("cameraYouName")
-.textContent=yourName;
 
-document.getElementById("cameraPartnerName")
-.textContent=partnerName||"Them";
+    document.getElementById(
+        "connectionMessage"
+    ).textContent = "";
 
-document.getElementById("stripNames")
-.textContent=
-yourName+" ♡ "+(partnerName||"Them");
 
-document.getElementById("distanceYou")
-.textContent=yourName;
+    updateNames();
 
-document.getElementById("distancePartner")
-.textContent=partnerName||"Them";
+    document.getElementById(
+        "displayRoom"
+    ).textContent = roomCode;
+
+    document.getElementById(
+        "boothRoom"
+    ).textContent = roomCode;
+
+
+    showPage("home");
+
+    startRoomListener();
+
+    startSignaling();
 
 }
 
 
 /* =====================================================
-CONNECT SHARED ROOM
+UPDATE NAMES
 ===================================================== */
 
-async function connectRoom(){
+function updateNames(){
 
-if(roomChannel)
-return;
+    document.getElementById(
+        "displayYou"
+    ).textContent =
+        yourName;
 
-roomChannel=
-supabaseClient
-.channel(
-"our-little-world-"+roomCode,
-{
-config:{
-broadcast:{
-self:false
-},
-presence:{
-key:currentUserId
-}
-}
-}
-);
+    document.getElementById(
+        "displayPartner"
+    ).textContent =
+        partnerName || "Them";
 
+    document.getElementById(
+        "cameraYouName"
+    ).textContent =
+        yourName;
 
-/* ================= PRESENCE ================= */
+    document.getElementById(
+        "cameraPartnerName"
+    ).textContent =
+        partnerName || "Them";
 
-roomChannel.on(
-"presence",
-{
-event:"sync"
-},
-()=>{
-updatePresence();
-}
-);
+    document.getElementById(
+        "distanceYou"
+    ).textContent =
+        yourName;
 
-roomChannel.on(
-"presence",
-{
-event:"join"
-},
-()=>{
-updatePresence();
-}
-);
+    document.getElementById(
+        "distancePartner"
+    ).textContent =
+        partnerName || "Them";
 
-roomChannel.on(
-"presence",
-{
-event:"leave"
-},
-()=>{
-updatePresence();
-}
-);
-
-
-/* ================= SHARED STATE ================= */
-
-roomChannel.on(
-"broadcast",
-{
-event:"state"
-},
-payload=>{
-
-if(payload.payload?.sender===currentUserId)
-return;
-
-const state=
-payload.payload?.state;
-
-if(!state)
-return;
-
-applySharedState(state);
-
-}
-);
-
-
-/* ================= STATE REQUEST ================= */
-
-roomChannel.on(
-"broadcast",
-{
-event:"request-state"
-},
-async payload=>{
-
-if(payload.payload?.sender===currentUserId)
-return;
-
-await sendState();
-
-}
-);
-
-
-/* ================= WEBRTC SIGNALS ================= */
-
-roomChannel.on(
-"broadcast",
-{
-event:"webrtc"
-},
-async payload=>{
-
-if(payload.payload?.sender===currentUserId)
-return;
-
-await handleWebRTCSignal(
-payload.payload
-);
-
-}
-);
-
-
-/* ================= PHOTO TRANSFER ================= */
-
-roomChannel.on(
-"broadcast",
-{
-event:"photo"
-},
-payload=>{
-
-if(payload.payload?.sender===currentUserId)
-return;
-
-const photo=
-payload.payload?.photo;
-
-if(!photo)
-return;
-
-if(!sharedState.photos.includes(photo)){
-
-sharedState.photos.push(photo);
-
-renderSharedStrip();
-
-}
-
-}
-);
-
-
-await roomChannel.subscribe(
-async status=>{
-
-if(status!=="SUBSCRIBED")
-return;
-
-
-/*
-Announce ourselves.
-*/
-
-await roomChannel.track({
-
-userId:currentUserId,
-name:yourName,
-joinedAt:Date.now()
-
-});
-
-
-/*
-Ask anyone already inside the room
-for the current page/design.
-*/
-
-await roomChannel.send({
-
-type:"broadcast",
-event:"request-state",
-
-payload:{
-sender:currentUserId
-}
-
-});
-
-
-/*
-Start WebRTC.
-*/
-
-await startWebRTC();
-
-});
+    document.getElementById(
+        "stripNames"
+    ).textContent =
+        yourName +
+        " ♡ " +
+        (partnerName || "Them");
 
 }
 
 
 /* =====================================================
-PRESENCE
+ROOM LISTENER
 ===================================================== */
 
-function updatePresence(){
+function startRoomListener(){
 
-if(!roomChannel)
-return;
+    supabaseClient
+    .channel(
+        "room-presence-" +
+        roomCode +
+        "-" +
+        currentUserId
+    )
+    .on(
+        "postgres_changes",
+        {
+            event:"INSERT",
+            schema:"public",
+            table:"rooms",
+            filter:
+                "room_code=eq." +
+                roomCode
+        },
+        async()=>{
+            await checkRoom();
+        }
+    )
+    .subscribe();
 
-const state=
-roomChannel.presenceState();
 
-const people=[];
-
-Object.values(state).forEach(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.userId!==currentUserId)
-people.push(entry);
-
-});
-
-});
-
-partnerOnline=
-people.length>0;
-
-const status=
-document.getElementById("partnerStatus");
-
-if(partnerOnline){
-
-const partner=
-people[0];
-
-status.textContent=
-"🟢 "+
-(partner.name||partnerName||"Your partner")+
-" is here ♡";
-
-document.getElementById("partnerCameraText")
-.textContent="Connecting cameras...";
-
-}else{
-
-status.textContent=
-"⚪ Waiting for partner...";
-
-document.getElementById("partnerCameraText")
-.textContent=
-"Waiting for partner...";
-
-}
+    checkRoom();
 
 }
 
 
 /* =====================================================
-SHARED NAVIGATION
+CHECK PARTNER
 ===================================================== */
 
-async function navigateShared(page){
+async function checkRoom(){
 
-sharedState.page=page;
+    const {data,error} =
+        await supabaseClient
+        .from("rooms")
+        .select("*")
+        .eq("room_code",roomCode);
 
-if(page==="photobooth"){
 
-sharedState.step=
-sharedState.step||1;
+    if(error){
 
-}
+        console.error(error);
+        return;
 
-renderSharedState();
+    }
 
-await sendState();
+
+    const otherUsers =
+        (data || [])
+        .filter(row =>
+            row.user_name !== yourName
+        );
+
+
+    if(otherUsers.length > 0){
+
+        document.getElementById(
+            "partnerStatus"
+        ).textContent =
+            "🟢 " +
+            (partnerName ||
+            otherUsers[0].user_name) +
+            " is here ♡";
+
+        startSignaling();
+
+    }
+    else{
+
+        document.getElementById(
+            "partnerStatus"
+        ).textContent =
+            "⚪ Waiting for partner...";
+
+    }
 
 }
 
 
 /* =====================================================
-SEND STATE
+SIGNALING
 ===================================================== */
 
-async function sendState(){
+function startSignaling(){
 
-if(!roomChannel)
-return;
+    if(signalingChannel)
+        return;
 
-await roomChannel.send({
 
-type:"broadcast",
-event:"state",
+    signalingChannel =
+        supabaseClient
+        .channel(
+            "signal-" +
+            roomCode +
+            "-" +
+            currentUserId
+        )
+        .on(
+            "postgres_changes",
+            {
+                event:"INSERT",
+                schema:"public",
+                table:"call_signals",
+                filter:
+                    "room_code=eq." +
+                    roomCode
+            },
+            async payload => {
 
-payload:{
-sender:currentUserId,
-state:JSON.parse(
-JSON.stringify(sharedState)
-)
-}
+                const signal =
+                    payload.new;
 
-});
+                if(
+                    signal.sender ===
+                    currentUserId
+                )
+                    return;
+
+                await handleSignal(signal);
+
+            }
+        )
+        .subscribe(
+            async status => {
+
+                if(status === "SUBSCRIBED"){
+
+                    await createPeerConnection();
+
+                    await decideCaller();
+
+                    await loadLatestSharedState();
+
+                }
+
+            }
+        );
 
 }
 
 
 /* =====================================================
-APPLY REMOTE STATE
+CALLER
 ===================================================== */
 
-function applySharedState(state){
+async function decideCaller(){
 
-updatingFromRemote=true;
+    const {data,error} =
+        await supabaseClient
+        .from("rooms")
+        .select("id,user_name")
+        .eq("room_code",roomCode)
+        .order("id",{ascending:true});
 
-sharedState={
-...sharedState,
-...state
-};
 
-if(!sharedState.photos)
-sharedState.photos=[];
+    if(
+        error ||
+        !data ||
+        data.length < 2
+    )
+        return;
 
-if(!sharedState.decorations)
-sharedState.decorations=[];
 
-renderSharedState();
+    if(
+        data[0].user_name ===
+        yourName
+    ){
 
-updatingFromRemote=false;
+        await createOffer();
+
+    }
 
 }
 
 
 /* =====================================================
-RENDER SHARED STATE
+PEER CONNECTION
 ===================================================== */
 
-function renderSharedState(){
+async function createPeerConnection(){
 
-/*
-Page
-*/
-
-showPage(sharedState.page);
+    if(peerConnection)
+        return;
 
 
-/*
-Photobooth step
-*/
-
-if(sharedState.page==="photobooth"){
-
-setStepUI(
-sharedState.step||1
-);
-
-}
+    peerConnection =
+        new RTCPeerConnection(
+            rtcConfig
+        );
 
 
-/*
-Strip
-*/
+    if(cameraStream){
 
-renderSharedStrip();
+        cameraStream
+        .getTracks()
+        .forEach(track=>{
+
+            peerConnection.addTrack(
+                track,
+                cameraStream
+            );
+
+        });
+
+    }
+
+
+    dataChannel =
+        peerConnection.createDataChannel(
+            "shared-world"
+        );
+
+    setupDataChannel(
+        dataChannel
+    );
+
+
+    peerConnection.ondatachannel =
+        event => {
+
+            setupDataChannel(
+                event.channel
+            );
+
+        };
+
+
+    peerConnection.ontrack =
+        event => {
+
+            const partnerVideo =
+                document.getElementById(
+                    "partnerVideo"
+                );
+
+            partnerVideo.srcObject =
+                event.streams[0];
+
+
+            document.getElementById(
+                "partnerWaiting"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "partnerStatus"
+            ).textContent =
+                "🟢 Live together ♡";
+
+        };
+
+
+    peerConnection.onicecandidate =
+        async event => {
+
+            if(event.candidate){
+
+                await sendSignal(
+                    "candidate",
+                    event.candidate.toJSON()
+                );
+
+            }
+
+        };
+
+
+    peerConnection.onconnectionstatechange =
+        () => {
+
+            if(
+                peerConnection.connectionState ===
+                "connected"
+            ){
+
+                document.getElementById(
+                    "partnerWaiting"
+                ).style.display =
+                    "none";
+
+                document.getElementById(
+                    "partnerStatus"
+                ).textContent =
+                    "🟢 Live together ♡";
+
+                sendCurrentState();
+
+            }
+
+        };
 
 }
 
 
 /* =====================================================
-STEP UI
+DATA CHANNEL
 ===================================================== */
 
-function setStepUI(number){
+function setupDataChannel(channel){
 
-document.querySelectorAll(".step")
-.forEach(x=>
-x.classList.remove("active")
-);
+    channel.onopen = () => {
 
-const step=
-document.getElementById(
-"step"+number
-);
+        dataChannel = channel;
 
-if(step)
-step.classList.add("active");
+        sendCurrentState();
 
-document.getElementById(
-"stepNumber"
-).textContent=
-number+" / 3";
+    };
 
 
-/*
-Select strip size.
-*/
+    channel.onmessage = event => {
 
-document.querySelectorAll(".strip-option")
-.forEach(button=>{
+        try{
 
-const numberText=
-button.querySelector("strong")
-?.textContent;
+            const message =
+                JSON.parse(event.data);
 
-button.classList.toggle(
-"selected",
-Number(numberText)===
-Number(sharedState.selectedStrip)
-);
+            handleSharedMessage(
+                message
+            );
 
-});
+        }catch(error){
 
+            console.error(
+                "Data channel error",
+                error
+            );
 
-/*
-Select template.
-*/
+        }
 
-document.querySelectorAll(".template")
-.forEach(button=>{
-
-button.classList.remove("selected");
-
-});
-
+    };
 
 }
 
 
 /* =====================================================
-PHOTOBOOTH
+SEND SIGNAL
 ===================================================== */
 
-function openPhotobooth(){
+async function sendSignal(
+    type,
+    data
+){
 
-if(!sharedState.photos)
-sharedState.photos=[];
+    const {error} =
+        await supabaseClient
+        .from("call_signals")
+        .insert({
 
-sharedState.page="photobooth";
-sharedState.step=1;
+            room_code:roomCode,
+            sender:currentUserId,
+            type:type,
+            data:data
 
-renderSharedState();
-sendState();
-
-}
-
-
-function selectStrip(number,button){
-
-sharedState.selectedStrip=number;
-
-sharedState.photos=
-(sharedState.photos||[])
-.slice(0,number);
-
-renderSharedStrip();
-
-if(!updatingFromRemote)
-sendState();
-
-}
+        });
 
 
-function selectTemplate(name,button){
-
-sharedState.selectedTemplate=name;
-
-applyStripTemplate();
-
-if(!updatingFromRemote)
-sendState();
-
-}
-
-
-function nextStep(number){
-
-sharedState.page="photobooth";
-sharedState.step=number;
-
-renderSharedState();
-
-sendState();
-
-
-if(number===3){
-
-if(!cameraStream)
-startCamera();
-
-startWebRTC();
-
-}
+    if(error)
+        console.error(
+            "SIGNAL ERROR:",
+            error
+        );
 
 }
 
 
 /* =====================================================
-STRIP TEMPLATE
+HANDLE SIGNAL
 ===================================================== */
 
-function applyStripTemplate(){
+async function handleSignal(signal){
 
-const strip=
-document.getElementById("photoStrip");
+    if(!peerConnection)
+        await createPeerConnection();
 
-if(!strip)
-return;
 
-strip.className=
-"photo-strip "+
-(sharedState.selectedTemplate||"coquette");
+    try{
+
+        if(
+            signal.type ===
+            "offer"
+        ){
+
+            await peerConnection
+            .setRemoteDescription(
+                new RTCSessionDescription(
+                    signal.data
+                )
+            );
+
+
+            const answer =
+                await peerConnection
+                .createAnswer();
+
+
+            await peerConnection
+            .setLocalDescription(
+                answer
+            );
+
+
+            await sendSignal(
+                "answer",
+                {
+                    type:answer.type,
+                    sdp:answer.sdp
+                }
+            );
+
+        }
+
+
+        else if(
+            signal.type ===
+            "answer"
+        ){
+
+            await peerConnection
+            .setRemoteDescription(
+                new RTCSessionDescription(
+                    signal.data
+                )
+            );
+
+        }
+
+
+        else if(
+            signal.type ===
+            "candidate"
+        ){
+
+            await peerConnection
+            .addIceCandidate(
+                new RTCIceCandidate(
+                    signal.data
+                )
+            );
+
+        }
+
+
+        else if(
+            signal.type ===
+            "shared-state"
+        ){
+
+            handleSharedMessage(
+                signal.data
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Signal handling error:",
+            error
+        );
+
+    }
 
 }
 
@@ -1701,379 +2459,307 @@ CAMERA
 
 async function startCamera(){
 
-try{
+    try{
 
-if(cameraStream){
+        cameraStream =
+            await navigator.mediaDevices
+            .getUserMedia({
 
-const video=
-document.getElementById("myCamera");
+                video:{
+                    facingMode:"user",
+                    width:{
+                        ideal:1280
+                    },
+                    height:{
+                        ideal:1600
+                    }
+                },
 
-video.srcObject=cameraStream;
+                audio:false
 
-return;
+            });
 
-}
 
-cameraStream=
-await navigator.mediaDevices.getUserMedia({
+        const video =
+            document.getElementById(
+                "myCamera"
+            );
 
-video:{
-facingMode:"user",
-width:{ideal:1280},
-height:{ideal:1600}
-},
 
-audio:false
+        video.srcObject =
+            cameraStream;
 
-});
 
-const video=
-document.getElementById("myCamera");
+        if(peerConnection){
 
-video.srcObject=
-cameraStream;
+            const track =
+                cameraStream
+                .getVideoTracks()[0];
 
-await video.play().catch(()=>{});
 
-await startWebRTC();
+            const sender =
+                peerConnection
+                .getSenders()
+                .find(
+                    s =>
+                    s.track &&
+                    s.track.kind ===
+                    "video"
+                );
 
-}catch(error){
 
-console.error(error);
+            if(sender){
 
-alert(
-"Please allow camera access in your browser."
-);
+                await sender
+                .replaceTrack(track);
 
-}
+            }
+            else{
+
+                peerConnection
+                .addTrack(
+                    track,
+                    cameraStream
+                );
+
+            }
+
+        }
+
+
+        startSignaling();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Please allow camera access in your browser."
+        );
+
+    }
 
 }
 
 
 /* =====================================================
-WEBRTC
+BOOTH FLOW
 ===================================================== */
 
-async function startWebRTC(){
+function openPhotobooth(){
 
-if(!roomChannel)
-return;
+    if(
+        sharedPage ===
+        "editor"
+    ){
 
-if(!cameraStream)
-return;
+        showPage("editor");
+        return;
 
-if(!peerConnection){
-
-peerConnection=
-new RTCPeerConnection(rtcConfig);
-
-cameraStream
-.getTracks()
-.forEach(track=>{
-
-peerConnection.addTrack(
-track,
-cameraStream
-);
-
-});
+    }
 
 
-peerConnection.ontrack=
-event=>{
+    photos = [];
 
-const video=
-document.getElementById("partnerVideo");
+    document.getElementById(
+        "photoPreview"
+    ).innerHTML = "";
 
-video.srcObject=
-event.streams[0];
+    document.getElementById(
+        "photoCount"
+    ).textContent =
+        "0 / " +
+        selectedStrip;
 
-document.getElementById(
-"partnerWaiting"
-).style.display="none";
-
-document.getElementById(
-"partnerStatus"
-).textContent=
-"🟢 Live together ♡";
-
-};
+    document.getElementById(
+        "editButton"
+    ).disabled = true;
 
 
-peerConnection.onicecandidate=
-async event=>{
+    showPage("photobooth");
 
-if(!event.candidate)
-return;
+    goBoothStep(1);
 
-await sendWebRTCSignal({
-
-type:"candidate",
-
-data:
-event.candidate.toJSON()
-
-});
-
-};
-
-
-peerConnection.onconnectionstatechange=
-()=>{
-
-const state=
-peerConnection.connectionState;
-
-if(state==="connected"){
-
-document.getElementById(
-"partnerWaiting"
-).style.display="none";
-
-document.getElementById(
-"partnerStatus"
-).textContent=
-"🟢 Live together ♡";
+    sendSharedPage(
+        "photobooth"
+    );
 
 }
 
-if(
-state==="disconnected"||
-state==="failed"||
-state==="closed"
+
+function goBoothStep(step){
+
+    document.querySelectorAll(
+        ".booth-stage"
+    )
+    .forEach(x =>
+        x.classList.remove("active")
+    );
+
+
+    const stage =
+        document.getElementById(
+            "boothStep" + step
+        );
+
+
+    if(stage)
+        stage.classList.add("active");
+
+
+    for(let i=1;i<=3;i++){
+
+        const dot =
+            document.getElementById(
+                "dot"+i
+            );
+
+        if(dot){
+
+            dot.classList.toggle(
+                "active",
+                i === step
+            );
+
+        }
+
+    }
+
+
+    if(step === 3){
+
+        if(!cameraStream)
+            startCamera();
+
+        startSignaling();
+
+    }
+
+
+    sendSharedPage(
+        "photobooth"
+    );
+
+}
+
+
+/* =====================================================
+STRIP SELECTION
+===================================================== */
+
+function selectStrip(
+    number,
+    button
 ){
 
-document.getElementById(
-"partnerWaiting"
-).style.display="flex";
+    selectedStrip =
+        number;
+
+
+    document.querySelectorAll(
+        ".strip-choice"
+    )
+    .forEach(x =>
+        x.classList.remove(
+            "selected"
+        )
+    );
+
+
+    button.classList.add(
+        "selected"
+    );
+
+
+    document.getElementById(
+        "photoCount"
+    ).textContent =
+        photos.length +
+        " / " +
+        selectedStrip;
+
+
+    sendSharedState();
 
 }
 
-};
 
-}
+/* =====================================================
+DESIGN SELECTION
+===================================================== */
 
-
-/*
-Only one side creates the offer.
-
-We use the random user ID so both browsers
-can deterministically decide who is caller.
-*/
-
-if(
-partnerOnline &&
-currentUserId <
-getPartnerId()
+function selectDesign(
+    name,
+    button
 ){
 
-await createOffer();
-
-}
-
-}
+    selectedDesign =
+        name;
 
 
-/* =====================================================
-PARTNER ID
-===================================================== */
+    document.querySelectorAll(
+        ".design-card"
+    )
+    .forEach(x =>
+        x.classList.remove(
+            "selected"
+        )
+    );
 
-function getPartnerId(){
 
-if(!roomChannel)
-return "zzzzzzzzzzzz";
+    button.classList.add(
+        "selected"
+    );
 
-const state=
-roomChannel.presenceState();
 
-const ids=[];
+    applyStripDesign();
 
-Object.keys(state)
-.forEach(key=>{
-
-if(key!==currentUserId)
-ids.push(key);
-
-});
-
-ids.sort();
-
-return ids[0]||"zzzzzzzzzzzz";
+    sendSharedState();
 
 }
 
 
 /* =====================================================
-CREATE OFFER
+DESIGN COLORS
 ===================================================== */
 
-async function createOffer(){
+function applyStripDesign(){
 
-if(!peerConnection)
-return;
-
-if(peerConnection.signalingState!=="stable")
-return;
-
-try{
-
-const offer=
-await peerConnection.createOffer();
-
-await peerConnection.setLocalDescription(
-offer
-);
-
-await sendWebRTCSignal({
-
-type:"offer",
-
-data:{
-type:offer.type,
-sdp:offer.sdp
-}
-
-});
-
-}catch(error){
-
-console.error(
-"Offer error:",
-error
-);
-
-}
-
-}
+    const strip =
+        document.getElementById(
+            "photoStrip"
+        );
 
 
-/* =====================================================
-SEND WEBRTC SIGNAL
-===================================================== */
+    const colors = {
 
-async function sendWebRTCSignal(data){
+        pink:"#fff1f5",
 
-if(!roomChannel)
-return;
+        film:"#f0dfca",
 
-await roomChannel.send({
+        blue:"#e7eff8",
 
-type:"broadcast",
+        strawberry:"#fff0e7",
 
-event:"webrtc",
+        lace:"#ead8e2",
 
-payload:{
-sender:currentUserId,
-...data
-}
+        green:"#e5f0e7",
 
-});
+        purple:"#eee7f5",
 
-}
+        brown:"#ead9c8",
 
+        red:"#f6dce0",
 
-/* =====================================================
-HANDLE WEBRTC
-===================================================== */
+        yellow:"#fff0bd"
 
-async function handleWebRTCSignal(signal){
-
-if(!peerConnection){
-
-await startWebRTC();
-
-}
-
-if(!peerConnection)
-return;
+    };
 
 
-try{
-
-if(signal.type==="offer"){
-
-if(
-peerConnection.signalingState!=="stable"
-){
-
-return;
-
-}
-
-await peerConnection.setRemoteDescription(
-new RTCSessionDescription(
-signal.data
-)
-);
-
-const answer=
-await peerConnection.createAnswer();
-
-await peerConnection.setLocalDescription(
-answer
-);
-
-await sendWebRTCSignal({
-
-type:"answer",
-
-data:{
-type:answer.type,
-sdp:answer.sdp
-}
-
-});
-
-}
-
-
-else if(signal.type==="answer"){
-
-if(
-peerConnection.signalingState===
-"have-local-offer"
-){
-
-await peerConnection.setRemoteDescription(
-new RTCSessionDescription(
-signal.data
-)
-);
-
-}
-
-}
-
-
-else if(signal.type==="candidate"){
-
-try{
-
-await peerConnection.addIceCandidate(
-new RTCIceCandidate(
-signal.data
-)
-);
-
-}catch(error){
-
-console.warn(
-"ICE candidate error:",
-error
-);
-
-}
-
-}
-
-}catch(error){
-
-console.error(
-"WebRTC error:",
-error
-);
-
-}
+    strip.style.background =
+        colors[selectedDesign] ||
+        "#fff1f5";
 
 }
 
@@ -2084,61 +2770,97 @@ TAKE PHOTO
 
 function takePhoto(){
 
-if(!cameraStream){
+    if(!cameraStream){
 
-alert("Start your camera first.");
-return;
+        alert(
+            "Start your camera first."
+        );
 
-}
+        return;
 
-if(
-(sharedState.photos||[]).length >=
-sharedState.selectedStrip
-){
+    }
 
-alert("Your strip is already full!");
-return;
 
-}
+    if(
+        photos.length >=
+        selectedStrip
+    ){
 
-let count=3;
+        alert(
+            "Your strip is already full!"
+        );
 
-const overlay=
-document.createElement("div");
+        return;
 
-overlay.style.position="fixed";
-overlay.style.inset="0";
-overlay.style.zIndex="9999";
-overlay.style.display="grid";
-overlay.style.placeItems="center";
-overlay.style.background="#0008";
-overlay.style.color="white";
-overlay.style.font="bold 100px Georgia";
+    }
 
-document.body.appendChild(overlay);
 
-overlay.textContent=count;
+    let count = 3;
 
-const timer=
-setInterval(()=>{
 
-count--;
+    const overlay =
+        document.createElement(
+            "div"
+        );
 
-if(count>0){
 
-overlay.textContent=count;
+    overlay.style.position =
+        "fixed";
 
-}else{
+    overlay.style.inset =
+        "0";
 
-clearInterval(timer);
+    overlay.style.zIndex =
+        "9999";
 
-overlay.remove();
+    overlay.style.display =
+        "grid";
 
-capturePhoto();
+    overlay.style.placeItems =
+        "center";
 
-}
+    overlay.style.background =
+        "#0009";
 
-},700);
+    overlay.style.color =
+        "white";
+
+    overlay.style.font =
+        "bold 110px Georgia";
+
+
+    document.body.appendChild(
+        overlay
+    );
+
+
+    overlay.textContent =
+        count;
+
+
+    const timer =
+        setInterval(()=>{
+
+            count--;
+
+
+            if(count > 0){
+
+                overlay.textContent =
+                    count;
+
+            }
+            else{
+
+                clearInterval(timer);
+
+                overlay.remove();
+
+                capturePhoto();
+
+            }
+
+        },700);
 
 }
 
@@ -2149,227 +2871,173 @@ CAPTURE
 
 function capturePhoto(){
 
-const video=
-document.getElementById("myCamera");
-
-const canvas=
-document.createElement("canvas");
-
-
-/*
-Portrait photo.
-*/
-
-canvas.width=480;
-canvas.height=600;
-
-const ctx=
-canvas.getContext("2d");
+    const video =
+        document.getElementById(
+            "myCamera"
+        );
 
 
-/*
-Mirror saved selfie just like
-the live selfie preview.
-*/
-
-ctx.save();
-
-ctx.translate(
-canvas.width,
-0
-);
-
-ctx.scale(-1,1);
-
-ctx.drawImage(
-video,
-0,
-0,
-canvas.width,
-canvas.height
-);
-
-ctx.restore();
+    const canvas =
+        document.createElement(
+            "canvas"
+        );
 
 
-const image=
-canvas.toDataURL(
-"image/jpeg",
-.78
-);
+    canvas.width =
+        800;
+
+    canvas.height =
+        1000;
 
 
-if(
-(sharedState.photos||[]).length >=
-sharedState.selectedStrip
-){
-
-return;
-
-}
+    const ctx =
+        canvas.getContext(
+            "2d"
+        );
 
 
-sharedState.photos.push(image);
+    /*
+       Mirror the captured photo
+       so it matches the live
+       mirror preview.
+    */
 
-renderSharedStrip();
+    ctx.save();
 
-sendState();
+    ctx.translate(
+        canvas.width,
+        0
+    );
+
+    ctx.scale(
+        -1,
+        1
+    );
 
 
-/*
-Send the photo separately as well.
-This helps a partner who is already
-inside the strip editor receive it.
-*/
+    ctx.drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-if(roomChannel){
 
-roomChannel.send({
+    ctx.restore();
 
-type:"broadcast",
-event:"photo",
 
-payload:{
-sender:currentUserId,
-photo:image
-}
+    const image =
+        canvas.toDataURL(
+            "image/jpeg",
+            .92
+        );
 
-});
 
-}
+    photos.push(
+        image
+    );
+
+
+    updatePhotoThumbnails();
+
+
+    document.getElementById(
+        "photoCount"
+    ).textContent =
+        photos.length +
+        " / " +
+        selectedStrip;
+
+
+    /*
+       Send the picture through
+       WebRTC to the partner.
+    */
+
+    sendPhotoToPartner(
+        image,
+        photos.length - 1
+    );
+
+
+    if(
+        photos.length >=
+        selectedStrip
+    ){
+
+        document.getElementById(
+            "editButton"
+        ).disabled =
+            false;
+
+    }
 
 }
 
 
 /* =====================================================
-SHARED STRIP
+SEND PHOTO TO PARTNER
 ===================================================== */
 
-function renderSharedStrip(){
+function sendPhotoToPartner(
+    image,
+    index
+){
 
-const preview=
-document.getElementById("photoPreview");
+    if(
+        dataChannel &&
+        dataChannel.readyState ===
+        "open"
+    ){
 
-if(preview){
+        dataChannel.send(
+            JSON.stringify({
 
-preview.innerHTML="";
+                type:"photo",
+                image:image,
+                index:index
 
-(sharedState.photos||[])
-.forEach(image=>{
+            })
+        );
 
-const img=
-document.createElement("img");
-
-img.src=image;
-
-preview.appendChild(img);
-
-});
-
-}
-
-
-const count=
-document.getElementById("photoCount");
-
-if(count){
-
-count.textContent=
-(sharedState.photos||[]).length+
-" / "+
-sharedState.selectedStrip;
+    }
 
 }
 
 
-const editButton=
-document.getElementById("editButton");
+/* =====================================================
+THUMBNAILS
+===================================================== */
 
-if(editButton){
+function updatePhotoThumbnails(){
 
-editButton.disabled=
-(sharedState.photos||[]).length<
-sharedState.selectedStrip;
-
-}
-
-
-const stripPhotos=
-document.getElementById("stripPhotos");
-
-if(stripPhotos){
-
-stripPhotos.innerHTML="";
-
-(sharedState.photos||[])
-.forEach(image=>{
-
-const img=
-document.createElement("img");
-
-img.src=image;
-
-stripPhotos.appendChild(img);
-
-});
-
-}
+    const preview =
+        document.getElementById(
+            "photoPreview"
+        );
 
 
-const stripNames=
-document.getElementById("stripNames");
-
-if(stripNames){
-
-stripNames.textContent=
-yourName+
-" ♡ "+
-(partnerName||"Them");
-
-}
+    preview.innerHTML = "";
 
 
-applyStripTemplate();
+    photos.forEach(
+        image => {
 
+            const img =
+                document.createElement(
+                    "img"
+                );
 
-/*
-Decorations.
-*/
+            img.src =
+                image;
 
-const decorationArea=
-document.getElementById(
-"stripDecorations"
-);
+            preview.appendChild(
+                img
+            );
 
-if(decorationArea){
-
-decorationArea.innerHTML="";
-
-(sharedState.decorations||[])
-.forEach(decoration=>{
-
-const el=
-document.createElement("div");
-
-el.className=
-decoration.type==="text"
-?"decor decor-text"
-:"decor";
-
-el.textContent=
-decoration.value;
-
-el.style.left=
-decoration.left;
-
-el.style.top=
-decoration.top;
-
-decorationArea.appendChild(el);
-
-});
-
-}
+        }
+    );
 
 }
 
@@ -2380,207 +3048,666 @@ OPEN EDITOR
 
 function openEditor(){
 
-if(
-(sharedState.photos||[]).length<
-sharedState.selectedStrip
+    if(
+        photos.length <
+        selectedStrip
+    ){
+
+        alert(
+            "Finish taking your photos first ♡"
+        );
+
+        return;
+
+    }
+
+
+    renderStrip();
+
+    showPage(
+        "editor"
+    );
+
+    sendSharedPage(
+        "editor"
+    );
+
+}
+
+
+/* =====================================================
+RENDER STRIP
+===================================================== */
+
+function renderStrip(){
+
+    const container =
+        document.getElementById(
+            "stripPhotos"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    photos.forEach(
+        image => {
+
+            const img =
+                document.createElement(
+                    "img"
+                );
+
+            img.src =
+                image;
+
+            container.appendChild(
+                img
+            );
+
+        }
+    );
+
+
+    applyStripDesign();
+
+    renderDecorations();
+
+}
+
+
+/* =====================================================
+DECORATIONS
+===================================================== */
+
+function addSticker(
+    symbol
 ){
 
-alert(
-"Take all your photos first ♡"
-);
+    const decoration = {
 
-return;
+        type:"sticker",
 
-}
+        value:symbol,
 
-sharedState.page="editor";
+        left:
+            5 +
+            Math.random()*75,
 
-renderSharedState();
+        top:
+            5 +
+            Math.random()*82
 
-sendState();
-
-}
-
-
-/* =====================================================
-PHOTO EDITOR
-===================================================== */
-
-function backToCamera(){
-
-sharedState.page="photobooth";
-sharedState.step=3;
-
-renderSharedState();
-
-sendState();
-
-}
+    };
 
 
-/*
-Small individual-photo sticker editor.
-*/
-
-function putPhotoSticker(symbol){
-
-const area=
-document.getElementById("editPhotoArea");
-
-const sticker=
-document.createElement("div");
-
-sticker.className="photo-sticker";
-
-sticker.textContent=symbol;
-
-sticker.style.left=
-(15+Math.random()*65)+"%";
-
-sticker.style.top=
-(15+Math.random()*65)+"%";
-
-area.appendChild(sticker);
-
-}
+    sharedDecorations.push(
+        decoration
+    );
 
 
-/*
-For compatibility with the photo editor.
-*/
+    renderDecorations();
 
-function saveEditedPhoto(){
-
-sharedState.page="editor";
-
-renderSharedState();
-
-sendState();
-
-}
-
-
-/* =====================================================
-FINAL STRIP STICKERS
-===================================================== */
-
-function addSticker(symbol){
-
-const decoration={
-
-type:"sticker",
-
-value:symbol,
-
-left:
-(5+Math.random()*75)+"%",
-
-top:
-(5+Math.random()*80)+"%"
-
-};
-
-sharedState.decorations.push(
-decoration
-);
-
-renderSharedStrip();
-
-sendState();
+    sendSharedState();
 
 }
 
 
 function addText(){
 
-const input=
-document.getElementById(
-"customText"
-);
+    const input =
+        document.getElementById(
+            "customText"
+        );
 
-const value=
-input.value.trim();
 
-if(!value)
-return;
+    const value =
+        input.value.trim();
 
-const decoration={
 
-type:"text",
+    if(!value)
+        return;
 
-value:value,
 
-left:"20%",
+    const decoration = {
 
-top:"50%"
+        type:"text",
 
-};
+        value:value,
 
-sharedState.decorations.push(
-decoration
-);
+        left:20,
 
-input.value="";
+        top:
+            30 +
+            Math.random()*40
 
-renderSharedStrip();
+    };
 
-sendState();
+
+    sharedDecorations.push(
+        decoration
+    );
+
+
+    input.value =
+        "";
+
+
+    renderDecorations();
+
+    sendSharedState();
 
 }
 
 
 /* =====================================================
-SAVE FINAL STRIP
+RENDER DECORATIONS
+===================================================== */
+
+function renderDecorations(){
+
+    document
+    .querySelectorAll(
+        "#photoStrip .decor"
+    )
+    .forEach(
+        element =>
+        element.remove()
+    );
+
+
+    const strip =
+        document.getElementById(
+            "photoStrip"
+        );
+
+
+    sharedDecorations
+    .forEach(
+        decoration => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "decor";
+
+
+            element.textContent =
+                decoration.value;
+
+
+            element.style.left =
+                decoration.left +
+                "%";
+
+
+            element.style.top =
+                decoration.top +
+                "%";
+
+
+            if(
+                decoration.type ===
+                "text"
+            ){
+
+                element.classList.add(
+                    "decor-text"
+                );
+
+            }
+
+
+            strip.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+SHARED STATE
+===================================================== */
+
+function getSharedState(){
+
+    return {
+
+        type:"shared-state",
+
+        selectedStrip:
+            selectedStrip,
+
+        selectedDesign:
+            selectedDesign,
+
+        decorations:
+            sharedDecorations,
+
+        page:
+            sharedPage
+
+    };
+
+}
+
+
+function sendSharedState(){
+
+    const state =
+        getSharedState();
+
+
+    if(
+        dataChannel &&
+        dataChannel.readyState ===
+        "open"
+    ){
+
+        dataChannel.send(
+            JSON.stringify(
+                state
+            )
+        );
+
+    }
+
+
+    /*
+       Also store state in
+       Supabase so the partner
+       can receive the latest
+       state when joining.
+    */
+
+    sendSignal(
+        "shared-state",
+        state
+    );
+
+}
+
+
+function sendCurrentState(){
+
+    sendSharedState();
+
+}
+
+
+function handleSharedMessage(
+    message
+){
+
+    if(
+        message.type ===
+        "photo"
+    ){
+
+        receivePartnerPhoto(
+            message
+        );
+
+        return;
+
+    }
+
+
+    if(
+        message.type ===
+        "shared-state"
+    ){
+
+        applySharedState(
+            message
+        );
+
+    }
+
+
+    if(
+        message.type ===
+        "shared-page"
+    ){
+
+        applySharedPage(
+            message.page
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+SHARED PAGE
+===================================================== */
+
+function sendSharedPage(
+    page
+){
+
+    sharedPage =
+        page;
+
+
+    const message = {
+
+        type:"shared-page",
+
+        page:page
+
+    };
+
+
+    if(
+        dataChannel &&
+        dataChannel.readyState ===
+        "open"
+    ){
+
+        dataChannel.send(
+            JSON.stringify(
+                message
+            )
+        );
+
+    }
+
+
+    sendSignal(
+        "shared-state",
+        message
+    );
+
+}
+
+
+function applySharedPage(
+    page
+){
+
+    sharedPage =
+        page;
+
+
+    /*
+       Only synchronize the
+       photobooth/editor.
+       The partner doesn't get
+       forcibly kicked out of
+       letters/home.
+    */
+
+    if(
+        page ===
+        "photobooth"
+    ){
+
+        if(
+            document
+            .getElementById(
+                "photobooth"
+            )
+            .classList
+            .contains("active") ===
+            false
+        ){
+
+            showPage(
+                "photobooth"
+            );
+
+        }
+
+    }
+
+
+    if(
+        page ===
+        "editor"
+    ){
+
+        renderStrip();
+
+        showPage(
+            "editor"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+APPLY SHARED STATE
+===================================================== */
+
+function applySharedState(
+    state
+){
+
+    if(
+        state.selectedStrip
+    ){
+
+        selectedStrip =
+            state.selectedStrip;
+
+    }
+
+
+    if(
+        state.selectedDesign
+    ){
+
+        selectedDesign =
+            state.selectedDesign;
+
+    }
+
+
+    if(
+        Array.isArray(
+            state.decorations
+        )
+    ){
+
+        sharedDecorations =
+            state.decorations;
+
+    }
+
+
+    renderDecorations();
+
+    applyStripDesign();
+
+}
+
+
+/* =====================================================
+PARTNER PHOTOS
+===================================================== */
+
+function receivePartnerPhoto(
+    message
+){
+
+    receivedPartnerPhotos[
+        message.index
+    ] =
+        message.image;
+
+
+    /*
+       If the partner's image is
+       received and we don't have
+       a photo at that position,
+       use it in the shared strip.
+    */
+
+    if(
+        !photos[message.index]
+    ){
+
+        photos[
+            message.index
+        ] =
+            message.image;
+
+    }
+
+
+    updatePhotoThumbnails();
+
+
+    if(
+        photos.length >=
+        selectedStrip
+    ){
+
+        document.getElementById(
+            "editButton"
+        ).disabled =
+            false;
+
+    }
+
+
+    if(
+        document
+        .getElementById(
+            "editor"
+        )
+        .classList
+        .contains("active")
+    ){
+
+        renderStrip();
+
+    }
+
+}
+
+
+/* =====================================================
+LOAD LATEST STATE
+===================================================== */
+
+async function loadLatestSharedState(){
+
+    /*
+       Read recent signal messages.
+       This lets someone joining later
+       catch up with the shared editor.
+    */
+
+    const {data,error} =
+        await supabaseClient
+        .from("call_signals")
+        .select("*")
+        .eq("room_code",roomCode)
+        .eq("type","shared-state")
+        .order("id",{ascending:false})
+        .limit(5);
+
+
+    if(error){
+
+        console.error(error);
+        return;
+
+    }
+
+
+    if(!data || !data.length)
+        return;
+
+
+    for(
+        const row of data.reverse()
+    ){
+
+        if(
+            row.sender !==
+            currentUserId
+        ){
+
+            handleSharedMessage(
+                row.data
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+SAVE STRIP
 ===================================================== */
 
 async function saveStrip(){
 
-const strip=
-document.getElementById(
-"photoStrip"
-);
+    const strip =
+        document.getElementById(
+            "photoStrip"
+        );
 
-if(!strip){
 
-alert("Photo strip not found.");
-return;
+    if(!strip){
 
-}
+        alert(
+            "Photo strip not found."
+        );
 
-try{
+        return;
 
-const canvas=
-await html2canvas(
-strip,
-{
-scale:3,
-backgroundColor:null,
-useCORS:true
-}
-);
+    }
 
-const link=
-document.createElement("a");
 
-link.download=
-"our-little-world-strip.png";
+    const canvas =
+        await html2canvas(
+            strip,
+            {
 
-link.href=
-canvas.toDataURL(
-"image/png"
-);
+                scale:3,
 
-link.click();
+                backgroundColor:null,
 
-}catch(error){
+                useCORS:true
 
-console.error(error);
+            }
+        );
 
-alert(
-"Could not save the strip."
-);
 
-}
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.download =
+        "our-little-world-strip.png";
+
+
+    link.href =
+        canvas.toDataURL(
+            "image/png"
+        );
+
+
+    link.click();
 
 }
 
@@ -2591,82 +3718,110 @@ LETTERS
 
 function sendLetter(){
 
-const text=
-document.getElementById(
-"letterInput"
-).value.trim();
+    const input =
+        document.getElementById(
+            "letterInput"
+        );
 
-if(!text)
-return;
 
-const letters=
-JSON.parse(
-localStorage.getItem(
-"letters"
-)||"[]"
-);
+    const text =
+        input.value.trim();
 
-letters.unshift({
 
-text:text,
+    if(!text)
+        return;
 
-date:
-new Date()
-.toLocaleDateString()
 
-});
+    const letters =
+        JSON.parse(
+            localStorage.getItem(
+                "letters"
+            ) ||
+            "[]"
+        );
 
-localStorage.setItem(
-"letters",
-JSON.stringify(letters)
-);
 
-document.getElementById(
-"letterInput"
-).value="";
+    letters.unshift({
 
-loadLetters();
+        text:text,
+
+        date:
+            new Date()
+            .toLocaleDateString()
+
+    });
+
+
+    localStorage.setItem(
+        "letters",
+        JSON.stringify(
+            letters
+        )
+    );
+
+
+    input.value =
+        "";
+
+
+    loadLetters();
 
 }
 
 
 function loadLetters(){
 
-const letters=
-JSON.parse(
-localStorage.getItem(
-"letters"
-)||"[]"
-);
+    const letters =
+        JSON.parse(
+            localStorage.getItem(
+                "letters"
+            ) ||
+            "[]"
+        );
 
-const list=
-document.getElementById(
-"lettersList"
-);
 
-if(!list)
-return;
+    const list =
+        document.getElementById(
+            "lettersList"
+        );
 
-list.innerHTML="";
 
-letters.forEach(letter=>{
+    if(!list)
+        return;
 
-const div=
-document.createElement("div");
 
-div.className=
-"letter-note";
+    list.innerHTML =
+        "";
 
-div.textContent=
-letter.text+
-"\n\n"+
-letter.date;
 
-list.appendChild(div);
+    letters.forEach(
+        letter => {
 
-});
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "letter";
+
+
+            div.textContent =
+                letter.text +
+                "\n\n" +
+                letter.date;
+
+
+            list.appendChild(
+                div
+            );
+
+        }
+    );
 
 }
+
 
 loadLetters();
 
@@ -2679,32 +3834,42 @@ window.addEventListener(
 "beforeunload",
 ()=>{
 
-if(cameraStream){
+    if(cameraStream){
 
-cameraStream
-.getTracks()
-.forEach(track=>
-track.stop()
+        cameraStream
+        .getTracks()
+        .forEach(
+            track =>
+            track.stop()
+        );
+
+    }
+
+
+    if(peerConnection){
+
+        peerConnection.close();
+
+    }
+
+});
+
+
+/* =====================================================
+KEEP ROOM CHECKING
+===================================================== */
+
+setInterval(
+()=>{
+
+    if(roomCode)
+        checkRoom();
+
+},
+5000
 );
 
-}
+</script>
 
-if(peerConnection){
-
-peerConnection.close();
-
-}
-
-if(roomChannel){
-
-roomChannel.untrack();
-
-roomChannel.unsubscribe();
-
-}
-
-}
-);
-
-</script></body>
+</body>
 </html>
