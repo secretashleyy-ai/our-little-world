@@ -6,6 +6,7 @@
 <title>Our Little Photobooth ♡</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -640,7 +641,6 @@ h1 span,h2 span{color:var(--pink)}
 
 <body>
 
-<!-- WELCOME -->
 <section id="welcome" class="page active">
 <div class="card">
 
@@ -681,7 +681,6 @@ Enter Our World ♡
 </section>
 
 
-<!-- HOME -->
 <section id="home" class="page">
 
 <div class="topbar">
@@ -732,7 +731,6 @@ ROOM:
 </section>
 
 
-<!-- PHOTOBOOTH -->
 <section id="photobooth" class="page">
 
 <div class="topbar">
@@ -743,7 +741,6 @@ ROOM:
 
 <div class="content">
 
-<!-- STEP 1 -->
 <div id="step1" class="step active">
 
 <div class="mini">01 · choose</div>
@@ -785,7 +782,6 @@ Take Photos →
 </div>
 
 
-<!-- STEP 2 -->
 <div id="step2" class="step">
 
 <div class="mini">02 · camera</div>
@@ -793,7 +789,7 @@ Take Photos →
 <h2>Let's take pictures 📸</h2>
 
 <p class="muted">
-Your cameras are side-by-side. Smile!
+Start your camera on both phones, then either person can press the shutter.
 </p>
 
 <div class="camera">
@@ -845,7 +841,10 @@ class="connection-pill">
 Start Camera
 </button>
 
-<button class="shutter" onclick="takePhoto()">
+<button id="shutterButton"
+class="shutter"
+onclick="takePhoto()"
+disabled>
 ●
 </button>
 
@@ -865,7 +864,6 @@ Choose Design →
 </div>
 
 
-<!-- STEP 3 -->
 <div id="step3" class="step">
 
 <div class="mini">03 · choose your design</div>
@@ -898,7 +896,6 @@ style="margin-top:10px">
 </div>
 
 
-<!-- STEP 4 -->
 <div id="step4" class="step">
 
 <div class="mini">04 · make it yours</div>
@@ -964,7 +961,6 @@ See Final Strip →
 </div>
 
 
-<!-- STEP 5 -->
 <div id="step5" class="step">
 
 <div class="mini">05 · your memory</div>
@@ -1035,13 +1031,24 @@ let webrtcChannel=null;
 let peerConnection=null;
 
 let isCaller=false;
-let makingOffer=false;
-let remoteDescriptionSet=false;
+let partnerClientId=null;
 
+let partnerCameraReady=false;
+let localCameraReady=false;
+
+let remoteDescriptionSet=false;
 let pendingCandidates=[];
 
-const clientId=
-crypto.randomUUID();
+let makingOffer=false;
+let offerCreated=false;
+
+let shotRecords=new Map();
+let shotCounter=0;
+let shutterLocked=false;
+
+let editHistory=[];
+
+const clientId=crypto.randomUUID();
 
 const rtcConfig={
   iceServers:[
@@ -1050,6 +1057,9 @@ const rtcConfig={
     },
     {
       urls:"stun:stun1.l.google.com:19302"
+    },
+    {
+      urls:"stun:stun2.l.google.com:19302"
     }
   ]
 };
@@ -1120,24 +1130,13 @@ document.getElementById(
 "connectionMessage"
 ).textContent="Connecting to room...";
 
-const {error}=await supabaseClient
-.from("rooms")
-.insert({
-room_code:roomCode,
-user_name:yourName
-});
+/*
+  We don't depend on the rooms table to establish
+  the actual connection. Presence/Broadcast does that.
+*/
+try{
 
-if(error){
-
-console.error(error);
-
-alert(
-"Could not join the room. Make sure your Supabase rooms table allows inserts."
-);
-
-return;
-
-}
+await setupRoomChannel();
 
 document.getElementById(
 "displayYou"
@@ -1159,15 +1158,28 @@ document.getElementById(
 "cameraPartnerName"
 ).textContent=partnerName||"Them";
 
+document.getElementById(
+"connectionMessage"
+).textContent="Room connected ♡";
+
 showPage("home");
 
-await setupRoomChannel();
+}catch(error){
+
+console.error(error);
+
+document.getElementById(
+"connectionMessage"
+).textContent=
+"Could not connect. Please try again.";
+
+}
 
 }
 
 
 /* =====================================================
-ROOM PRESENCE / BROADCAST
+ROOM PRESENCE
 ===================================================== */
 
 async function setupRoomChannel(){
@@ -1191,6 +1203,24 @@ roomChannel
 "presence",
 {
 event:"sync"
+},
+()=>{
+updatePresence();
+}
+)
+.on(
+"presence",
+{
+event:"join"
+},
+()=>{
+updatePresence();
+}
+)
+.on(
+"presence",
+{
+event:"leave"
 },
 ()=>{
 updatePresence();
@@ -1236,6 +1266,8 @@ users.push(entry);
 
 if(users.length){
 
+partnerClientId=users[0].id;
+
 document.getElementById(
 "partnerStatus"
 ).textContent=
@@ -1244,16 +1276,27 @@ document.getElementById(
 document.getElementById(
 "partnerCameraText"
 ).textContent=
-"Connecting video...";
+partnerCameraReady
+?"🟢 Camera ready"
+:"Waiting for partner camera...";
 
 await setupWebRTC();
 
 }else{
 
+partnerClientId=null;
+
+partnerCameraReady=false;
+
 document.getElementById(
 "partnerStatus"
 ).textContent=
 "⚪ Waiting for partner...";
+
+document.getElementById(
+"partnerCameraText"
+).textContent=
+"Waiting for partner...";
 
 }
 
@@ -1294,6 +1337,10 @@ if(!message)return;
 
 if(message.sender===clientId)return;
 
+if(message.sender){
+partnerClientId=message.sender;
+}
+
 await handleSignal(message);
 
 }
@@ -1305,9 +1352,23 @@ if(status==="SUBSCRIBED"){
 
 await createPeer();
 
+await sendSignal(
+"hello",
+{}
+);
+
+if(localCameraReady){
+
+await sendSignal(
+"camera-ready",
+{}
+);
+
+}
+
 setTimeout(
 electCaller,
-700
+500
 );
 
 }
@@ -1336,7 +1397,7 @@ async event=>{
 
 if(event.candidate){
 
-await broadcastSignal(
+await sendSignal(
 "candidate",
 {
 candidate:event.candidate.toJSON()
@@ -1355,7 +1416,7 @@ document.getElementById(
 "partnerVideo"
 );
 
-if(event.streams[0]){
+if(event.streams && event.streams[0]){
 
 video.srcObject=
 event.streams[0];
@@ -1382,7 +1443,7 @@ const state=
 peerConnection.connectionState;
 
 console.log(
-"WebRTC connection:",
+"WebRTC:",
 state
 );
 
@@ -1399,9 +1460,7 @@ document.getElementById(
 
 }
 
-else if(
-state==="connecting"
-){
+else if(state==="connecting"){
 
 setConnectionStatus(
 "🟡 Connecting video...",
@@ -1411,12 +1470,11 @@ false
 }
 
 else if(
-state==="failed"||
-state==="disconnected"
+state==="failed"
 ){
 
 setConnectionStatus(
-"🔴 Video connection failed — retrying...",
+"🔴 Reconnecting video...",
 false
 );
 
@@ -1424,60 +1482,49 @@ restartWebRTC();
 
 }
 
-};
+else if(
+state==="disconnected"
+){
 
-peerConnection.onnegotiationneeded=
-async()=>{
-
-if(!isCaller)return;
-
-if(makingOffer)return;
-
-try{
-
-makingOffer=true;
-
-const offer=
-await peerConnection.createOffer();
-
-await peerConnection.setLocalDescription(
-offer
+setConnectionStatus(
+"🟡 Video temporarily disconnected...",
+false
 );
-
-await broadcastSignal(
-"offer",
-{
-description:{
-type:offer.type,
-sdp:offer.sdp
-}
-}
-);
-
-}catch(error){
-
-console.error(
-"Offer error:",
-error
-);
-
-}finally{
-
-makingOffer=false;
 
 }
 
 };
 
+
+/*
+  IMPORTANT:
+  Add the local camera track immediately if the camera
+  is already running. This means the offer contains the
+  local video track.
+*/
 if(cameraStream){
 
-cameraStream
-.getTracks()
-.forEach(track=>{
+const tracks=
+cameraStream.getTracks();
+
+tracks.forEach(track=>{
+
+const exists=
+peerConnection
+.getSenders()
+.some(sender=>
+sender.track===track
+);
+
+if(!exists){
+
 peerConnection.addTrack(
 track,
 cameraStream
 );
+
+}
+
 });
 
 }
@@ -1505,7 +1552,15 @@ users.push(entry);
 });
 });
 
-if(!users.length)return;
+if(users.length<2){
+
+document.getElementById(
+"partnerWaiting"
+).style.display="flex";
+
+return;
+
+}
 
 users.sort(
 (a,b)=>
@@ -1514,28 +1569,24 @@ String(b.id)
 )
 );
 
-const newCaller=
-users[0].id===clientId;
+const callerId=
+users[0].id;
 
-if(
-newCaller!==isCaller
-){
-
-isCaller=newCaller;
+isCaller=
+callerId===clientId;
 
 console.log(
-"is caller:",
+"Caller:",
+callerId,
+"Me:",
+clientId,
+"isCaller:",
 isCaller
 );
 
-}
-
 if(isCaller){
 
-setTimeout(
-createOffer,
-500
-);
+maybeCreateOffer();
 
 }
 
@@ -1543,18 +1594,26 @@ createOffer,
 
 
 /* =====================================================
-CREATE OFFER
+CAMERA READY NEGOTIATION
 ===================================================== */
 
-async function createOffer(){
+async function maybeCreateOffer(){
+
+if(!isCaller)return;
 
 if(!peerConnection)return;
+
+if(!localCameraReady)return;
+
+if(!partnerCameraReady)return;
+
+if(makingOffer)return;
+
+if(offerCreated)return;
 
 if(
 peerConnection.signalingState!=="stable"
 )return;
-
-if(makingOffer)return;
 
 try{
 
@@ -1567,7 +1626,9 @@ await peerConnection.setLocalDescription(
 offer
 );
 
-await broadcastSignal(
+offerCreated=true;
+
+await sendSignal(
 "offer",
 {
 description:{
@@ -1580,7 +1641,7 @@ sdp:offer.sdp
 }catch(error){
 
 console.error(
-"Create offer error:",
+"Offer error:",
 error
 );
 
@@ -1594,25 +1655,36 @@ makingOffer=false;
 
 
 /* =====================================================
-SIGNAL BROADCAST
+SIGNAL
 ===================================================== */
 
-async function broadcastSignal(
+async function sendSignal(
 type,
 data
 ){
 
 if(!webrtcChannel)return;
 
+try{
+
 await webrtcChannel.send({
 type:"broadcast",
 event:"signal",
 payload:{
 sender:clientId,
-type:type,
+type,
 ...data
 }
 });
+
+}catch(error){
+
+console.error(
+"Broadcast error:",
+error
+);
+
+}
 
 }
 
@@ -1623,12 +1695,65 @@ HANDLE SIGNAL
 
 async function handleSignal(message){
 
-if(!peerConnection)
+if(!peerConnection){
+
 await createPeer();
+
+}
 
 try{
 
+if(message.type==="hello"){
+
+if(localCameraReady){
+
+await sendSignal(
+"camera-ready",
+{}
+);
+
+}
+
+await electCaller();
+
+return;
+
+}
+
+
+/* PARTNER CAMERA READY */
+
+if(message.type==="camera-ready"){
+
+partnerCameraReady=true;
+
+document.getElementById(
+"partnerCameraText"
+).textContent=
+"🟢 Camera ready";
+
+await electCaller();
+
+maybeCreateOffer();
+
+return;
+
+}
+
+
+/* OFFER */
+
 if(message.type==="offer"){
+
+console.log("Received offer");
+
+if(
+peerConnection.signalingState!=="stable"
+){
+
+await restartPeerOnly();
+
+}
 
 await peerConnection.setRemoteDescription(
 new RTCSessionDescription(
@@ -1647,7 +1772,7 @@ await peerConnection.setLocalDescription(
 answer
 );
 
-await broadcastSignal(
+await sendSignal(
 "answer",
 {
 description:{
@@ -1657,9 +1782,20 @@ sdp:answer.sdp
 }
 );
 
+return;
+
 }
 
-else if(message.type==="answer"){
+
+/* ANSWER */
+
+if(message.type==="answer"){
+
+console.log("Received answer");
+
+if(
+peerConnection.signalingState==="have-local-offer"
+){
 
 await peerConnection.setRemoteDescription(
 new RTCSessionDescription(
@@ -1673,7 +1809,14 @@ await flushCandidates();
 
 }
 
-else if(message.type==="candidate"){
+return;
+
+}
+
+
+/* ICE */
+
+if(message.type==="candidate"){
 
 const candidate=
 new RTCIceCandidate(
@@ -1682,15 +1825,58 @@ message.candidate
 
 if(remoteDescriptionSet){
 
+try{
+
 await peerConnection.addIceCandidate(
 candidate
 );
+
+}catch(error){
+
+console.warn(
+"ICE candidate error:",
+error
+);
+
+}
 
 }else{
 
 pendingCandidates.push(candidate);
 
 }
+
+return;
+
+}
+
+
+/* =================================================
+SYNCHRONIZED SHUTTER
+================================================= */
+
+if(message.type==="shutter"){
+
+await receiveShutter(
+message
+);
+
+return;
+
+}
+
+
+/* =================================================
+REMOTE PHOTO
+================================================= */
+
+if(message.type==="photo"){
+
+receiveRemotePhoto(
+message
+);
+
+return;
 
 }
 
@@ -1707,7 +1893,7 @@ error
 
 
 /* =====================================================
-ICE QUEUE
+ICE
 ===================================================== */
 
 async function flushCandidates(){
@@ -1727,8 +1913,8 @@ candidate
 
 }catch(error){
 
-console.error(
-"ICE error:",
+console.warn(
+"Could not add queued ICE:",
 error
 );
 
@@ -1740,20 +1926,17 @@ error
 
 
 /* =====================================================
-RESTART CONNECTION
+RESTART PEER
 ===================================================== */
 
-async function restartWebRTC(){
+async function restartPeerOnly(){
 
 try{
 
-if(peerConnection){
-
-peerConnection.ontrack=null;
-
+if(peerConnection)
 peerConnection.close();
 
-}
+}catch(e){}
 
 peerConnection=null;
 
@@ -1761,21 +1944,21 @@ remoteDescriptionSet=false;
 
 pendingCandidates=[];
 
+offerCreated=false;
+
 await createPeer();
+
+}
+
+
+async function restartWebRTC(){
+
+await restartPeerOnly();
 
 setTimeout(
 electCaller,
-500
+600
 );
-
-}catch(error){
-
-console.error(
-"Restart error:",
-error
-);
-
-}
 
 }
 
@@ -1816,7 +1999,9 @@ if(cameraStream){
 
 cameraStream
 .getTracks()
-.forEach(track=>track.stop());
+.forEach(track=>
+track.stop()
+);
 
 }
 
@@ -1824,8 +2009,12 @@ cameraStream=
 await navigator.mediaDevices.getUserMedia({
 video:{
 facingMode:"user",
-width:{ideal:1280},
-height:{ideal:720}
+width:{
+ideal:1280
+},
+height:{
+ideal:720
+}
 },
 audio:false
 });
@@ -1840,42 +2029,32 @@ cameraStream;
 
 await video.play();
 
+localCameraReady=true;
+
+document.getElementById(
+"shutterButton"
+).disabled=false;
+
 setConnectionStatus(
-"🟡 Camera on — connecting partner...",
+"🟡 Camera ready — connecting partner...",
 false
 );
 
-if(peerConnection){
 
-const track=
-cameraStream.getVideoTracks()[0];
-
-const sender=
-peerConnection
-.getSenders()
-.find(
-s=>s.track &&
-s.track.kind==="video"
-);
-
-if(sender){
-
-await sender.replaceTrack(track);
-
-}else{
-
-peerConnection.addTrack(
-track,
-cameraStream
-);
-
-}
-
-}else{
+/*
+  Make sure WebRTC exists before announcing readiness.
+*/
 
 await setupWebRTC();
 
-}
+await sendSignal(
+"camera-ready",
+{}
+);
+
+await electCaller();
+
+maybeCreateOffer();
 
 }catch(error){
 
@@ -1883,6 +2062,12 @@ console.error(
 "Camera error:",
 error
 );
+
+localCameraReady=false;
+
+document.getElementById(
+"shutterButton"
+).disabled=true;
 
 alert(
 "Camera access was blocked. Allow camera permission in your browser, then press Start Camera again."
@@ -1901,6 +2086,12 @@ function openPhotobooth(){
 
 photos=[];
 
+shotRecords.clear();
+
+shotCounter=0;
+
+shutterLocked=false;
+
 document.getElementById(
 "photoCount"
 ).textContent=
@@ -1913,6 +2104,11 @@ document.getElementById(
 document.getElementById(
 "photosDoneButton"
 ).disabled=true;
+
+document.getElementById(
+"shutterButton"
+).disabled=
+!localCameraReady;
 
 showPage("photobooth");
 
@@ -1945,6 +2141,10 @@ selectedStrip;
 
 }
 
+
+/* =====================================================
+STEP
+===================================================== */
 
 function nextStep(number){
 
@@ -1985,32 +2185,188 @@ copyFinalPreview();
 
 
 /* =====================================================
-TAKE PHOTO
+SHUTTER
 ===================================================== */
 
-function takePhoto(){
+async function takePhoto(){
 
 if(!cameraStream){
 
-alert("Start your camera first.");
+alert(
+"Start your camera first ♡"
+);
+
+return;
+
+}
+
+if(!localCameraReady){
+
+alert(
+"Please start your camera first."
+);
+
+return;
+
+}
+
+if(shutterLocked){
+
 return;
 
 }
 
 if(photos.length>=selectedStrip){
 
-alert("Your strip is already full!");
+alert(
+"Your strip is already full!"
+);
+
 return;
 
 }
+
+
+/*
+  Lock so one physical press only creates one shot.
+*/
+shutterLocked=true;
+
+const shotIndex=
+photos.length+1;
+
+const shotId=
+clientId+"-"+Date.now()+"-"+Math.random()
+.toString(36)
+.slice(2,8);
+
+
+/*
+  Create the shot record FIRST.
+  This makes the counter synchronized immediately.
+*/
+shotRecords.set(
+shotId,
+{
+id:shotId,
+index:shotIndex,
+local:null,
+remote:null,
+localSender:clientId,
+remoteSender:null
+}
+);
+
+
+/*
+  The counter changes immediately on BOTH devices
+  because the shutter event is broadcast.
+*/
+updatePhotoCounter(
+shotIndex
+);
+
+
+/*
+  Tell partner to take the same shot.
+*/
+await sendSignal(
+"shutter",
+{
+shotId,
+shotIndex
+}
+);
+
+
+/*
+  Countdown only affects the local camera capture.
+  The partner receives the same shutter event and
+  performs its own countdown.
+*/
+await countdownAndCapture(
+shotId,
+shotIndex
+);
+
+}
+
+
+/* =====================================================
+REMOTE SHUTTER
+===================================================== */
+
+async function receiveShutter(message){
+
+if(!message.shotId)return;
+
+if(
+shotRecords.has(message.shotId)
+)return;
+
+
+/*
+  Create the exact same shot record.
+*/
+shotRecords.set(
+message.shotId,
+{
+id:message.shotId,
+index:message.shotIndex,
+local:null,
+remote:null,
+localSender:clientId,
+remoteSender:message.sender
+});
+
+
+/*
+  Immediately update count on partner phone.
+*/
+updatePhotoCounter(
+message.shotIndex
+);
+
+
+/*
+  If camera isn't ready, tell user.
+  We don't silently create a black photo.
+*/
+if(!cameraStream){
+
+alert(
+"Your partner pressed the shutter. Please press Start Camera first so your photo can be captured."
+);
+
+return;
+
+}
+
+await countdownAndCapture(
+message.shotId,
+message.shotIndex
+);
+
+}
+
+
+/* =====================================================
+COUNTDOWN
+===================================================== */
+
+function countdownAndCapture(
+shotId,
+shotIndex
+){
+
+return new Promise(resolve=>{
 
 let count=3;
 
 const overlay=
 document.createElement("div");
 
-overlay.style.cssText=
-`
+overlay.style.cssText=`
 position:fixed;
 inset:0;
 z-index:9999;
@@ -2021,11 +2377,14 @@ color:white;
 font:bold 100px Georgia;
 `;
 
-document.body.appendChild(overlay);
+document.body.appendChild(
+overlay
+);
 
 overlay.textContent=count;
 
-const timer=setInterval(()=>{
+const timer=
+setInterval(()=>{
 
 count--;
 
@@ -2036,32 +2395,74 @@ overlay.textContent=count;
 }else{
 
 clearInterval(timer);
+
+overlay.textContent="♡";
+
+setTimeout(
+async()=>{
 overlay.remove();
-capturePhoto();
+
+await captureLocalForShot(
+shotId,
+shotIndex
+);
+
+resolve();
+
+},
+180
+);
 
 }
 
-},700);
+},550);
+
+});
 
 }
 
 
 /* =====================================================
-CAPTURE 4:5
+CAPTURE LOCAL PHOTO
 ===================================================== */
 
-function capturePhoto(){
+async function captureLocalForShot(
+shotId,
+shotIndex
+){
 
 const video=
 document.getElementById(
 "myCamera"
 );
 
+if(
+!video.videoWidth ||
+!video.videoHeight
+){
+
+console.error(
+"Camera has no video frame yet."
+);
+
+shutterLocked=false;
+
+return;
+
+}
+
+
+/*
+  Smaller transmitted image.
+  This is intentional:
+  Supabase Broadcast should not receive huge
+  multi-megabyte camera frames.
+*/
 const canvas=
 document.createElement("canvas");
 
-const width=800;
-const height=1000;
+const width=400;
+const height=500;
 
 canvas.width=width;
 canvas.height=height;
@@ -2094,6 +2495,9 @@ sy=(vh-sh)/2;
 
 ctx.save();
 
+/*
+  Mirror selfie camera.
+*/
 ctx.translate(width,0);
 ctx.scale(-1,1);
 
@@ -2111,24 +2515,185 @@ height
 
 ctx.restore();
 
-photos.push(
+const image=
 canvas.toDataURL(
 "image/jpeg",
-.94
-)
+.72
 );
+
+const record=
+shotRecords.get(shotId);
+
+if(!record)return;
+
+record.local=image;
+
+shotRecords.set(
+shotId,
+record
+);
+
+
+/*
+  Send our actual captured image to partner.
+*/
+await sendSignal(
+"photo",
+{
+shotId,
+shotIndex,
+image
+}
+);
+
+
+/*
+  If partner's image already arrived,
+  make the combined photo now.
+*/
+tryCompleteShot(
+shotId
+);
+
+
+/*
+  Allow another shutter after a short delay.
+*/
+setTimeout(
+()=>{
+shutterLocked=false;
+},
+450
+);
+
+
+/*
+  If this was triggered remotely and there are
+  still photos remaining, the shutter remains usable.
+*/
+}
+
+
+/* =====================================================
+REMOTE PHOTO
+===================================================== */
+
+function receiveRemotePhoto(message){
+
+if(!message.shotId)return;
+
+partnerClientId=
+message.sender||
+partnerClientId;
+
+let record=
+shotRecords.get(
+message.shotId
+);
+
+if(!record){
+
+record={
+id:message.shotId,
+index:message.shotIndex,
+local:null,
+remote:null,
+localSender:clientId,
+remoteSender:message.sender
+};
+
+shotRecords.set(
+message.shotId,
+record
+);
+
+}
+
+record.remote=
+message.image;
+
+record.remoteSender=
+message.sender;
+
+shotRecords.set(
+message.shotId,
+record
+);
+
+tryCompleteShot(
+message.shotId
+);
+
+}
+
+
+/* =====================================================
+COMPLETE SYNCHRONIZED SHOT
+===================================================== */
+
+async function tryCompleteShot(
+shotId
+){
+
+const record=
+shotRecords.get(shotId);
+
+if(!record)return;
+
+if(
+!record.local ||
+!record.remote
+)return;
+
+
+/*
+  Prevent generating the same image twice.
+*/
+if(record.completed)
+return;
+
+record.completed=true;
+
+
+/*
+  Make a 4:5 photo containing BOTH faces.
+*/
+const combined=
+await createCombinedPhoto(
+record.local,
+record.remote,
+record
+);
+
+if(!combined)return;
+
+
+/*
+  Store according to shot number.
+*/
+photos[
+record.index-1
+]=combined;
+
+updatePhotoThumbnails();
+
+
+/*
+  Only allow Design once every requested shot
+  has both people's pictures.
+*/
+const completeCount=
+photos.filter(Boolean).length;
 
 document.getElementById(
 "photoCount"
 ).textContent=
-photos.length+
+completeCount+
 " / "+
 selectedStrip;
 
-updatePhotoThumbnails();
-
 if(
-photos.length>=selectedStrip
+completeCount>=selectedStrip
 ){
 
 document.getElementById(
@@ -2140,6 +2705,296 @@ document.getElementById(
 }
 
 
+/* =====================================================
+CREATE 4:5 PHOTO WITH BOTH PEOPLE
+===================================================== */
+
+function createCombinedPhoto(
+localImage,
+remoteImage,
+record
+){
+
+return new Promise(resolve=>{
+
+const local=
+new Image();
+
+const remote=
+new Image();
+
+let loaded=0;
+
+function done(){
+
+loaded++;
+
+if(loaded<2)return;
+
+
+/*
+  Final output is ALWAYS 4:5.
+*/
+const canvas=
+document.createElement("canvas");
+
+const W=800;
+const H=1000;
+
+canvas.width=W;
+canvas.height=H;
+
+const ctx=
+canvas.getContext("2d");
+
+
+/*
+  Draw a clean background.
+*/
+ctx.fillStyle="#fff8fa";
+
+ctx.fillRect(
+0,
+0,
+W,
+H
+);
+
+
+/*
+  Determine a stable left/right order.
+  Both phones therefore generate the same arrangement.
+*/
+let first=local;
+let second=remote;
+
+if(
+record.remoteSender &&
+String(record.remoteSender)
+<
+String(clientId)
+){
+
+first=remote;
+second=local;
+
+}
+
+
+/*
+  Each portrait keeps its own 4:5 ratio.
+  They are displayed side-by-side in the 4:5 canvas.
+*/
+const cardW=350;
+const cardH=437.5;
+
+const gap=20;
+
+const startX=
+(W-(cardW*2+gap))/2;
+
+const startY=
+250;
+
+
+/*
+  Rounded cards.
+*/
+drawRoundedImage(
+ctx,
+first,
+startX,
+startY,
+cardW,
+cardH,
+22
+);
+
+drawRoundedImage(
+ctx,
+second,
+startX+cardW+gap,
+startY,
+cardW,
+cardH,
+22
+);
+
+
+/*
+  Small cute separator.
+*/
+ctx.font="34px Georgia";
+ctx.textAlign="center";
+ctx.fillStyle="#d97899";
+
+ctx.fillText(
+"♡",
+W/2,
+startY+cardH/2+12
+);
+
+
+/*
+  Caption.
+*/
+ctx.font="bold 28px Georgia";
+ctx.fillStyle="#49363e";
+
+ctx.fillText(
+yourName+" ♡ "+(partnerName||"Them"),
+W/2,
+820
+);
+
+ctx.font="18px Arial";
+ctx.fillStyle="#ad7084";
+
+ctx.fillText(
+"our little moment",
+W/2,
+855
+);
+
+
+/*
+  Final 4:5 image.
+*/
+resolve(
+canvas.toDataURL(
+"image/jpeg",
+.92
+)
+);
+
+}
+
+local.onload=done;
+remote.onload=done;
+
+local.src=localImage;
+remote.src=remoteImage;
+
+});
+
+}
+
+
+/* =====================================================
+DRAW ROUNDED IMAGE
+===================================================== */
+
+function drawRoundedImage(
+ctx,
+img,
+x,
+y,
+w,
+h,
+radius
+){
+
+ctx.save();
+
+ctx.beginPath();
+
+ctx.moveTo(
+x+radius,
+y
+);
+
+ctx.lineTo(
+x+w-radius,
+y
+);
+
+ctx.quadraticCurveTo(
+x+w,
+y,
+x+w,
+y+radius
+);
+
+ctx.lineTo(
+x+w,
+y+h-radius
+);
+
+ctx.quadraticCurveTo(
+x+w,
+y+h,
+x+w-radius,
+y+h
+);
+
+ctx.lineTo(
+x+radius,
+y+h
+);
+
+ctx.quadraticCurveTo(
+x,
+y+h,
+x,
+y+h-radius
+);
+
+ctx.lineTo(
+x,
+y+radius
+);
+
+ctx.quadraticCurveTo(
+x,
+y,
+x+radius,
+y
+);
+
+ctx.closePath();
+
+ctx.clip();
+
+
+/*
+  Cover the card while preserving the portrait
+  aspect ratio.
+*/
+const ratio=
+Math.max(
+w/img.width,
+h/img.height
+);
+
+const nw=
+img.width*ratio;
+
+const nh=
+img.height*ratio;
+
+const dx=
+x+(w-nw)/2;
+
+const dy=
+y+(h-nh)/2;
+
+ctx.drawImage(
+img,
+dx,
+dy,
+nw,
+nh
+);
+
+ctx.restore();
+
+}
+
+
+/* =====================================================
+PHOTO THUMBNAILS
+===================================================== */
+
 function updatePhotoThumbnails(){
 
 const preview=
@@ -2149,7 +3004,9 @@ document.getElementById(
 
 preview.innerHTML="";
 
-photos.forEach(image=>{
+photos
+.filter(Boolean)
+.forEach(image=>{
 
 const img=
 document.createElement("img");
@@ -2282,7 +3139,9 @@ preview.className=
 
 preview.innerHTML="";
 
-photos.forEach(image=>{
+photos
+.filter(Boolean)
+.forEach(image=>{
 
 const img=
 document.createElement("img");
@@ -2312,30 +3171,8 @@ preview.appendChild(title);
 function chooseDesign(){
 
 buildFinalStrip();
+
 nextStep(4);
-
-}
-
-
-/* =====================================================
-EDIT HISTORY
-===================================================== */
-
-let editHistory=[];
-
-function saveEditState(){
-
-const strip=
-document.getElementById(
-"photoStrip"
-);
-
-editHistory.push(
-strip.innerHTML
-);
-
-if(editHistory.length>30)
-editHistory.shift();
 
 }
 
@@ -2356,7 +3193,9 @@ strip.className=
 
 strip.innerHTML="";
 
-photos.forEach(image=>{
+photos
+.filter(Boolean)
+.forEach(image=>{
 
 const img=
 document.createElement("img");
@@ -2381,6 +3220,27 @@ yourName+
 strip.appendChild(title);
 
 editHistory=[];
+
+}
+
+
+/* =====================================================
+EDIT HISTORY
+===================================================== */
+
+function saveEditState(){
+
+const strip=
+document.getElementById(
+"photoStrip"
+);
+
+editHistory.push(
+strip.innerHTML
+);
+
+if(editHistory.length>30)
+editHistory.shift();
 
 }
 
@@ -2528,7 +3388,9 @@ t.clientY
 
 element.addEventListener(
 "touchend",
-()=>dragging=false
+()=>{
+dragging=false;
+}
 );
 
 element.addEventListener(
@@ -2554,7 +3416,9 @@ e.clientY
 
 document.addEventListener(
 "mouseup",
-()=>dragging=false
+()=>{
+dragging=false;
+}
 );
 
 }
@@ -2649,39 +3513,17 @@ source.className;
 
 
 /* =====================================================
-SAVE IMAGE
+SAVE
 ===================================================== */
 
 async function saveStrip(){
-
-if(typeof html2canvas==="undefined"){
-
-const script=
-document.createElement("script");
-
-script.src=
-"https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js";
-
-script.onload=
-actuallySaveStrip;
-
-document.head.appendChild(script);
-
-}else{
-
-actuallySaveStrip();
-
-}
-
-}
-
-
-async function actuallySaveStrip(){
 
 const strip=
 document.getElementById(
 "photoStrip"
 );
+
+try{
 
 const canvas=
 await html2canvas(
@@ -2700,9 +3542,24 @@ link.download=
 "our-little-photobooth.png";
 
 link.href=
-canvas.toDataURL("image/png");
+canvas.toDataURL(
+"image/png"
+);
 
 link.click();
+
+}catch(error){
+
+console.error(
+"Save error:",
+error
+);
+
+alert(
+"Could not save the photo. Please try again."
+);
+
+}
 
 }
 
