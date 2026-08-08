@@ -3800,7 +3800,7 @@ async function tryCompleteShot(
 
 
 /* =========================================================
-   CREATE COMBINED PHOTO (Stacked Vertical Layout)
+   CREATE COMBINED PHOTO (Side-by-Side Horizontal Layout)
 ========================================================= */
 
 function createCombinedPhoto(
@@ -3838,11 +3838,11 @@ function createCombinedPhoto(
 
 
         /*
-          Dimensions for vertical stack: 800 x 1000
+          Dimensions for side-by-side horizontal canvas: 1000 x 600
         */
 
-        const W=800;
-        const H=1000;
+        const W=1000;
+        const H=600;
 
 
         canvas.width=W;
@@ -3868,25 +3868,25 @@ function createCombinedPhoto(
 
 
         /*
-          Stack two landscape 16:9/custom portraits vertically
+          Place two photos side-by-side (left and right)
         */
 
-        const cardW=680;
-        const cardH=425;
+        const cardW=450;
+        const cardH=520;
 
-        const gap=30;
+        const gap=20;
 
-        const startX=(W-cardW)/2;
-        const startY=(H - (cardH*2 + gap))/2;
+        const startX=(W - (cardW*2 + gap))/2;
+        const startY=(H - cardH)/2;
 
 
-        let first=local;
-        let second=remote;
+        let leftImage = local;
+        let rightImage = remote;
 
 
         /*
-          Both phones use the same deterministic
-          ordering so the combined image is identical.
+          Deterministic positioning: Ensures both users see 
+          the exact same person on the left vs right
         */
 
         if(
@@ -3897,15 +3897,16 @@ function createCombinedPhoto(
             )<0
         ){
 
-          first=remote;
-          second=local;
+          leftImage = remote;
+          rightImage = local;
 
         }
 
 
+        // Draw Left Photo (x = startX)
         drawRoundedImage(
           ctx,
-          first,
+          leftImage,
           startX,
           startY,
           cardW,
@@ -3914,22 +3915,16 @@ function createCombinedPhoto(
         );
 
 
+        // Draw Right Photo (x = startX + cardW + gap)
         drawRoundedImage(
           ctx,
-          second,
-          startX,
-          startY+cardH+gap,
+          rightImage,
+          startX + cardW + gap,
+          startY,
           cardW,
           cardH,
           22
         );
-
-
-        /*
-          NO NAMES HERE.
-          Names are ONLY added at the bottom of
-          the COMPLETE strip later.
-        */
 
 
         resolve(
@@ -4871,171 +4866,74 @@ function copyFinalPreview(){
 
 
 /* =========================================================
-   SAVE FINAL STRIP
+   SAVE FINAL STRIP (Automatic Download & Mobile Share)
 ========================================================= */
-
-/*
-  This does NOT use html2canvas anymore.
-
-  The final image is built directly on a canvas.
-  This makes saving much more reliable on phones.
-*/
 
 async function saveStrip(){
 
-  const strip=
-    document
-      .getElementById(
-        "photoStrip"
-      );
-
+  const strip = document.getElementById("photoStrip");
 
   if(!photos.length){
-
-    alert(
-      "There are no photos to save yet."
-    );
-
+    alert("There are no photos to save yet.");
     return;
-
   }
 
+  const button = document.querySelector('#step5 .primary');
+  button.disabled = true;
+  button.textContent = "Creating your photo... ♡";
 
-  const button=
-    document
-      .querySelector(
-        '#step5 .primary'
-      );
+  try {
+    const blob = await renderFinalCanvas();
 
+    if(!blob) throw new Error("Could not create image.");
 
-  button.disabled=true;
+    const file = new File([blob], "our-little-photobooth.png", { type: "image/png" });
 
-  button.textContent=
-    "Creating your photo... ♡";
-
-
-  try{
-
-    const blob=
-      await renderFinalCanvas();
-
-
-    if(!blob)
-      throw new Error(
-        "Could not create image."
-      );
-
-
-    /*
-      Create a real downloadable file.
-    */
-
-    if(finalBlobUrl){
-
-      URL.revokeObjectURL(
-        finalBlobUrl
-      );
-
+    // 1. Mobile Web Share API (Triggers native "Save Image" to Photo Gallery)
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: "Our Photobooth Strip",
+        text: "Our little memory ♡"
+      });
+      button.textContent = "✓ Saved ♡";
+      return;
     }
 
+    // 2. Desktop Automatic Download Fallback
+    if (finalBlobUrl) {
+      URL.revokeObjectURL(finalBlobUrl);
+    }
+    finalBlobUrl = URL.createObjectURL(blob);
 
-    finalBlobUrl=
-      URL.createObjectURL(
-        blob
-      );
-
-
-    const link=
-      document.createElement(
-        "a"
-      );
-
-
-    link.href=
-      finalBlobUrl;
-
-
-    link.download=
-      "our-little-photobooth.png";
-
-
-    document.body.appendChild(
-      link
-    );
-
-
+    const link = document.createElement("a");
+    link.href = finalBlobUrl;
+    link.download = "our-little-photobooth.png";
+    document.body.appendChild(link);
     link.click();
-
-
     link.remove();
 
+    // 3. Fallback display for mobile browsers blocking direct downloads
+    const fallback = document.getElementById("saveFallback");
+    const saveImage = document.getElementById("saveImage");
+    saveImage.src = finalBlobUrl;
+    fallback.style.display = "block";
 
-    /*
-      Also show the actual image as a fallback.
-    */
+    button.textContent = "✓ Saved / See Photo Below";
 
-    const fallback=
-      document
-        .getElementById(
-          "saveFallback"
-        );
-
-
-    const saveImage=
-      document
-        .getElementById(
-          "saveImage"
-        );
-
-
-    saveImage.src=
-      finalBlobUrl;
-
-
-    fallback.style.display=
-      "block";
-
-
-    button.textContent=
-      "✓ Saved / Open Image Below";
-
-
-    /*
-      On mobile browsers where automatic downloads
-      are blocked, the image below can still be
-      opened and saved manually.
-    */
-
-    setTimeout(
-      ()=>{
-        window.open(
-          finalBlobUrl,
-          "_blank"
-        );
-      },
-      500
-    );
-
-
-  }catch(error){
-
-    console.error(
-      "Save error:",
-      error
-    );
-
-
-    alert(
-      "The image was created but your browser blocked the automatic save. Use the image shown below to save it."
-    );
-
-  }finally{
-
-    button.disabled=false;
-
+  } catch(error) {
+    console.error("Save error:", error);
+    
+    // Show fallback preview image if automatic save is blocked
+    if (finalBlobUrl) {
+      document.getElementById("saveImage").src = finalBlobUrl;
+      document.getElementById("saveFallback").style.display = "block";
+    }
+  } finally {
+    button.disabled = false;
   }
-
 }
+
 
 
 /* =========================================================
