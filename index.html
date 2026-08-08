@@ -13,54 +13,74 @@
 body{
 margin:0;
 font-family:Georgia,serif;
-background:#fff7fa;
-color:#5b4650;
+background:#fff8fa;
+color:#55434b;
 }
 
-.page{display:none;min-height:100vh;padding:20px}
+button,input,textarea{font:inherit}
+
+button{cursor:pointer}
+
+.page{
+display:none;
+min-height:100vh;
+padding:18px;
+}
+
 .page.active{display:block}
 
 .home{
 display:flex;
 align-items:center;
 justify-content:center;
-background:#fff7fa;
+background:
+radial-gradient(circle at 10% 20%,#f8dce8 0 2px,transparent 3px),
+radial-gradient(circle at 80% 30%,#e9cddd 0 2px,transparent 3px),
+#fff8fa;
+background-size:70px 70px;
 }
 
 .card{
-width:min(600px,100%);
-padding:40px 28px;
-background:white;
-border-radius:32px;
+width:min(580px,100%);
+padding:38px 28px;
+background:#fffdfd;
+border:1px solid #ead7df;
+border-radius:35px;
 text-align:center;
-box-shadow:0 25px 70px #67445220;
+box-shadow:0 25px 70px #6844521c;
 }
 
-.logo{font-size:55px}
+.logo{
+font-size:58px;
+color:#b96883;
+}
 
 .mini{
 font-family:Arial,sans-serif;
-font-size:11px;
+font-size:10px;
 letter-spacing:3px;
 text-transform:uppercase;
-color:#b4778d;
+color:#ad7084;
 }
 
 h1{
-font-size:60px;
+font-size:58px;
 line-height:.9;
-margin:12px 0;
+margin:12px 0 18px;
 }
 
-h1 span,h2 span{color:#bd718b}
+h1 span,h2 span{color:#b96883}
 
 .desc{
 font-family:Arial,sans-serif;
 line-height:1.6;
-color:#8b7880;
+color:#88747c;
 }
 
-.field{text-align:left;margin:18px 0}
+.field{
+text-align:left;
+margin:16px 0;
+}
 
 .field label{
 font-family:Arial,sans-serif;
@@ -72,8 +92,9 @@ font-weight:bold;
 width:100%;
 padding:14px;
 margin-top:7px;
-border:1px solid #e8dce1;
-border-radius:14px;
+border:1px solid #e7d7de;
+border-radius:15px;
+background:#fffafa;
 outline:none;
 }
 
@@ -81,24 +102,24 @@ outline:none;
 width:100%;
 padding:15px;
 border:0;
-border-radius:15px;
-background:#b96e88;
+border-radius:16px;
+background:#b96d87;
 color:white;
 font-family:Arial,sans-serif;
 font-weight:bold;
-cursor:pointer;
+box-shadow:0 8px 20px #b96d8726;
 }
 
 .secondary{
 padding:12px 18px;
-border:1px solid #e3d6dc;
+border:1px solid #dfd0d7;
 border-radius:14px;
-background:white;
-cursor:pointer;
+background:#fff;
+color:#654e57;
 }
 
 .topbar{
-height:60px;
+height:58px;
 max-width:1100px;
 margin:auto;
 display:flex;
@@ -110,10 +131,9 @@ font-family:Arial,sans-serif;
 .back{
 width:42px;
 height:42px;
-border:0;
+border:1px solid #e5d7dd;
 border-radius:50%;
 background:white;
-cursor:pointer;
 }
 
 .home-content{
@@ -123,11 +143,11 @@ margin:auto;
 
 .title{
 text-align:center;
-padding:40px 10px;
+padding:35px 10px;
 }
 
 .title h2{
-font-size:52px;
+font-size:48px;
 margin:12px 0;
 }
 
@@ -136,6 +156,7 @@ display:inline-block;
 padding:9px 16px;
 border-radius:30px;
 background:white;
+border:1px solid #eadde2;
 font-family:Arial,sans-serif;
 font-size:11px;
 }
@@ -144,9 +165,10 @@ font-size:11px;
 width:max-content;
 max-width:100%;
 margin:15px auto;
-padding:10px 18px;
+padding:9px 17px;
 border-radius:30px;
 background:white;
+border:1px solid #eadde2;
 font-family:Arial,sans-serif;
 font-size:12px;
 }
@@ -154,20 +176,24 @@ font-size:12px;
 .menu{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:18px;
+gap:17px;
 }
 
 .menu-card{
-min-height:200px;
+min-height:205px;
 padding:22px;
-border:0;
-border-radius:28px;
+border:1px solid #e5d5dc;
+border-radius:30px;
 text-align:left;
 display:flex;
 flex-direction:column;
 justify-content:flex-end;
-box-shadow:0 18px 40px #543b4516;
-cursor:pointer;
+box-shadow:0 18px 40px #543b4512;
+transition:.2s;
+}
+
+.menu-card:hover{
+transform:translateY(-3px);
 }
 
 .menu-card .emoji{
@@ -176,7 +202,7 @@ margin-bottom:auto;
 }
 
 .menu-card h3{
-font-size:25px;
+font-size:24px;
 margin:5px 0;
 }
 
@@ -186,16 +212,39 @@ font-size:12px;
 color:#806d75;
 }
 
-.booth{background:#f8dce7}
-.letters{background:#fff0d5}
-.memories{background:#eee3f5}
-.distance{background:#dfeee8}
+.booth{
+background:
+radial-gradient(circle,#fff 2px,transparent 3px),
+#f4dce5;
+background-size:18px 18px;
+}
+
+.letters{
+background:
+repeating-linear-gradient(0deg,#fff3df,#fff3df 20px,#f1dfc7 21px);
+}
+
+.memories{
+background:
+linear-gradient(135deg,#eee3f7 25%,transparent 25%),
+linear-gradient(315deg,#eee3f7 25%,transparent 25%),
+#faf5ff;
+background-size:35px 35px;
+}
+
+.distance{
+background:
+radial-gradient(circle at 30% 30%,#fff 2px,transparent 3px),
+#dfeee8;
+background-size:30px 30px;
+}
 
 .content{
 max-width:1100px;
-margin:30px auto;
+margin:25px auto;
 padding:30px;
-background:white;
+background:#fffdfd;
+border:1px solid #eadde2;
 border-radius:30px;
 box-shadow:0 20px 60px #533b4614;
 }
@@ -204,7 +253,7 @@ box-shadow:0 20px 60px #533b4614;
 .step.active{display:block}
 
 .step h2{
-font-size:42px;
+font-size:40px;
 margin:8px 0;
 }
 
@@ -217,79 +266,275 @@ color:#917d85;
 display:grid;
 grid-template-columns:repeat(4,1fr);
 gap:15px;
-margin:30px 0;
+margin:28px 0;
 }
 
 .strip-option{
-padding:25px 15px;
+padding:22px 12px;
 border:2px solid #eadde2;
 border-radius:22px;
 background:white;
-cursor:pointer;
 }
 
 .strip-option.selected{
 border-color:#c47791;
-background:#fff1f5;
+background:#fff0f5;
 }
 
 .strip-option strong{
 display:block;
-font-size:45px;
+font-size:42px;
 }
 
 .templates{
 display:grid;
-grid-template-columns:repeat(5,1fr);
-gap:15px;
+grid-template-columns:repeat(4,1fr);
+gap:16px;
 margin:25px 0;
 }
 
 .template{
 border:2px solid transparent;
-border-radius:20px;
+border-radius:22px;
 overflow:hidden;
-padding:0;
 background:white;
-cursor:pointer;
+padding:0;
+box-shadow:0 8px 20px #51363f0d;
 }
 
-.template.selected{border-color:#c47791}
+.template.selected{
+border-color:#b96883;
+}
 
 .preview{
-height:150px;
+height:170px;
 position:relative;
+overflow:hidden;
 }
 
+/* =========================
+   DECORATED TEMPLATE PREVIEWS
+========================= */
+
 .coquette{
-background:radial-gradient(circle,#e8a8bb 1px,transparent 2px),#fff1f5;
-background-size:13px 13px;
+background:
+radial-gradient(circle at 15px 15px,#d68aa2 0 2px,transparent 3px),
+#fff1f6;
+background-size:30px 30px;
+}
+
+.coquette:before{
+content:"🎀  ♡  🎀  ♡";
+position:absolute;
+left:10px;
+right:10px;
+bottom:15px;
+font-size:27px;
+text-align:center;
 }
 
 .retro{
-background:#c99972;
-border:8px solid #8c5c43;
+background:
+repeating-linear-gradient(
+90deg,
+#b87955 0 5px,
+#d6a27f 5px 10px
+);
+border:9px solid #76503e;
+}
+
+.retro:after{
+content:"★  1970s  ★";
+position:absolute;
+left:12px;
+right:12px;
+top:50%;
+transform:translateY(-50%);
+background:#f4d4a8;
+padding:10px 4px;
+text-align:center;
+font-size:15px;
+color:#674431;
+}
+
+.scrapbook{
+background:#f1dfc7;
+}
+
+.scrapbook:before,
+.scrapbook:after{
+content:"";
+position:absolute;
+width:90px;
+height:110px;
+background:#fff;
+box-shadow:0 5px 12px #0002;
+}
+
+.scrapbook:before{
+left:15px;
+top:25px;
+transform:rotate(-8deg);
+}
+
+.scrapbook:after{
+right:15px;
+bottom:20px;
+transform:rotate(8deg);
+}
+
+.scrapbook{
+border:8px dashed #b58d6d;
+}
+
+.scrapbook .fake{
+display:block;
 }
 
 .y2k{
-background:linear-gradient(135deg,#d7d1f3,#b8d9e9,#f5cce1);
+background:
+radial-gradient(circle,#fff 2px,transparent 3px),
+linear-gradient(135deg,#b9d8ec,#d9c9ef,#f3c6dd);
+background-size:24px 24px,100% 100%;
+}
+
+.y2k:after{
+content:"✦ ✧ Y2K ✧ ✦";
+position:absolute;
+bottom:18px;
+left:10px;
+right:10px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+color:#735f91;
 }
 
 .strawberry{
-background:radial-gradient(circle,#fff 2px,transparent 3px),#ffd9d5;
+background:
+radial-gradient(circle at 30px 25px,#e75f6d 0 7px,transparent 8px),
+radial-gradient(circle at 65px 65px,#e75f6d 0 6px,transparent 7px),
+#fff0e9;
+background-size:85px 85px;
+}
+
+.strawberry:after{
+content:"🍓  ♡  🍓";
+position:absolute;
+bottom:15px;
+left:0;
+right:0;
+text-align:center;
+font-size:27px;
+}
+
+.lace{
+background:
+radial-gradient(circle,#fff 0 8px,transparent 9px),
+#ead6e1;
 background-size:18px 18px;
+border:9px double #b98ca2;
 }
 
-.letter{
-background:#f4e6d5;
-border:8px solid #dcc2a7;
+.lace:after{
+content:"♡  delicate days  ♡";
+position:absolute;
+bottom:18px;
+left:5px;
+right:5px;
+text-align:center;
+font-style:italic;
+color:#8c6174;
 }
 
-.vintage{background:#d9c5b8}
-.kawaii{background:#dcecf7}
-.dreamy{background:linear-gradient(#cdd5f0,#eee6f5)}
-.indie{background:#e8dfcf}
-.dark{background:#ded0d7}
+.postcard{
+background:#e8d2b9;
+border:10px solid #9f755c;
+}
+
+.postcard:before{
+content:"LOVE MAIL";
+position:absolute;
+top:22px;
+left:15px;
+right:15px;
+border-bottom:2px solid #9f755c;
+padding-bottom:8px;
+font-size:15px;
+letter-spacing:4px;
+color:#795746;
+}
+
+.postcard:after{
+content:"♡  ✉  ♡";
+position:absolute;
+bottom:20px;
+left:0;
+right:0;
+text-align:center;
+font-size:25px;
+}
+
+.floral{
+background:
+radial-gradient(circle at 20px 20px,#d88da2 0 4px,transparent 5px),
+radial-gradient(circle at 45px 45px,#f1b6c7 0 5px,transparent 6px),
+#f7e9dc;
+background-size:70px 70px;
+border:7px solid #d3a0ae;
+}
+
+.floral:after{
+content:"🌸  🌿  🌸  🌿";
+position:absolute;
+bottom:13px;
+left:0;
+right:0;
+text-align:center;
+font-size:24px;
+}
+
+.dreamy{
+background:
+radial-gradient(circle at 20% 30%,#fff 0 12px,transparent 13px),
+radial-gradient(circle at 70% 60%,#fff 0 15px,transparent 16px),
+linear-gradient(#c9d2ec,#e9d9ee);
+}
+
+.dreamy:after{
+content:"☁︎  ✦  ☾  ✦  ☁︎";
+position:absolute;
+bottom:18px;
+left:0;
+right:0;
+text-align:center;
+font-size:27px;
+color:#777798;
+}
+
+.vintage{
+background:
+repeating-linear-gradient(
+45deg,
+#d9c3b1 0 8px,
+#c7aa94 8px 16px
+);
+border:9px solid #876b59;
+}
+
+.vintage:after{
+content:"EST. LOVE • ALWAYS";
+position:absolute;
+bottom:15px;
+left:0;
+right:0;
+text-align:center;
+font-size:13px;
+letter-spacing:2px;
+color:#634d40;
+}
+
+/* ========================= */
 
 .template-name{
 padding:11px;
@@ -301,8 +546,9 @@ font-weight:bold;
 .camera{
 display:grid;
 grid-template-columns:1fr 1fr;
-gap:5px;
+gap:8px;
 background:#292126;
+padding:8px;
 border-radius:25px;
 overflow:hidden;
 }
@@ -310,12 +556,14 @@ overflow:hidden;
 .video-box{
 position:relative;
 background:#292126;
-min-height:400px;
+min-height:280px;
+border-radius:18px;
+overflow:hidden;
 }
 
 .video-box video{
 width:100%;
-height:420px;
+height:280px;
 object-fit:cover;
 display:block;
 background:#292126;
@@ -323,19 +571,19 @@ background:#292126;
 
 .video-label{
 position:absolute;
-bottom:15px;
-left:15px;
+bottom:10px;
+left:10px;
 padding:7px 12px;
 border-radius:20px;
 background:#0008;
 color:white;
 font-family:Arial,sans-serif;
-font-size:12px;
-z-index:2;
+font-size:11px;
+z-index:3;
 }
 
 .waiting{
-height:420px;
+height:280px;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -344,14 +592,15 @@ color:white;
 background:#3d3037;
 font-family:Arial,sans-serif;
 text-align:center;
-padding:25px;
+padding:20px;
 position:absolute;
 inset:0;
+z-index:2;
 }
 
 .waiting .heart{
-font-size:55px;
-margin-bottom:15px;
+font-size:50px;
+margin-bottom:10px;
 }
 
 .camera-buttons{
@@ -363,18 +612,17 @@ margin:20px 0;
 }
 
 .shutter{
-width:75px;
-height:75px;
+width:68px;
+height:68px;
 border-radius:50%;
 border:7px solid #e3b3c2;
 background:white;
-font-size:25px;
-cursor:pointer;
+font-size:22px;
 }
 
 .editor{
 display:grid;
-grid-template-columns:1fr 330px;
+grid-template-columns:1fr 310px;
 gap:25px;
 }
 
@@ -383,15 +631,19 @@ display:grid;
 place-items:center;
 padding:30px;
 border-radius:25px;
-background:#f8edf1;
+background:
+radial-gradient(circle,#fff 2px,transparent 3px),
+#f8edf1;
+background-size:25px 25px;
 }
 
 .photo-strip{
 position:relative;
 width:290px;
-padding:16px;
+padding:14px;
 overflow:hidden;
-box-shadow:0 20px 45px #51363f30;
+box-shadow:0 20px 45px #51363f35;
+transition:.2s;
 }
 
 .photo-strip img{
@@ -399,13 +651,14 @@ display:block;
 width:100%;
 aspect-ratio:4/3;
 object-fit:cover;
-margin-bottom:8px;
+margin-bottom:7px;
 }
 
 .strip-title{
 text-align:center;
-padding:10px 5px;
-font-size:17px;
+padding:12px 5px 7px;
+font-size:16px;
+letter-spacing:.5px;
 }
 
 .decor{
@@ -413,13 +666,14 @@ position:absolute;
 z-index:20;
 font-size:30px;
 cursor:move;
+user-select:none;
 }
 
 .decor-text{
-padding:5px 8px;
+padding:5px 9px;
 background:#fff9;
-border-radius:7px;
-font-size:18px;
+border-radius:8px;
+font-size:17px;
 }
 
 .tools{
@@ -447,10 +701,10 @@ border:1px solid #e7dbe0;
 border-radius:10px;
 background:white;
 font-size:22px;
-cursor:pointer;
 }
 
-.tools input,textarea{
+.tools input,
+textarea{
 width:100%;
 padding:12px;
 border:1px solid #e5d9de;
@@ -481,16 +735,63 @@ line-height:29px;
 }
 
 @media(max-width:850px){
-.menu{grid-template-columns:1fr 1fr}
-.templates{grid-template-columns:repeat(2,1fr)}
-.editor{grid-template-columns:1fr}
+
+.menu{
+grid-template-columns:1fr 1fr;
+}
+
+.templates{
+grid-template-columns:repeat(2,1fr);
+}
+
+.editor{
+grid-template-columns:1fr;
+}
+
 }
 
 @media(max-width:550px){
-.menu{grid-template-columns:1fr}
-.strip-options{grid-template-columns:1fr 1fr}
-.camera{grid-template-columns:1fr}
-.video-box video,.waiting{height:300px;min-height:300px}
+
+.menu{
+grid-template-columns:1fr;
+}
+
+.strip-options{
+grid-template-columns:1fr 1fr;
+}
+
+.camera{
+grid-template-columns:1fr 1fr;
+}
+
+.video-box,
+.video-box video,
+.waiting{
+height:210px;
+min-height:210px;
+}
+
+.content{
+padding:20px;
+}
+
+.step h2{
+font-size:32px;
+}
+
+.templates{
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.preview{
+height:130px;
+}
+
+.photo-strip{
+width:260px;
+}
+
 }
 </style>
 </head>
@@ -678,7 +979,12 @@ Choose design →
 
 <button class="template" onclick="selectTemplate('retro',this)">
 <div class="preview retro"></div>
-<div class="template-name">📻 Retro</div>
+<div class="template-name">📻 Retro Film</div>
+</button>
+
+<button class="template" onclick="selectTemplate('scrapbook',this)">
+<div class="preview scrapbook"></div>
+<div class="template-name">📒 Scrapbook</div>
 </button>
 
 <button class="template" onclick="selectTemplate('y2k',this)">
@@ -691,19 +997,19 @@ Choose design →
 <div class="template-name">🍓 Strawberry</div>
 </button>
 
-<button class="template" onclick="selectTemplate('letter',this)">
-<div class="preview letter"></div>
-<div class="template-name">💌 Love Letter</div>
+<button class="template" onclick="selectTemplate('lace',this)">
+<div class="preview lace"></div>
+<div class="template-name">🕊️ Lace</div>
 </button>
 
-<button class="template" onclick="selectTemplate('vintage',this)">
-<div class="preview vintage"></div>
-<div class="template-name">🌷 Vintage</div>
+<button class="template" onclick="selectTemplate('postcard',this)">
+<div class="preview postcard"></div>
+<div class="template-name">💌 Postcard</div>
 </button>
 
-<button class="template" onclick="selectTemplate('kawaii',this)">
-<div class="preview kawaii"></div>
-<div class="template-name">🧸 Kawaii</div>
+<button class="template" onclick="selectTemplate('floral',this)">
+<div class="preview floral"></div>
+<div class="template-name">🌸 Floral</div>
 </button>
 
 <button class="template" onclick="selectTemplate('dreamy',this)">
@@ -711,14 +1017,9 @@ Choose design →
 <div class="template-name">☁️ Dreamy</div>
 </button>
 
-<button class="template" onclick="selectTemplate('indie',this)">
-<div class="preview indie"></div>
-<div class="template-name">🎧 Indie</div>
-</button>
-
-<button class="template" onclick="selectTemplate('dark',this)">
-<div class="preview dark"></div>
-<div class="template-name">🥀 Dark</div>
+<button class="template" onclick="selectTemplate('vintage',this)">
+<div class="preview vintage"></div>
+<div class="template-name">🌷 Vintage</div>
 </button>
 
 </div>
@@ -801,6 +1102,7 @@ Design My Strip →
 </button>
 
 </div>
+
 </div>
 </section>
 
@@ -853,8 +1155,11 @@ Design My Strip →
 <button class="sticker" onclick="addSticker('☁️')">☁️</button>
 <button class="sticker" onclick="addSticker('💌')">💌</button>
 <button class="sticker" onclick="addSticker('🦋')">🦋</button>
+<button class="sticker" onclick="addSticker('✿')">✿</button>
+<button class="sticker" onclick="addSticker('୨୧')">୨୧</button>
 
 </div>
+
 </div>
 
 <div class="tool-section">
@@ -911,10 +1216,11 @@ Save Letter 💌
 <div class="simple">
 
 <div class="mini">little moments</div>
+
 <h2>Our scrapbook</h2>
 
 <p class="desc">
-Your decorated photobooth strips can be saved here later.
+Your favorite little moments belong here. ♡
 </p>
 
 </div>
@@ -973,7 +1279,7 @@ SUPABASE_KEY
 
 
 /* =====================================================
-APP VARIABLES
+VARIABLES
 ===================================================== */
 
 let yourName="";
@@ -986,18 +1292,11 @@ let selectedTemplate="coquette";
 let photos=[];
 
 let cameraStream=null;
-
 let peerConnection=null;
-
 let signalingChannel=null;
 
-const currentUserId=
-crypto.randomUUID();
+const currentUserId=crypto.randomUUID();
 
-
-/* =====================================================
-WEBRTC
-===================================================== */
 
 const rtcConfig={
 iceServers:[
@@ -1017,12 +1316,10 @@ PAGE
 
 function showPage(id){
 
-document
-.querySelectorAll(".page")
+document.querySelectorAll(".page")
 .forEach(p=>p.classList.remove("active"));
 
-document
-.getElementById(id)
+document.getElementById(id)
 .classList.add("active");
 
 window.scrollTo(0,0);
@@ -1059,14 +1356,12 @@ return;
 
 }
 
-const message=
-document.getElementById("connectionMessage");
-
-message.textContent=
-"Connecting...";
+document.getElementById("connectionMessage")
+.textContent="Connecting...";
 
 
-const {data,error}=await supabaseClient
+const {data,error}=
+await supabaseClient
 .from("rooms")
 .insert({
 room_code:roomCode,
@@ -1078,13 +1373,10 @@ user_name:yourName
 
 if(error){
 
-console.error("ROOM ERROR:",error);
-
-message.textContent=
-"Could not join the room.";
+console.error(error);
 
 alert(
-"Could not join the room. Please check your Supabase policies."
+"Could not join the room. Check your Supabase table permissions."
 );
 
 return;
@@ -1092,26 +1384,23 @@ return;
 }
 
 
-document.getElementById("displayYou").textContent=yourName;
+document.getElementById("displayYou").textContent=
+yourName;
+
 document.getElementById("displayPartner").textContent=
 partnerName||"Them";
 
-document.getElementById("displayRoom").textContent=roomCode;
+document.getElementById("displayRoom").textContent=
+roomCode;
 
-document.getElementById("cameraYouName").textContent=yourName;
+document.getElementById("cameraYouName").textContent=
+yourName;
 
 document.getElementById("cameraPartnerName").textContent=
 partnerName||"Them";
 
 document.getElementById("stripNames").textContent=
 yourName+" ♡ "+(partnerName||"Them");
-
-document.getElementById("distanceYou").textContent=yourName;
-
-document.getElementById("distancePartner").textContent=
-partnerName||"Them";
-
-message.textContent="Connected ♡";
 
 showPage("home");
 
@@ -1129,7 +1418,7 @@ async function startRoomListener(){
 await checkRoom();
 
 supabaseClient
-.channel("room-presence-"+roomCode)
+.channel("room-"+roomCode)
 .on(
 "postgres_changes",
 {
@@ -1138,10 +1427,8 @@ schema:"public",
 table:"rooms",
 filter:"room_code=eq."+roomCode
 },
-async payload=>{
-
+async()=>{
 await checkRoom();
-
 }
 )
 .subscribe();
@@ -1149,42 +1436,41 @@ await checkRoom();
 }
 
 
-/* =====================================================
-CHECK ROOM
-===================================================== */
-
 async function checkRoom(){
 
-const {data,error}=await supabaseClient
+const {data,error}=
+await supabaseClient
 .from("rooms")
-.select("id,room_code,user_name,created_at")
+.select("*")
 .eq("room_code",roomCode);
 
 if(error){
 
-console.error("ROOM READ ERROR:",error);
+console.error(error);
 return;
 
 }
 
 const otherUsers=
-(data||[]).filter(
-row=>row.user_name!==yourName
-);
+(data||[])
+.filter(row=>row.user_name!==yourName);
 
-if(otherUsers.length>0){
+if(otherUsers.length){
 
-document.getElementById("partnerStatus").textContent=
+document.getElementById("partnerStatus")
+.textContent=
 "🟢 "+otherUsers[0].user_name+" is here ♡";
 
-document.getElementById("partnerCameraText").textContent=
+document.getElementById("partnerCameraText")
+.textContent=
 "Connecting...";
 
 startSignaling();
 
 }else{
 
-document.getElementById("partnerStatus").textContent=
+document.getElementById("partnerStatus")
+.textContent=
 "⚪ Waiting for partner...";
 
 }
@@ -1193,20 +1479,16 @@ document.getElementById("partnerStatus").textContent=
 
 
 /* =====================================================
-SIGNALING
+WEBRTC SIGNALING
 ===================================================== */
 
 function startSignaling(){
 
-if(signalingChannel){
-return;
-}
+if(signalingChannel)return;
 
 signalingChannel=
 supabaseClient
-.channel(
-"webrtc-"+roomCode+"-"+currentUserId
-)
+.channel("webrtc-"+roomCode+"-"+currentUserId)
 .on(
 "postgres_changes",
 {
@@ -1219,11 +1501,7 @@ async payload=>{
 
 const signal=payload.new;
 
-if(signal.sender===currentUserId){
-return;
-}
-
-console.log("Received:",signal.type);
+if(signal.sender===currentUserId)return;
 
 await handleSignal(signal);
 
@@ -1231,12 +1509,9 @@ await handleSignal(signal);
 )
 .subscribe(async status=>{
 
-console.log("Realtime status:",status);
-
 if(status==="SUBSCRIBED"){
 
 await createPeerConnection();
-
 await decideCaller();
 
 }
@@ -1246,25 +1521,18 @@ await decideCaller();
 }
 
 
-/* =====================================================
-DECIDE WHO CREATES OFFER
-===================================================== */
-
 async function decideCaller(){
 
-const {data,error}=await supabaseClient
+const {data,error}=
+await supabaseClient
 .from("rooms")
 .select("id,user_name")
 .eq("room_code",roomCode)
 .order("id",{ascending:true});
 
-if(error||!data||data.length<2){
-return;
-}
+if(error||!data||data.length<2)return;
 
-const firstUser=data[0];
-
-if(firstUser.user_name===yourName){
+if(data[0].user_name===yourName){
 
 await createOffer();
 
@@ -1274,14 +1542,12 @@ await createOffer();
 
 
 /* =====================================================
-PEER
+PEER CONNECTION
 ===================================================== */
 
 async function createPeerConnection(){
 
-if(peerConnection){
-return;
-}
+if(peerConnection)return;
 
 peerConnection=
 new RTCPeerConnection(rtcConfig);
@@ -1292,12 +1558,10 @@ if(cameraStream){
 cameraStream
 .getTracks()
 .forEach(track=>{
-
 peerConnection.addTrack(
 track,
 cameraStream
 );
-
 });
 
 }
@@ -1305,17 +1569,14 @@ cameraStream
 
 peerConnection.ontrack=event=>{
 
-console.log("PARTNER VIDEO RECEIVED");
+document.getElementById("partnerVideo")
+.srcObject=event.streams[0];
 
-const video=
-document.getElementById("partnerVideo");
+document.getElementById("partnerWaiting")
+.style.display="none";
 
-video.srcObject=
-event.streams[0];
-
-document.getElementById("partnerWaiting").style.display="none";
-
-document.getElementById("partnerStatus").textContent=
+document.getElementById("partnerStatus")
+.textContent=
 "🟢 Live together ♡";
 
 };
@@ -1337,16 +1598,13 @@ event.candidate.toJSON()
 
 peerConnection.onconnectionstatechange=()=>{
 
-console.log(
-"Connection:",
-peerConnection.connectionState
-);
-
 if(peerConnection.connectionState==="connected"){
 
-document.getElementById("partnerWaiting").style.display="none";
+document.getElementById("partnerWaiting")
+.style.display="none";
 
-document.getElementById("partnerStatus").textContent=
+document.getElementById("partnerStatus")
+.textContent=
 "🟢 Live together ♡";
 
 }
@@ -1356,15 +1614,10 @@ document.getElementById("partnerStatus").textContent=
 }
 
 
-/* =====================================================
-OFFER
-===================================================== */
-
 async function createOffer(){
 
-if(!peerConnection){
+if(!peerConnection)
 await createPeerConnection();
-}
 
 const offer=
 await peerConnection.createOffer();
@@ -1382,17 +1635,10 @@ sdp:offer.sdp
 }
 
 
-/* =====================================================
-SIGNALS
-===================================================== */
-
 async function handleSignal(signal){
 
-if(!peerConnection){
-
+if(!peerConnection)
 await createPeerConnection();
-
-}
 
 try{
 
@@ -1417,7 +1663,6 @@ sdp:answer.sdp
 
 }
 
-
 else if(signal.type==="answer"){
 
 await peerConnection.setRemoteDescription(
@@ -1425,7 +1670,6 @@ new RTCSessionDescription(signal.data)
 );
 
 }
-
 
 else if(signal.type==="candidate"){
 
@@ -1437,23 +1681,17 @@ new RTCIceCandidate(signal.data)
 
 }catch(error){
 
-console.error(
-"Signal handling error:",
-error
-);
+console.error(error);
 
 }
 
 }
 
-
-/* =====================================================
-SEND SIGNAL TO SUPABASE
-===================================================== */
 
 async function sendSignal(type,data){
 
-const {error}=await supabaseClient
+const {error}=
+await supabaseClient
 .from("call_signals")
 .insert({
 room_code:roomCode,
@@ -1462,14 +1700,8 @@ type:type,
 data:data
 });
 
-if(error){
-
-console.error(
-"CALL SIGNAL ERROR:",
-error
-);
-
-}
+if(error)
+console.error("SIGNAL ERROR:",error);
 
 }
 
@@ -1490,50 +1722,39 @@ facingMode:"user"
 audio:false
 });
 
-document.getElementById("myCamera").srcObject=
-cameraStream;
+document.getElementById("myCamera")
+.srcObject=cameraStream;
 
 
 if(peerConnection){
 
-const senders=
-peerConnection.getSenders();
+const track=
+cameraStream.getVideoTracks()[0];
 
-const videoSender=
-senders.find(
-s=>s.track&&s.track.kind==="video"
-);
+const sender=
+peerConnection.getSenders()
+.find(s=>s.track?.kind==="video");
 
-if(videoSender){
+if(sender){
 
-await videoSender.replaceTrack(
-cameraStream.getVideoTracks()[0]
-);
+await sender.replaceTrack(track);
 
 }else{
 
-cameraStream
-.getTracks()
-.forEach(track=>{
 peerConnection.addTrack(
 track,
 cameraStream
 );
-});
 
 }
 
 }
-
-if(roomCode){
 
 startSignaling();
 
-}
-
 }catch(error){
 
-console.error("CAMERA ERROR:",error);
+console.error(error);
 
 alert(
 "Please allow camera access in your browser."
@@ -1552,12 +1773,14 @@ function openPhotobooth(){
 
 photos=[];
 
-document.getElementById("photoCount").textContent=
-"0 / "+selectedStrip;
+document.getElementById("photoCount")
+.textContent="0 / "+selectedStrip;
 
-document.getElementById("editButton").disabled=true;
+document.getElementById("photoPreview")
+.innerHTML="";
 
-document.getElementById("photoPreview").innerHTML="";
+document.getElementById("editButton")
+.disabled=true;
 
 showPage("photobooth");
 
@@ -1570,13 +1793,13 @@ function selectStrip(number,button){
 
 selectedStrip=number;
 
-document
-.querySelectorAll(".strip-option")
+document.querySelectorAll(".strip-option")
 .forEach(x=>x.classList.remove("selected"));
 
 button.classList.add("selected");
 
-document.getElementById("photoCount").textContent=
+document.getElementById("photoCount")
+.textContent=
 "0 / "+selectedStrip;
 
 }
@@ -1586,8 +1809,7 @@ function selectTemplate(name,button){
 
 selectedTemplate=name;
 
-document
-.querySelectorAll(".template")
+document.querySelectorAll(".template")
 .forEach(x=>x.classList.remove("selected"));
 
 button.classList.add("selected");
@@ -1597,22 +1819,19 @@ button.classList.add("selected");
 
 function nextStep(number){
 
-document
-.querySelectorAll(".step")
+document.querySelectorAll(".step")
 .forEach(x=>x.classList.remove("active"));
 
-document
-.getElementById("step"+number)
+document.getElementById("step"+number)
 .classList.add("active");
 
-document.getElementById("stepNumber").textContent=
-number+" / 3";
+document.getElementById("stepNumber")
+.textContent=number+" / 3";
 
 if(number===3){
 
-if(!cameraStream){
+if(!cameraStream)
 startCamera();
-}
 
 startSignaling();
 
@@ -1643,8 +1862,7 @@ return;
 
 let count=3;
 
-const overlay=
-document.createElement("div");
+const overlay=document.createElement("div");
 
 overlay.style.position="fixed";
 overlay.style.inset="0";
@@ -1670,7 +1888,6 @@ overlay.textContent=count;
 }else{
 
 clearInterval(timer);
-
 overlay.remove();
 
 capturePhoto();
@@ -1696,11 +1913,7 @@ canvas.height=750;
 const ctx=
 canvas.getContext("2d");
 
-ctx.save();
-
-ctx.translate(1000,0);
-ctx.scale(-1,1);
-
+/* NOT MIRRORED */
 ctx.drawImage(
 video,
 0,
@@ -1709,14 +1922,16 @@ video,
 750
 );
 
-ctx.restore();
-
 const image=
-canvas.toDataURL("image/jpeg",0.92);
+canvas.toDataURL(
+"image/jpeg",
+0.92
+);
 
 photos.push(image);
 
-document.getElementById("photoCount").textContent=
+document.getElementById("photoCount")
+.textContent=
 photos.length+" / "+selectedStrip;
 
 const preview=
@@ -1730,13 +1945,13 @@ preview.style.objectFit="cover";
 preview.style.margin="5px";
 preview.style.borderRadius="8px";
 
-document
-.getElementById("photoPreview")
+document.getElementById("photoPreview")
 .appendChild(preview);
 
 if(photos.length>=selectedStrip){
 
-document.getElementById("editButton").disabled=false;
+document.getElementById("editButton")
+.disabled=false;
 
 }
 
@@ -1749,9 +1964,7 @@ EDITOR
 
 function openEditor(){
 
-if(!photos.length){
-return;
-}
+if(!photos.length)return;
 
 const container=
 document.getElementById("stripPhotos");
@@ -1768,71 +1981,93 @@ container.appendChild(img);
 
 });
 
-document.getElementById("stripNames").textContent=
+document.getElementById("stripNames")
+.textContent=
 yourName+" ♡ "+(partnerName||"Them");
+
 
 const strip=
 document.getElementById("photoStrip");
 
+
 const designs={
 
-coquette:[
-"repeating-linear-gradient(45deg,#fff1f5,#fff1f5 10px,#f8dce7 11px,#f8dce7 13px)",
-"5px solid #d99aae"
-],
+coquette:{
+background:
+"radial-gradient(circle,#fff 2px,transparent 3px),#fff1f6",
+backgroundSize:"22px 22px",
+border:"10px double #d58ca2"
+},
 
-retro:[
-"linear-gradient(#d8ad83,#e8c8a8)",
-"8px solid #916347"
-],
+retro:{
+background:
+"repeating-linear-gradient(90deg,#b87854 0 7px,#d9a47f 7px 14px)",
+border:"10px solid #76503e"
+},
 
-y2k:[
-"linear-gradient(135deg,#d9d2f0,#bcdfea,#f4cfe1)",
-"5px solid #a69bc9"
-],
+scrapbook:{
+background:"#f1dfc7",
+border:"8px dashed #a77d60"
+},
 
-strawberry:[
-"radial-gradient(circle,#fff 2px,transparent 3px),#ffd8d4",
-"5px solid #e99c98"
-],
+y2k:{
+background:
+"radial-gradient(circle,#fff 2px,transparent 3px),linear-gradient(135deg,#b9d8ec,#d9c9ef,#f3c6dd)",
+backgroundSize:"24px 24px,100% 100%",
+border:"7px solid #a79bc7"
+},
 
-letter:[
-"repeating-linear-gradient(#f5e8d7,#f5e8d7 20px,#e5d2bd 21px)",
-"6px solid #c8a98b"
-],
+strawberry:{
+background:
+"radial-gradient(circle,#e75f6d 0 6px,transparent 7px),#fff0e9",
+backgroundSize:"55px 55px",
+border:"9px solid #df9a9c"
+},
 
-vintage:[
-"#d8c2b4",
-"6px solid #a98c7b"
-],
+lace:{
+background:
+"radial-gradient(circle,#fff 0 7px,transparent 8px),#ead6e1",
+backgroundSize:"17px 17px",
+border:"9px double #b98ca2"
+},
 
-kawaii:[
-"radial-gradient(circle,#fff 2px,transparent 3px),#dcecf7",
-"5px solid #9ebed4"
-],
+postcard:{
+background:"#e8d2b9",
+border:"10px solid #9f755c"
+},
 
-dreamy:[
-"linear-gradient(#cfd6ef,#eee8f6)",
-"5px solid #a7acd1"
-],
+floral:{
+background:
+"radial-gradient(circle,#d88da2 0 4px,transparent 5px),#f7e9dc",
+backgroundSize:"55px 55px",
+border:"8px solid #d3a0ae"
+},
 
-indie:[
-"linear-gradient(135deg,#e8dfcf,#d7ccb8)",
-"6px dashed #8c7c6d"
-],
+dreamy:{
+background:
+"radial-gradient(circle at 20% 30%,#fff 0 11px,transparent 12px),linear-gradient(#c9d2ec,#e9d9ee)",
+border:"7px solid #a7acd1"
+},
 
-dark:[
-"radial-gradient(circle,#765163 1px,transparent 2px),#ddd0d6",
-"6px solid #7b5868"
-]
+vintage:{
+background:
+"repeating-linear-gradient(45deg,#d9c3b1 0 8px,#c7aa94 8px 16px)",
+border:"10px solid #876b59"
+}
 
 };
 
+const design=
+designs[selectedTemplate];
+
 strip.style.background=
-designs[selectedTemplate][0];
+design.background;
+
+strip.style.backgroundSize=
+design.backgroundSize||"auto";
 
 strip.style.border=
-designs[selectedTemplate][1];
+design.border;
 
 showPage("editor");
 
@@ -1845,20 +2080,20 @@ STICKERS
 
 function addSticker(symbol){
 
-const sticker=document.createElement("div");
+const sticker=
+document.createElement("div");
 
 sticker.className="decor";
 
 sticker.textContent=symbol;
 
 sticker.style.left=
-(10+Math.random()*70)+"%";
+(5+Math.random()*75)+"%";
 
 sticker.style.top=
-(5+Math.random()*80)+"%";
+(5+Math.random()*82)+"%";
 
-document
-.getElementById("photoStrip")
+document.getElementById("photoStrip")
 .appendChild(sticker);
 
 }
@@ -1871,26 +2106,27 @@ TEXT
 function addText(){
 
 const value=
-document.getElementById("customText").value.trim();
+document.getElementById("customText")
+.value.trim();
 
-if(!value){
-return;
-}
+if(!value)return;
 
-const text=document.createElement("div");
+const text=
+document.createElement("div");
 
-text.className="decor decor-text";
+text.className=
+"decor decor-text";
 
 text.textContent=value;
 
 text.style.left="20%";
 text.style.top="50%";
 
-document
-.getElementById("photoStrip")
+document.getElementById("photoStrip")
 .appendChild(text);
 
-document.getElementById("customText").value="";
+document.getElementById("customText")
+.value="";
 
 }
 
@@ -1899,14 +2135,13 @@ document.getElementById("customText").value="";
 LETTERS
 ===================================================== */
 
-async function sendLetter(){
+function sendLetter(){
 
 const text=
-document.getElementById("letterInput").value.trim();
+document.getElementById("letterInput")
+.value.trim();
 
-if(!text){
-return;
-}
+if(!text)return;
 
 const letters=
 JSON.parse(
@@ -1923,7 +2158,8 @@ localStorage.setItem(
 JSON.stringify(letters)
 );
 
-document.getElementById("letterInput").value="";
+document.getElementById("letterInput")
+.value="";
 
 loadLetters();
 
@@ -1944,7 +2180,8 @@ list.innerHTML="";
 
 letters.forEach(letter=>{
 
-const div=document.createElement("div");
+const div=
+document.createElement("div");
 
 div.className="letter-note";
 
@@ -1959,8 +2196,12 @@ list.appendChild(div);
 
 }
 
+loadLetters();
 
-window.addEventListener("beforeunload",()=>{
+
+window.addEventListener(
+"beforeunload",
+()=>{
 
 if(cameraStream){
 
@@ -1976,7 +2217,8 @@ peerConnection.close();
 
 }
 
-});
+}
+);
 
 </script>
 
