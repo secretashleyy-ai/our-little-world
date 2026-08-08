@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Our Little Photobooth ♡</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>Our Little Photobooth ♡</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 *{box-sizing:border-box}
 
 :root{
@@ -459,7 +454,7 @@ border:7px double #a87b96;
 }
 
 .theme-lace:before{
-content:"୨୧ 𝓁𝑜𝓋𝑒 𝓁𝑒𝓉𝓉𝑒𝓇 ୨୧";
+content:"୨୧ 𝓁𝑜𝓋𝑒 𝓁𝑒𝓉𝑡𝑒𝓇 ୨୧";
 display:block;
 text-align:center;
 color:#87627a;
@@ -546,6 +541,8 @@ padding-bottom:5px;
 filter:sepia(.55) saturate(.75);
 border:2px solid #f0dfca;
 }
+
+/* FINAL STRIP */
 
 .final-preview-wrap{
 display:flex;
@@ -663,11 +660,9 @@ margin-top:10px;
 }
 
 @media(max-width:850px){
-
 .design-grid{
 grid-template-columns:repeat(3,1fr);
 }
-
 }
 
 @media(max-width:600px){
@@ -731,87 +726,52 @@ height:190px;
 }
 
 }
-</style>
-</head>
-
-<body>
-
-<section id="welcome" class="page active">
+</style></head><body><section id="welcome" class="page active">
 <div class="card">
-
 <div class="logo">♡</div>
-<div class="mini">a tiny place for two</div>
-
-<h1>
+<div class="mini">a tiny place for two</div><h1>
 Our Little<br>
 <span>Photobooth</span>
-</h1>
-
-<p class="desc">
+</h1><p class="desc">
 Take pictures together even when you're far apart.
-</p>
-
-<div class="field">
+</p><div class="field">
 <label>
 Your name
 <input id="yourName" placeholder="Your name" autocomplete="off">
 </label>
-</div>
-
-<div class="field">
+</div><div class="field">
 <label>
 Partner's name
 <input id="partnerName" placeholder="Their name" autocomplete="off">
 </label>
-</div>
-
-<div class="field">
+</div><div class="field">
 <label>
 Shared room code
 <input id="roomCode" placeholder="OURWORLD" autocomplete="off">
 </label>
-</div>
-
-<button class="primary" onclick="enterWorld()">
+</div><button
+class="primary"
+onclick="enterWorld()">
 Enter Our World ♡
 </button>
 
-<p id="connectionMessage"
-style="font-family:Arial,sans-serif;font-size:12px"></p>
-
+<p
+id="connectionMessage"
+style="font-family:Arial,sans-serif;font-size:12px">
+</p>
 </div>
-</section>
-
-<section id="home" class="page">
-
-<div class="topbar">
-
-<button class="back" onclick="showPage('welcome')">
-←
-</button>
-
+</section><section id="home" class="page"><div class="topbar">
+<button class="back" onclick="showPage('welcome')">←</button>
 <div>our little ♡ world</div>
 <div></div>
-
-</div>
-
-<div class="content">
-
-<div style="text-align:center;padding:30px 10px">
-
-<div class="mini">welcome home</div>
-
-<h2>
+</div><div class="content"><div style="text-align:center;padding:30px 10px"><div class="mini">welcome home</div><h2>
 <span id="displayYou">You</span>
 ♡
 <span id="displayPartner">Them</span>
-</h2>
-
-<p class="desc">
+</h2><p class="desc">
 Same love. Different places. One little photobooth.
-</p>
-
-<div style="
+</p><div
+style="
 display:inline-block;
 padding:10px 18px;
 background:#fff;
@@ -822,101 +782,59 @@ font-size:11px
 ">
 ROOM:
 <b id="displayRoom">---</b>
-</div>
-
-<p id="partnerStatus" class="muted">
+</div><p id="partnerStatus" class="muted">
 ⚪ Waiting for partner...
-</p>
-
-<button class="primary" onclick="openPhotobooth()">
+</p><button
+class="primary"
+onclick="openPhotobooth()">
 📸 Open Photobooth
 </button>
 
 </div>
 </div>
-</section>
-
-<section id="photobooth" class="page">
-
-<div class="topbar">
-
-<button class="back" onclick="showPage('home')">
-←
-</button>
-
+</section><section id="photobooth" class="page"><div class="topbar">
+<button class="back" onclick="showPage('home')">←</button>
 <div>photobooth ♡</div>
-
-<div id="stepNumber">
-1 / 5
-</div>
-
-</div>
-
-<div class="content">
-
-<div id="step1" class="step active">
-
-<div class="mini">01 · choose</div>
-
-<h2>
-How many photos?
-</h2>
-
-<p class="muted">
+<div id="stepNumber">1 / 5</div>
+</div><div class="content"><div id="step1" class="step active"><div class="mini">01 · choose</div><h2>How many photos?</h2><p class="muted">
 Choose the size of your photobooth strip.
-</p>
-
-<div class="strip-options">
-
-<button class="strip-option selected"
+</p><div class="strip-options"><button
+class="strip-option selected"
 onclick="selectStrip(2,this)">
 <strong>2</strong>
 classic
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(3,this)">
 <strong>3</strong>
 sweet
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(4,this)">
 <strong>4</strong>
 classic +
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(6,this)">
 <strong>6</strong>
 long
 </button>
 
-</div>
-
-<button class="primary" onclick="nextStep(2)">
+</div><button
+class="primary"
+onclick="nextStep(2)">
 Take Photos →
 </button>
 
-</div>
-
-<div id="step2" class="step">
-
-<div class="mini">02 · camera</div>
-
-<h2>
-Let's take pictures 📸
-</h2>
-
-<p class="muted">
+</div><div id="step2" class="step"><div class="mini">02 · camera</div><h2>Let's take pictures 📸</h2><p class="muted">
 Start your camera on both phones. Once both cameras are ready, you will be able to see each other live.
-</p>
-
-<div class="camera">
-
-<div class="video-box">
-
-<video
+</p><div class="camera"><div class="video-box"><video
 id="myCamera"
 autoplay
 playsinline
@@ -926,53 +844,26 @@ muted>
 <div class="video-label">
 You ·
 <span id="cameraYouName">You</span>
-</div>
-
-</div>
-
-<div class="video-box partner">
-
-<video
+</div></div><div class="video-box partner"><video
 id="partnerVideo"
 autoplay
 playsinline
 muted>
 </video>
 
-<div id="partnerWaiting" class="waiting">
-
-<div class="heart">♡</div>
-
-<b id="partnerCameraText">
+<div id="partnerWaiting" class="waiting"><div class="heart">♡</div><b id="partnerCameraText">
 Waiting for partner...
-</b>
-
-<p>
+</b><p>
 Keep the same room code open.
-</p>
-
-</div>
-
-<div class="video-label">
+</p></div><div class="video-label">
 Partner ·
 <span id="cameraPartnerName">Them</span>
-</div>
-
-</div>
-</div>
-
-<div style="text-align:center">
-
-<div id="connectionPill"
+</div></div></div><div style="text-align:center"><div
+id="connectionPill"
 class="connection-pill">
 🔴 Not connected
-</div>
-
-</div>
-
-<div class="camera-buttons">
-
-<button class="secondary"
+</div></div><div class="camera-buttons"><button
+class="secondary"
 onclick="startCamera()">
 Start Camera
 </button>
@@ -987,13 +878,7 @@ disabled>
 
 <span id="photoCount">
 0 / 2
-</span>
-
-</div>
-
-<div id="photoPreview"></div>
-
-<button
+</span></div><div id="photoPreview"></div><button
 id="photosDoneButton"
 class="primary"
 onclick="nextStep(3)"
@@ -1001,36 +886,13 @@ disabled>
 Choose Design →
 </button>
 
-</div>
-
-<div id="step3" class="step">
-
-<div class="mini">
-03 · choose your design
-</div>
-
-<h2>
-Which one feels like you? ✨
-</h2>
-
-<p class="muted">
+</div><div id="step3" class="step"><div class="mini">03 · choose your design</div><h2>Which one feels like you? ✨</h2><p class="muted">
 Tap a design, or hover over one to preview your actual photos.
-</p>
-
-<div id="designGrid" class="design-grid"></div>
-
-<div class="final-preview-wrap">
-
-<div
+</p><div id="designGrid" class="design-grid"></div><div class="final-preview-wrap"><div
 id="designPreview"
 class="final-strip">
-</div>
-
-</div>
-
-<div style="margin-top:18px">
-
-<button class="secondary"
+</div></div><div style="margin-top:18px"><button
+class="secondary"
 onclick="nextStep(2)">
 ← Retake
 </button>
@@ -1042,96 +904,39 @@ style="margin-top:10px">
 ♡ Use This Design
 </button>
 
-</div>
-
-</div>
-
-<div id="step4" class="step">
-
-<div class="mini">
-04 · make it yours
-</div>
-
-<h2>
-Add your little details ✨
-</h2>
-
-<p class="muted">
+</div></div><div id="step4" class="step"><div class="mini">04 · make it yours</div><h2>Add your little details ✨</h2><p class="muted">
 Tap a sticker, then drag it anywhere on your strip.
-</p>
+</p><div class="sticker-bar"><button class="sticker-choice" onclick="addSticker('🎀')">🎀</button>
+<button class="sticker-choice" onclick="addSticker('♡')">♡</button>
+<button class="sticker-choice" onclick="addSticker('♥')">♥</button>
+<button class="sticker-choice" onclick="addSticker('✦')">✦</button>
+<button class="sticker-choice" onclick="addSticker('☆')">☆</button>
+<button class="sticker-choice" onclick="addSticker('🌷')">🌷</button>
+<button class="sticker-choice" onclick="addSticker('🌸')">🌸</button>
+<button class="sticker-choice" onclick="addSticker('🍓')">🍓</button>
+<button class="sticker-choice" onclick="addSticker('🧸')">🧸</button>
+<button class="sticker-choice" onclick="addSticker('☁️')">☁️</button>
+<button class="sticker-choice" onclick="addSticker('💌')">💌</button>
+<button class="sticker-choice" onclick="addSticker('🦋')">🦋</button>
+<button class="sticker-choice" onclick="addSticker('✿')">✿</button>
+<button class="sticker-choice" onclick="addSticker('୨୧')">୨୧</button>
 
-<div class="sticker-bar">
-
-<button class="sticker-choice"
-onclick="addSticker('🎀')">🎀</button>
-
-<button class="sticker-choice"
-onclick="addSticker('♡')">♡</button>
-
-<button class="sticker-choice"
-onclick="addSticker('♥')">♥</button>
-
-<button class="sticker-choice"
-onclick="addSticker('✦')">✦</button>
-
-<button class="sticker-choice"
-onclick="addSticker('☆')">☆</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🌷')">🌷</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🌸')">🌸</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🍓')">🍓</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🧸')">🧸</button>
-
-<button class="sticker-choice"
-onclick="addSticker('☁️')">☁️</button>
-
-<button class="sticker-choice"
-onclick="addSticker('💌')">💌</button>
-
-<button class="sticker-choice"
-onclick="addSticker('🦋')">🦋</button>
-
-<button class="sticker-choice"
-onclick="addSticker('✿')">✿</button>
-
-<button class="sticker-choice"
-onclick="addSticker('୨୧')">୨୧</button>
-
-</div>
-
-<div class="final-preview-wrap">
-
-<div
+</div><div class="final-preview-wrap"><div
 id="photoStrip"
 class="final-strip">
-</div>
-
-</div>
-
-<div class="edit-buttons">
-
-<button class="secondary"
+</div></div><div class="edit-buttons"><button
+class="secondary"
 onclick="undoLastEdit()">
 ↩ Undo
 </button>
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="resetEdits()">
 ↻ Reset
 </button>
 
-</div>
-
-<div class="text-row">
-
-<input
+</div><div class="text-row"><input
 id="customText"
 placeholder="our little moment ♡">
 
@@ -1141,76 +946,41 @@ onclick="addText()">
 Add
 </button>
 
-</div>
-
-<button
+</div><button
 class="primary"
 onclick="nextStep(5)"
 style="margin-top:18px">
 See Final Strip →
 </button>
 
-</div>
-
-<div id="step5" class="step">
-
-<div class="mini">
-05 · your memory
-</div>
-
-<h2>
-It's ready. ♡
-</h2>
-
-<p class="muted">
+</div><div id="step5" class="step"><div class="mini">05 · your memory</div><h2>It's ready. ♡</h2><p class="muted">
 Your little photobooth memory is finished.
-</p>
-
-<div class="final-preview-wrap">
-
-<div
+</p><div class="final-preview-wrap"><div
 id="savedPreview"
 class="final-strip">
-</div>
-
-</div>
-
-<button
+</div></div><button
+id="finalSaveButton"
 class="primary"
 onclick="saveStrip()"
 style="margin-top:18px">
 💾 Save Photo
 </button>
 
-<div id="saveFallback">
-
-<p class="save-note">
-Your photo has been prepared automatically. If your phone does not automatically download it, tap the image below and save it to your Photos/Gallery.
-</p>
-
-<img
+<div id="saveFallback"><p class="save-note">
+If your phone doesn't automatically download it, tap the image below, then save it to your Photos/Gallery.
+</p><img
 id="saveImage"
 alt="Your photobooth strip">
 
-</div>
-
-<button
+</div><button
 class="secondary"
 onclick="nextStep(4)"
 style="margin-top:10px;width:100%">
 ← Add More
 </button>
 
-</div>
-
-</div>
-</section>
-
-<script>
-
-/* =========================================================
-SUPABASE
-========================================================= */
+</div></div>
+</section><script>
 
 const SUPABASE_URL =
 "https://pqmnwuwkdgvlmsxbizmp.supabase.co";
@@ -1223,10 +993,6 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
-
-/* =========================================================
-USER VARIABLES
-========================================================= */
 
 let yourName="";
 let partnerName="";
@@ -1255,7 +1021,6 @@ let remoteDescriptionSet=false;
 let pendingCandidates=[];
 
 let makingOffer=false;
-let offerInProgress=false;
 
 let connectionRetryTimer=null;
 let readinessTimer=null;
@@ -1273,18 +1038,10 @@ crypto.randomUUID();
 
 const rtcConfig={
 iceServers:[
-{
-urls:"stun:stun.l.google.com:19302"
-},
-{
-urls:"stun:stun1.l.google.com:19302"
-},
-{
-urls:"stun:stun2.l.google.com:19302"
-},
-{
-urls:"stun:stun3.l.google.com:19302"
-}
+{urls:"stun:stun.l.google.com:19302"},
+{urls:"stun:stun1.l.google.com:19302"},
+{urls:"stun:stun2.l.google.com:19302"},
+{urls:"stun:stun3.l.google.com:19302"}
 ]
 };
 
@@ -1301,10 +1058,6 @@ const designs=[
 "vintage"
 ];
 
-/* =========================================================
-PAGE
-========================================================= */
-
 function showPage(id){
 
 document
@@ -1320,10 +1073,6 @@ document
 window.scrollTo(0,0);
 
 }
-
-/* =========================================================
-ENTER ROOM
-========================================================= */
 
 async function enterWorld(){
 
@@ -1359,6 +1108,14 @@ alert("Please enter a room code ♡");
 return;
 
 }
+
+const button=
+document.querySelector(
+"#welcome .primary"
+);
+
+button.disabled=true;
+button.textContent="Entering our world... ♡";
 
 document
 .getElementById("connectionMessage")
@@ -1407,13 +1164,12 @@ document
 .textContent=
 "Could not connect. Try again.";
 
-}
+button.disabled=false;
+button.textContent="Enter Our World ♡";
 
 }
 
-/* =========================================================
-ROOM PRESENCE
-========================================================= */
+}
 
 async function setupRoom(){
 
@@ -1434,27 +1190,21 @@ key:clientId
 roomChannel
 .on(
 "presence",
-{
-event:"sync"
-},
+{event:"sync"},
 ()=>{
 updatePresence();
 }
 )
 .on(
 "presence",
-{
-event:"join"
-},
+{event:"join"},
 ()=>{
 updatePresence();
 }
 )
 .on(
 "presence",
-{
-event:"leave"
-},
+{event:"leave"},
 ()=>{
 updatePresence();
 }
@@ -1487,21 +1237,16 @@ reject(error);
 
 }
 
-});
+}
+);
 
 }
-
 );
 
 await setupSignalChannel();
-
 await updatePresence();
 
 }
-
-/* =========================================================
-SIGNAL CHANNEL
-========================================================= */
 
 async function setupSignalChannel(){
 
@@ -1522,9 +1267,7 @@ self:false
 
 signalChannel.on(
 "broadcast",
-{
-event:"signal"
-},
+{event:"signal"},
 async payload=>{
 
 const message=
@@ -1546,30 +1289,20 @@ await new Promise(
 signalChannel.subscribe(
 status=>{
 
-if(status==="SUBSCRIBED"){
-
+if(status==="SUBSCRIBED")
 resolve();
 
 }
-
-}
 );
 
 }
 );
-
-/*
-Send hello repeatedly.
-*/
 
 for(let i=0;i<5;i++){
 
 setTimeout(
 ()=>{
-sendSignal(
-"hello",
-{}
-);
+sendSignal("hello",{});
 },
 i*700
 );
@@ -1577,10 +1310,6 @@ i*700
 }
 
 }
-
-/* =========================================================
-PRESENCE
-========================================================= */
 
 async function updatePresence(){
 
@@ -1598,11 +1327,8 @@ Object
 
 entries.forEach(entry=>{
 
-if(entry.id!==clientId){
-
+if(entry.id!==clientId)
 others.push(entry);
-
-}
 
 });
 
@@ -1633,11 +1359,9 @@ String(a.id)
 .localeCompare(String(b.id))
 );
 
-const partner=
-others[0];
+const partner=others[0];
 
-partnerClientId=
-partner.id;
+partnerClientId=partner.id;
 
 document
 .getElementById("partnerStatus")
@@ -1658,10 +1382,7 @@ partnerCameraReady
 
 await ensurePeer();
 
-await sendSignal(
-"hello",
-{}
-);
+await sendSignal("hello",{});
 
 const all=[];
 
@@ -1686,10 +1407,6 @@ all[0].id===clientId;
 maybeOffer();
 
 }
-
-/* =========================================================
-UPDATE OUR PRESENCE CAMERA STATE
-========================================================= */
 
 async function updateMyCameraPresence(){
 
@@ -1716,19 +1433,13 @@ error
 
 }
 
-/* =========================================================
-WEBRTC PEER
-========================================================= */
-
 async function ensurePeer(){
 
 if(peerConnection)
 return;
 
 peerConnection=
-new RTCPeerConnection(
-rtcConfig
-);
+new RTCPeerConnection(rtcConfig);
 
 if(cameraStream){
 
@@ -1765,13 +1476,10 @@ event.candidate.toJSON()
 peerConnection.ontrack=
 event=>{
 
-console.log(
-"REMOTE TRACK RECEIVED"
-);
-
 const video=
-document
-.getElementById("partnerVideo");
+document.getElementById(
+"partnerVideo"
+);
 
 let stream=
 event.streams &&
@@ -1785,30 +1493,20 @@ new MediaStream();
 
 if(
 event.track &&
-!stream
-.getTracks()
-.includes(event.track)
+!stream.getTracks().includes(event.track)
 ){
 
-stream.addTrack(
-event.track
-);
+stream.addTrack(event.track);
 
 }
 
 }
 
 video.srcObject=stream;
-
 video.muted=true;
 
 video.play()
-.catch(error=>{
-console.warn(
-"Remote video autoplay:",
-error
-);
-});
+.catch(()=>{});
 
 document
 .getElementById("partnerWaiting")
@@ -1819,23 +1517,18 @@ setConnectionStatus(
 true
 );
 
+stopConnectionRetry();
+
 };
 
-peerConnection
-.onconnectionstatechange=
+peerConnection.onconnectionstatechange=
 ()=>{
 
 if(!peerConnection)
 return;
 
 const state=
-peerConnection
-.connectionState;
-
-console.log(
-"WebRTC state:",
-state
-);
+peerConnection.connectionState;
 
 if(state==="connected"){
 
@@ -1850,20 +1543,14 @@ true
 
 stopConnectionRetry();
 
-}
-
-else if(
-state==="connecting"
-){
+}else if(state==="connecting"){
 
 setConnectionStatus(
 "🟡 Connecting your cameras...",
 false
 );
 
-}
-
-else if(
+}else if(
 state==="disconnected" ||
 state==="failed"
 ){
@@ -1875,11 +1562,7 @@ false
 
 scheduleReconnect();
 
-}
-
-else if(
-state==="closed"
-){
+}else if(state==="closed"){
 
 scheduleReconnect();
 
@@ -1887,24 +1570,14 @@ scheduleReconnect();
 
 };
 
-peerConnection
-.oniceconnectionstatechange=
+peerConnection.oniceconnectionstatechange=
 ()=>{
 
 if(!peerConnection)
 return;
 
-const state=
-peerConnection
-.iceConnectionState;
-
-console.log(
-"ICE state:",
-state
-);
-
 if(
-state==="failed"
+peerConnection.iceConnectionState==="failed"
 ){
 
 scheduleReconnect();
@@ -1915,14 +1588,7 @@ scheduleReconnect();
 
 }
 
-/* =========================================================
-SEND SIGNAL
-========================================================= */
-
-async function sendSignal(
-type,
-data={}
-){
+async function sendSignal(type,data={}){
 
 if(!signalChannel)
 return;
@@ -1955,10 +1621,6 @@ error
 }
 
 }
-
-/* =========================================================
-HANDLE SIGNAL
-========================================================= */
 
 async function handleSignal(message){
 
@@ -2008,13 +1670,8 @@ return;
 
 if(message.type==="offer"){
 
-console.log(
-"RECEIVED OFFER"
-);
-
 if(
-peerConnection
-.signalingState!=="stable"
+peerConnection.signalingState!=="stable"
 ){
 
 await rebuildPeer();
@@ -2048,27 +1705,19 @@ remoteDescriptionSet=true;
 await flushCandidates();
 
 const answer=
-await peerConnection
-.createAnswer();
+await peerConnection.createAnswer();
 
 await peerConnection
-.setLocalDescription(
-answer
-);
+.setLocalDescription(answer);
 
 await sendSignal(
 "answer",
 {
 description:{
 type:
-peerConnection
-.localDescription
-.type,
-
+peerConnection.localDescription.type,
 sdp:
-peerConnection
-.localDescription
-.sdp
+peerConnection.localDescription.sdp
 }
 }
 );
@@ -2079,13 +1728,8 @@ return;
 
 if(message.type==="answer"){
 
-console.log(
-"RECEIVED ANSWER"
-);
-
 if(
-peerConnection
-.signalingState==="have-local-offer"
+peerConnection.signalingState==="have-local-offer"
 ){
 
 await peerConnection
@@ -2120,9 +1764,7 @@ peerConnection
 try{
 
 await peerConnection
-.addIceCandidate(
-candidate
-);
+.addIceCandidate(candidate);
 
 }catch(error){
 
@@ -2135,9 +1777,7 @@ error
 
 }else{
 
-pendingCandidates.push(
-candidate
-);
+pendingCandidates.push(candidate);
 
 }
 
@@ -2147,67 +1787,43 @@ return;
 
 if(message.type==="shutter"){
 
-await receiveShutter(
-message
-);
-
+await receiveShutter(message);
 return;
 
 }
 
 if(message.type==="photo"){
 
-receiveRemotePhoto(
-message
-);
-
+receiveRemotePhoto(message);
 return;
 
 }
 
 }
-
-/* =========================================================
-CREATE OFFER
-========================================================= */
 
 async function maybeOffer(){
 
-if(!isCaller)
-return;
-
-if(!localCameraReady)
-return;
-
-if(!partnerCameraReady)
-return;
-
-if(!peerConnection)
-return;
-
-if(makingOffer)
-return;
+if(!isCaller) return;
+if(!localCameraReady) return;
+if(!partnerCameraReady) return;
+if(!peerConnection) return;
+if(makingOffer) return;
 
 if(
-peerConnection
-.signalingState!=="stable"
+peerConnection.signalingState!=="stable"
 )
 return;
 
-const senders=
-peerConnection
-.getSenders();
-
 const hasVideo=
-senders.some(
+peerConnection
+.getSenders()
+.some(
 sender=>
 sender.track &&
 sender.track.kind==="video"
 );
 
-if(!hasVideo){
-
-if(cameraStream){
+if(!hasVideo && cameraStream){
 
 cameraStream
 .getTracks()
@@ -2237,8 +1853,6 @@ cameraStream
 
 }
 
-}
-
 if(
 !peerConnection
 .getSenders()
@@ -2258,33 +1872,21 @@ try{
 makingOffer=true;
 
 const offer=
-await peerConnection
-.createOffer();
+await peerConnection.createOffer();
 
 await peerConnection
-.setLocalDescription(
-offer
-);
+.setLocalDescription(offer);
 
 await sendSignal(
 "offer",
 {
 description:{
 type:
-peerConnection
-.localDescription
-.type,
-
+peerConnection.localDescription.type,
 sdp:
-peerConnection
-.localDescription
-.sdp
+peerConnection.localDescription.sdp
 }
 }
-);
-
-console.log(
-"OFFER SENT"
 );
 
 }catch(error){
@@ -2302,18 +1904,12 @@ makingOffer=false;
 
 }
 
-/* =========================================================
-FLUSH ICE
-========================================================= */
-
 async function flushCandidates(){
 
 if(!peerConnection)
 return;
 
-while(
-pendingCandidates.length
-){
+while(pendingCandidates.length){
 
 const candidate=
 pendingCandidates.shift();
@@ -2321,9 +1917,7 @@ pendingCandidates.shift();
 try{
 
 await peerConnection
-.addIceCandidate(
-candidate
-);
+.addIceCandidate(candidate);
 
 }catch(error){
 
@@ -2338,18 +1932,12 @@ error
 
 }
 
-/* =========================================================
-REBUILD PEER
-========================================================= */
-
 async function rebuildPeer(){
 
 try{
 
 if(peerConnection){
 
-peerConnection.ontrack=null;
-peerConnection.onicecandidate=null;
 peerConnection.close();
 
 }
@@ -2359,18 +1947,12 @@ peerConnection.close();
 peerConnection=null;
 
 remoteDescriptionSet=false;
-
 pendingCandidates=[];
-
 makingOffer=false;
 
 await ensurePeer();
 
 }
-
-/* =========================================================
-RECONNECT
-========================================================= */
 
 function scheduleReconnect(){
 
@@ -2385,15 +1967,8 @@ connectionRetryTimer=null;
 
 await rebuildPeer();
 
-await sendSignal(
-"hello",
-{}
-);
-
-await sendSignal(
-"camera-ready",
-{}
-);
+await sendSignal("hello",{});
+await sendSignal("camera-ready",{});
 
 setTimeout(
 maybeOffer,
@@ -2420,18 +1995,10 @@ connectionRetryTimer=null;
 
 }
 
-/* =========================================================
-STATUS
-========================================================= */
-
-function setConnectionStatus(
-text,
-connected
-){
+function setConnectionStatus(text,connected){
 
 const pill=
-document
-.getElementById(
+document.getElementById(
 "connectionPill"
 );
 
@@ -2444,10 +2011,6 @@ connected
 
 }
 
-/* =========================================================
-CAMERA
-========================================================= */
-
 async function startCamera(){
 
 try{
@@ -2456,25 +2019,17 @@ if(cameraStream){
 
 cameraStream
 .getTracks()
-.forEach(track=>
-track.stop()
-);
+.forEach(track=>track.stop());
 
 }
 
 cameraStream=
-await navigator
-.mediaDevices
-.getUserMedia({
+await navigator.mediaDevices.getUserMedia({
 
 video:{
 facingMode:"user",
-width:{
-ideal:1280
-},
-height:{
-ideal:720
-}
+width:{ideal:1280},
+height:{ideal:720}
 },
 
 audio:false
@@ -2482,22 +2037,16 @@ audio:false
 });
 
 const video=
-document
-.getElementById(
-"myCamera"
-);
+document.getElementById("myCamera");
 
-video.srcObject=
-cameraStream;
+video.srcObject=cameraStream;
 
 await video.play();
 
 localCameraReady=true;
 
 document
-.getElementById(
-"shutterButton"
-)
+.getElementById("shutterButton")
 .disabled=false;
 
 setConnectionStatus(
@@ -2508,20 +2057,17 @@ false
 await ensurePeer();
 
 const senders=
-peerConnection
-.getSenders();
+peerConnection.getSenders();
 
 cameraStream
 .getTracks()
 .forEach(track=>{
 
-const exists=
-senders.some(
-sender=>
-sender.track===track
-);
-
-if(!exists){
+if(
+!senders.some(
+sender=>sender.track===track
+)
+){
 
 peerConnection.addTrack(
 track,
@@ -2539,29 +2085,17 @@ await sendSignal(
 {}
 );
 
-if(readinessTimer){
-
-clearInterval(
-readinessTimer
-);
-
-}
+if(readinessTimer)
+clearInterval(readinessTimer);
 
 readinessTimer=
 setInterval(
 ()=>{
 
-if(
-localCameraReady
-){
+if(localCameraReady){
 
 updateMyCameraPresence();
-
-sendSignal(
-"camera-ready",
-{}
-);
-
+sendSignal("camera-ready",{});
 maybeOffer();
 
 }
@@ -2584,9 +2118,7 @@ error
 localCameraReady=false;
 
 document
-.getElementById(
-"shutterButton"
-)
+.getElementById("shutterButton")
 .disabled=true;
 
 alert(
@@ -2597,16 +2129,10 @@ alert(
 
 }
 
-/* =========================================================
-OPEN PHOTOBOOTH
-========================================================= */
-
 function openPhotobooth(){
 
 photos=[];
-
 shotRecords.clear();
-
 shutterBusy=false;
 
 document
@@ -2619,15 +2145,11 @@ document
 .innerHTML="";
 
 document
-.getElementById(
-"photosDoneButton"
-)
+.getElementById("photosDoneButton")
 .disabled=true;
 
 document
-.getElementById(
-"shutterButton"
-)
+.getElementById("shutterButton")
 .disabled=
 !localCameraReady;
 
@@ -2637,73 +2159,41 @@ nextStep(1);
 
 }
 
-/* =========================================================
-STRIP SELECT
-========================================================= */
-
-function selectStrip(
-number,
-button
-){
+function selectStrip(number,button){
 
 selectedStrip=number;
 
 document
-.querySelectorAll(
-".strip-option"
-)
+.querySelectorAll(".strip-option")
 .forEach(x=>
-x.classList.remove(
-"selected"
-)
+x.classList.remove("selected")
 );
 
-button.classList.add(
-"selected"
-);
+button.classList.add("selected");
 
 document
-.getElementById(
-"photoCount"
-)
+.getElementById("photoCount")
 .textContent=
-photos.length+
-" / "+
-selectedStrip;
+photos.length+" / "+selectedStrip;
 
 }
-
-/* =========================================================
-STEP
-========================================================= */
 
 function nextStep(number){
 
 document
-.querySelectorAll(
-".step"
-)
+.querySelectorAll(".step")
 .forEach(x=>
-x.classList.remove(
-"active"
-)
+x.classList.remove("active")
 );
 
 document
-.getElementById(
-"step"+number
-)
-.classList.add(
-"active"
-);
+.getElementById("step"+number)
+.classList.add("active");
 
 document
-.getElementById(
-"stepNumber"
-)
+.getElementById("stepNumber")
 .textContent=
-number+
-" / 5";
+number+" / 5";
 
 if(number===2){
 
@@ -2713,10 +2203,7 @@ startCamera();
 setupSignalChannel()
 .then(()=>{
 ensurePeer();
-sendSignal(
-"hello",
-{}
-);
+sendSignal("hello",{});
 });
 
 }
@@ -2738,23 +2225,20 @@ if(number===5){
 copyFinalPreview();
 
 /*
-AUTOMATIC SAVE AFTER EDITING.
+NEW:
+Automatically save once the edited final strip
+is displayed.
 */
-
 setTimeout(
 ()=>{
-saveStrip(true);
+autoSaveFinalStrip();
 },
-300
+350
 );
 
 }
 
 }
-
-/* =========================================================
-TAKE PHOTO
-========================================================= */
 
 async function takePhoto(){
 
@@ -2818,9 +2302,7 @@ completed:false
 }
 );
 
-updatePhotoCounter(
-shotIndex
-);
+updatePhotoCounter(shotIndex);
 
 await sendSignal(
 "shutter",
@@ -2837,26 +2319,15 @@ shotIndex
 
 }
 
-/* =========================================================
-RECEIVE SHUTTER
-========================================================= */
-
-async function receiveShutter(
-message
-){
+async function receiveShutter(message){
 
 if(!message.shotId)
 return;
 
 if(
-shotRecords.has(
-message.shotId
+shotRecords.has(message.shotId)
 )
-){
-
 return;
-
-}
 
 shotRecords.set(
 message.shotId,
@@ -2869,9 +2340,7 @@ completed:false
 }
 );
 
-updatePhotoCounter(
-message.shotIndex
-);
+updatePhotoCounter(message.shotIndex);
 
 if(!cameraStream){
 
@@ -2890,9 +2359,9 @@ message.shotIndex
 
 }
 
-/* =========================================================
-COUNTDOWN
-========================================================= */
+/*
+FIXED COUNTDOWN
+*/
 
 function countdownAndCapture(
 shotId,
@@ -2905,12 +2374,9 @@ resolve=>{
 let count=3;
 
 const overlay=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
-overlay.style.cssText=
-`
+overlay.style.cssText=`
 position:fixed;
 inset:0;
 z-index:99999;
@@ -2921,12 +2387,9 @@ color:white;
 font:bold 100px Georgia;
 `;
 
-document.body.appendChild(
-overlay
-);
+document.body.appendChild(overlay);
 
-overlay.textContent=
-count;
+overlay.textContent=count;
 
 const timer=
 setInterval(
@@ -2936,17 +2399,13 @@ count--;
 
 if(count>0){
 
-overlay.textContent=
-count;
+overlay.textContent=count;
 
 }else{
 
-clearInterval(
-timer
-);
+clearInterval(timer);
 
-overlay.textContent=
-"♡";
+overlay.textContent="♡";
 
 setTimeout(
 async()=>{
@@ -2967,16 +2426,14 @@ resolve();
 }
 
 },
-550
+700
 );
 
 }
 
 );
 
-/* =========================================================
-CAPTURE LOCAL
-========================================================= */
+}
 
 async function captureLocalForShot(
 shotId,
@@ -2984,10 +2441,7 @@ shotIndex
 ){
 
 const video=
-document
-.getElementById(
-"myCamera"
-);
+document.getElementById("myCamera");
 
 if(
 !video.videoWidth ||
@@ -2995,15 +2449,12 @@ if(
 ){
 
 shutterBusy=false;
-
 return;
 
 }
 
 const canvas=
-document.createElement(
-"canvas"
-);
+document.createElement("canvas");
 
 const width=400;
 const height=500;
@@ -3014,53 +2465,33 @@ canvas.height=height;
 const ctx=
 canvas.getContext("2d");
 
-const vw=
-video.videoWidth;
-
-const vh=
-video.videoHeight;
+const vw=video.videoWidth;
+const vh=video.videoHeight;
 
 const targetRatio=4/5;
-
-const videoRatio=
-vw/vh;
+const videoRatio=vw/vh;
 
 let sx=0;
 let sy=0;
 let sw=vw;
 let sh=vh;
 
-if(
-videoRatio>targetRatio
-){
+if(videoRatio>targetRatio){
 
-sw=
-vh*targetRatio;
-
-sx=
-(vw-sw)/2;
+sw=vh*targetRatio;
+sx=(vw-sw)/2;
 
 }else{
 
-sh=
-vw/targetRatio;
-
-sy=
-(vh-sh)/2;
+sh=vw/targetRatio;
+sy=(vh-sh)/2;
 
 }
 
 ctx.save();
 
-ctx.translate(
-width,
-0
-);
-
-ctx.scale(
--1,
-1
-);
+ctx.translate(width,0);
+ctx.scale(-1,1);
 
 ctx.drawImage(
 video,
@@ -3083,14 +2514,11 @@ canvas.toDataURL(
 );
 
 const record=
-shotRecords.get(
-shotId
-);
+shotRecords.get(shotId);
 
 if(!record){
 
 shutterBusy=false;
-
 return;
 
 }
@@ -3111,9 +2539,7 @@ image:image
 }
 );
 
-tryCompleteShot(
-shotId
-);
+tryCompleteShot(shotId);
 
 setTimeout(
 ()=>{
@@ -3124,21 +2550,13 @@ shutterBusy=false;
 
 }
 
-/* =========================================================
-RECEIVE REMOTE PHOTO
-========================================================= */
-
-function receiveRemotePhoto(
-message
-){
+function receiveRemotePhoto(message){
 
 if(!message.shotId)
 return;
 
 let record=
-shotRecords.get(
-message.shotId
-);
+shotRecords.get(message.shotId);
 
 if(!record){
 
@@ -3152,43 +2570,27 @@ completed:false
 
 }
 
-record.remote=
-message.image;
-
-record.remoteSender=
-message.sender;
+record.remote=message.image;
+record.remoteSender=message.sender;
 
 shotRecords.set(
 message.shotId,
 record
 );
 
-tryCompleteShot(
-message.shotId
-);
+tryCompleteShot(message.shotId);
 
 }
 
-/* =========================================================
-COMPLETE SHOT
-========================================================= */
-
-async function tryCompleteShot(
-shotId
-){
+async function tryCompleteShot(shotId){
 
 const record=
-shotRecords.get(
-shotId
-);
+shotRecords.get(shotId);
 
 if(!record)
 return;
 
-if(
-!record.local ||
-!record.remote
-)
+if(!record.local || !record.remote)
 return;
 
 if(record.completed)
@@ -3213,35 +2615,22 @@ record.index-1
 updatePhotoThumbnails();
 
 const completeCount=
-photos.filter(Boolean)
-.length;
+photos.filter(Boolean).length;
 
 document
-.getElementById(
-"photoCount"
-)
+.getElementById("photoCount")
 .textContent=
-completeCount+
-" / "+
-selectedStrip;
+completeCount+" / "+selectedStrip;
 
-if(
-completeCount>=selectedStrip
-){
+if(completeCount>=selectedStrip){
 
 document
-.getElementById(
-"photosDoneButton"
-)
+.getElementById("photosDoneButton")
 .disabled=false;
 
 }
 
 }
-
-/* =========================================================
-CREATE COMBINED PHOTO
-========================================================= */
 
 function createCombinedPhoto(
 localImage,
@@ -3252,11 +2641,8 @@ record
 return new Promise(
 resolve=>{
 
-const local=
-new Image();
-
-const remote=
-new Image();
+const local=new Image();
+const remote=new Image();
 
 let loaded=0;
 
@@ -3268,9 +2654,7 @@ if(loaded<2)
 return;
 
 const canvas=
-document.createElement(
-"canvas"
-);
+document.createElement("canvas");
 
 const W=800;
 const H=1000;
@@ -3279,23 +2663,14 @@ canvas.width=W;
 canvas.height=H;
 
 const ctx=
-canvas.getContext(
-"2d"
-);
+canvas.getContext("2d");
 
-ctx.fillStyle=
-"#fff8fa";
+ctx.fillStyle="#fff8fa";
 
-ctx.fillRect(
-0,
-0,
-W,
-H
-);
+ctx.fillRect(0,0,W,H);
 
 const cardW=350;
 const cardH=437.5;
-
 const gap=20;
 
 const startX=
@@ -3309,9 +2684,7 @@ let second=remote;
 if(
 record.remoteSender &&
 String(record.remoteSender)
-.localeCompare(
-String(clientId)
-)<0
+.localeCompare(String(clientId))<0
 ){
 
 first=remote;
@@ -3339,21 +2712,14 @@ cardH,
 22
 );
 
-ctx.font=
-"34px Georgia";
-
-ctx.textAlign=
-"center";
-
-ctx.fillStyle=
-"#d97899";
+ctx.font="34px Georgia";
+ctx.textAlign="center";
+ctx.fillStyle="#d97899";
 
 ctx.fillText(
 "♡",
 W/2,
-startY+
-cardH/2+
-12
+startY+cardH/2+12
 );
 
 resolve(
@@ -3368,19 +2734,14 @@ canvas.toDataURL(
 local.onload=done;
 remote.onload=done;
 
-local.src=
-localImage;
-
-remote.src=
-remoteImage;
+local.src=localImage;
+remote.src=remoteImage;
 
 }
 
 );
 
-/* =========================================================
-DRAW ROUNDED IMAGE
-========================================================= */
+}
 
 function drawRoundedImage(
 ctx,
@@ -3396,61 +2757,17 @@ ctx.save();
 
 ctx.beginPath();
 
-ctx.moveTo(
-x+radius,
-y
-);
-
-ctx.lineTo(
-x+w-radius,
-y
-);
-
-ctx.quadraticCurveTo(
-x+w,
-y,
-x+w,
-y+radius
-);
-
-ctx.lineTo(
-x+w,
-y+h-radius
-);
-
-ctx.quadraticCurveTo(
-x+w,
-y+h,
-x+w-radius,
-y+h
-);
-
-ctx.lineTo(
-x+radius,
-y+h
-);
-
-ctx.quadraticCurveTo(
-x,
-y+h,
-x,
-y+h-radius
-);
-
-ctx.lineTo(
-x,
-y+radius
-);
-
-ctx.quadraticCurveTo(
-x,
-y,
-x+radius,
-y
-);
+ctx.moveTo(x+radius,y);
+ctx.lineTo(x+w-radius,y);
+ctx.quadraticCurveTo(x+w,y,x+w,y+radius);
+ctx.lineTo(x+w,y+h-radius);
+ctx.quadraticCurveTo(x+w,y+h,x+w-radius,y+h);
+ctx.lineTo(x+radius,y+h);
+ctx.quadraticCurveTo(x,y+h,x,y+h-radius);
+ctx.lineTo(x,y+radius);
+ctx.quadraticCurveTo(x,y,x+radius,y);
 
 ctx.closePath();
-
 ctx.clip();
 
 const ratio=
@@ -3459,17 +2776,11 @@ w/img.width,
 h/img.height
 );
 
-const nw=
-img.width*ratio;
+const nw=img.width*ratio;
+const nh=img.height*ratio;
 
-const nh=
-img.height*ratio;
-
-const dx=
-x+(w-nw)/2;
-
-const dy=
-y+(h-nh)/2;
+const dx=x+(w-nw)/2;
+const dy=y+(h-nh)/2;
 
 ctx.drawImage(
 img,
@@ -3483,36 +2794,19 @@ ctx.restore();
 
 }
 
-/* =========================================================
-PHOTO COUNT
-========================================================= */
-
-function updatePhotoCounter(
-number
-){
+function updatePhotoCounter(number){
 
 document
-.getElementById(
-"photoCount"
-)
+.getElementById("photoCount")
 .textContent=
-number+
-" / "+
-selectedStrip;
+number+" / "+selectedStrip;
 
 }
-
-/* =========================================================
-THUMBNAILS
-========================================================= */
 
 function updatePhotoThumbnails(){
 
 const preview=
-document
-.getElementById(
-"photoPreview"
-);
+document.getElementById("photoPreview");
 
 preview.innerHTML="";
 
@@ -3521,41 +2815,27 @@ photos
 .forEach(image=>{
 
 const img=
-document.createElement(
-"img"
-);
+document.createElement("img");
 
 img.src=image;
 
-preview.appendChild(
-img
-);
+preview.appendChild(img);
 
 });
 
 }
 
-/* =========================================================
-DESIGN PICKER
-========================================================= */
-
 function buildDesignPicker(){
 
 const grid=
-document
-.getElementById(
-"designGrid"
-);
+document.getElementById("designGrid");
 
 grid.innerHTML="";
 
-designs.forEach(
-name=>{
+designs.forEach(name=>{
 
 const card=
-document.createElement(
-"button"
-);
+document.createElement("button");
 
 card.className=
 "design-card"+
@@ -3566,67 +2846,44 @@ name===selectedDesign
 );
 
 const preview=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 preview.className=
-"design-preview theme-"+
-name;
+"design-preview theme-"+name;
 
 photos
 .filter(Boolean)
 .forEach(image=>{
 
 const img=
-document.createElement(
-"img"
-);
+document.createElement("img");
 
 img.src=image;
 
-preview.appendChild(
-img
-);
+preview.appendChild(img);
 
 });
 
 const label=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
-label.className=
-"design-name";
+label.className="design-name";
+label.textContent=getDesignName(name);
 
-label.textContent=
-getDesignName(name);
-
-card.appendChild(
-preview
-);
-
-card.appendChild(
-label
-);
+card.appendChild(preview);
+card.appendChild(label);
 
 card.onclick=()=>{
 
 selectedDesign=name;
 
 document
-.querySelectorAll(
-".design-card"
-)
+.querySelectorAll(".design-card")
 .forEach(x=>
-x.classList.remove(
-"selected"
-)
+x.classList.remove("selected")
 );
 
-card.classList.add(
-"selected"
-);
+card.classList.add("selected");
 
 renderDesignPreview();
 
@@ -3634,33 +2891,22 @@ renderDesignPreview();
 
 card.onmouseenter=()=>{
 
-if(
-window.innerWidth>600
-){
+if(window.innerWidth>600){
 
 selectedDesign=name;
-
 renderDesignPreview();
 
 }
 
 };
 
-grid.appendChild(
-card
-);
+grid.appendChild(card);
 
-}
-
-);
+});
 
 renderDesignPreview();
 
 }
-
-/* =========================================================
-DESIGN NAMES
-========================================================= */
 
 function getDesignName(name){
 
@@ -3683,21 +2929,20 @@ return names[name];
 
 }
 
-/* =========================================================
-DESIGN PREVIEW
-========================================================= */
+/*
+UPDATED FINAL DESIGN PREVIEW.
+
+The photos stay fitted inside the design strip,
+with ONE name line at the bottom.
+*/
 
 function renderDesignPreview(){
 
 const preview=
-document
-.getElementById(
-"designPreview"
-);
+document.getElementById("designPreview");
 
 preview.className=
-"final-strip theme-"+
-selectedDesign;
+"final-strip theme-"+selectedDesign;
 
 preview.innerHTML="";
 
@@ -3706,339 +2951,117 @@ photos
 .forEach(image=>{
 
 const img=
-document.createElement(
-"img"
-);
+document.createElement("img");
 
 img.src=image;
 
-preview.appendChild(
-img
-);
+preview.appendChild(img);
 
 });
 
 const title=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
-title.className=
-"final-strip-title";
+title.className="final-strip-title";
 
 title.textContent=
 yourName+
 " ♡ "+
 (partnerName||"Them");
 
-preview.appendChild(
-title
-);
+preview.appendChild(title);
 
 }
-
-/* =========================================================
-CHOOSE DESIGN
-========================================================= */
 
 function chooseDesign(){
 
 buildFinalStrip();
-
 nextStep(4);
 
 }
 
-/* =========================================================
-FINAL STRIP
-ONLY CHANGED PART:
-GRID STYLE PREVIEW
-========================================================= */
-
 function buildFinalStrip(){
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
 strip.className=
-"final-strip theme-"+
-selectedDesign;
+"final-strip theme-"+selectedDesign;
 
 strip.innerHTML="";
-
-const grid=
-document.createElement(
-"div"
-);
-
-grid.style.display=
-"grid";
-
-grid.style.gridTemplateColumns=
-"repeat(3,1fr)";
-
-grid.style.gap="5px";
-
-grid.style.width="100%";
-
-/*
-DESIGN DESIGN DESIGN
-DESIGN PHOTO DESIGN
-DESIGN DESIGN DESIGN
-DESIGN PHOTO DESIGN
-DESIGN PHOTO DESIGN
-DESIGN DESIGN DESIGN
-*/
 
 photos
 .filter(Boolean)
 .forEach(image=>{
 
-/* Top decorative row */
+const img=
+document.createElement("img");
 
-for(let i=0;i<3;i++){
+img.src=image;
 
-const cell=
-document.createElement(
-"div"
-);
-
-cell.className=
-"grid-design-cell";
-
-cell.style.aspectRatio="1/1";
-cell.style.borderRadius="6px";
-cell.style.overflow="hidden";
-
-grid.appendChild(
-cell
-);
-
-}
-
-/* Photo row */
-
-const left=
-document.createElement(
-"div"
-);
-
-left.className=
-"grid-design-cell";
-
-left.style.aspectRatio="1/1";
-left.style.borderRadius="6px";
-left.style.overflow="hidden";
-
-const photo=
-document.createElement(
-"img"
-);
-
-photo.src=image;
-
-photo.style.width="100%";
-photo.style.height="100%";
-photo.style.aspectRatio="1/1";
-photo.style.objectFit="cover";
-photo.style.display="block";
-photo.style.borderRadius="6px";
-
-const right=
-document.createElement(
-"div"
-);
-
-right.className=
-"grid-design-cell";
-
-right.style.aspectRatio="1/1";
-right.style.borderRadius="6px";
-right.style.overflow="hidden";
-
-grid.appendChild(left);
-grid.appendChild(photo);
-grid.appendChild(right);
+strip.appendChild(img);
 
 });
 
-/* Bottom decorative row */
-
-for(let i=0;i<3;i++){
-
-const cell=
-document.createElement(
-"div"
-);
-
-cell.className=
-"grid-design-cell";
-
-cell.style.aspectRatio="1/1";
-cell.style.borderRadius="6px";
-cell.style.overflow="hidden";
-
-grid.appendChild(
-cell
-);
-
-}
-
-strip.appendChild(
-grid
-);
-
-/* ONE caption */
-
 const title=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
-title.className=
-"final-strip-title";
+title.className="final-strip-title";
 
 title.textContent=
 yourName+
 " ♡ "+
 (partnerName||"Them");
 
-strip.appendChild(
-title
-);
+strip.appendChild(title);
 
 editHistory=[];
 
-/*
-Apply the selected design to all
-decorative grid cells.
-*/
-
-applyGridDesign();
-
 }
-
-/* =========================================================
-GRID DESIGN
-========================================================= */
-
-function applyGridDesign(){
-
-const strip=
-document.getElementById(
-"photoStrip"
-);
-
-const cells=
-strip.querySelectorAll(
-".grid-design-cell"
-);
-
-cells.forEach(
-cell=>{
-
-cell.className=
-"grid-design-cell theme-"+
-selectedDesign;
-
-cell.style.aspectRatio="1/1";
-cell.style.borderRadius="6px";
-cell.style.overflow="hidden";
-
-}
-);
-
-}
-
-/* =========================================================
-SAVE EDIT STATE
-========================================================= */
 
 function saveEditState(){
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
-editHistory.push(
-strip.innerHTML
-);
+editHistory.push(strip.innerHTML);
 
-if(
-editHistory.length>30
-){
-
+if(editHistory.length>30)
 editHistory.shift();
 
 }
-
-}
-
-/* =========================================================
-STICKER
-========================================================= */
 
 function addSticker(symbol){
 
 saveEditState();
 
 const sticker=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
-sticker.className=
-"decor";
-
-sticker.textContent=
-symbol;
+sticker.className="decor";
+sticker.textContent=symbol;
 
 sticker.style.left=
-(15+
-Math.random()*70)+
-"%";
+(15+Math.random()*70)+"%";
 
 sticker.style.top=
-(10+
-Math.random()*80)+
-"%";
+(10+Math.random()*80)+"%";
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
-strip.appendChild(
-sticker
-);
+strip.appendChild(sticker);
 
-makeMovable(
-sticker,
-strip
-);
+makeMovable(sticker,strip);
 
 }
-
-/* =========================================================
-CUSTOM TEXT
-========================================================= */
 
 function addText(){
 
 const input=
-document
-.getElementById(
-"customText"
-);
+document.getElementById("customText");
 
-const value=
-input.value.trim();
+const value=input.value.trim();
 
 if(!value)
 return;
@@ -4046,90 +3069,47 @@ return;
 saveEditState();
 
 const text=
-document.createElement(
-"div"
-);
+document.createElement("div");
 
 text.className=
 "decor text-decor";
 
-text.textContent=
-value;
+text.textContent=value;
 
-text.style.left=
-"50%";
-
-text.style.top=
-"50%";
+text.style.left="50%";
+text.style.top="50%";
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
-strip.appendChild(
-text
-);
+strip.appendChild(text);
 
 input.value="";
 
-makeMovable(
-text,
-strip
-);
+makeMovable(text,strip);
 
 }
 
-/* =========================================================
-DRAGGABLE STICKERS
-========================================================= */
-
-function makeMovable(
-element,
-container
-){
+function makeMovable(element,container){
 
 let dragging=false;
 
-function move(
-clientX,
-clientY
-){
+function move(clientX,clientY){
 
 const rect=
-container
-.getBoundingClientRect();
+container.getBoundingClientRect();
 
 let x=
-(
-(clientX-rect.left)/
-rect.width
-)*100;
+((clientX-rect.left)/rect.width)*100;
 
 let y=
-(
-(clientY-rect.top)/
-rect.height
-)*100;
+((clientY-rect.top)/rect.height)*100;
 
-x=
-Math.max(
-5,
-Math.min(95,x)
-);
+x=Math.max(5,Math.min(95,x));
+y=Math.max(3,Math.min(97,y));
 
-y=
-Math.max(
-3,
-Math.min(97,y)
-);
-
-element.style.left=
-x+"%";
-
-element.style.top=
-y+"%";
+element.style.left=x+"%";
+element.style.top=y+"%";
 
 }
 
@@ -4138,13 +3118,10 @@ element.addEventListener(
 e=>{
 
 dragging=true;
-
 e.preventDefault();
 
 },
-{
-passive:false
-}
+{passive:false}
 );
 
 element.addEventListener(
@@ -4156,18 +3133,12 @@ return;
 
 e.preventDefault();
 
-const t=
-e.touches[0];
+const t=e.touches[0];
 
-move(
-t.clientX,
-t.clientY
-);
+move(t.clientX,t.clientY);
 
 },
-{
-passive:false
-}
+{passive:false}
 );
 
 element.addEventListener(
@@ -4182,7 +3153,6 @@ element.addEventListener(
 e=>{
 
 dragging=true;
-
 e.preventDefault();
 
 }
@@ -4194,10 +3164,7 @@ e=>{
 
 if(dragging){
 
-move(
-e.clientX,
-e.clientY
-);
+move(e.clientX,e.clientY);
 
 }
 
@@ -4213,27 +3180,17 @@ dragging=false;
 
 }
 
-/* =========================================================
-UNDO
-========================================================= */
-
 function undoLastEdit(){
 
 if(!editHistory.length){
 
-alert(
-"Nothing to undo ♡"
-);
-
+alert("Nothing to undo ♡");
 return;
 
 }
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
 strip.innerHTML=
 editHistory.pop();
@@ -4242,36 +3199,20 @@ restoreMovableElements();
 
 }
 
-/* =========================================================
-RESTORE MOVABLES
-========================================================= */
-
 function restoreMovableElements(){
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
 strip
-.querySelectorAll(
-".decor"
-)
+.querySelectorAll(".decor")
 .forEach(element=>{
 
-makeMovable(
-element,
-strip
-);
+makeMovable(element,strip);
 
 });
 
 }
-
-/* =========================================================
-RESET
-========================================================= */
 
 function resetEdits(){
 
@@ -4286,23 +3227,13 @@ buildFinalStrip();
 
 }
 
-/* =========================================================
-FINAL PREVIEW
-========================================================= */
-
 function copyFinalPreview(){
 
 const source=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
 const target=
-document
-.getElementById(
-"savedPreview"
-);
+document.getElementById("savedPreview");
 
 target.innerHTML=
 source.innerHTML;
@@ -4310,20 +3241,16 @@ source.innerHTML;
 target.className=
 source.className;
 
-/*
-Copy the grid styles too.
-*/
-
-target.style.position="relative";
-
 }
 
-/* =========================================================
-SAVE FINAL STRIP
-AUTOMATIC SAVE
-========================================================= */
+/*
+SAVE
+*/
 
-async function saveStrip(autoSave=false){
+async function saveStrip(){
+
+const strip=
+document.getElementById("photoStrip");
 
 if(!photos.length){
 
@@ -4336,16 +3263,116 @@ return;
 }
 
 const button=
-document.querySelector(
-'#step5 .primary'
+document.getElementById("finalSaveButton");
+
+button.disabled=true;
+button.textContent=
+"Creating your photo... ♡";
+
+try{
+
+const blob=
+await renderFinalCanvas();
+
+if(!blob)
+throw new Error(
+"Could not create image."
+);
+
+if(finalBlobUrl){
+
+URL.revokeObjectURL(
+finalBlobUrl
+);
+
+}
+
+finalBlobUrl=
+URL.createObjectURL(blob);
+
+const link=
+document.createElement("a");
+
+link.href=finalBlobUrl;
+link.download=
+"our-little-photobooth.png";
+
+document.body.appendChild(link);
+
+link.click();
+link.remove();
+
+const fallback=
+document.getElementById("saveFallback");
+
+const saveImage=
+document.getElementById("saveImage");
+
+saveImage.src=finalBlobUrl;
+
+fallback.style.display="block";
+
+button.textContent=
+"✓ Saved / Open Image Below";
+
+setTimeout(
+()=>{
+try{
+window.open(
+finalBlobUrl,
+"_blank"
+);
+}catch(e){}
+},
+500
+);
+
+}catch(error){
+
+console.error(
+"Save error:",
+error
+);
+
+alert(
+"The image was created but your browser blocked the automatic save. Use the image shown below to save it."
+);
+
+}finally{
+
+button.disabled=false;
+
+}
+
+}
+
+/*
+NEW:
+Automatically save the final edited strip.
+*/
+
+let autoSaveRunning=false;
+
+async function autoSaveFinalStrip(){
+
+if(autoSaveRunning)
+return;
+
+if(!photos.length)
+return;
+
+autoSaveRunning=true;
+
+const button=
+document.getElementById(
+"finalSaveButton"
 );
 
 if(button){
 
 button.disabled=true;
-
 button.textContent=
-"Saving your photo... ♡";
+"Saving your memory... ♡";
 
 }
 
@@ -4368,48 +3395,32 @@ finalBlobUrl
 }
 
 finalBlobUrl=
-URL.createObjectURL(
-blob
-);
+URL.createObjectURL(blob);
+
+const saveImage=
+document.getElementById("saveImage");
+
+saveImage.src=finalBlobUrl;
+
+document
+.getElementById("saveFallback")
+.style.display="block";
 
 const link=
-document.createElement(
-"a"
-);
+document.createElement("a");
 
-link.href=
-finalBlobUrl;
+link.href=finalBlobUrl;
 
 link.download=
 "our-little-photobooth.png";
 
 link.style.display="none";
 
-document.body.appendChild(
-link
-);
+document.body.appendChild(link);
 
 link.click();
 
 link.remove();
-
-const fallback=
-document
-.getElementById(
-"saveFallback"
-);
-
-const saveImage=
-document
-.getElementById(
-"saveImage"
-);
-
-saveImage.src=
-finalBlobUrl;
-
-fallback.style.display=
-"block";
 
 if(button){
 
@@ -4420,26 +3431,14 @@ button.textContent=
 
 }catch(error){
 
-console.error(
-"Save error:",
+console.warn(
+"Automatic save was blocked:",
 error
-);
-
-const fallback=
-document
-.getElementById(
-"saveFallback"
-);
-
-fallback.style.display=
-"block";
-
-alert(
-"The photo is ready, but your browser blocked the automatic download. Tap the image below to save it."
 );
 
 if(button){
 
+button.disabled=false;
 button.textContent=
 "💾 Save Photo";
 
@@ -4447,67 +3446,48 @@ button.textContent=
 
 }finally{
 
-if(button){
-
-button.disabled=false;
+autoSaveRunning=false;
 
 }
 
 }
 
-}
+/*
+FINAL CANVAS
 
-/* =========================================================
-RENDER FINAL CANVAS
-ONLY CHANGED PART:
-GRID-STYLE FINAL IMAGE
-========================================================= */
+The actual saved image uses the same long-strip
+layout as the photobooth preview.
+*/
 
 async function renderFinalCanvas(){
 
 const W=900;
 
-const CELL=250;
+const PHOTO_W=820;
+const PHOTO_H=
+PHOTO_W*5/4;
 
+const TOP=75;
 const GAP=18;
+const CAPTION_H=120;
 
-const GRID_W=
-CELL*3+
-GAP*2;
-
-const TOP=95;
-
-const ROWS=
-photos.length*2;
-
-const GRID_H=
-ROWS*CELL+
-(ROWS-1)*GAP;
-
-const CAPTION_H=130;
+const count=photos.length;
 
 const H=
 TOP+
-GRID_H+
+count*PHOTO_H+
+(count-1)*GAP+
 CAPTION_H+
-50;
+45;
 
 const canvas=
-document.createElement(
-"canvas"
-);
+document.createElement("canvas");
 
 canvas.width=W;
 canvas.height=H;
 
 const ctx=
-canvas.getContext(
-"2d"
-);
-
-/*
-Theme background.
-*/
+canvas.getContext("2d");
 
 drawThemeBackground(
 ctx,
@@ -4522,13 +3502,6 @@ W,
 selectedDesign
 );
 
-/*
-Draw the decorative grid.
-
-Every photo is fitted into
-the center cell of its photo row.
-*/
-
 for(
 let i=0;
 i<photos.length;
@@ -4536,158 +3509,73 @@ i++
 ){
 
 const image=
-await loadImage(
-photos[i]
-);
-
-const photoRow=
-i*2+1;
+await loadImage(photos[i]);
 
 const x=
-(W-GRID_W)/2+
-CELL+
-GAP;
+(W-PHOTO_W)/2;
 
 const y=
-TOP+
-photoRow*(CELL+GAP);
+TOP+i*(PHOTO_H+GAP);
 
 drawPhotoToCanvas(
 ctx,
 image,
 x,
 y,
-CELL,
-CELL,
+PHOTO_W,
+PHOTO_H,
 selectedDesign
 );
 
 }
 
 /*
-Decorative grid cell outlines.
-*/
-
-ctx.save();
-
-ctx.strokeStyle=
-getThemeBorder(
-selectedDesign
-);
-
-ctx.lineWidth=3;
-
-for(
-let row=0;
-row<ROWS;
-row++
-){
-
-for(
-let col=0;
-col<3;
-col++
-){
-
-const x=
-(W-GRID_W)/2+
-col*(CELL+GAP);
-
-const y=
-TOP+
-row*(CELL+GAP);
-
-const hasPhoto=
-col===1 &&
-row%2===1;
-
-if(hasPhoto)
-continue;
-
-roundRect(
-ctx,
-x,
-y,
-CELL,
-CELL,
-18
-);
-
-ctx.stroke();
-
-}
-
-}
-
-ctx.restore();
-
-/*
-Draw stickers and custom text.
+Place stickers/text based on their actual
+positions in the editable strip.
 */
 
 const strip=
-document
-.getElementById(
-"photoStrip"
-);
+document.getElementById("photoStrip");
 
 const stripRect=
-strip
-.getBoundingClientRect();
+strip.getBoundingClientRect();
 
 strip
-.querySelectorAll(
-".decor"
-)
+.querySelectorAll(".decor")
 .forEach(element=>{
 
 const rect=
-element
-.getBoundingClientRect();
+element.getBoundingClientRect();
 
 const centerX=
-rect.left+
-rect.width/2;
+rect.left+rect.width/2;
 
 const centerY=
-rect.top+
-rect.height/2;
+rect.top+rect.height/2;
 
 const percentX=
-(
-(centerX-
-stripRect.left)/
-stripRect.width
-);
+(centerX-stripRect.left)/
+stripRect.width;
 
 const percentY=
-(
-(centerY-
-stripRect.top)/
-stripRect.height
-);
+(centerY-stripRect.top)/
+stripRect.height;
 
 const canvasX=
 percentX*W;
 
 const canvasY=
-TOP+
-percentY*GRID_H;
+percentY*H;
 
 ctx.save();
 
-ctx.textAlign=
-"center";
-
-ctx.textBaseline=
-"middle";
+ctx.textAlign="center";
+ctx.textBaseline="middle";
 
 let fontSize=38;
 
 if(
-element.classList.contains(
-"text-decor"
-)
+element.classList.contains("text-decor")
 ){
 
 fontSize=25;
@@ -4695,13 +3583,10 @@ fontSize=25;
 }
 
 ctx.font=
-fontSize+
-"px Georgia";
+fontSize+"px Georgia";
 
 if(
-element.classList.contains(
-"text-decor"
-)
+element.classList.contains("text-decor")
 ){
 
 const padding=9;
@@ -4712,12 +3597,10 @@ element.textContent
 );
 
 const bw=
-metrics.width+
-padding*2;
+metrics.width+padding*2;
 
 const bh=
-fontSize+
-padding;
+fontSize+padding;
 
 ctx.fillStyle=
 "rgba(255,255,255,.88)";
@@ -4735,8 +3618,7 @@ ctx.fill();
 
 }
 
-ctx.fillStyle=
-"#49363e";
+ctx.fillStyle="#49363e";
 
 ctx.fillText(
 element.textContent,
@@ -4749,26 +3631,18 @@ ctx.restore();
 });
 
 /*
-ONE SINGLE NAME LINE AT THE BOTTOM.
+ONE NAME AT THE VERY BOTTOM.
 */
 
-const captionY=
-TOP+
-GRID_H+
-70;
+const captionY=H-55;
 
 ctx.save();
 
-ctx.textAlign=
-"center";
-
-ctx.textBaseline=
-"middle";
+ctx.textAlign="center";
+ctx.textBaseline="middle";
 
 ctx.fillStyle=
-getThemeTextColor(
-selectedDesign
-);
+getThemeTextColor(selectedDesign);
 
 ctx.font=
 "bold 42px Georgia";
@@ -4787,9 +3661,7 @@ return new Promise(
 resolve=>{
 
 canvas.toBlob(
-blob=>{
-resolve(blob);
-},
+blob=>resolve(blob),
 "image/png"
 );
 
@@ -4798,25 +3670,18 @@ resolve(blob);
 
 }
 
-/* =========================================================
-LOAD IMAGE
-========================================================= */
-
 function loadImage(src){
 
 return new Promise(
 (resolve,reject)=>{
 
-const image=
-new Image();
+const image=new Image();
 
-image.onload=
-()=>{
+image.onload=()=>{
 resolve(image);
 };
 
-image.onerror=
-reject;
+image.onerror=reject;
 
 image.src=src;
 
@@ -4824,10 +3689,6 @@ image.src=src;
 );
 
 }
-
-/* =========================================================
-PHOTO CANVAS
-========================================================= */
 
 function drawPhotoToCanvas(
 ctx,
@@ -4846,8 +3707,7 @@ getThemeBorder(theme);
 
 if(border){
 
-ctx.fillStyle=
-border;
+ctx.fillStyle=border;
 
 roundRect(
 ctx,
@@ -4879,17 +3739,11 @@ w/img.width,
 h/img.height
 );
 
-const nw=
-img.width*ratio;
+const nw=img.width*ratio;
+const nh=img.height*ratio;
 
-const nh=
-img.height*ratio;
-
-const dx=
-x+(w-nw)/2;
-
-const dy=
-y+(h-nh)/2;
+const dx=x+(w-nw)/2;
+const dy=y+(h-nh)/2;
 
 if(
 theme==="retro" ||
@@ -4909,16 +3763,11 @@ nw,
 nh
 );
 
-ctx.filter=
-"none";
+ctx.filter="none";
 
 ctx.restore();
 
 }
-
-/* =========================================================
-THEME BACKGROUND
-========================================================= */
 
 function drawThemeBackground(
 ctx,
@@ -4939,10 +3788,7 @@ if(theme==="y2k"){
 
 const gradient=
 ctx.createLinearGradient(
-0,
-0,
-W,
-H
+0,0,W,H
 );
 
 gradient.addColorStop(
@@ -4980,10 +3826,7 @@ if(theme==="dreamy"){
 
 const gradient=
 ctx.createLinearGradient(
-0,
-0,
-0,
-H
+0,0,0,H
 );
 
 gradient.addColorStop(
@@ -5000,41 +3843,34 @@ bg=gradient;
 
 }
 
-if(theme==="vintage"){
-
+if(theme==="vintage")
 bg="#d0b39f";
-
-}
 
 ctx.fillStyle=bg;
 
 ctx.fillRect(
-0,
-0,
-W,
-H
+0,0,W,H
 );
+
+}
+
+function drawThemeHeader(
+ctx,
+W,
+theme
+){
 
 ctx.save();
 
-ctx.textAlign=
-"center";
+ctx.textAlign="center";
 
 ctx.fillStyle=
-getThemeTextColor(
-theme
-);
+getThemeTextColor(theme);
 
-ctx.font=
-"22px Georgia";
-
-const header=
-getThemeHeader(
-theme
-);
+ctx.font="22px Georgia";
 
 ctx.fillText(
-header,
+getThemeHeader(theme),
 W/2,
 40
 );
@@ -5043,32 +3879,19 @@ ctx.restore();
 
 }
 
-/* =========================================================
-THEME HEADER
-========================================================= */
-
 function getThemeHeader(theme){
 
 const headers={
 
 coquette:"♡ ୨୧ 🎀 ୨୧ ♡",
-
 retro:"MEMORIES • 1990s • LOVE",
-
 scrapbook:"♡ OUR LITTLE MOMENTS ♡",
-
 y2k:"★ BABY ★ ANGEL ★ 2000 ★",
-
 strawberry:"🍓 strawberry kisses 🍓",
-
 lace:"୨୧ love letter ୨୧",
-
 postcard:"POSTCARD FROM US ♡",
-
 floral:"✿ 🌸 love grows here 🌸 ✿",
-
 dreamy:"☁︎ DREAMING OF YOU ☁︎",
-
 vintage:"♡ VINTAGE LOVE ♡"
 
 };
@@ -5077,10 +3900,6 @@ return headers[theme] ||
 "♡ OUR LITTLE MOMENTS ♡";
 
 }
-
-/* =========================================================
-THEME COLORS
-========================================================= */
 
 function getThemeTextColor(theme){
 
@@ -5131,10 +3950,6 @@ return borders[theme] ||
 
 }
 
-/* =========================================================
-ROUNDED RECT
-========================================================= */
-
 function roundRect(
 ctx,
 x,
@@ -5146,128 +3961,75 @@ r
 
 ctx.beginPath();
 
-ctx.moveTo(
-x+r,
-y
+ctx.moveTo(x+r,y);
+ctx.lineTo(x+w-r,y);
+
+ctx.quadraticCurveTo(
+x+w,y,x+w,y+r
 );
 
 ctx.lineTo(
-x+w-r,
-y
+x+w,y+h-r
 );
 
 ctx.quadraticCurveTo(
-x+w,
-y,
-x+w,
-y+r
+x+w,y+h,x+w-r,y+h
 );
 
 ctx.lineTo(
-x+w,
-y+h-r
+x+r,y+h
 );
 
 ctx.quadraticCurveTo(
-x+w,
-y+h,
-x+w-r,
-y+h
+x,y+h,x,y+h-r
 );
 
 ctx.lineTo(
-x+r,
-y+h
+x,y+r
 );
 
 ctx.quadraticCurveTo(
-x,
-y+h,
-x,
-y+h-r
-);
-
-ctx.lineTo(
-x,
-y+r
-);
-
-ctx.quadraticCurveTo(
-x,
-y,
-x+r,
-y
+x,y,x+r,y
 );
 
 ctx.closePath();
 
 }
 
-/* =========================================================
-CLEANUP
-========================================================= */
-
 window.addEventListener(
 "beforeunload",
 ()=>{
 
-if(readinessTimer){
+if(readinessTimer)
+clearInterval(readinessTimer);
 
-clearInterval(
-readinessTimer
-);
-
-}
-
-if(connectionRetryTimer){
-
-clearTimeout(
-connectionRetryTimer
-);
-
-}
+if(connectionRetryTimer)
+clearTimeout(connectionRetryTimer);
 
 if(cameraStream){
 
 cameraStream
 .getTracks()
 .forEach(
-track=>
-track.stop()
+track=>track.stop()
 );
 
 }
 
-if(peerConnection){
-
+if(peerConnection)
 peerConnection.close();
 
-}
-
-if(roomChannel){
-
+if(roomChannel)
 roomChannel.unsubscribe();
 
-}
-
-if(signalChannel){
-
+if(signalChannel)
 signalChannel.unsubscribe();
 
-}
-
-if(finalBlobUrl){
-
-URL.revokeObjectURL(
-finalBlobUrl
-);
-
-}
+if(finalBlobUrl)
+URL.revokeObjectURL(finalBlobUrl);
 
 }
 );
 
-</script>
-
-</body>
+</script></body>
 </html>
