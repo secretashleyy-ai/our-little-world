@@ -191,44 +191,82 @@ h1 span,h2 span{color:var(--pink)}
 
 /* =========================================================
    LIVE CAMERA
+   FIXED SIDE-BY-SIDE LAYOUT
+   OWN CAMERA = LEFT
+   PARTNER CAMERA = RIGHT
 ========================================================= */
 
 .camera{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:1fr;
   gap:10px;
   background:#211b1e;
   padding:10px;
   border-radius:28px;
   overflow:hidden;
+  width:100%;
+  align-items:stretch;
 }
 
-.camera.my-side-left #myCameraBox{grid-column:1}
-.camera.my-side-left #partnerCameraBox{grid-column:2}
+/*
+  IMPORTANT:
+  The boxes NEVER swap positions.
 
-.camera.my-side-right #partnerCameraBox{grid-column:1}
-.camera.my-side-right #myCameraBox{grid-column:2}
+  Your camera is ALWAYS on the LEFT.
+  Partner camera is ALWAYS on the RIGHT.
+
+  This is true on BOTH phones.
+*/
+
+#myCameraBox{
+  grid-column:1;
+  grid-row:1;
+}
+
+#partnerCameraBox{
+  grid-column:2;
+  grid-row:1;
+}
+
+/* Prevent the old my-side classes from changing the layout */
+
+.camera.my-side-left #myCameraBox,
+.camera.my-side-right #myCameraBox{
+  grid-column:1;
+  grid-row:1;
+}
+
+.camera.my-side-left #partnerCameraBox,
+.camera.my-side-right #partnerCameraBox{
+  grid-column:2;
+  grid-row:1;
+}
 
 .video-box{
   position:relative;
   background:#30262b;
+  min-width:0;
   min-height:330px;
+  height:330px;
   border-radius:20px;
   overflow:hidden;
 }
 
 .video-box video{
   width:100%;
-  height:330px;
+  height:100%;
   object-fit:cover;
   display:block;
   background:#30262b;
 }
 
+/* Own camera is mirrored like a normal selfie camera */
 #myCamera{
   transform:scaleX(-1);
 }
 
+/* Partner camera is NOT mirrored */
 #partnerVideo{
   transform:none;
 }
@@ -666,6 +704,10 @@ h1 span,h2 span{color:var(--pink)}
   margin-top:10px;
 }
 
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
 @media(max-width:850px){
   .design-grid{
     grid-template-columns:repeat(3,1fr);
@@ -686,18 +728,52 @@ h1 span,h2 span{color:var(--pink)}
     grid-template-columns:repeat(3,1fr);
   }
 
+  /*
+    MOBILE:
+    STILL TWO COLUMNS.
+    NEVER STACK VERTICALLY.
+  */
+
   .camera{
-    grid-template-columns:1fr 1fr;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    grid-template-rows:1fr;
     gap:5px;
     padding:5px;
   }
 
+  #myCameraBox{
+    grid-column:1;
+    grid-row:1;
+  }
+
+  #partnerCameraBox{
+    grid-column:2;
+    grid-row:1;
+  }
+
+  .camera.my-side-left #myCameraBox,
+  .camera.my-side-right #myCameraBox{
+    grid-column:1;
+    grid-row:1;
+  }
+
+  .camera.my-side-left #partnerCameraBox,
+  .camera.my-side-right #partnerCameraBox{
+    grid-column:2;
+    grid-row:1;
+  }
+
   .video-box{
+    min-width:0;
     min-height:230px;
+    height:230px;
   }
 
   .video-box video{
-    height:230px;
+    width:100%;
+    height:100%;
+    object-fit:cover;
   }
 
   .design-grid{
@@ -719,12 +795,17 @@ h1 span,h2 span{color:var(--pink)}
 
 @media(max-width:400px){
 
-  .video-box video{
-    height:205px;
+  .camera{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   }
 
   .video-box{
     min-height:205px;
+    height:205px;
+  }
+
+  .video-box video{
+    height:100%;
   }
 
   .design-preview{
@@ -983,8 +1064,8 @@ Let's take pictures 📸
 </h2>
 
 <p class="muted">
-You are on the left and your partner is on the right.
-Both live cameras should appear here.
+Your camera is always on the left and your partner is always on the right.
+Both live cameras stay side-by-side on both phones.
 </p>
 
 
@@ -992,6 +1073,8 @@ Both live cameras should appear here.
 id="cameraContainer"
 class="camera my-side-left">
 
+
+<!-- YOUR CAMERA — ALWAYS LEFT -->
 
 <div
 id="myCameraBox"
@@ -1013,6 +1096,8 @@ You
 
 </div>
 
+
+<!-- PARTNER CAMERA — ALWAYS RIGHT -->
 
 <div
 id="partnerCameraBox"
@@ -1272,6 +1357,7 @@ It's ready. ♡
 Your photobooth strip is automatically downloading below!
 </p>
 
+
 <div class="final-preview-wrap">
 
 <div
@@ -1280,6 +1366,7 @@ class="final-strip">
 </div>
 
 </div>
+
 
 <div
 id="saveStatusMessage"
@@ -1293,6 +1380,7 @@ Generating photo... ♡
 
 </div>
 
+
 <div id="saveFallback">
 
 <p class="save-note">
@@ -1305,6 +1393,7 @@ id="saveImage"
 alt="Your photobooth strip">
 
 </div>
+
 
 <button
 class="secondary"
@@ -1342,14 +1431,6 @@ window.supabase.createClient(
 
 /* =========================================================
 WEBRTC CONFIGURATION
-
-IMPORTANT:
-STUN helps discover direct paths.
-
-TURN is needed when two phones cannot establish
-a direct peer-to-peer connection.
-
-PUT YOUR REAL TURN CREDENTIALS BELOW.
 ========================================================= */
 
 const rtcConfig = {
@@ -1361,32 +1442,7 @@ const rtcConfig = {
         "stun:stun.l.google.com:19302",
         "stun:stun1.l.google.com:19302"
       ]
-    },
-
-    /*
-      Example format:
-
-      {
-        urls:"turn:YOUR-TURN-SERVER:3478",
-        username:"YOUR-USERNAME",
-        credential:"YOUR-PASSWORD"
-      }
-
-      You need to replace these with real TURN
-      credentials from your TURN provider.
-    */
-
-    /*
-    {
-      urls:[
-        "turn:YOUR-TURN-SERVER:3478",
-        "turn:YOUR-TURN-SERVER:3478?transport=tcp",
-        "turns:YOUR-TURN-SERVER:5349"
-      ],
-      username:"YOUR-USERNAME",
-      credential:"YOUR-PASSWORD"
     }
-    */
 
   ],
 
@@ -1423,6 +1479,17 @@ let localCameraReady=false;
 let partnerCameraReady=false;
 
 let partnerClientId=null;
+
+/*
+  IMPORTANT:
+  The visual camera position is now FIXED.
+
+  Your own camera = LEFT
+  Partner camera = RIGHT
+
+  mySide is still retained for WebRTC offer/answer
+  negotiation, but it NEVER changes the visual layout.
+*/
 
 let mySide="left";
 let partnerSide="right";
@@ -1472,6 +1539,7 @@ function showPage(id){
   .classList.add("active");
 
   window.scrollTo(0,0);
+
 }
 
 
@@ -1599,6 +1667,7 @@ async function setupRoom(){
     "presence",
     {event:"join"},
     async()=>{
+
       await updatePresence();
 
       setTimeout(
@@ -1607,6 +1676,7 @@ async function setupRoom(){
         },
         300
       );
+
     }
   );
 
@@ -1843,6 +1913,12 @@ async function updatePresence(){
 
   if(all.length<=1){
 
+    /*
+      Visual layout ALWAYS stays:
+      local = left
+      partner = right
+    */
+
     mySide="left";
     partnerSide="right";
 
@@ -1863,6 +1939,13 @@ async function updatePresence(){
     return;
 
   }
+
+  /*
+    IMPORTANT:
+    mySide is ONLY used for WebRTC signaling.
+
+    It does NOT control the visual camera layout.
+  */
 
   const leftClient=all[0];
   const rightClient=all[1];
@@ -1909,6 +1992,11 @@ async function updatePresence(){
     : "Waiting for partner camera..."
   );
 
+  /*
+    This function now ONLY enforces:
+    YOUR CAMERA LEFT
+    PARTNER CAMERA RIGHT
+  */
   applyCameraSides();
 
   await ensurePeer();
@@ -1946,22 +2034,50 @@ function applyCameraSides(){
   if(!camera)
     return;
 
+  /*
+    NEVER swap these.
+
+    Local camera = LEFT.
+    Partner camera = RIGHT.
+
+    This is identical on both phones.
+  */
+
   camera.classList.remove(
     "my-side-left",
     "my-side-right"
   );
 
-  if(mySide==="left"){
+  /*
+    We keep a neutral class only so
+    existing code does not break.
+  */
 
-    camera.classList.add(
-      "my-side-left"
-    );
+  camera.classList.add(
+    "my-side-left"
+  );
 
-  }else{
+  const myBox =
+  document.getElementById(
+    "myCameraBox"
+  );
 
-    camera.classList.add(
-      "my-side-right"
-    );
+  const partnerBox =
+  document.getElementById(
+    "partnerCameraBox"
+  );
+
+  if(myBox){
+
+    myBox.style.gridColumn="1";
+    myBox.style.gridRow="1";
+
+  }
+
+  if(partnerBox){
+
+    partnerBox.style.gridColumn="2";
+    partnerBox.style.gridRow="1";
 
   }
 
@@ -2044,9 +2160,6 @@ async function ensurePeer(){
   pendingCandidates=[];
   remoteVideoReceived=false;
 
-  /*
-    Add local tracks.
-  */
 
   if(cameraStream){
 
@@ -2231,14 +2344,6 @@ async function ensurePeer(){
 
     if(state==="connected"){
 
-      /*
-        DO NOT claim that both people can
-        see each other merely because the
-        peer connection says connected.
-
-        We wait for ontrack.
-      */
-
       if(remoteVideoReceived){
 
         setConnectionStatus(
@@ -2315,8 +2420,10 @@ async function ensurePeer(){
 
     }
 
-    if(state==="connected" ||
-       state==="completed"){
+    if(
+      state==="connected" ||
+      state==="completed"
+    ){
 
       if(remoteVideoReceived){
 
@@ -2479,6 +2586,8 @@ async function handleSignal(message){
 
     /*
       The RIGHT device answers.
+      This is only WebRTC negotiation logic.
+      It does NOT affect visual camera positions.
     */
 
     if(mySide!=="right"){
@@ -2495,11 +2604,6 @@ async function handleSignal(message){
     await ensurePeer();
 
     try{
-
-      /*
-        If an old connection is in a
-        conflicting state, rebuild it.
-      */
 
       if(
         pc.signalingState!=="stable"
@@ -2521,11 +2625,6 @@ async function handleSignal(message){
       remoteDescriptionSet=true;
 
       await flushCandidates();
-
-      /*
-        Make absolutely sure the local
-        camera is attached before answer.
-      */
 
       ensureLocalTracks(
         activePc
@@ -2574,10 +2673,6 @@ async function handleSignal(message){
   ======================================================= */
 
   if(message.type==="answer"){
-
-    /*
-      Only the LEFT device receives the answer.
-    */
 
     if(mySide!=="left")
       return;
@@ -2755,8 +2850,7 @@ function ensureLocalTracks(pc){
 
 /* =========================================================
 CREATE OFFER
-
-ONLY LEFT CREATES OFFER.
+ONLY LEFT CREATES OFFER
 ========================================================= */
 
 async function maybeOffer(){
@@ -3052,10 +3146,6 @@ async function startCamera(){
     }
 
 
-    /*
-      Stop previous stream.
-    */
-
     if(cameraStream){
 
       cameraStream
@@ -3112,12 +3202,6 @@ async function startCamera(){
     );
 
 
-    /*
-      IMPORTANT:
-      Create the peer AFTER obtaining
-      the local camera.
-    */
-
     const pc =
     await ensurePeer();
 
@@ -3139,10 +3223,6 @@ async function startCamera(){
       {}
     );
 
-
-    /*
-      Reannounce every 3 seconds.
-    */
 
     if(readinessTimer)
       clearInterval(
@@ -3319,6 +3399,11 @@ function nextStep(number){
 
   if(number===2){
 
+    /*
+      Re-apply the fixed layout every time
+      the camera screen opens.
+    */
+
     applyCameraSides();
 
     if(!cameraStream){
@@ -3357,6 +3442,8 @@ function nextStep(number){
         }
 
         await updatePresence();
+
+        applyCameraSides();
 
         maybeOffer();
 
@@ -3679,6 +3766,11 @@ async function captureLocalForShot(
 
   ctx.save();
 
+  /*
+    Keep local photo mirrored,
+    matching the live local camera.
+  */
+
   ctx.translate(
     width,
     0
@@ -3921,20 +4013,19 @@ function createCombinedPhoto(
         const cardH=
         H-gap*2;
 
-        let leftImage;
-        let rightImage;
+        /*
+          IMPORTANT:
+          The final photo now follows the
+          same visual rule as the live cameras.
 
-        if(mySide==="left"){
+          LOCAL = LEFT
+          PARTNER = RIGHT
 
-          leftImage=local;
-          rightImage=remote;
+          This is the same on both phones.
+        */
 
-        }else{
-
-          leftImage=remote;
-          rightImage=local;
-
-        }
+        const leftImage=local;
+        const rightImage=remote;
 
         drawRoundedImage(
           ctx,
