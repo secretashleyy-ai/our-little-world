@@ -209,16 +209,6 @@ h1 span,h2 span{color:var(--pink)}
   align-items:stretch;
 }
 
-/*
-  IMPORTANT:
-  The boxes NEVER swap positions.
-
-  Your camera is ALWAYS on the LEFT.
-  Partner camera is ALWAYS on the RIGHT.
-
-  This is true on BOTH phones.
-*/
-
 #myCameraBox{
   grid-column:1;
   grid-row:1;
@@ -228,8 +218,6 @@ h1 span,h2 span{color:var(--pink)}
   grid-column:2;
   grid-row:1;
 }
-
-/* Prevent the old my-side classes from changing the layout */
 
 .camera.my-side-left #myCameraBox,
 .camera.my-side-right #myCameraBox{
@@ -261,12 +249,10 @@ h1 span,h2 span{color:var(--pink)}
   background:#30262b;
 }
 
-/* Own camera is mirrored like a normal selfie camera */
 #myCamera{
   transform:scaleX(-1);
 }
 
-/* Partner camera is NOT mirrored */
 #partnerVideo{
   transform:none;
 }
@@ -728,12 +714,6 @@ h1 span,h2 span{color:var(--pink)}
     grid-template-columns:repeat(3,1fr);
   }
 
-  /*
-    MOBILE:
-    STILL TWO COLUMNS.
-    NEVER STACK VERTICALLY.
-  */
-
   .camera{
     display:grid;
     grid-template-columns:minmax(0,1fr) minmax(0,1fr);
@@ -817,10 +797,6 @@ h1 span,h2 span{color:var(--pink)}
 
 <body>
 
-<!-- =========================================================
-WELCOME
-========================================================= -->
-
 <section id="welcome" class="page active">
 
 <div class="card">
@@ -884,10 +860,6 @@ style="font-family:Arial,sans-serif;font-size:12px">
 </div>
 </section>
 
-
-<!-- =========================================================
-HOME
-========================================================= -->
 
 <section id="home" class="page">
 
@@ -957,10 +929,6 @@ onclick="openPhotobooth()">
 </section>
 
 
-<!-- =========================================================
-PHOTOBOOTH
-========================================================= -->
-
 <section id="photobooth" class="page">
 
 <div class="topbar">
@@ -982,8 +950,6 @@ onclick="showPage('home')">
 
 <div class="content">
 
-
-<!-- STEP 1 -->
 
 <div
 id="step1"
@@ -1049,8 +1015,6 @@ Take Photos →
 </div>
 
 
-<!-- STEP 2 -->
-
 <div
 id="step2"
 class="step">
@@ -1074,8 +1038,6 @@ id="cameraContainer"
 class="camera my-side-left">
 
 
-<!-- YOUR CAMERA — ALWAYS LEFT -->
-
 <div
 id="myCameraBox"
 class="video-box">
@@ -1096,8 +1058,6 @@ You
 
 </div>
 
-
-<!-- PARTNER CAMERA — ALWAYS RIGHT -->
 
 <div
 id="partnerCameraBox"
@@ -1192,8 +1152,6 @@ Choose Design →
 </div>
 
 
-<!-- STEP 3 -->
-
 <div
 id="step3"
 class="step">
@@ -1245,8 +1203,6 @@ style="margin-top:10px">
 
 </div>
 
-
-<!-- STEP 4 -->
 
 <div
 id="step4"
@@ -1339,8 +1295,6 @@ Finish & Auto Save →
 </div>
 
 
-<!-- STEP 5 -->
-
 <div
 id="step5"
 class="step">
@@ -1412,10 +1366,6 @@ style="margin-top:15px;width:100%">
 
 <script>
 
-/* =========================================================
-SUPABASE
-========================================================= */
-
 const SUPABASE_URL =
 "https://pqmnwuwkdgvlmsxbizmp.supabase.co";
 
@@ -1427,11 +1377,6 @@ window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
-
-
-/* =========================================================
-WEBRTC CONFIGURATION
-========================================================= */
 
 const rtcConfig = {
 
@@ -1454,11 +1399,6 @@ const rtcConfig = {
 
 };
 
-
-/* =========================================================
-USER / ROOM STATE
-========================================================= */
-
 let yourName="";
 let partnerName="";
 let roomCode="";
@@ -1479,17 +1419,6 @@ let localCameraReady=false;
 let partnerCameraReady=false;
 
 let partnerClientId=null;
-
-/*
-  IMPORTANT:
-  The visual camera position is now FIXED.
-
-  Your own camera = LEFT
-  Partner camera = RIGHT
-
-  mySide is still retained for WebRTC offer/answer
-  negotiation, but it NEVER changes the visual layout.
-*/
 
 let mySide="left";
 let partnerSide="right";
@@ -1513,18 +1442,9 @@ let finalBlobUrl=null;
 
 let remoteVideoReceived=false;
 
-
-/* =========================================================
-UNIQUE CLIENT ID
-========================================================= */
-
 const clientId =
 crypto.randomUUID();
 
-
-/* =========================================================
-PAGE
-========================================================= */
 
 function showPage(id){
 
@@ -1542,10 +1462,6 @@ function showPage(id){
 
 }
 
-
-/* =========================================================
-ENTER ROOM
-========================================================= */
 
 async function enterWorld(){
 
@@ -1633,10 +1549,6 @@ async function enterWorld(){
 
 }
 
-
-/* =========================================================
-ROOM PRESENCE
-========================================================= */
 
 async function setupRoom(){
 
@@ -1767,10 +1679,6 @@ async function setupRoom(){
 }
 
 
-/* =========================================================
-SIGNALING CHANNEL
-========================================================= */
-
 async function setupSignalChannel(){
 
   if(signalChannel)
@@ -1867,10 +1775,6 @@ async function setupSignalChannel(){
 }
 
 
-/* =========================================================
-PRESENCE
-========================================================= */
-
 async function updatePresence(){
 
   if(!roomChannel)
@@ -1913,12 +1817,6 @@ async function updatePresence(){
 
   if(all.length<=1){
 
-    /*
-      Visual layout ALWAYS stays:
-      local = left
-      partner = right
-    */
-
     mySide="left";
     partnerSide="right";
 
@@ -1939,13 +1837,6 @@ async function updatePresence(){
     return;
 
   }
-
-  /*
-    IMPORTANT:
-    mySide is ONLY used for WebRTC signaling.
-
-    It does NOT control the visual camera layout.
-  */
 
   const leftClient=all[0];
   const rightClient=all[1];
@@ -1992,11 +1883,6 @@ async function updatePresence(){
     : "Waiting for partner camera..."
   );
 
-  /*
-    This function now ONLY enforces:
-    YOUR CAMERA LEFT
-    PARTNER CAMERA RIGHT
-  */
   applyCameraSides();
 
   await ensurePeer();
@@ -2020,10 +1906,6 @@ async function updatePresence(){
 }
 
 
-/* =========================================================
-CAMERA SIDES
-========================================================= */
-
 function applyCameraSides(){
 
   const camera =
@@ -2034,24 +1916,10 @@ function applyCameraSides(){
   if(!camera)
     return;
 
-  /*
-    NEVER swap these.
-
-    Local camera = LEFT.
-    Partner camera = RIGHT.
-
-    This is identical on both phones.
-  */
-
   camera.classList.remove(
     "my-side-left",
     "my-side-right"
   );
-
-  /*
-    We keep a neutral class only so
-    existing code does not break.
-  */
 
   camera.classList.add(
     "my-side-left"
@@ -2084,10 +1952,6 @@ function applyCameraSides(){
 }
 
 
-/* =========================================================
-PARTNER WAITING
-========================================================= */
-
 function setPartnerWaiting(text){
 
   const element =
@@ -2100,10 +1964,6 @@ function setPartnerWaiting(text){
 
 }
 
-
-/* =========================================================
-CAMERA PRESENCE
-========================================================= */
 
 async function updateMyCameraPresence(){
 
@@ -2135,10 +1995,6 @@ async function updateMyCameraPresence(){
 
 }
 
-
-/* =========================================================
-WEBRTC PEER CREATION
-========================================================= */
 
 async function ensurePeer(){
 
@@ -2177,10 +2033,6 @@ async function ensurePeer(){
   }
 
 
-  /* =======================================================
-     ICE CANDIDATE
-  ======================================================= */
-
   pc.onicecandidate =
   async event=>{
 
@@ -2198,10 +2050,6 @@ async function ensurePeer(){
   };
 
 
-  /* =======================================================
-     ICE GATHERING
-  ======================================================= */
-
   pc.onicegatheringstatechange =
   ()=>{
 
@@ -2212,10 +2060,6 @@ async function ensurePeer(){
 
   };
 
-
-  /* =======================================================
-     REMOTE TRACK
-  ======================================================= */
 
   pc.ontrack =
   async event=>{
@@ -2309,10 +2153,6 @@ async function ensurePeer(){
   };
 
 
-  /* =======================================================
-     CONNECTION STATE
-  ======================================================= */
-
   pc.onconnectionstatechange =
   ()=>{
 
@@ -2396,10 +2236,6 @@ async function ensurePeer(){
   };
 
 
-  /* =======================================================
-     ICE CONNECTION
-  ======================================================= */
-
   pc.oniceconnectionstatechange =
   ()=>{
 
@@ -2455,10 +2291,6 @@ async function ensurePeer(){
 }
 
 
-/* =========================================================
-SIGNAL SENDER
-========================================================= */
-
 async function sendSignal(
   type,
   data={}
@@ -2502,10 +2334,6 @@ async function sendSignal(
 }
 
 
-/* =========================================================
-SIGNAL HANDLER
-========================================================= */
-
 async function handleSignal(message){
 
   if(!message)
@@ -2516,10 +2344,6 @@ async function handleSignal(message){
     message.type
   );
 
-
-  /* =======================================================
-     HELLO
-  ======================================================= */
 
   if(message.type==="hello"){
 
@@ -2551,10 +2375,6 @@ async function handleSignal(message){
   }
 
 
-  /* =======================================================
-     CAMERA READY
-  ======================================================= */
-
   if(message.type==="camera-ready"){
 
     partnerClientId =
@@ -2578,17 +2398,7 @@ async function handleSignal(message){
   }
 
 
-  /* =======================================================
-     OFFER
-  ======================================================= */
-
   if(message.type==="offer"){
-
-    /*
-      The RIGHT device answers.
-      This is only WebRTC negotiation logic.
-      It does NOT affect visual camera positions.
-    */
 
     if(mySide!=="right"){
 
@@ -2668,10 +2478,6 @@ async function handleSignal(message){
   }
 
 
-  /* =======================================================
-     ANSWER
-  ======================================================= */
-
   if(message.type==="answer"){
 
     if(mySide!=="left")
@@ -2728,10 +2534,6 @@ async function handleSignal(message){
   }
 
 
-  /* =======================================================
-     ICE CANDIDATE
-  ======================================================= */
-
   if(message.type==="candidate"){
 
     if(!message.candidate)
@@ -2775,10 +2577,6 @@ async function handleSignal(message){
   }
 
 
-  /* =======================================================
-     SHUTTER
-  ======================================================= */
-
   if(message.type==="shutter"){
 
     await receiveShutter(
@@ -2789,10 +2587,6 @@ async function handleSignal(message){
 
   }
 
-
-  /* =======================================================
-     PHOTO
-  ======================================================= */
 
   if(message.type==="photo"){
 
@@ -2806,10 +2600,6 @@ async function handleSignal(message){
 
 }
 
-
-/* =========================================================
-ENSURE LOCAL TRACKS
-========================================================= */
 
 function ensureLocalTracks(pc){
 
@@ -2847,11 +2637,6 @@ function ensureLocalTracks(pc){
 
 }
 
-
-/* =========================================================
-CREATE OFFER
-ONLY LEFT CREATES OFFER
-========================================================= */
 
 async function maybeOffer(){
 
@@ -2927,10 +2712,6 @@ async function maybeOffer(){
 }
 
 
-/* =========================================================
-ICE QUEUE
-========================================================= */
-
 async function flushCandidates(){
 
   if(
@@ -2965,10 +2746,6 @@ async function flushCandidates(){
 
 }
 
-
-/* =========================================================
-REBUILD PEER
-========================================================= */
 
 async function rebuildPeer(){
 
@@ -3054,10 +2831,6 @@ async function rebuildPeer(){
 }
 
 
-/* =========================================================
-RECONNECT
-========================================================= */
-
 function scheduleReconnect(){
 
   if(connectionRetryTimer)
@@ -3099,10 +2872,6 @@ function stopConnectionRetry(){
 }
 
 
-/* =========================================================
-CONNECTION UI
-========================================================= */
-
 function setConnectionStatus(
   text,
   connected
@@ -3125,10 +2894,6 @@ function setConnectionStatus(
 
 }
 
-
-/* =========================================================
-START CAMERA
-========================================================= */
 
 async function startCamera(){
 
@@ -3290,10 +3055,6 @@ async function startCamera(){
 }
 
 
-/* =========================================================
-OPEN PHOTOBOOTH
-========================================================= */
-
 function openPhotobooth(){
 
   photos=[];
@@ -3332,10 +3093,6 @@ function openPhotobooth(){
 }
 
 
-/* =========================================================
-STRIP COUNT
-========================================================= */
-
 function selectStrip(
   number,
   button
@@ -3369,10 +3126,6 @@ function selectStrip(
 }
 
 
-/* =========================================================
-STEP NAVIGATION
-========================================================= */
-
 function nextStep(number){
 
   document
@@ -3398,11 +3151,6 @@ function nextStep(number){
 
 
   if(number===2){
-
-    /*
-      Re-apply the fixed layout every time
-      the camera screen opens.
-    */
 
     applyCameraSides();
 
@@ -3471,10 +3219,6 @@ function nextStep(number){
 
 }
 
-
-/* =========================================================
-TAKE PHOTO
-========================================================= */
 
 async function takePhoto(){
 
@@ -3551,10 +3295,6 @@ async function takePhoto(){
 }
 
 
-/* =========================================================
-RECEIVE SHUTTER
-========================================================= */
-
 async function receiveShutter(
   message
 ){
@@ -3599,10 +3339,6 @@ async function receiveShutter(
 
 }
 
-
-/* =========================================================
-COUNTDOWN
-========================================================= */
 
 function countdownAndCapture(
   shotId,
@@ -3679,10 +3415,6 @@ function countdownAndCapture(
 
 }
 
-
-/* =========================================================
-CAPTURE LOCAL
-========================================================= */
 
 async function captureLocalForShot(
   shotId,
@@ -3766,11 +3498,6 @@ async function captureLocalForShot(
 
   ctx.save();
 
-  /*
-    Keep local photo mirrored,
-    matching the live local camera.
-  */
-
   ctx.translate(
     width,
     0
@@ -3843,10 +3570,6 @@ async function captureLocalForShot(
 }
 
 
-/* =========================================================
-RECEIVE REMOTE PHOTO
-========================================================= */
-
 function receiveRemotePhoto(
   message
 ){
@@ -3888,10 +3611,6 @@ function receiveRemotePhoto(
 
 }
 
-
-/* =========================================================
-COMPLETE SHOT
-========================================================= */
 
 async function tryCompleteShot(
   shotId
@@ -3955,10 +3674,6 @@ async function tryCompleteShot(
 }
 
 
-/* =========================================================
-COMBINE BOTH PEOPLE
-========================================================= */
-
 function createCombinedPhoto(
   localImage,
   remoteImage
@@ -4013,17 +3728,6 @@ function createCombinedPhoto(
         const cardH=
         H-gap*2;
 
-        /*
-          IMPORTANT:
-          The final photo now follows the
-          same visual rule as the live cameras.
-
-          LOCAL = LEFT
-          PARTNER = RIGHT
-
-          This is the same on both phones.
-        */
-
         const leftImage=local;
         const rightImage=remote;
 
@@ -4069,10 +3773,6 @@ function createCombinedPhoto(
 
 }
 
-
-/* =========================================================
-DRAW ROUNDED IMAGE
-========================================================= */
 
 function drawRoundedImage(
   ctx,
@@ -4201,10 +3901,6 @@ function drawRoundedImage(
 }
 
 
-/* =========================================================
-PHOTO COUNTER
-========================================================= */
-
 function updatePhotoCounter(
   number
 ){
@@ -4220,10 +3916,6 @@ function updatePhotoCounter(
 
 }
 
-
-/* =========================================================
-THUMBNAILS
-========================================================= */
 
 function updatePhotoThumbnails(){
 
@@ -4255,10 +3947,6 @@ function updatePhotoThumbnails(){
 
 }
 
-
-/* =========================================================
-DESIGNS
-========================================================= */
 
 const designs=[
   "coquette",
@@ -4395,10 +4083,6 @@ function getDesignName(name){
 }
 
 
-/* =========================================================
-DESIGN PREVIEW
-========================================================= */
-
 function renderDesignPreview(){
 
   const preview =
@@ -4449,10 +4133,6 @@ function renderDesignPreview(){
 }
 
 
-/* =========================================================
-CHOOSE DESIGN
-========================================================= */
-
 function chooseDesign(){
 
   buildFinalStrip();
@@ -4461,10 +4141,6 @@ function chooseDesign(){
 
 }
 
-
-/* =========================================================
-BUILD FINAL STRIP
-========================================================= */
 
 function buildFinalStrip(){
 
@@ -4518,10 +4194,6 @@ function buildFinalStrip(){
 }
 
 
-/* =========================================================
-EDIT HISTORY
-========================================================= */
-
 function saveEditState(){
 
   const strip =
@@ -4538,10 +4210,6 @@ function saveEditState(){
 
 }
 
-
-/* =========================================================
-STICKERS
-========================================================= */
 
 function addSticker(symbol){
 
@@ -4586,10 +4254,6 @@ function addSticker(symbol){
 
 }
 
-
-/* =========================================================
-CUSTOM TEXT
-========================================================= */
 
 function addText(){
 
@@ -4636,10 +4300,6 @@ function addText(){
 
 }
 
-
-/* =========================================================
-DRAG
-========================================================= */
 
 function makeMovable(
   element,
@@ -4758,10 +4418,6 @@ function makeMovable(
 }
 
 
-/* =========================================================
-UNDO
-========================================================= */
-
 function undoLastEdit(){
 
   if(!editHistory.length){
@@ -4787,10 +4443,6 @@ function undoLastEdit(){
 }
 
 
-/* =========================================================
-RESTORE MOVABLE
-========================================================= */
-
 function restoreMovableElements(){
 
   const strip =
@@ -4813,10 +4465,6 @@ function restoreMovableElements(){
 }
 
 
-/* =========================================================
-RESET
-========================================================= */
-
 function resetEdits(){
 
   if(
@@ -4830,10 +4478,6 @@ function resetEdits(){
 
 }
 
-
-/* =========================================================
-COPY PREVIEW
-========================================================= */
 
 function copyFinalPreview(){
 
@@ -4855,10 +4499,6 @@ function copyFinalPreview(){
 
 }
 
-
-/* =========================================================
-AUTO SAVE
-========================================================= */
 
 async function autoSaveStrip(){
 
@@ -4941,10 +4581,6 @@ async function autoSaveStrip(){
 
 }
 
-
-/* =========================================================
-FINAL CANVAS
-========================================================= */
 
 async function renderFinalCanvas(){
 
@@ -5185,10 +4821,6 @@ async function renderFinalCanvas(){
 }
 
 
-/* =========================================================
-LOAD IMAGE
-========================================================= */
-
 function loadImage(src){
 
   return new Promise(
@@ -5210,10 +4842,6 @@ function loadImage(src){
 
 }
 
-
-/* =========================================================
-DRAW PHOTO
-========================================================= */
 
 function drawPhotoToCanvas(
   ctx,
@@ -5301,10 +4929,6 @@ function drawPhotoToCanvas(
 
 }
 
-
-/* =========================================================
-THEME BACKGROUND
-========================================================= */
 
 function drawThemeBackground(
   ctx,
@@ -5395,10 +5019,6 @@ function drawThemeBackground(
 }
 
 
-/* =========================================================
-THEME HEADER
-========================================================= */
-
 function drawThemeHeader(
   ctx,
   W,
@@ -5427,10 +5047,6 @@ function drawThemeHeader(
 
 }
 
-
-/* =========================================================
-THEME HEADER TEXT
-========================================================= */
 
 function getThemeHeader(theme){
 
@@ -5474,10 +5090,6 @@ function getThemeHeader(theme){
 }
 
 
-/* =========================================================
-THEME TEXT
-========================================================= */
-
 function getThemeTextColor(theme){
 
   if(
@@ -5503,10 +5115,6 @@ function getThemeTextColor(theme){
 }
 
 
-/* =========================================================
-THEME BORDER
-========================================================= */
-
 function getThemeBorder(theme){
 
   const borders={
@@ -5529,10 +5137,6 @@ function getThemeBorder(theme){
 
 }
 
-
-/* =========================================================
-ROUNDED RECT
-========================================================= */
 
 function roundRect(
   ctx,
@@ -5602,10 +5206,6 @@ function roundRect(
 
 }
 
-
-/* =========================================================
-CLEANUP
-========================================================= */
 
 window.addEventListener(
   "beforeunload",
