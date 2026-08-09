@@ -195,14 +195,13 @@ color:var(--pink);
 }
 
 /* =========================================================
-LIVE CAMERA
-SYNCHRONIZED FIXED LAYOUT
+CAMERA
 
-ASH / USER = LEFT
-STAN / PARTNER = RIGHT
+IMPORTANT:
+PERSON 1 = ALWAYS LEFT
+PERSON 2 = ALWAYS RIGHT
 
-THE SAME PEOPLE STAY IN THE SAME POSITIONS
-ON BOTH PHONES.
+This is controlled by role, NOT by whose phone it is.
 ========================================================= */
 
 .camera{
@@ -216,16 +215,6 @@ border-radius:28px;
 overflow:hidden;
 width:100%;
 align-items:stretch;
-}
-
-#myCameraBox{
-grid-column:1 !important;
-grid-row:1 !important;
-}
-
-#partnerCameraBox{
-grid-column:2 !important;
-grid-row:1 !important;
 }
 
 .video-box{
@@ -247,12 +236,11 @@ background:#30262b;
 }
 
 /*
-Both cameras are mirrored.
+The local preview is mirrored because it is your own
+camera preview.
 
-This means:
-- your own preview looks like a normal mirror
-- your partner's face is also shown the same way
-  they see themselves on their own phone
+The remote video is also mirrored so both people
+have the same visual orientation.
 */
 #myCamera,
 #partnerVideo{
@@ -714,11 +702,9 @@ RESPONSIVE
 ========================================================= */
 
 @media(max-width:850px){
-
 .design-grid{
 grid-template-columns:repeat(3,1fr);
 }
-
 }
 
 @media(max-width:600px){
@@ -739,16 +725,6 @@ grid-template-columns:repeat(3,1fr);
 grid-template-columns:minmax(0,1fr) minmax(0,1fr);
 gap:5px;
 padding:5px;
-}
-
-#myCameraBox{
-grid-column:1 !important;
-grid-row:1 !important;
-}
-
-#partnerCameraBox{
-grid-column:2 !important;
-grid-row:1 !important;
 }
 
 .video-box{
@@ -782,17 +758,9 @@ flex-direction:column;
 
 @media(max-width:400px){
 
-.camera{
-grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-}
-
 .video-box{
 min-height:205px;
 height:205px;
-}
-
-.video-box video{
-height:100%;
 }
 
 .design-preview{
@@ -815,9 +783,7 @@ WELCOME
 
 <div class="logo">♡</div>
 
-<div class="mini">
-a tiny place for two
-</div>
+<div class="mini">a tiny place for two</div>
 
 <h1>
 Our Little<br>
@@ -831,46 +797,33 @@ Take pictures together even when you're far apart.
 <div class="field">
 <label>
 Your name
-<input
-id="yourName"
-placeholder="Your name"
-autocomplete="off">
+<input id="yourName" placeholder="Your name" autocomplete="off">
 </label>
 </div>
 
 <div class="field">
 <label>
 Partner's name
-<input
-id="partnerName"
-placeholder="Their name"
-autocomplete="off">
+<input id="partnerName" placeholder="Their name" autocomplete="off">
 </label>
 </div>
 
 <div class="field">
 <label>
 Shared room code
-<input
-id="roomCode"
-placeholder="OURWORLD"
-autocomplete="off">
+<input id="roomCode" placeholder="OURWORLD" autocomplete="off">
 </label>
 </div>
 
-<button
-class="primary"
-onclick="enterWorld()">
+<button class="primary" onclick="enterWorld()">
 Enter Our World ♡
 </button>
 
-<p
-id="connectionMessage"
+<p id="connectionMessage"
 style="font-family:Arial,sans-serif;font-size:12px">
 </p>
 
 </div>
-
 </section>
 
 <!-- =========================================================
@@ -881,9 +834,7 @@ HOME
 
 <div class="topbar">
 
-<button
-class="back"
-onclick="showPage('welcome')">
+<button class="back" onclick="showPage('welcome')">
 ←
 </button>
 
@@ -897,9 +848,7 @@ onclick="showPage('welcome')">
 
 <div style="text-align:center;padding:30px 10px">
 
-<div class="mini">
-welcome home
-</div>
+<div class="mini">welcome home</div>
 
 <h2>
 <span id="displayYou">You</span>
@@ -911,8 +860,7 @@ welcome home
 Same love. Different places. One little photobooth.
 </p>
 
-<div
-style="
+<div style="
 display:inline-block;
 padding:10px 18px;
 background:#fff;
@@ -926,22 +874,22 @@ ROOM:
 
 </div>
 
-<p
-id="partnerStatus"
+<p id="roleDisplay"
 class="muted">
+Determining your position...
+</p>
+
+<p id="partnerStatus" class="muted">
 ⚪ Waiting for partner...
 </p>
 
-<button
-class="primary"
-onclick="openPhotobooth()">
+<button class="primary" onclick="openPhotobooth()">
 📸 Open Photobooth
 </button>
 
 </div>
 
 </div>
-
 </section>
 
 <!-- =========================================================
@@ -952,9 +900,7 @@ PHOTOBOOTH
 
 <div class="topbar">
 
-<button
-class="back"
-onclick="showPage('home')">
+<button class="back" onclick="showPage('home')">
 ←
 </button>
 
@@ -970,17 +916,11 @@ onclick="showPage('home')">
 
 <!-- STEP 1 -->
 
-<div
-id="step1"
-class="step active">
+<div id="step1" class="step active">
 
-<div class="mini">
-01 · choose
-</div>
+<div class="mini">01 · choose</div>
 
-<h2>
-How many photos?
-</h2>
+<h2>How many photos?</h2>
 
 <p class="muted">
 Choose the size of your photobooth strip.
@@ -988,36 +928,31 @@ Choose the size of your photobooth strip.
 
 <div class="strip-options">
 
-<button
-class="strip-option selected"
+<button class="strip-option selected"
 onclick="selectStrip(2,this)">
 <strong>2</strong>
 classic
 </button>
 
-<button
-class="strip-option"
+<button class="strip-option"
 onclick="selectStrip(3,this)">
 <strong>3</strong>
 sweet
 </button>
 
-<button
-class="strip-option"
+<button class="strip-option"
 onclick="selectStrip(4,this)">
 <strong>4</strong>
 classic +
 </button>
 
-<button
-class="strip-option"
+<button class="strip-option"
 onclick="selectStrip(5,this)">
 <strong>5</strong>
 deluxe
 </button>
 
-<button
-class="strip-option"
+<button class="strip-option"
 onclick="selectStrip(6,this)">
 <strong>6</strong>
 long
@@ -1025,9 +960,7 @@ long
 
 </div>
 
-<button
-class="primary"
-onclick="nextStep(2)">
+<button class="primary" onclick="nextStep(2)">
 Take Photos →
 </button>
 
@@ -1035,43 +968,35 @@ Take Photos →
 
 <!-- STEP 2 -->
 
-<div
-id="step2"
-class="step">
+<div id="step2" class="step">
 
-<div class="mini">
-02 · camera
-</div>
+<div class="mini">02 · camera</div>
 
-<h2>
-Let's take pictures 📸
-</h2>
+<h2>Let's take pictures 📸</h2>
 
 <p class="muted">
-Both phones use the exact same layout:
-<strong>LEFT = you</strong> and
-<strong>RIGHT = your partner</strong>.
+Both phones use the exact same identity layout:
+<strong>PERSON 1 = LEFT</strong> and
+<strong>PERSON 2 = RIGHT</strong>.
 </p>
 
-<div
-id="cameraContainer"
-class="camera">
+<div id="cameraContainer" class="camera">
 
-<!-- LEFT = USER -->
+<!-- These two boxes are dynamically placed by role -->
 
-<div
-id="myCameraBox"
-class="video-box">
+<div id="myCameraBox" class="video-box">
 
-<video
-id="myCamera"
+<video id="myCamera"
 autoplay
 playsinline
 muted>
 </video>
 
 <div class="video-label">
-You ·
+<span id="myCameraPosition">
+Person 1
+</span>
+·
 <span id="cameraYouName">
 You
 </span>
@@ -1079,26 +1004,17 @@ You
 
 </div>
 
-<!-- RIGHT = PARTNER -->
+<div id="partnerCameraBox" class="video-box">
 
-<div
-id="partnerCameraBox"
-class="video-box">
-
-<video
-id="partnerVideo"
+<video id="partnerVideo"
 autoplay
 playsinline
 muted>
 </video>
 
-<div
-id="partnerWaiting"
-class="waiting">
+<div id="partnerWaiting" class="waiting">
 
-<div class="heart">
-♡
-</div>
+<div class="heart">♡</div>
 
 <b id="partnerCameraText">
 Waiting for partner camera...
@@ -1111,7 +1027,10 @@ Keep the same room code open.
 </div>
 
 <div class="video-label">
-Partner ·
+<span id="partnerCameraPosition">
+Person 2
+</span>
+·
 <span id="cameraPartnerName">
 Them
 </span>
@@ -1123,8 +1042,7 @@ Them
 
 <div style="text-align:center">
 
-<div
-id="connectionPill"
+<div id="connectionPill"
 class="connection-pill">
 🔴 Waiting for cameras...
 </div>
@@ -1133,22 +1051,18 @@ class="connection-pill">
 
 <div class="camera-buttons">
 
-<button
-class="secondary"
-onclick="startCamera()">
+<button class="secondary" onclick="startCamera()">
 Start Camera
 </button>
 
-<button
-id="shutterButton"
+<button id="shutterButton"
 class="shutter"
 onclick="takePhoto()"
 disabled>
 ●
 </button>
 
-<button
-id="retakeButton"
+<button id="retakeButton"
 class="secondary retake-camera"
 onclick="retakeLastPhoto()"
 disabled>
@@ -1167,8 +1081,7 @@ Retake the most recent photo if you don't like it.
 
 <div id="photoPreview"></div>
 
-<button
-id="photosDoneButton"
+<button id="photosDoneButton"
 class="primary"
 onclick="nextStep(3)"
 disabled>
@@ -1179,31 +1092,23 @@ Choose Design →
 
 <!-- STEP 3 -->
 
-<div
-id="step3"
-class="step">
+<div id="step3" class="step">
 
 <div class="mini">
 03 · choose your design
 </div>
 
-<h2>
-Which one feels like you? ✨
-</h2>
+<h2>Which one feels like you? ✨</h2>
 
 <p class="muted">
 Tap a design to preview your actual photos.
 </p>
 
-<div
-id="designGrid"
-class="design-grid">
-</div>
+<div id="designGrid" class="design-grid"></div>
 
 <div class="final-preview-wrap">
 
-<div
-id="designPreview"
+<div id="designPreview"
 class="final-strip">
 </div>
 
@@ -1211,14 +1116,11 @@ class="final-strip">
 
 <div style="margin-top:18px">
 
-<button
-class="secondary"
-onclick="nextStep(2)">
+<button class="secondary" onclick="nextStep(2)">
 ← Retake
 </button>
 
-<button
-class="primary"
+<button class="primary"
 onclick="chooseDesign()"
 style="margin-top:10px">
 ♡ Use This Design
@@ -1230,17 +1132,13 @@ style="margin-top:10px">
 
 <!-- STEP 4 -->
 
-<div
-id="step4"
-class="step">
+<div id="step4" class="step">
 
 <div class="mini">
 04 · make it yours
 </div>
 
-<h2>
-Add your little details ✨
-</h2>
+<h2>Add your little details ✨</h2>
 
 <p class="muted">
 Tap a sticker, then drag it anywhere on your strip.
@@ -1267,8 +1165,7 @@ Tap a sticker, then drag it anywhere on your strip.
 
 <div class="final-preview-wrap">
 
-<div
-id="photoStrip"
+<div id="photoStrip"
 class="final-strip">
 </div>
 
@@ -1276,15 +1173,11 @@ class="final-strip">
 
 <div class="edit-buttons">
 
-<button
-class="secondary"
-onclick="undoLastEdit()">
+<button class="secondary" onclick="undoLastEdit()">
 ↩ Undo
 </button>
 
-<button
-class="secondary"
-onclick="resetEdits()">
+<button class="secondary" onclick="resetEdits()">
 ↻ Reset
 </button>
 
@@ -1292,20 +1185,16 @@ onclick="resetEdits()">
 
 <div class="text-row">
 
-<input
-id="customText"
+<input id="customText"
 placeholder="our little moment ♡">
 
-<button
-class="secondary"
-onclick="addText()">
+<button class="secondary" onclick="addText()">
 Add
 </button>
 
 </div>
 
-<button
-class="primary"
+<button class="primary"
 onclick="nextStep(5)"
 style="margin-top:18px">
 Finish & Auto Save →
@@ -1315,17 +1204,13 @@ Finish & Auto Save →
 
 <!-- STEP 5 -->
 
-<div
-id="step5"
-class="step">
+<div id="step5" class="step">
 
 <div class="mini">
 05 · your memory
 </div>
 
-<h2>
-It's ready. ♡
-</h2>
+<h2>It's ready. ♡</h2>
 
 <p class="muted">
 Your photobooth strip is automatically downloading below!
@@ -1333,15 +1218,13 @@ Your photobooth strip is automatically downloading below!
 
 <div class="final-preview-wrap">
 
-<div
-id="savedPreview"
+<div id="savedPreview"
 class="final-strip">
 </div>
 
 </div>
 
-<div
-id="saveStatusMessage"
+<div id="saveStatusMessage"
 style="
 text-align:center;
 font-weight:bold;
@@ -1357,14 +1240,11 @@ If your browser blocks automatic downloads,
 press and hold or right-click the image below to save it.
 </p>
 
-<img
-id="saveImage"
-alt="Your photobooth strip">
+<img id="saveImage" alt="Your photobooth strip">
 
 </div>
 
-<button
-class="secondary"
+<button class="secondary"
 onclick="nextStep(4)"
 style="margin-top:15px;width:100%">
 ← Edit More
@@ -1373,7 +1253,6 @@ style="margin-top:15px;width:100%">
 </div>
 
 </div>
-
 </section>
 
 <script>
@@ -1437,6 +1316,18 @@ let localCameraReady=false;
 let partnerCameraReady=false;
 
 let partnerClientId=null;
+
+/*
+ROLE SYSTEM
+
+role 1 = PERSON 1 = ALWAYS LEFT
+role 2 = PERSON 2 = ALWAYS RIGHT
+*/
+
+let myRole=null;
+let partnerRole=null;
+
+let joinedAt=Date.now();
 
 let remoteDescriptionSet=false;
 let pendingCandidates=[];
@@ -1544,6 +1435,8 @@ document
 .getElementById("cameraPartnerName")
 .textContent=
 partnerName||"Them";
+
+updateRoleUI();
 
 document
 .getElementById("connectionMessage")
@@ -1655,7 +1548,7 @@ await roomChannel.track({
 id:clientId,
 name:yourName,
 camera:false,
-time:Date.now()
+joinedAt:joinedAt
 
 });
 
@@ -1795,6 +1688,229 @@ resolve();
 }
 
 /* =========================================================
+ROLE ASSIGNMENT
+
+This is the key fix.
+
+Both phones see the exact same two clients.
+
+The earliest person in the room = PERSON 1.
+The second person = PERSON 2.
+
+Therefore:
+
+PERSON 1 = LEFT
+PERSON 2 = RIGHT
+
+No matter which phone is being used.
+========================================================= */
+
+function calculateRoles(){
+
+if(!roomChannel)
+return;
+
+const state=
+roomChannel.presenceState();
+
+const people=[];
+
+Object.values(state)
+.forEach(entries=>{
+
+entries.forEach(entry=>{
+
+if(
+entry &&
+entry.id &&
+!people.some(
+p=>p.id===entry.id
+)
+){
+
+people.push(entry);
+
+}
+
+});
+
+});
+
+people.sort(
+(a,b)=>{
+
+const at=
+Number(a.joinedAt||0);
+
+const bt=
+Number(b.joinedAt||0);
+
+if(at!==bt)
+return at-bt;
+
+return String(a.id)
+.localeCompare(
+String(b.id)
+);
+
+}
+);
+
+const meIndex=
+people.findIndex(
+p=>p.id===clientId
+);
+
+if(meIndex===0){
+
+myRole=1;
+
+}else if(meIndex===1){
+
+myRole=2;
+
+}else{
+
+myRole=null;
+
+}
+
+const partner=
+people.find(
+p=>p.id!==clientId
+);
+
+if(partner){
+
+partnerClientId=partner.id;
+
+const partnerIndex=
+people.findIndex(
+p=>p.id===partner.id
+);
+
+partnerRole=
+partnerIndex===0?1:2;
+
+partnerCameraReady=
+partner.camera===true;
+
+}else{
+
+partnerClientId=null;
+partnerRole=null;
+partnerCameraReady=false;
+
+}
+
+updateRoleUI();
+
+return people;
+
+}
+
+/* =========================================================
+ROLE UI
+========================================================= */
+
+function updateRoleUI(){
+
+const roleText=
+document.getElementById(
+"roleDisplay"
+);
+
+if(roleText){
+
+if(myRole===1){
+
+roleText.textContent=
+"♡ You are Person 1 · LEFT";
+
+}else if(myRole===2){
+
+roleText.textContent=
+"♡ You are Person 2 · RIGHT";
+
+}else{
+
+roleText.textContent=
+"Waiting for your position...";
+
+}
+
+}
+
+/*
+Dynamically place the actual video boxes.
+
+Person 1 box always goes LEFT.
+Person 2 box always goes RIGHT.
+*/
+
+const camera=
+document.getElementById(
+"cameraContainer"
+);
+
+const myBox=
+document.getElementById(
+"myCameraBox"
+);
+
+const partnerBox=
+document.getElementById(
+"partnerCameraBox"
+);
+
+if(!camera||!myBox||!partnerBox)
+return;
+
+if(myRole===1){
+
+myBox.style.gridColumn="1";
+myBox.style.gridRow="1";
+
+partnerBox.style.gridColumn="2";
+partnerBox.style.gridRow="1";
+
+document
+.getElementById(
+"myCameraPosition"
+)
+.textContent="Person 1 · LEFT";
+
+document
+.getElementById(
+"partnerCameraPosition"
+)
+.textContent="Person 2 · RIGHT";
+
+}else if(myRole===2){
+
+partnerBox.style.gridColumn="1";
+partnerBox.style.gridRow="1";
+
+myBox.style.gridColumn="2";
+myBox.style.gridRow="1";
+
+document
+.getElementById(
+"partnerCameraPosition"
+)
+.textContent="Person 1 · LEFT";
+
+document
+.getElementById(
+"myCameraPosition"
+)
+.textContent="Person 2 · RIGHT";
+
+}
+
+}
+
+/* =========================================================
 PRESENCE
 ========================================================= */
 
@@ -1810,7 +1926,7 @@ await roomChannel.track({
 id:clientId,
 name:yourName,
 camera:localCameraReady,
-time:Date.now()
+joinedAt:joinedAt
 
 });
 
@@ -1823,35 +1939,13 @@ error
 
 }
 
-const state=
-roomChannel.presenceState();
+const people=
+calculateRoles()||[];
 
-const all=[];
-
-Object.values(state)
-.forEach(entries=>{
-
-entries.forEach(entry=>{
-
-if(
-entry &&
-entry.id &&
-!all.some(
-x=>x.id===entry.id
-)
-){
-
-all.push(entry);
-
-}
-
-});
-
-});
-
-if(all.length<=1){
+if(people.length<=1){
 
 partnerClientId=null;
+partnerRole=null;
 partnerCameraReady=false;
 
 document
@@ -1868,7 +1962,7 @@ return;
 }
 
 const partner=
-all.find(
+people.find(
 x=>x.id!==clientId
 );
 
@@ -1968,8 +2062,6 @@ cameraStream
 
 }
 
-/* ICE */
-
 pc.onicecandidate=async event=>{
 
 if(!event.candidate)
@@ -1984,8 +2076,6 @@ event.candidate.toJSON()
 );
 
 };
-
-/* REMOTE TRACK */
 
 pc.ontrack=async event=>{
 
@@ -2028,7 +2118,6 @@ event.track
 }
 
 video.srcObject=stream;
-
 video.muted=true;
 
 try{
@@ -2063,16 +2152,9 @@ stopConnectionRetry();
 
 };
 
-/* CONNECTION */
-
 pc.onconnectionstatechange=()=>{
 
 const state=pc.connectionState;
-
-console.log(
-"Connection state:",
-state
-);
 
 if(state==="connecting"){
 
@@ -2126,8 +2208,6 @@ scheduleReconnect();
 }
 
 };
-
-/* ICE */
 
 pc.oniceconnectionstatechange=()=>{
 
@@ -2194,6 +2274,7 @@ event:"signal",
 payload:{
 sender:clientId,
 senderName:yourName,
+senderRole:myRole,
 type:type,
 ...data
 }
@@ -2228,6 +2309,13 @@ if(message.type==="hello"){
 partnerClientId=
 message.sender;
 
+if(message.senderRole){
+
+partnerRole=
+message.senderRole;
+
+}
+
 if(localCameraReady){
 
 await sendSignal(
@@ -2256,6 +2344,13 @@ partnerClientId=
 message.sender;
 
 partnerCameraReady=true;
+
+if(message.senderRole){
+
+partnerRole=
+message.senderRole;
+
+}
 
 setPartnerWaiting(
 "🟢 Camera ready"
@@ -2493,9 +2588,16 @@ cameraStream
 
 /* =========================================================
 OFFER
+
+PERSON 1 is the WebRTC offerer.
+This prevents both phones from trying to
+create an offer at exactly the same time.
 ========================================================= */
 
 async function maybeOffer(){
+
+if(myRole!==1)
+return;
 
 if(!localCameraReady)
 return;
@@ -2937,6 +3039,8 @@ document
 .disabled=
 !localCameraReady;
 
+updateRoleUI();
+
 showPage("photobooth");
 
 nextStep(1);
@@ -3006,6 +3110,8 @@ number+
 " / 5";
 
 if(number===2){
+
+updateRoleUI();
 
 if(!cameraStream){
 
@@ -3122,6 +3228,8 @@ id:shotId,
 index:shotIndex,
 local:null,
 remote:null,
+localRole:myRole,
+remoteRole:partnerRole,
 completed:false
 }
 );
@@ -3130,7 +3238,8 @@ await sendSignal(
 "shutter",
 {
 shotId,
-shotIndex
+shotIndex,
+senderRole:myRole
 }
 );
 
@@ -3138,6 +3247,12 @@ await countdownAndCapture(
 shotId,
 shotIndex
 );
+
+/*
+The sender and receiver each capture
+their own image. The final combined image
+is sorted by role.
+*/
 
 }
 
@@ -3168,6 +3283,8 @@ id:message.shotId,
 index:message.shotIndex,
 local:null,
 remote:null,
+localRole:myRole,
+remoteRole:message.senderRole,
 completed:false
 }
 );
@@ -3349,12 +3466,12 @@ sy=
 
 }
 
-ctx.save();
-
 /*
-The saved local photo matches
-the mirrored live preview.
+Keep the saved local photo visually
+consistent with the live mirrored preview.
 */
+
+ctx.save();
 
 ctx.translate(
 width,
@@ -3399,6 +3516,7 @@ return;
 }
 
 record.local=image;
+record.localRole=myRole;
 
 shotRecords.set(
 shotId,
@@ -3410,7 +3528,8 @@ await sendSignal(
 {
 shotId,
 shotIndex,
-image
+image,
+senderRole:myRole
 }
 );
 
@@ -3450,6 +3569,8 @@ id:message.shotId,
 index:message.shotIndex,
 local:null,
 remote:null,
+localRole:myRole,
+remoteRole:message.senderRole,
 completed:false
 };
 
@@ -3460,6 +3581,9 @@ message.image;
 
 record.remoteSender=
 message.sender;
+
+record.remoteRole=
+message.senderRole;
 
 shotRecords.set(
 message.shotId,
@@ -3474,6 +3598,15 @@ message.shotId
 
 /* =========================================================
 COMPLETE SHOT
+
+THIS IS THE SECOND IMPORTANT FIX.
+
+The two images are sorted using PERSON ROLE:
+
+role 1 -> LEFT
+role 2 -> RIGHT
+
+It does NOT matter which phone captured which image.
 ========================================================= */
 
 async function tryCompleteShot(
@@ -3495,10 +3628,55 @@ return;
 
 record.completed=true;
 
+let person1Image=null;
+let person2Image=null;
+
+/*
+If the local camera belongs to Person 1,
+local image goes LEFT.
+
+If local camera belongs to Person 2,
+local image goes RIGHT and remote goes LEFT.
+*/
+
+if(record.localRole===1){
+
+person1Image=record.local;
+person2Image=record.remote;
+
+}else if(record.localRole===2){
+
+person1Image=record.remote;
+person2Image=record.local;
+
+}else{
+
+/*
+Fallback:
+Use the stored remote role if available.
+*/
+
+if(record.remoteRole===1){
+
+person1Image=record.remote;
+person2Image=record.local;
+
+}else{
+
+person1Image=record.local;
+person2Image=record.remote;
+
+}
+
+}
+
+if(!person1Image||!person2Image)
+return;
+
 const combined=
 await createCombinedPhoto(
-record.local,
-record.remote
+person1Image,
+person2Image
 );
 
 if(!combined)
@@ -3570,19 +3748,10 @@ return;
 const shotIndex=
 lastIndex+1;
 
-/*
-Remove the old completed photo.
-*/
-
 photos.splice(
 lastIndex,
 1
 );
-
-/*
-Shift later records/photos back into
-the correct sequence.
-*/
 
 const recordsToDelete=[];
 
@@ -3603,11 +3772,6 @@ recordsToDelete.push(key);
 recordsToDelete.forEach(
 key=>shotRecords.delete(key)
 );
-
-/*
-Broadcast the retake so both phones
-remove the same photo.
-*/
 
 await sendSignal(
 "retake",
@@ -3657,10 +3821,6 @@ shotIndex
 if(!shotIndex)
 return;
 
-/*
-Remove the same photo number.
-*/
-
 if(
 photos[shotIndex-1]
 ){
@@ -3671,12 +3831,6 @@ shotIndex-1,
 );
 
 }
-
-/*
-Delete all records for this and later
-shots so the next synchronized shot
-can replace it.
-*/
 
 const removeKeys=[];
 
@@ -3723,20 +3877,23 @@ count===0;
 
 /* =========================================================
 COMBINE BOTH PEOPLE
+
+PERSON 1 = LEFT
+PERSON 2 = RIGHT
 ========================================================= */
 
 function createCombinedPhoto(
-localImage,
-remoteImage
+person1Image,
+person2Image
 ){
 
 return new Promise(
 resolve=>{
 
-const local=
+const person1=
 new Image();
 
-const remote=
+const person2=
 new Image();
 
 let loaded=0;
@@ -3780,15 +3937,15 @@ const cardH=
 H-gap*2;
 
 /*
-LOCAL = LEFT
-PARTNER = RIGHT
+PERSON 1 = LEFT
+PERSON 2 = RIGHT
 
-The same rule is used on both phones.
+Always.
 */
 
 drawRoundedImage(
 ctx,
-local,
+person1,
 gap,
 gap,
 cardW,
@@ -3799,7 +3956,7 @@ false
 
 drawRoundedImage(
 ctx,
-remote,
+person2,
 gap*2+cardW,
 gap,
 cardW,
@@ -3817,16 +3974,14 @@ canvas.toDataURL(
 
 }
 
-local.onload=done;
-remote.onload=done;
+person1.onload=done;
+person2.onload=done;
 
-local.src=localImage;
-remote.src=remoteImage;
+person1.src=person1Image;
+person2.src=person2Image;
 
 }
 );
-
-}
 
 /* =========================================================
 DRAW ROUNDED IMAGE
@@ -4002,9 +4157,7 @@ document.createElement(
 
 img.src=image;
 
-preview.appendChild(
-img
-);
+preview.appendChild(img);
 
 }
 );
@@ -4074,9 +4227,7 @@ document.createElement(
 
 img.src=image;
 
-preview.appendChild(
-img
-);
+preview.appendChild(img);
 
 }
 );
@@ -4176,9 +4327,7 @@ document.createElement(
 
 img.src=image;
 
-preview.appendChild(
-img
-);
+preview.appendChild(img);
 
 }
 );
@@ -4196,9 +4345,7 @@ yourName+
 " ♡ "+
 (partnerName||"Them");
 
-preview.appendChild(
-title
-);
+preview.appendChild(title);
 
 }
 
@@ -4243,9 +4390,7 @@ document.createElement(
 
 img.src=image;
 
-strip.appendChild(
-img
-);
+strip.appendChild(img);
 
 }
 );
@@ -4263,9 +4408,7 @@ yourName+
 " ♡ "+
 (partnerName||"Them");
 
-strip.appendChild(
-title
-);
+strip.appendChild(title);
 
 editHistory=[];
 
