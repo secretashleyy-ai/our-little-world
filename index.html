@@ -33,13 +33,8 @@ body{
   background-size:90px 90px;
 }
 
-button,input{
-  font:inherit;
-}
-
-button{
-  cursor:pointer;
-}
+button,input{font:inherit}
+button{cursor:pointer}
 
 .page{
   display:none;
@@ -47,9 +42,7 @@ button{
   padding:12px;
 }
 
-.page.active{
-  display:block;
-}
+.page.active{display:block}
 
 .card{
   width:min(600px,100%);
@@ -81,13 +74,9 @@ h1{
   margin:12px 0 18px;
 }
 
-h1 span,
-h2 span{
-  color:var(--pink);
-}
+h1 span,h2 span{color:var(--pink)}
 
-.desc,
-.muted{
+.desc,.muted{
   font-family:Arial,sans-serif;
   line-height:1.6;
   color:#88747c;
@@ -167,13 +156,8 @@ h2 span{
   box-shadow:0 20px 60px #533b4614;
 }
 
-.step{
-  display:none;
-}
-
-.step.active{
-  display:block;
-}
+.step{display:none}
+.step.active{display:block}
 
 .step h2{
   font-size:40px;
@@ -205,7 +189,9 @@ h2 span{
   color:var(--pink);
 }
 
-/* CAMERA */
+/* =========================
+   LIVE CAMERA
+========================= */
 
 .camera{
   display:grid;
@@ -217,34 +203,11 @@ h2 span{
   overflow:hidden;
 }
 
-/*
-  IMPORTANT:
-  The two boxes are positioned dynamically by JavaScript.
+.camera.my-side-left #myCameraBox{grid-column:1}
+.camera.my-side-left #partnerCameraBox{grid-column:2}
 
-  Left-side user:
-  local = LEFT
-  partner = RIGHT
-
-  Right-side user:
-  partner = LEFT
-  local = RIGHT
-*/
-
-.camera.my-side-left #myCameraBox{
-  grid-column:1;
-}
-
-.camera.my-side-left #partnerCameraBox{
-  grid-column:2;
-}
-
-.camera.my-side-right #partnerCameraBox{
-  grid-column:1;
-}
-
-.camera.my-side-right #myCameraBox{
-  grid-column:2;
-}
+.camera.my-side-right #partnerCameraBox{grid-column:1}
+.camera.my-side-right #myCameraBox{grid-column:2}
 
 .video-box{
   position:relative;
@@ -260,16 +223,6 @@ h2 span{
   object-fit:cover;
   display:block;
   background:#30262b;
-}
-
-/*
-  Both live videos are mirrored.
-
-  This means the actual camera frame is rendered the
-  same way the person sees themselves in a normal
-  selfie preview.
-*/
-.video-box video{
   transform:scaleX(-1);
 }
 
@@ -301,9 +254,7 @@ h2 span{
   z-index:4;
 }
 
-.waiting .heart{
-  font-size:55px;
-}
+.waiting .heart{font-size:55px}
 
 .connection-pill{
   display:inline-flex;
@@ -334,13 +285,9 @@ h2 span{
   font-size:22px;
 }
 
-.shutter:disabled{
-  opacity:.4;
-}
+.shutter:disabled{opacity:.4}
 
-#photoPreview{
-  text-align:center;
-}
+#photoPreview{text-align:center}
 
 #photoPreview img{
   width:95px;
@@ -349,6 +296,10 @@ h2 span{
   margin:5px;
   border-radius:8px;
 }
+
+/* =========================
+   DESIGNS
+========================= */
 
 .design-grid{
   display:grid;
@@ -410,9 +361,7 @@ h2 span{
   padding-bottom:5px;
 }
 
-.theme-coquette img{
-  border:2px solid #efb6c9;
-}
+.theme-coquette img{border:2px solid #efb6c9}
 
 .theme-retro{
   background:#c89470;
@@ -487,9 +436,7 @@ h2 span{
   padding-bottom:5px;
 }
 
-.theme-strawberry img{
-  border:2px solid #e76572;
-}
+.theme-strawberry img{border:2px solid #e76572}
 
 .theme-lace{
   background:#ead8e3;
@@ -505,9 +452,7 @@ h2 span{
   padding-bottom:5px;
 }
 
-.theme-lace img{
-  border:3px solid white;
-}
+.theme-lace img{border:3px solid white}
 
 .theme-postcard{
   background:#e6cdb5;
@@ -524,9 +469,7 @@ h2 span{
   padding-bottom:5px;
 }
 
-.theme-postcard img{
-  border:2px solid #704b39;
-}
+.theme-postcard img{border:2px solid #704b39}
 
 .theme-floral{
   background:#f7e7dc;
@@ -542,9 +485,7 @@ h2 span{
   padding-bottom:5px;
 }
 
-.theme-floral img{
-  border:2px solid #d19aaa;
-}
+.theme-floral img{border:2px solid #d19aaa}
 
 .theme-dreamy{
   background:linear-gradient(#bfcce7,#ead8ee);
@@ -584,6 +525,10 @@ h2 span{
   filter:sepia(.55) saturate(.75);
   border:2px solid #f0dfca;
 }
+
+/* =========================
+   FINAL STRIP
+========================= */
 
 .final-preview-wrap{
   display:flex;
@@ -645,9 +590,7 @@ h2 span{
   transform:translate(-50%,-50%);
 }
 
-.decor:active{
-  cursor:grabbing;
-}
+.decor:active{cursor:grabbing}
 
 .text-decor{
   font-size:17px;
@@ -662,9 +605,7 @@ h2 span{
   margin-top:12px;
 }
 
-.edit-buttons button{
-  flex:1;
-}
+.edit-buttons button{flex:1}
 
 .text-row{
   display:flex;
@@ -701,19 +642,14 @@ h2 span{
 }
 
 @media(max-width:850px){
-  .design-grid{
-    grid-template-columns:repeat(3,1fr);
-  }
+  .design-grid{grid-template-columns:repeat(3,1fr)}
 }
 
 @media(max-width:600px){
-  .content{
-    padding:18px;
-  }
 
-  .step h2{
-    font-size:31px;
-  }
+  .content{padding:18px}
+
+  .step h2{font-size:31px}
 
   .strip-options{
     grid-template-columns:repeat(3,1fr);
@@ -725,119 +661,212 @@ h2 span{
     padding:5px;
   }
 
-  .video-box{
-    min-height:230px;
-  }
+  .video-box{min-height:230px}
 
-  .video-box video{
-    height:230px;
-  }
+  .video-box video{height:230px}
 
   .design-grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .design-preview{
-    height:210px;
-  }
+  .design-preview{height:210px}
 
-  .final-strip{
-    width:270px;
-  }
+  .final-strip{width:270px}
 
-  .text-row{
-    flex-direction:column;
-  }
+  .text-row{flex-direction:column}
 }
 
 @media(max-width:400px){
-  .video-box video{
-    height:205px;
-  }
 
-  .video-box{
-    min-height:205px;
-  }
+  .video-box video{height:205px}
 
-  .design-preview{
-    height:190px;
-  }
+  .video-box{min-height:205px}
+
+  .design-preview{height:190px}
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     WELCOME
+========================= -->
+
 <section id="welcome" class="page active">
+
 <div class="card">
+
 <div class="logo">♡</div>
-<div class="mini">a tiny place for two</div>
-<h1>Our Little<br><span>Photobooth</span></h1>
-<p class="desc">Take pictures together even when you're far apart.</p>
+
+<div class="mini">
+a tiny place for two
+</div>
+
+<h1>
+Our Little<br>
+<span>Photobooth</span>
+</h1>
+
+<p class="desc">
+Take pictures together even when you're far apart.
+</p>
 
 <div class="field">
-<label>Your name
-<input id="yourName" placeholder="Your name" autocomplete="off">
+<label>
+Your name
+<input
+id="yourName"
+placeholder="Your name"
+autocomplete="off">
 </label>
 </div>
 
 <div class="field">
-<label>Partner's name
-<input id="partnerName" placeholder="Their name" autocomplete="off">
+<label>
+Partner's name
+<input
+id="partnerName"
+placeholder="Their name"
+autocomplete="off">
 </label>
 </div>
 
 <div class="field">
-<label>Shared room code
-<input id="roomCode" placeholder="OURWORLD" autocomplete="off">
+<label>
+Shared room code
+<input
+id="roomCode"
+placeholder="OURWORLD"
+autocomplete="off">
 </label>
 </div>
 
-<button class="primary" onclick="enterWorld()">Enter Our World ♡</button>
-<p id="connectionMessage" style="font-family:Arial,sans-serif;font-size:12px"></p>
+<button
+class="primary"
+onclick="enterWorld()">
+Enter Our World ♡
+</button>
+
+<p
+id="connectionMessage"
+style="font-family:Arial,sans-serif;font-size:12px">
+</p>
+
 </div>
 </section>
 
+
+<!-- =========================
+     HOME
+========================= -->
+
 <section id="home" class="page">
+
 <div class="topbar">
-<button class="back" onclick="showPage('welcome')">←</button>
+
+<button
+class="back"
+onclick="showPage('welcome')">
+←
+</button>
+
 <div>our little ♡ world</div>
+
 <div></div>
+
 </div>
 
 <div class="content">
-<div style="text-align:center;padding:30px 10px">
-<div class="mini">welcome home</div>
-<h2><span id="displayYou">You</span> ♡ <span id="displayPartner">Them</span></h2>
-<p class="desc">Same love. Different places. One little photobooth.</p>
 
-<div style="display:inline-block;padding:10px 18px;background:#fff;border:1px solid var(--line);border-radius:30px;font-family:Arial,sans-serif;font-size:11px">
-ROOM: <b id="displayRoom">---</b>
+<div style="text-align:center;padding:30px 10px">
+
+<div class="mini">
+welcome home
 </div>
 
-<p id="partnerStatus" class="muted">⚪ Waiting for partner...</p>
+<h2>
+<span id="displayYou">You</span>
+♡
+<span id="displayPartner">Them</span>
+</h2>
 
-<button class="primary" onclick="openPhotobooth()">
+<p class="desc">
+Same love. Different places. One little photobooth.
+</p>
+
+<div
+style="
+display:inline-block;
+padding:10px 18px;
+background:#fff;
+border:1px solid var(--line);
+border-radius:30px;
+font-family:Arial,sans-serif;
+font-size:11px">
+
+ROOM:
+<b id="displayRoom">---</b>
+
+</div>
+
+<p
+id="partnerStatus"
+class="muted">
+⚪ Waiting for partner...
+</p>
+
+<button
+class="primary"
+onclick="openPhotobooth()">
+
 📸 Open Photobooth
+
 </button>
+
 </div>
 </div>
 </section>
+
+
+<!-- =========================
+     PHOTOBOOTH
+========================= -->
 
 <section id="photobooth" class="page">
 
 <div class="topbar">
-<button class="back" onclick="showPage('home')">←</button>
+
+<button
+class="back"
+onclick="showPage('home')">
+←
+</button>
+
 <div>photobooth ♡</div>
-<div id="stepNumber">1 / 5</div>
+
+<div id="stepNumber">
+1 / 5
+</div>
+
 </div>
 
 <div class="content">
 
-<div id="step1" class="step active">
 
-<div class="mini">01 · choose</div>
-<h2>How many photos?</h2>
+<!-- STEP 1 -->
+
+<div
+id="step1"
+class="step active">
+
+<div class="mini">
+01 · choose
+</div>
+
+<h2>
+How many photos?
+</h2>
 
 <p class="muted">
 Choose the size of your photobooth strip.
@@ -845,77 +874,128 @@ Choose the size of your photobooth strip.
 
 <div class="strip-options">
 
-<button class="strip-option selected"
+<button
+class="strip-option selected"
 onclick="selectStrip(2,this)">
-<strong>2</strong>classic
+
+<strong>2</strong>
+classic
+
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(3,this)">
-<strong>3</strong>sweet
+
+<strong>3</strong>
+sweet
+
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(4,this)">
-<strong>4</strong>classic +
+
+<strong>4</strong>
+classic +
+
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(5,this)">
-<strong>5</strong>deluxe
+
+<strong>5</strong>
+deluxe
+
 </button>
 
-<button class="strip-option"
+<button
+class="strip-option"
 onclick="selectStrip(6,this)">
-<strong>6</strong>long
+
+<strong>6</strong>
+long
+
 </button>
 
 </div>
 
-<button class="primary" onclick="nextStep(2)">
+<button
+class="primary"
+onclick="nextStep(2)">
+
 Take Photos →
+
 </button>
 
 </div>
 
 
-<div id="step2" class="step">
+<!-- STEP 2 -->
 
-<div class="mini">02 · camera</div>
+<div
+id="step2"
+class="step">
 
-<h2>Let's take pictures 📸</h2>
+<div class="mini">
+02 · camera
+</div>
+
+<h2>
+Let's take pictures 📸
+</h2>
 
 <p class="muted">
 Your position stays consistent:
 you are on your assigned side and your partner is on the other side.
 </p>
 
-<div id="cameraContainer" class="camera my-side-left">
 
-<div id="myCameraBox" class="video-box">
+<div
+id="cameraContainer"
+class="camera my-side-left">
 
-<video id="myCamera"
+
+<div
+id="myCameraBox"
+class="video-box">
+
+<video
+id="myCamera"
 autoplay
 playsinline
-muted></video>
+muted>
+</video>
 
 <div class="video-label">
-You · <span id="cameraYouName">You</span>
+You ·
+<span id="cameraYouName">
+You
+</span>
 </div>
 
 </div>
 
 
-<div id="partnerCameraBox" class="video-box partner">
+<div
+id="partnerCameraBox"
+class="video-box">
 
-<video id="partnerVideo"
+<video
+id="partnerVideo"
 autoplay
 playsinline
-muted></video>
+muted>
+</video>
 
-<div id="partnerWaiting" class="waiting">
+<div
+id="partnerWaiting"
+class="waiting">
 
-<div class="heart">♡</div>
+<div class="heart">
+♡
+</div>
 
 <b id="partnerCameraText">
 Waiting for partner...
@@ -928,7 +1008,10 @@ Keep the same room code open.
 </div>
 
 <div class="video-label">
-Partner · <span id="cameraPartnerName">Them</span>
+Partner ·
+<span id="cameraPartnerName">
+Them
+</span>
 </div>
 
 </div>
@@ -938,9 +1021,12 @@ Partner · <span id="cameraPartnerName">Them</span>
 
 <div style="text-align:center">
 
-<div id="connectionPill"
+<div
+id="connectionPill"
 class="connection-pill">
+
 🔴 Not connected
+
 </div>
 
 </div>
@@ -948,16 +1034,22 @@ class="connection-pill">
 
 <div class="camera-buttons">
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="startCamera()">
+
 Start Camera
+
 </button>
 
-<button id="shutterButton"
+<button
+id="shutterButton"
 class="shutter"
 onclick="takePhoto()"
 disabled>
+
 ●
+
 </button>
 
 <span id="photoCount">
@@ -968,17 +1060,24 @@ disabled>
 
 <div id="photoPreview"></div>
 
-<button id="photosDoneButton"
+<button
+id="photosDoneButton"
 class="primary"
 onclick="nextStep(3)"
 disabled>
+
 Choose Design →
+
 </button>
 
 </div>
 
 
-<div id="step3" class="step">
+<!-- STEP 3 -->
+
+<div
+id="step3"
+class="step">
 
 <div class="mini">
 03 · choose your design
@@ -992,11 +1091,15 @@ Which one feels like you? ✨
 Tap a design, or hover over one to preview your actual photos.
 </p>
 
-<div id="designGrid" class="design-grid"></div>
+<div
+id="designGrid"
+class="design-grid">
+</div>
 
 <div class="final-preview-wrap">
 
-<div id="designPreview"
+<div
+id="designPreview"
 class="final-strip">
 </div>
 
@@ -1004,15 +1107,19 @@ class="final-strip">
 
 <div style="margin-top:18px">
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="nextStep(2)">
 ← Retake
 </button>
 
-<button class="primary"
+<button
+class="primary"
 onclick="chooseDesign()"
 style="margin-top:10px">
+
 ♡ Use This Design
+
 </button>
 
 </div>
@@ -1020,7 +1127,11 @@ style="margin-top:10px">
 </div>
 
 
-<div id="step4" class="step">
+<!-- STEP 4 -->
+
+<div
+id="step4"
+class="step">
 
 <div class="mini">
 04 · make it yours
@@ -1055,7 +1166,8 @@ Tap a sticker, then drag it anywhere on your strip.
 
 <div class="final-preview-wrap">
 
-<div id="photoStrip"
+<div
+id="photoStrip"
 class="final-strip">
 </div>
 
@@ -1063,12 +1175,14 @@ class="final-strip">
 
 <div class="edit-buttons">
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="undoLastEdit()">
 ↩ Undo
 </button>
 
-<button class="secondary"
+<button
+class="secondary"
 onclick="resetEdits()">
 ↻ Reset
 </button>
@@ -1101,7 +1215,11 @@ Finish & Auto Save →
 </div>
 
 
-<div id="step5" class="step">
+<!-- STEP 5 -->
+
+<div
+id="step5"
+class="step">
 
 <div class="mini">
 05 · your memory
@@ -1117,15 +1235,23 @@ Your photobooth strip is automatically downloading below!
 
 <div class="final-preview-wrap">
 
-<div id="savedPreview"
+<div
+id="savedPreview"
 class="final-strip">
 </div>
 
 </div>
 
-<div id="saveStatusMessage"
-style="text-align:center;font-weight:bold;margin-top:15px;color:var(--pink)">
+<div
+id="saveStatusMessage"
+style="
+text-align:center;
+font-weight:bold;
+margin-top:15px;
+color:var(--pink)">
+
 Generating photo... ♡
+
 </div>
 
 <div id="saveFallback">
@@ -1135,7 +1261,8 @@ If your browser blocks automatic downloads,
 press and hold or right-click the image below to save it.
 </p>
 
-<img id="saveImage"
+<img
+id="saveImage"
 alt="Your photobooth strip">
 
 </div>
@@ -1144,7 +1271,9 @@ alt="Your photobooth strip">
 class="secondary"
 onclick="nextStep(4)"
 style="margin-top:15px;width:100%">
+
 ← Edit More
+
 </button>
 
 </div>
@@ -1155,6 +1284,10 @@ style="margin-top:15px;width:100%">
 
 <script>
 
+/* =========================================================
+   SUPABASE
+========================================================= */
+
 const SUPABASE_URL =
 "https://pqmnwuwkdgvlmsxbizmp.supabase.co";
 
@@ -1163,10 +1296,14 @@ const SUPABASE_KEY =
 
 const supabaseClient =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
+
+/* =========================================================
+   USER / ROOM STATE
+========================================================= */
 
 let yourName="";
 let partnerName="";
@@ -1181,6 +1318,7 @@ let cameraStream=null;
 
 let roomChannel=null;
 let signalChannel=null;
+
 let peerConnection=null;
 
 let localCameraReady=false;
@@ -1188,32 +1326,11 @@ let partnerCameraReady=false;
 
 let partnerClientId=null;
 
-let isCaller=false;
-
-/*
-  NEW SIDE SYSTEM
-
-  The first person who enters the room becomes LEFT.
-
-  The second person becomes RIGHT.
-
-  Therefore:
-
-  FIRST PERSON:
-  local = LEFT
-  partner = RIGHT
-
-  SECOND PERSON:
-  partner = LEFT
-  local = RIGHT
-
-  This makes the same two people stay in the
-  same physical positions from their own POV.
-*/
 let mySide="left";
 let partnerSide="right";
 
 let remoteDescriptionSet=false;
+
 let pendingCandidates=[];
 
 let makingOffer=false;
@@ -1230,39 +1347,48 @@ let editHistory=[];
 let finalBlobUrl=null;
 
 
+/* =========================================================
+   IMPORTANT:
+   EACH DEVICE GETS ONE UNIQUE ID.
+========================================================= */
+
 const clientId =
 crypto.randomUUID();
 
 
+/* =========================================================
+   WEBRTC
+========================================================= */
+
 const rtcConfig={
   iceServers:[
-    {urls:"stun:stun.l.google.com:19302"},
-    {urls:"stun:stun1.l.google.com:19302"},
-    {urls:"stun:stun2.l.google.com:19302"},
-    {urls:"stun:stun3.l.google.com:19302"}
+    {
+      urls:"stun:stun.l.google.com:19302"
+    },
+    {
+      urls:"stun:stun1.l.google.com:19302"
+    },
+    {
+      urls:"stun:stun2.l.google.com:19302"
+    },
+    {
+      urls:"stun:stun3.l.google.com:19302"
+    }
   ]
 };
 
 
-const designs=[
-  "coquette",
-  "retro",
-  "scrapbook",
-  "y2k",
-  "strawberry",
-  "lace",
-  "postcard",
-  "floral",
-  "dreamy",
-  "vintage"
-];
-
+/* =========================================================
+   PAGE
+========================================================= */
 
 function showPage(id){
 
   document
   .querySelectorAll(".page")
-  .forEach(p=>p.classList.remove("active"));
+  .forEach(
+    p=>p.classList.remove("active")
+  );
 
   document
   .getElementById(id)
@@ -1272,36 +1398,51 @@ function showPage(id){
 }
 
 
+/* =========================================================
+   ENTER ROOM
+========================================================= */
+
 async function enterWorld(){
 
-  yourName =
-  document.getElementById("yourName")
-  .value.trim();
+  yourName=
+  document
+  .getElementById("yourName")
+  .value
+  .trim();
 
-  partnerName =
-  document.getElementById("partnerName")
-  .value.trim();
+  partnerName=
+  document
+  .getElementById("partnerName")
+  .value
+  .trim();
 
-  roomCode =
-  document.getElementById("roomCode")
-  .value.trim()
+  roomCode=
+  document
+  .getElementById("roomCode")
+  .value
+  .trim()
   .toUpperCase();
 
 
   if(!yourName){
+
     alert("Please enter your name ♡");
+
     return;
   }
 
+
   if(!roomCode){
+
     alert("Please enter a room code ♡");
+
     return;
   }
 
 
   document
   .getElementById("connectionMessage")
-  .textContent =
+  .textContent=
   "Connecting to your little room...";
 
 
@@ -1309,22 +1450,27 @@ async function enterWorld(){
 
     await setupRoom();
 
+
     document
     .getElementById("displayYou")
     .textContent=yourName;
+
 
     document
     .getElementById("displayPartner")
     .textContent=
     partnerName || "Them";
 
+
     document
     .getElementById("displayRoom")
     .textContent=roomCode;
 
+
     document
     .getElementById("cameraYouName")
     .textContent=yourName;
+
 
     document
     .getElementById("cameraPartnerName")
@@ -1354,12 +1500,17 @@ async function enterWorld(){
 }
 
 
+/* =========================================================
+   ROOM PRESENCE
+========================================================= */
+
 async function setupRoom(){
 
-  if(roomChannel) return;
+  if(roomChannel)
+    return;
 
 
-  roomChannel =
+  roomChannel=
   supabaseClient.channel(
     "presence-"+roomCode,
     {
@@ -1372,55 +1523,110 @@ async function setupRoom(){
   );
 
 
-  roomChannel
-
-  .on(
+  roomChannel.on(
     "presence",
     {event:"sync"},
-    ()=>updatePresence()
-  )
-
-  .on(
-    "presence",
-    {event:"join"},
-    ()=>updatePresence()
-  )
-
-  .on(
-    "presence",
-    {event:"leave"},
-    ()=>updatePresence()
+    async()=>{
+      await updatePresence();
+    }
   );
 
 
-  await new Promise((resolve,reject)=>{
+  roomChannel.on(
+    "presence",
+    {event:"join"},
+    async()=>{
+      await updatePresence();
 
-    roomChannel.subscribe(async status=>{
+      setTimeout(
+        ()=>{
+          sendSignal("hello",{});
+        },
+        250
+      );
+    }
+  );
 
-      if(status==="SUBSCRIBED"){
 
-        try{
+  roomChannel.on(
+    "presence",
+    {event:"leave"},
+    async()=>{
+      await updatePresence();
+    }
+  );
 
-          await roomChannel.track({
-            id:clientId,
-            name:yourName,
-            camera:false,
-            time:Date.now()
-          });
 
-          resolve();
+  await new Promise(
+    (resolve,reject)=>{
 
-        }catch(e){
+      let finished=false;
 
-          reject(e);
+      const timeout=
+      setTimeout(
+        ()=>{
+          if(!finished){
+
+            finished=true;
+
+            reject(
+              new Error(
+                "Presence connection timeout"
+              )
+            );
+
+          }
+        },
+        10000
+      );
+
+
+      roomChannel.subscribe(
+        async status=>{
+
+          if(status==="SUBSCRIBED"){
+
+            try{
+
+              await roomChannel.track({
+                id:clientId,
+                name:yourName,
+                camera:false,
+                time:Date.now()
+              });
+
+
+              clearTimeout(timeout);
+
+              if(!finished){
+
+                finished=true;
+
+                resolve();
+
+              }
+
+            }catch(e){
+
+              clearTimeout(timeout);
+
+              if(!finished){
+
+                finished=true;
+
+                reject(e);
+
+              }
+
+            }
+
+          }
 
         }
+      );
 
-      }
-
-    });
-
-  });
+    }
+  );
 
 
   await setupSignalChannel();
@@ -1430,12 +1636,17 @@ async function setupRoom(){
 }
 
 
+/* =========================================================
+   SIGNALING CHANNEL
+========================================================= */
+
 async function setupSignalChannel(){
 
-  if(signalChannel) return;
+  if(signalChannel)
+    return;
 
 
-  signalChannel =
+  signalChannel=
   supabaseClient.channel(
     "photobooth-signal-"+roomCode,
     {
@@ -1454,34 +1665,98 @@ async function setupSignalChannel(){
     {event:"signal"},
     async payload=>{
 
-      const msg=payload.payload;
+      const message=
+      payload.payload;
 
-      if(!msg || msg.sender===clientId)
+
+      if(
+        !message ||
+        message.sender===clientId
+      )
         return;
 
-      await handleSignal(msg);
+
+      try{
+
+        await handleSignal(message);
+
+      }catch(error){
+
+        console.error(
+          "Signal handling error:",
+          error
+        );
+
+      }
 
     }
   );
 
 
-  await new Promise(resolve=>{
+  await new Promise(
+    (resolve,reject)=>{
 
-    signalChannel.subscribe(status=>{
+      let finished=false;
 
-      if(status==="SUBSCRIBED")
-        resolve();
+      const timeout=
+      setTimeout(
+        ()=>{
+          if(!finished){
 
-    });
+            finished=true;
 
-  });
+            reject(
+              new Error(
+                "Signal connection timeout"
+              )
+            );
+
+          }
+        },
+        10000
+      );
 
 
-  for(let i=0;i<5;i++){
+      signalChannel.subscribe(
+        status=>{
+
+          if(status==="SUBSCRIBED"){
+
+            clearTimeout(timeout);
+
+            if(!finished){
+
+              finished=true;
+
+              resolve();
+
+            }
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  /*
+    Broadcast several hello messages because
+    a device can enter the room just before
+    the other device finishes subscribing.
+  */
+
+  for(let i=0;i<6;i++){
 
     setTimeout(
-      ()=>sendSignal("hello",{}),
-      i*700
+      ()=>{
+        sendSignal(
+          "hello",
+          {}
+        );
+      },
+      i*600
     );
 
   }
@@ -1489,82 +1764,55 @@ async function setupSignalChannel(){
 }
 
 
+/* =========================================================
+   PRESENCE
+========================================================= */
+
 async function updatePresence(){
 
   if(!roomChannel)
     return;
 
 
-  const state =
+  const state=
   roomChannel.presenceState();
 
 
-  let others=[];
-
-
-  Object
-  .values(state)
-  .forEach(entries=>{
-
-    entries.forEach(e=>{
-
-      if(e.id!==clientId)
-        others.push(e);
-
-    });
-
-  });
-
-
-  /*
-    No partner yet.
-
-    We don't assign a permanent side until
-    another person is actually in the room.
-  */
-
-  if(!others.length){
-
-    partnerClientId=null;
-
-    partnerCameraReady=false;
-
-    document
-    .getElementById("partnerStatus")
-    .textContent=
-    "⚪ Waiting for partner...";
-
-    document
-    .getElementById("partnerCameraText")
-    .textContent=
-    "Waiting for partner...";
-
-    return;
-  }
-
-
-  /*
-    SORT BY CLIENT ID.
-
-    The first client in the room is ALWAYS LEFT.
-    The second client is ALWAYS RIGHT.
-
-    This is the important part that prevents
-    the sides from changing between devices.
-  */
-
   const all=[];
 
+
   Object
   .values(state)
   .forEach(entries=>{
 
-    entries.forEach(e=>{
-      all.push(e);
+    entries.forEach(entry=>{
+
+      if(entry && entry.id){
+
+        if(
+          !all.some(
+            x=>x.id===entry.id
+          )
+        ){
+
+          all.push(entry);
+
+        }
+
+      }
+
     });
 
   });
 
+
+  /*
+    FIXED SIDE ASSIGNMENT.
+
+    Sorting by client ID means both devices
+    independently calculate exactly the same
+    LEFT and RIGHT assignment.
+  */
 
   all.sort(
     (a,b)=>
@@ -1573,12 +1821,57 @@ async function updatePresence(){
   );
 
 
-  const leftClient=all[0];
+  if(all.length===0){
 
+    partnerClientId=null;
+
+    partnerCameraReady=false;
+
+    setPartnerWaiting(
+      "Waiting for partner..."
+    );
+
+    return;
+  }
+
+
+  if(all.length===1){
+
+    /*
+      The only person in the room is LEFT.
+    */
+
+    if(all[0].id===clientId){
+
+      mySide="left";
+      partnerSide="right";
+
+    }
+
+
+    partnerClientId=null;
+
+    partnerCameraReady=false;
+
+    applyCameraSides();
+
+    setPartnerWaiting(
+      "Waiting for partner..."
+    );
+
+    return;
+  }
+
+
+  /*
+    Two people are present.
+  */
+
+  const leftClient=all[0];
   const rightClient=all[1];
 
 
-  if(leftClient && leftClient.id===clientId){
+  if(leftClient.id===clientId){
 
     mySide="left";
     partnerSide="right";
@@ -1591,47 +1884,56 @@ async function updatePresence(){
   }
 
 
-  /*
-    Apply the same positions to the live camera.
-  */
+  const partner=
+  all.find(
+    x=>x.id!==clientId
+  );
+
+
+  if(partner){
+
+    partnerClientId=partner.id;
+
+    partnerCameraReady=
+    partner.camera===true;
+
+
+    setPartnerWaiting(
+      partnerCameraReady
+      ? "🟢 Camera ready"
+      : "Waiting for partner camera..."
+    );
+
+
+    document
+    .getElementById("partnerStatus")
+    .textContent=
+    "🟢 "+
+    (
+      partner.name ||
+      partnerName ||
+      "Partner"
+    )+
+    " is here ♡";
+
+  }
+
 
   applyCameraSides();
 
 
-  const partner =
-  others.sort(
-    (a,b)=>
-      String(a.id)
-      .localeCompare(String(b.id))
-  )[0];
-
-
-  partnerClientId=partner.id;
-
-
-  document
-  .getElementById("partnerStatus")
-  .textContent=
-  "🟢 "+
-  (partner.name ||
-   partnerName ||
-   "Partner")+
-  " is here ♡";
-
-
-  partnerCameraReady =
-  partner.camera===true;
-
-
-  document
-  .getElementById("partnerCameraText")
-  .textContent=
-  partnerCameraReady
-  ? "🟢 Camera ready"
-  : "Waiting for partner camera...";
-
+  /*
+    Make sure the peer exists as soon as
+    the second person arrives.
+  */
 
   await ensurePeer();
+
+
+  /*
+    Re-announce ourselves so the new device
+    knows we are here.
+  */
 
   await sendSignal(
     "hello",
@@ -1639,15 +1941,30 @@ async function updatePresence(){
   );
 
 
-  isCaller =
-    all.length>=2 &&
-    all[0].id===clientId;
+  if(localCameraReady){
 
+    await sendSignal(
+      "camera-ready",
+      {}
+    );
+
+  }
+
+
+  /*
+    Only the LEFT device creates the offer.
+    This prevents both devices from creating
+    competing offers.
+  */
 
   maybeOffer();
 
 }
 
+
+/* =========================================================
+   CAMERA SIDE POSITION
+========================================================= */
 
 function applyCameraSides(){
 
@@ -1656,7 +1973,9 @@ function applyCameraSides(){
     "cameraContainer"
   );
 
-  if(!camera) return;
+
+  if(!camera)
+    return;
 
 
   camera.classList.remove(
@@ -1682,24 +2001,67 @@ function applyCameraSides(){
 }
 
 
+/* =========================================================
+   PARTNER WAITING UI
+========================================================= */
+
+function setPartnerWaiting(text){
+
+  const element=
+  document.getElementById(
+    "partnerCameraText"
+  );
+
+
+  if(element)
+    element.textContent=text;
+
+
+  const waiting=
+  document.getElementById(
+    "partnerWaiting"
+  );
+
+
+  if(waiting){
+
+    waiting.style.display=
+    "flex";
+
+  }
+
+}
+
+
+/* =========================================================
+   PRESENCE CAMERA STATUS
+========================================================= */
+
 async function updateMyCameraPresence(){
 
-  if(!roomChannel) return;
+  if(!roomChannel)
+    return;
+
 
   try{
 
     await roomChannel.track({
+
       id:clientId,
+
       name:yourName,
+
       camera:localCameraReady,
+
       time:Date.now()
+
     });
 
-  }catch(e){
+  }catch(error){
 
     console.warn(
-      "Presence error:",
-      e
+      "Presence update error:",
+      error
     );
 
   }
@@ -1707,16 +2069,35 @@ async function updateMyCameraPresence(){
 }
 
 
+/* =========================================================
+   WEBRTC PEER
+========================================================= */
+
 async function ensurePeer(){
 
-  if(peerConnection) return;
+  if(peerConnection)
+    return peerConnection;
 
 
-  peerConnection =
+  const pc=
   new RTCPeerConnection(
     rtcConfig
   );
 
+
+  peerConnection=pc;
+
+
+  remoteDescriptionSet=false;
+
+  pendingCandidates=[];
+
+
+  /*
+    IMPORTANT:
+    Add the local camera track immediately
+    when the peer exists.
+  */
 
   if(cameraStream){
 
@@ -1724,7 +2105,7 @@ async function ensurePeer(){
     .getTracks()
     .forEach(track=>{
 
-      peerConnection.addTrack(
+      pc.addTrack(
         track,
         cameraStream
       );
@@ -1734,12 +2115,14 @@ async function ensurePeer(){
   }
 
 
-  peerConnection.onicecandidate =
-  event=>{
+  pc.onicecandidate=
+  async event=>{
 
-    if(event.candidate){
+    if(
+      event.candidate
+    ){
 
-      sendSignal(
+      await sendSignal(
         "candidate",
         {
           candidate:
@@ -1752,8 +2135,13 @@ async function ensurePeer(){
   };
 
 
-  peerConnection.ontrack =
-  event=>{
+  pc.ontrack=
+  async event=>{
+
+    console.log(
+      "REMOTE TRACK RECEIVED"
+    );
+
 
     const video=
     document.getElementById(
@@ -1761,26 +2149,43 @@ async function ensurePeer(){
     );
 
 
-    let stream =
-    event.streams &&
-    event.streams[0];
+    /*
+      Use the stream provided by WebRTC.
+    */
 
+    if(
+      event.streams &&
+      event.streams[0]
+    ){
 
-    if(!stream){
+      video.srcObject=
+      event.streams[0];
 
-      stream=
-      video.srcObject ||
-      new MediaStream();
+    }else{
+
+      /*
+        Fallback for browsers that don't
+        provide event.streams.
+      */
+
+      if(
+        !video.srcObject
+      ){
+
+        video.srcObject=
+        new MediaStream();
+
+      }
 
 
       if(
         event.track &&
-        !stream
+        !video.srcObject
         .getTracks()
         .includes(event.track)
       ){
 
-        stream.addTrack(
+        video.srcObject.addTrack(
           event.track
         );
 
@@ -1789,21 +2194,32 @@ async function ensurePeer(){
     }
 
 
-    video.srcObject=stream;
-
     video.muted=true;
 
-    video.play()
-    .catch(e=>
-      console.warn(e)
+
+    try{
+
+      await video.play();
+
+    }catch(error){
+
+      console.warn(
+        "Remote video play:",
+        error
+      );
+
+    }
+
+
+    const waiting=
+    document.getElementById(
+      "partnerWaiting"
     );
 
 
-    document
-    .getElementById(
-      "partnerWaiting"
-    )
-    .style.display="none";
+    if(waiting)
+      waiting.style.display=
+      "none";
 
 
     setConnectionStatus(
@@ -1811,27 +2227,56 @@ async function ensurePeer(){
       true
     );
 
+
+    stopConnectionRetry();
+
   };
 
 
-  peerConnection.onconnectionstatechange =
+  pc.onconnectionstatechange=
   ()=>{
 
-    if(!peerConnection)
-      return;
-
-
     const state=
-    peerConnection.connectionState;
+    pc.connectionState;
+
+
+    console.log(
+      "WebRTC connection:",
+      state
+    );
+
+
+    if(state==="new"){
+
+      setConnectionStatus(
+        "🟡 Connecting...",
+        false
+      );
+
+    }
+
+
+    if(state==="connecting"){
+
+      setConnectionStatus(
+        "🟡 Connecting your cameras...",
+        false
+      );
+
+    }
 
 
     if(state==="connected"){
 
-      document
-      .getElementById(
+      const waiting=
+      document.getElementById(
         "partnerWaiting"
-      )
-      .style.display="none";
+      );
+
+
+      if(waiting)
+        waiting.style.display=
+        "none";
 
 
       setConnectionStatus(
@@ -1842,17 +2287,12 @@ async function ensurePeer(){
 
       stopConnectionRetry();
 
-    }else if(state==="connecting"){
+    }
 
-      setConnectionStatus(
-        "🟡 Connecting your cameras...",
-        false
-      );
 
-    }else if(
+    if(
       state==="disconnected" ||
-      state==="failed" ||
-      state==="closed"
+      state==="failed"
     ){
 
       setConnectionStatus(
@@ -1860,14 +2300,52 @@ async function ensurePeer(){
         false
       );
 
+
+      scheduleReconnect();
+
+    }
+
+
+    if(state==="closed"){
+
+      setConnectionStatus(
+        "🔴 Connection closed",
+        false
+      );
+
+    }
+
+  };
+
+
+  pc.oniceconnectionstatechange=
+  ()=>{
+
+    console.log(
+      "ICE:",
+      pc.iceConnectionState
+    );
+
+
+    if(
+      pc.iceConnectionState==="failed"
+    ){
+
       scheduleReconnect();
 
     }
 
   };
 
+
+  return pc;
+
 }
 
+
+/* =========================================================
+   SIGNAL SENDER
+========================================================= */
 
 async function sendSignal(
   type,
@@ -1895,12 +2373,12 @@ async function sendSignal(
 
     });
 
-  }catch(e){
+  }catch(error){
 
     console.warn(
       "Signal failed:",
       type,
-      e
+      error
     );
 
   }
@@ -1908,9 +2386,17 @@ async function sendSignal(
 }
 
 
+/* =========================================================
+   SIGNAL HANDLER
+========================================================= */
+
 async function handleSignal(message){
 
-  await ensurePeer();
+  if(!peerConnection){
+
+    await ensurePeer();
+
+  }
 
 
   if(message.type==="hello"){
@@ -1925,12 +2411,26 @@ async function handleSignal(message){
     }
 
 
-    if(partnerClientId===null)
+    if(
+      partnerClientId===null
+    ){
+
       partnerClientId=
       message.sender;
 
+    }
 
-    maybeOffer();
+
+    /*
+      Give the left device a moment
+      to establish presence before offering.
+    */
+
+    setTimeout(
+      maybeOffer,
+      150
+    );
+
 
     return;
   }
@@ -1944,21 +2444,38 @@ async function handleSignal(message){
     partnerCameraReady=true;
 
 
-    document
-    .getElementById(
-      "partnerCameraText"
-    )
-    .textContent=
-    "🟢 Camera ready";
+    setPartnerWaiting(
+      "🟢 Camera ready"
+    );
 
 
-    maybeOffer();
+    /*
+      The LEFT device should create
+      the offer after both cameras exist.
+    */
+
+    setTimeout(
+      maybeOffer,
+      100
+    );
+
 
     return;
   }
 
 
   if(message.type==="offer"){
+
+    console.log(
+      "Received offer"
+    );
+
+
+    /*
+      Only rebuild if we are in a state
+      where an incoming offer cannot be
+      accepted.
+    */
 
     if(
       peerConnection.signalingState!=="stable"
@@ -1969,19 +2486,24 @@ async function handleSignal(message){
     }
 
 
+    const pc=
     await ensurePeer();
 
 
     try{
 
-      await peerConnection
-      .setRemoteDescription(
+      await pc.setRemoteDescription(
         new RTCSessionDescription(
           message.description
         )
       );
 
-    }catch(e){
+    }catch(error){
+
+      console.error(
+        "setRemoteDescription offer:",
+        error
+      );
 
       return;
 
@@ -1990,16 +2512,42 @@ async function handleSignal(message){
 
     remoteDescriptionSet=true;
 
+
     await flushCandidates();
 
 
-    const answer =
-    await peerConnection
-    .createAnswer();
+    /*
+      IMPORTANT:
+      Make sure our own local tracks are
+      attached before creating the answer.
+    */
+
+    if(
+      cameraStream &&
+      pc.getSenders()
+      .filter(s=>s.track)
+      .length===0
+    ){
+
+      cameraStream
+      .getTracks()
+      .forEach(track=>{
+
+        pc.addTrack(
+          track,
+          cameraStream
+        );
+
+      });
+
+    }
 
 
-    await peerConnection
-    .setLocalDescription(
+    const answer=
+    await pc.createAnswer();
+
+
+    await pc.setLocalDescription(
       answer
     );
 
@@ -2009,81 +2557,107 @@ async function handleSignal(message){
       {
         description:{
           type:
-          peerConnection
-          .localDescription
-          .type,
+          pc.localDescription.type,
 
           sdp:
-          peerConnection
-          .localDescription
-          .sdp
+          pc.localDescription.sdp
         }
       }
     );
 
 
     return;
-
   }
 
 
   if(message.type==="answer"){
 
+    console.log(
+      "Received answer"
+    );
+
+
+    const pc=
+    peerConnection;
+
+
+    if(!pc)
+      return;
+
+
     if(
-      peerConnection.signalingState===
+      pc.signalingState===
       "have-local-offer"
     ){
 
-      await peerConnection
-      .setRemoteDescription(
-        new RTCSessionDescription(
-          message.description
-        )
-      );
+      try{
+
+        await pc.setRemoteDescription(
+          new RTCSessionDescription(
+            message.description
+          )
+        );
 
 
-      remoteDescriptionSet=true;
+        remoteDescriptionSet=true;
 
-      await flushCandidates();
+
+        await flushCandidates();
+
+      }catch(error){
+
+        console.error(
+          "setRemoteDescription answer:",
+          error
+        );
+
+      }
 
     }
 
-    return;
 
+    return;
   }
 
 
   if(message.type==="candidate"){
 
-    const candidate =
+    const candidate=
     new RTCIceCandidate(
       message.candidate
     );
 
 
     if(
-      remoteDescriptionSet &&
-      peerConnection
+      peerConnection &&
+      remoteDescriptionSet
     ){
 
       try{
 
-        await peerConnection
-        .addIceCandidate(
+        await peerConnection.addIceCandidate(
           candidate
         );
 
-      }catch(e){}
+      }catch(error){
+
+        console.warn(
+          "ICE candidate error:",
+          error
+        );
+
+      }
 
     }else{
 
-      pendingCandidates
-      .push(candidate);
+      pendingCandidates.push(
+        candidate
+      );
 
     }
 
-    return;
 
+    return;
   }
 
 
@@ -2094,7 +2668,6 @@ async function handleSignal(message){
     );
 
     return;
-
   }
 
 
@@ -2105,26 +2678,43 @@ async function handleSignal(message){
     );
 
     return;
-
   }
 
 }
 
 
+/* =========================================================
+   CREATE OFFER
+========================================================= */
+
 async function maybeOffer(){
 
-  if(
-    !isCaller ||
-    !localCameraReady ||
-    !partnerCameraReady ||
-    !peerConnection ||
-    makingOffer
-  )
+  /*
+    Only LEFT creates the offer.
+  */
+
+  if(mySide!=="left")
     return;
 
 
+  if(!localCameraReady)
+    return;
+
+
+  if(!partnerCameraReady)
+    return;
+
+
+  if(makingOffer)
+    return;
+
+
+  const pc=
+  await ensurePeer();
+
+
   if(
-    peerConnection.signalingState!=="stable"
+    pc.signalingState!=="stable"
   )
     return;
 
@@ -2134,13 +2724,52 @@ async function maybeOffer(){
     makingOffer=true;
 
 
+    console.log(
+      "Creating WebRTC offer"
+    );
+
+
+    /*
+      Ensure local camera tracks exist.
+    */
+
+    const existingTracks=
+    pc.getSenders()
+    .map(
+      sender=>sender.track
+    )
+    .filter(Boolean);
+
+
+    if(cameraStream){
+
+      cameraStream
+      .getTracks()
+      .forEach(track=>{
+
+        if(
+          !existingTracks.includes(
+            track
+          )
+        ){
+
+          pc.addTrack(
+            track,
+            cameraStream
+          );
+
+        }
+
+      });
+
+    }
+
+
     const offer=
-    await peerConnection
-    .createOffer();
+    await pc.createOffer();
 
 
-    await peerConnection
-    .setLocalDescription(
+    await pc.setLocalDescription(
       offer
     );
 
@@ -2150,23 +2779,20 @@ async function maybeOffer(){
       {
         description:{
           type:
-          peerConnection
-          .localDescription
-          .type,
+          pc.localDescription.type,
 
           sdp:
-          peerConnection
-          .localDescription
-          .sdp
+          pc.localDescription.sdp
         }
       }
     );
 
-  }catch(e){
+
+  }catch(error){
 
     console.error(
       "Offer error:",
-      e
+      error
     );
 
   }finally{
@@ -2178,9 +2804,16 @@ async function maybeOffer(){
 }
 
 
+/* =========================================================
+   ICE QUEUE
+========================================================= */
+
 async function flushCandidates(){
 
-  if(!peerConnection)
+  if(
+    !peerConnection ||
+    !remoteDescriptionSet
+  )
     return;
 
 
@@ -2188,21 +2821,40 @@ async function flushCandidates(){
     pendingCandidates.length
   ){
 
+    const candidate=
+    pendingCandidates.shift();
+
+
     try{
 
-      await peerConnection
-      .addIceCandidate(
-        pendingCandidates.shift()
+      await peerConnection.addIceCandidate(
+        candidate
       );
 
-    }catch(e){}
+    }catch(error){
+
+      console.warn(
+        "Queued ICE error:",
+        error
+      );
+
+    }
 
   }
 
 }
 
 
+/* =========================================================
+   REBUILD PEER
+========================================================= */
+
 async function rebuildPeer(){
+
+  console.log(
+    "Rebuilding WebRTC connection..."
+  );
+
 
   try{
 
@@ -2215,7 +2867,7 @@ async function rebuildPeer(){
 
     }
 
-  }catch(e){}
+  }catch(error){}
 
 
   peerConnection=null;
@@ -2227,10 +2879,54 @@ async function rebuildPeer(){
   makingOffer=false;
 
 
+  const video=
+  document.getElementById(
+    "partnerVideo"
+  );
+
+
+  if(video){
+
+    video.srcObject=null;
+
+  }
+
+
+  setPartnerWaiting(
+    partnerCameraReady
+    ? "🟡 Reconnecting..."
+    : "Waiting for partner camera..."
+  );
+
+
   await ensurePeer();
+
+
+  /*
+    Re-announce camera state after rebuild.
+  */
+
+  if(localCameraReady){
+
+    await sendSignal(
+      "camera-ready",
+      {}
+    );
+
+  }
+
+
+  setTimeout(
+    maybeOffer,
+    700
+  );
 
 }
 
+
+/* =========================================================
+   RECONNECT
+========================================================= */
 
 function scheduleReconnect(){
 
@@ -2239,28 +2935,25 @@ function scheduleReconnect(){
 
 
   connectionRetryTimer=
-  setTimeout(async()=>{
+  setTimeout(
+    async()=>{
 
-    connectionRetryTimer=null;
+      connectionRetryTimer=null;
 
-    await rebuildPeer();
 
-    await sendSignal(
-      "hello",
-      {}
-    );
+      if(
+        !localCameraReady ||
+        !partnerCameraReady
+      )
+        return;
 
-    await sendSignal(
-      "camera-ready",
-      {}
-    );
 
-    setTimeout(
-      maybeOffer,
-      500
-    );
+      await rebuildPeer();
 
-  },1500);
+
+    },
+    1500
+  );
 
 }
 
@@ -2280,6 +2973,10 @@ function stopConnectionRetry(){
 }
 
 
+/* =========================================================
+   CONNECTION UI
+========================================================= */
+
 function setConnectionStatus(
   text,
   connected
@@ -2291,7 +2988,12 @@ function setConnectionStatus(
   );
 
 
+  if(!pill)
+    return;
+
+
   pill.textContent=text;
+
 
   pill.style.background=
   connected
@@ -2301,16 +3003,24 @@ function setConnectionStatus(
 }
 
 
+/* =========================================================
+   START CAMERA
+========================================================= */
+
 async function startCamera(){
 
   try{
+
+    /*
+      Stop old camera first.
+    */
 
     if(cameraStream){
 
       cameraStream
       .getTracks()
-      .forEach(track=>
-        track.stop()
+      .forEach(
+        track=>track.stop()
       );
 
     }
@@ -2360,11 +3070,26 @@ async function startCamera(){
     );
 
 
+    /*
+      IMPORTANT FIX:
+      Make sure the peer exists AFTER
+      the camera stream exists.
+    */
+
+    const pc=
     await ensurePeer();
 
 
-    const senders=
-    peerConnection.getSenders();
+    /*
+      Add the new camera tracks exactly once.
+    */
+
+    const existingTracks=
+    pc.getSenders()
+    .map(
+      sender=>sender.track
+    )
+    .filter(Boolean);
 
 
     cameraStream
@@ -2372,12 +3097,10 @@ async function startCamera(){
     .forEach(track=>{
 
       if(
-        !senders.some(
-          s=>s.track===track
-        )
+        !existingTracks.includes(track)
       ){
 
-        peerConnection.addTrack(
+        pc.addTrack(
           track,
           cameraStream
         );
@@ -2390,11 +3113,27 @@ async function startCamera(){
     await updateMyCameraPresence();
 
 
+    /*
+      Tell the partner immediately.
+    */
+
     await sendSignal(
       "camera-ready",
       {}
     );
 
+
+    await sendSignal(
+      "hello",
+      {}
+    );
+
+
+    /*
+      Keep announcing readiness.
+      This is useful when one phone loads
+      more slowly than the other.
+    */
 
     if(readinessTimer)
       clearInterval(
@@ -2403,32 +3142,60 @@ async function startCamera(){
 
 
     readinessTimer=
-    setInterval(()=>{
+    setInterval(
+      async()=>{
 
-      if(localCameraReady){
+        if(!localCameraReady)
+          return;
 
-        updateMyCameraPresence();
 
-        sendSignal(
+        await updateMyCameraPresence();
+
+
+        await sendSignal(
           "camera-ready",
           {}
         );
 
+
+        await sendSignal(
+          "hello",
+          {}
+        );
+
+
         maybeOffer();
 
-      }
+      },
+      2500
+    );
 
-    },2000);
 
+    /*
+      Refresh room information.
+    */
 
     await updatePresence();
 
-    maybeOffer();
+
+    /*
+      If we are LEFT and the partner is
+      already ready, create the offer.
+    */
+
+    setTimeout(
+      maybeOffer,
+      300
+    );
 
 
-  }catch(e){
+  }catch(error){
 
-    console.error(e);
+    console.error(
+      "Camera error:",
+      error
+    );
+
 
     localCameraReady=false;
 
@@ -2449,6 +3216,10 @@ async function startCamera(){
 }
 
 
+/* =========================================================
+   OPEN PHOTOBOOTH
+========================================================= */
+
 function openPhotobooth(){
 
   photos=[];
@@ -2461,7 +3232,8 @@ function openPhotobooth(){
   document
   .getElementById("photoCount")
   .textContent=
-  "0 / "+selectedStrip;
+  "0 / "+
+  selectedStrip;
 
 
   document
@@ -2491,6 +3263,10 @@ function openPhotobooth(){
 }
 
 
+/* =========================================================
+   STRIP COUNT
+========================================================= */
+
 function selectStrip(
   number,
   button
@@ -2503,8 +3279,8 @@ function selectStrip(
   .querySelectorAll(
     ".strip-option"
   )
-  .forEach(x=>
-    x.classList.remove(
+  .forEach(
+    x=>x.classList.remove(
       "selected"
     )
   );
@@ -2527,12 +3303,18 @@ function selectStrip(
 }
 
 
+/* =========================================================
+   STEP NAVIGATION
+========================================================= */
+
 function nextStep(number){
 
   document
   .querySelectorAll(".step")
-  .forEach(x=>
-    x.classList.remove("active")
+  .forEach(
+    x=>x.classList.remove(
+      "active"
+    )
   );
 
 
@@ -2556,21 +3338,39 @@ function nextStep(number){
     applyCameraSides();
 
 
+    /*
+      If camera hasn't started yet,
+      start it automatically.
+    */
+
     if(!cameraStream)
       startCamera();
 
 
     setupSignalChannel()
-    .then(()=>{
+    .then(
+      async()=>{
 
-      ensurePeer();
+        await ensurePeer();
 
-      sendSignal(
-        "hello",
-        {}
-      );
+        await sendSignal(
+          "hello",
+          {}
+        );
 
-    });
+        if(localCameraReady){
+
+          await sendSignal(
+            "camera-ready",
+            {}
+          );
+
+        }
+
+        maybeOffer();
+
+      }
+    );
 
   }
 
@@ -2593,6 +3393,10 @@ function nextStep(number){
 
 }
 
+
+/* =========================================================
+   TAKE PHOTO
+========================================================= */
 
 async function takePhoto(){
 
@@ -2661,6 +3465,10 @@ async function takePhoto(){
   );
 
 
+  /*
+    Tell partner to take the same shot.
+  */
+
   await sendSignal(
     "shutter",
     {
@@ -2677,6 +3485,10 @@ async function takePhoto(){
 
 }
 
+
+/* =========================================================
+   RECEIVE SHUTTER
+========================================================= */
 
 async function receiveShutter(
   message
@@ -2727,85 +3539,100 @@ async function receiveShutter(
 }
 
 
+/* =========================================================
+   COUNTDOWN
+========================================================= */
+
 function countdownAndCapture(
   shotId,
   shotIndex
 ){
 
-  return new Promise(resolve=>{
+  return new Promise(
+    resolve=>{
 
-    let count=3;
-
-
-    const overlay=
-    document.createElement(
-      "div"
-    );
+      let count=3;
 
 
-    overlay.style.cssText=`
-      position:fixed;
-      inset:0;
-      z-index:99999;
-      display:grid;
-      place-items:center;
-      background:#0009;
-      color:white;
-      font:bold 100px Georgia;
-    `;
+      const overlay=
+      document.createElement(
+        "div"
+      );
 
 
-    document.body
-    .appendChild(
-      overlay
-    );
+      overlay.style.cssText=`
+        position:fixed;
+        inset:0;
+        z-index:99999;
+        display:grid;
+        place-items:center;
+        background:#0009;
+        color:white;
+        font:bold 100px Georgia;
+      `;
 
 
-    overlay.textContent=
-    count;
+      document.body.appendChild(
+        overlay
+      );
 
 
-    const timer=
-    setInterval(async()=>{
-
-      count--;
+      overlay.textContent=
+      count;
 
 
-      if(count>0){
+      const timer=
+      setInterval(
+        async()=>{
 
-        overlay.textContent=
-        count;
-
-      }else{
-
-        clearInterval(timer);
-
-        overlay.textContent="♡";
+          count--;
 
 
-        setTimeout(async()=>{
+          if(count>0){
 
-          overlay.remove();
+            overlay.textContent=
+            count;
+
+          }else{
+
+            clearInterval(timer);
+
+            overlay.textContent="♡";
 
 
-          await captureLocalForShot(
-            shotId,
-            shotIndex
-          );
+            setTimeout(
+              async()=>{
+
+                overlay.remove();
 
 
-          resolve();
+                await captureLocalForShot(
+                  shotId,
+                  shotIndex
+                );
 
-        },180);
 
-      }
+                resolve();
 
-    },550);
+              },
+              180
+            );
 
-  });
+          }
+
+        },
+        550
+      );
+
+    }
+  );
 
 }
 
+
+/* =========================================================
+   CAPTURE LOCAL
+========================================================= */
 
 async function captureLocalForShot(
   shotId,
@@ -2846,15 +3673,19 @@ async function captureLocalForShot(
 
   const width=500;
 
+
   const height=
   Math.round(
     500*
-    (rect.height/
-     rect.width)
+    (
+      rect.height/
+      rect.width
+    )
   );
 
 
   canvas.width=width;
+
   canvas.height=height;
 
 
@@ -2902,15 +3733,8 @@ async function captureLocalForShot(
 
 
   /*
-    IMPORTANT:
-
-    The saved camera image is MIRRORED.
-
-    This matches the live selfie preview.
-
-    So if you see your face one way in
-    the live camera, the final image uses
-    that same orientation.
+    Mirror local photo to match
+    the live selfie preview.
   */
 
   ctx.save();
@@ -2966,11 +3790,16 @@ async function captureLocalForShot(
 
   record.local=image;
 
+
   shotRecords.set(
     shotId,
     record
   );
 
+
+  /*
+    Send the local image to partner.
+  */
 
   await sendSignal(
     "photo",
@@ -2996,6 +3825,10 @@ async function captureLocalForShot(
 
 }
 
+
+/* =========================================================
+   RECEIVE REMOTE PHOTO
+========================================================= */
 
 function receiveRemotePhoto(
   message
@@ -3045,6 +3878,10 @@ function receiveRemotePhoto(
 }
 
 
+/* =========================================================
+   COMPLETE SHOT
+========================================================= */
+
 async function tryCompleteShot(
   shotId
 ){
@@ -3067,23 +3904,10 @@ async function tryCompleteShot(
   record.completed=true;
 
 
-  /*
-    createCombinedPhoto now uses mySide.
-
-    LEFT SIDE = the person assigned LEFT.
-
-    RIGHT SIDE = the person assigned RIGHT.
-
-    It no longer sorts based on remoteSender.
-    That old sorting was the reason the sides
-    could swap.
-  */
-
   const combined=
   await createCombinedPhoto(
     record.local,
-    record.remote,
-    record
+    record.remote
   );
 
 
@@ -3129,170 +3953,159 @@ async function tryCompleteShot(
 }
 
 
+/* =========================================================
+   COMBINE BOTH PEOPLE
+========================================================= */
+
 function createCombinedPhoto(
   localImage,
-  remoteImage,
-  record
+  remoteImage
 ){
 
-  return new Promise(resolve=>{
+  return new Promise(
+    resolve=>{
 
-    const local=
-    new Image();
+      const local=
+      new Image();
 
-    const remote=
-    new Image();
-
-
-    let loaded=0;
+      const remote=
+      new Image();
 
 
-    function done(){
-
-      loaded++;
+      let loaded=0;
 
 
-      if(loaded<2)
-        return;
+      function done(){
+
+        loaded++;
 
 
-      const canvas=
-      document.createElement(
-        "canvas"
-      );
+        if(loaded<2)
+          return;
 
 
-      const W=1000;
-
-      const H=500;
-
-
-      canvas.width=W;
-
-      canvas.height=H;
+        const canvas=
+        document.createElement(
+          "canvas"
+        );
 
 
-      const ctx=
-      canvas.getContext("2d");
+        const W=1000;
+
+        const H=500;
 
 
-      ctx.fillStyle=
-      "#211b1e";
+        canvas.width=W;
 
-      ctx.fillRect(
-        0,
-        0,
-        W,
-        H
-      );
+        canvas.height=H;
 
 
-      const gap=10;
-
-      const cardW=
-      (W-gap*3)/2;
-
-      const cardH=
-      H-gap*2;
+        const ctx=
+        canvas.getContext("2d");
 
 
-      /*
-        FIXED IDENTITY POSITION
-
-        If I am LEFT:
-          local -> left
-          remote -> right
-
-        If I am RIGHT:
-          remote -> left
-          local -> right
-
-        Therefore:
-
-        YOUR SCREEN:
-          YOU = LEFT
-          PARTNER = RIGHT
-
-        PARTNER SCREEN:
-          PARTNER = RIGHT
-          YOU = LEFT
-      */
-
-      let leftImage;
-      let rightImage;
+        ctx.fillStyle=
+        "#211b1e";
 
 
-      if(mySide==="left"){
+        ctx.fillRect(
+          0,
+          0,
+          W,
+          H
+        );
 
-        leftImage=local;
-        rightImage=remote;
 
-      }else{
+        const gap=10;
 
-        leftImage=remote;
-        rightImage=local;
+        const cardW=
+        (W-gap*3)/2;
+
+        const cardH=
+        H-gap*2;
+
+
+        let leftImage;
+        let rightImage;
+
+
+        /*
+          FIXED POSITION:
+
+          If YOU are LEFT:
+            local = left
+            remote = right
+
+          If YOU are RIGHT:
+            remote = left
+            local = right
+        */
+
+        if(mySide==="left"){
+
+          leftImage=local;
+          rightImage=remote;
+
+        }else{
+
+          leftImage=remote;
+          rightImage=local;
+
+        }
+
+
+        drawRoundedImage(
+          ctx,
+          leftImage,
+          gap,
+          gap,
+          cardW,
+          cardH,
+          20,
+          false
+        );
+
+
+        drawRoundedImage(
+          ctx,
+          rightImage,
+          gap*2+cardW,
+          gap,
+          cardW,
+          cardH,
+          20,
+          false
+        );
+
+
+        resolve(
+          canvas.toDataURL(
+            "image/jpeg",
+            .9
+          )
+        );
 
       }
 
 
-      /*
-        The images were already mirrored
-        when captured, so DON'T mirror them
-        again here.
+      local.onload=done;
 
-        This is what keeps the final photo
-        looking exactly like the live preview.
-      */
-
-      drawRoundedImage(
-        ctx,
-        leftImage,
-        gap,
-        gap,
-        cardW,
-        cardH,
-        20,
-        false
-      );
+      remote.onload=done;
 
 
-      drawRoundedImage(
-        ctx,
-        rightImage,
-        gap*2+cardW,
-        gap,
-        cardW,
-        cardH,
-        20,
-        false
-      );
+      local.src=localImage;
 
-
-      resolve(
-        canvas.toDataURL(
-          "image/jpeg",
-          .9
-        )
-      );
+      remote.src=remoteImage;
 
     }
-
-
-    local.onload=done;
-
-    remote.onload=done;
-
-
-    local.src=
-    localImage;
-
-    remote.src=
-    remoteImage;
-
-  });
+  );
 
 }
 
+
+/* =========================================================
+   DRAW ROUNDED PHOTO
+========================================================= */
 
 function drawRoundedImage(
   ctx,
@@ -3427,6 +4240,10 @@ function drawRoundedImage(
 }
 
 
+/* =========================================================
+   PHOTO COUNTER
+========================================================= */
+
 function updatePhotoCounter(
   number
 ){
@@ -3443,6 +4260,10 @@ function updatePhotoCounter(
 }
 
 
+/* =========================================================
+   THUMBNAILS
+========================================================= */
+
 function updatePhotoThumbnails(){
 
   const preview=
@@ -3456,22 +4277,44 @@ function updatePhotoThumbnails(){
 
   photos
   .filter(Boolean)
-  .forEach(image=>{
+  .forEach(
+    image=>{
 
-    const img=
-    document.createElement(
-      "img"
-    );
+      const img=
+      document.createElement(
+        "img"
+      );
 
-    img.src=image;
 
-    preview.appendChild(
-      img
-    );
+      img.src=image;
 
-  });
+
+      preview.appendChild(
+        img
+      );
+
+    }
+  );
 
 }
+
+
+/* =========================================================
+   DESIGN PICKER
+========================================================= */
+
+const designs=[
+  "coquette",
+  "retro",
+  "scrapbook",
+  "y2k",
+  "strawberry",
+  "lace",
+  "postcard",
+  "floral",
+  "dreamy",
+  "vintage"
+];
 
 
 function buildDesignPicker(){
@@ -3485,119 +4328,126 @@ function buildDesignPicker(){
   grid.innerHTML="";
 
 
-  designs.forEach(name=>{
+  designs.forEach(
+    name=>{
 
-    const card=
-    document.createElement(
-      "button"
-    );
-
-
-    card.className=
-    "design-card"+
-    (
-      name===selectedDesign
-      ?" selected"
-      :""
-    );
-
-
-    const preview=
-    document.createElement(
-      "div"
-    );
-
-
-    preview.className=
-    "design-preview theme-"+
-    name;
-
-
-    photos
-    .filter(Boolean)
-    .forEach(image=>{
-
-      const img=
+      const card=
       document.createElement(
-        "img"
-      );
-
-      img.src=image;
-
-      preview.appendChild(
-        img
-      );
-
-    });
-
-
-    const label=
-    document.createElement(
-      "div"
-    );
-
-
-    label.className=
-    "design-name";
-
-
-    label.textContent=
-    getDesignName(name);
-
-
-    card.appendChild(
-      preview
-    );
-
-    card.appendChild(
-      label
-    );
-
-
-    card.onclick=()=>{
-
-      selectedDesign=name;
-
-
-      document
-      .querySelectorAll(
-        ".design-card"
-      )
-      .forEach(x=>
-        x.classList.remove(
-          "selected"
-        )
+        "button"
       );
 
 
-      card.classList.add(
-        "selected"
+      card.className=
+      "design-card"+
+      (
+        name===selectedDesign
+        ? " selected"
+        : ""
       );
 
 
-      renderDesignPreview();
+      const preview=
+      document.createElement(
+        "div"
+      );
 
-    };
+
+      preview.className=
+      "design-preview theme-"+
+      name;
 
 
-    if(window.innerWidth>600){
+      photos
+      .filter(Boolean)
+      .forEach(
+        image=>{
 
-      card.onmouseenter=()=>{
+          const img=
+          document.createElement(
+            "img"
+          );
+
+
+          img.src=image;
+
+
+          preview.appendChild(
+            img
+          );
+
+        }
+      );
+
+
+      const label=
+      document.createElement(
+        "div"
+      );
+
+
+      label.className=
+      "design-name";
+
+
+      label.textContent=
+      getDesignName(name);
+
+
+      card.appendChild(
+        preview
+      );
+
+
+      card.appendChild(
+        label
+      );
+
+
+      card.onclick=()=>{
 
         selectedDesign=name;
+
+
+        document
+        .querySelectorAll(
+          ".design-card"
+        )
+        .forEach(
+          x=>x.classList.remove(
+            "selected"
+          )
+        );
+
+
+        card.classList.add(
+          "selected"
+        );
+
 
         renderDesignPreview();
 
       };
 
+
+      if(window.innerWidth>600){
+
+        card.onmouseenter=()=>{
+
+          selectedDesign=name;
+
+          renderDesignPreview();
+
+        };
+
+      }
+
+
+      grid.appendChild(
+        card
+      );
+
     }
-
-
-    grid.appendChild(
-      card
-    );
-
-  });
+  );
 
 
   renderDesignPreview();
@@ -3610,23 +4460,14 @@ function getDesignName(name){
   const names={
 
     coquette:"🎀 Coquette",
-
     retro:"📻 Retro Film",
-
     scrapbook:"📒 Scrapbook",
-
     y2k:"💿 Y2K",
-
     strawberry:"🍓 Strawberry",
-
     lace:"🕊️ Lace",
-
     postcard:"💌 Postcard",
-
     floral:"🌸 Floral",
-
     dreamy:"☁️ Dreamy",
-
     vintage:"🌷 Vintage"
 
   };
@@ -3636,6 +4477,10 @@ function getDesignName(name){
 
 }
 
+
+/* =========================================================
+   DESIGN PREVIEW
+========================================================= */
 
 function renderDesignPreview(){
 
@@ -3655,20 +4500,24 @@ function renderDesignPreview(){
 
   photos
   .filter(Boolean)
-  .forEach(image=>{
+  .forEach(
+    image=>{
 
-    const img=
-    document.createElement(
-      "img"
-    );
+      const img=
+      document.createElement(
+        "img"
+      );
 
-    img.src=image;
 
-    preview.appendChild(
-      img
-    );
+      img.src=image;
 
-  });
+
+      preview.appendChild(
+        img
+      );
+
+    }
+  );
 
 
   const title=
@@ -3694,6 +4543,10 @@ function renderDesignPreview(){
 }
 
 
+/* =========================================================
+   CHOOSE DESIGN
+========================================================= */
+
 function chooseDesign(){
 
   buildFinalStrip();
@@ -3702,6 +4555,10 @@ function chooseDesign(){
 
 }
 
+
+/* =========================================================
+   BUILD FINAL STRIP
+========================================================= */
 
 function buildFinalStrip(){
 
@@ -3721,20 +4578,24 @@ function buildFinalStrip(){
 
   photos
   .filter(Boolean)
-  .forEach(image=>{
+  .forEach(
+    image=>{
 
-    const img=
-    document.createElement(
-      "img"
-    );
+      const img=
+      document.createElement(
+        "img"
+      );
 
-    img.src=image;
 
-    strip.appendChild(
-      img
-    );
+      img.src=image;
 
-  });
+
+      strip.appendChild(
+        img
+      );
+
+    }
+  );
 
 
   const title=
@@ -3763,6 +4624,10 @@ function buildFinalStrip(){
 }
 
 
+/* =========================================================
+   EDIT HISTORY
+========================================================= */
+
 function saveEditState(){
 
   const strip=
@@ -3781,6 +4646,10 @@ function saveEditState(){
 
 }
 
+
+/* =========================================================
+   STICKERS
+========================================================= */
 
 function addSticker(symbol){
 
@@ -3802,12 +4671,18 @@ function addSticker(symbol){
 
 
   sticker.style.left=
-  (15+Math.random()*70)+
+  (
+    15+
+    Math.random()*70
+  )+
   "%";
 
 
   sticker.style.top=
-  (10+Math.random()*80)+
+  (
+    10+
+    Math.random()*80
+  )+
   "%";
 
 
@@ -3829,6 +4704,10 @@ function addSticker(symbol){
 
 }
 
+
+/* =========================================================
+   CUSTOM TEXT
+========================================================= */
 
 function addText(){
 
@@ -3890,6 +4769,10 @@ function addText(){
 }
 
 
+/* =========================================================
+   DRAG STICKERS / TEXT
+========================================================= */
+
 function makeMovable(
   element,
   container
@@ -3908,24 +4791,26 @@ function makeMovable(
 
 
     let x=
-    ((clientX-rect.left)/
-    rect.width)*100;
+    (
+      (clientX-rect.left)/
+      rect.width
+    )*100;
 
 
     let y=
-    ((clientY-rect.top)/
-    rect.height)*100;
+    (
+      (clientY-rect.top)/
+      rect.height
+    )*100;
 
 
-    x=
-    Math.max(
+    x=Math.max(
       5,
       Math.min(95,x)
     );
 
 
-    y=
-    Math.max(
+    y=Math.max(
       3,
       Math.min(97,y)
     );
@@ -3960,6 +4845,7 @@ function makeMovable(
 
       if(!dragging)
         return;
+
 
       e.preventDefault();
 
@@ -3998,11 +4884,14 @@ function makeMovable(
     "mousemove",
     e=>{
 
-      if(dragging)
+      if(dragging){
+
         move(
           e.clientX,
           e.clientY
         );
+
+      }
 
     }
   );
@@ -4017,6 +4906,10 @@ function makeMovable(
 
 }
 
+
+/* =========================================================
+   UNDO
+========================================================= */
 
 function undoLastEdit(){
 
@@ -4046,6 +4939,10 @@ function undoLastEdit(){
 }
 
 
+/* =========================================================
+   RESTORE MOVABLE ELEMENTS
+========================================================= */
+
 function restoreMovableElements(){
 
   const strip=
@@ -4058,7 +4955,8 @@ function restoreMovableElements(){
   .querySelectorAll(
     ".decor"
   )
-  .forEach(element=>
+  .forEach(
+    element=>
     makeMovable(
       element,
       strip
@@ -4067,6 +4965,10 @@ function restoreMovableElements(){
 
 }
 
+
+/* =========================================================
+   RESET
+========================================================= */
 
 function resetEdits(){
 
@@ -4082,6 +4984,10 @@ function resetEdits(){
 
 }
 
+
+/* =========================================================
+   COPY PREVIEW
+========================================================= */
 
 function copyFinalPreview(){
 
@@ -4107,6 +5013,10 @@ function copyFinalPreview(){
 }
 
 
+/* =========================================================
+   AUTO SAVE
+========================================================= */
+
 async function autoSaveStrip(){
 
   const msg=
@@ -4131,10 +5041,13 @@ async function autoSaveStrip(){
       );
 
 
-    if(finalBlobUrl)
+    if(finalBlobUrl){
+
       URL.revokeObjectURL(
         finalBlobUrl
       );
+
+    }
 
 
     finalBlobUrl=
@@ -4223,6 +5136,10 @@ async function autoSaveStrip(){
 
 }
 
+
+/* =========================================================
+   FINAL CANVAS
+========================================================= */
 
 async function renderFinalCanvas(){
 
@@ -4330,124 +5247,133 @@ async function renderFinalCanvas(){
   .querySelectorAll(
     ".decor"
   )
-  .forEach(element=>{
+  .forEach(
+    element=>{
 
-    const rect=
-    element.getBoundingClientRect();
-
-
-    const centerX=
-    rect.left+
-    rect.width/2;
+      const rect=
+      element.getBoundingClientRect();
 
 
-    const centerY=
-    rect.top+
-    rect.height/2;
+      const centerX=
+      rect.left+
+      rect.width/2;
 
 
-    const percentX=
-    (centerX-
-     stripRect.left)/
-    stripRect.width;
+      const centerY=
+      rect.top+
+      rect.height/2;
 
 
-    const percentY=
-    (centerY-
-     stripRect.top)/
-    stripRect.height;
+      const percentX=
+      (
+        centerX-
+        stripRect.left
+      )/
+      stripRect.width;
 
 
-    const canvasX=
-    percentX*W;
+      const percentY=
+      (
+        centerY-
+        stripRect.top
+      )/
+      stripRect.height;
 
 
-    const canvasY=
-    percentY*H;
+      const canvasX=
+      percentX*W;
 
 
-    ctx.save();
+      const canvasY=
+      percentY*H;
 
 
-    ctx.textAlign="center";
-
-    ctx.textBaseline="middle";
+      ctx.save();
 
 
-    let fontSize=38;
+      ctx.textAlign="center";
+
+      ctx.textBaseline="middle";
 
 
-    if(
-      element.classList
-      .contains("text-decor")
-    ){
-
-      fontSize=25;
-
-    }
+      let fontSize=38;
 
 
-    ctx.font=
-    fontSize+
-    "px Georgia";
+      if(
+        element.classList.contains(
+          "text-decor"
+        )
+      ){
+
+        fontSize=25;
+
+      }
 
 
-    if(
-      element.classList
-      .contains("text-decor")
-    ){
-
-      const padding=9;
-
-      const metrics=
-      ctx.measureText(
-        element.textContent
-      );
-
-
-      const bw=
-      metrics.width+
-      padding*2;
-
-
-      const bh=
+      ctx.font=
       fontSize+
-      padding;
+      "px Georgia";
+
+
+      if(
+        element.classList.contains(
+          "text-decor"
+        )
+      ){
+
+        const padding=9;
+
+
+        const metrics=
+        ctx.measureText(
+          element.textContent
+        );
+
+
+        const bw=
+        metrics.width+
+        padding*2;
+
+
+        const bh=
+        fontSize+
+        padding;
+
+
+        ctx.fillStyle=
+        "rgba(255,255,255,.88)";
+
+
+        roundRect(
+          ctx,
+          canvasX-bw/2,
+          canvasY-bh/2,
+          bw,
+          bh,
+          10
+        );
+
+
+        ctx.fill();
+
+      }
 
 
       ctx.fillStyle=
-      "rgba(255,255,255,.88)";
+      "#49363e";
 
 
-      roundRect(
-        ctx,
-        canvasX-bw/2,
-        canvasY-bh/2,
-        bw,
-        bh,
-        10
+      ctx.fillText(
+        element.textContent,
+        canvasX,
+        canvasY
       );
 
 
-      ctx.fill();
+      ctx.restore();
 
     }
-
-
-    ctx.fillStyle=
-    "#49363e";
-
-
-    ctx.fillText(
-      element.textContent,
-      canvasX,
-      canvasY
-    );
-
-
-    ctx.restore();
-
-  });
+  );
 
 
   const captionY=
@@ -4484,17 +5410,23 @@ async function renderFinalCanvas(){
   ctx.restore();
 
 
-  return new Promise(resolve=>{
+  return new Promise(
+    resolve=>{
 
-    canvas.toBlob(
-      blob=>resolve(blob),
-      "image/png"
-    );
+      canvas.toBlob(
+        blob=>resolve(blob),
+        "image/png"
+      );
 
-  });
+    }
+  );
 
 }
 
+
+/* =========================================================
+   IMAGE LOADER
+========================================================= */
 
 function loadImage(src){
 
@@ -4520,6 +5452,10 @@ function loadImage(src){
 
 }
 
+
+/* =========================================================
+   DRAW PHOTO
+========================================================= */
 
 function drawPhotoToCanvas(
   ctx,
@@ -4623,6 +5559,10 @@ function drawPhotoToCanvas(
 }
 
 
+/* =========================================================
+   THEME BACKGROUND
+========================================================= */
+
 function drawThemeBackground(
   ctx,
   W,
@@ -4630,8 +5570,7 @@ function drawThemeBackground(
   theme
 ){
 
-  let bg=
-  "#fff0f6";
+  let bg="#fff0f6";
 
 
   if(theme==="retro")
@@ -4731,6 +5670,10 @@ function drawThemeBackground(
 }
 
 
+/* =========================================================
+   THEME HEADER
+========================================================= */
+
 function drawThemeHeader(
   ctx,
   W,
@@ -4764,6 +5707,10 @@ function drawThemeHeader(
 
 }
 
+
+/* =========================================================
+   THEME HEADER TEXT
+========================================================= */
 
 function getThemeHeader(theme){
 
@@ -4808,6 +5755,10 @@ function getThemeHeader(theme){
 }
 
 
+/* =========================================================
+   THEME TEXT
+========================================================= */
+
 function getThemeTextColor(theme){
 
   if(
@@ -4837,6 +5788,10 @@ function getThemeTextColor(theme){
 
 }
 
+
+/* =========================================================
+   THEME BORDER
+========================================================= */
 
 function getThemeBorder(theme){
 
@@ -4870,6 +5825,10 @@ function getThemeBorder(theme){
 
 }
 
+
+/* =========================================================
+   ROUNDED RECT
+========================================================= */
 
 function roundRect(
   ctx,
@@ -4950,20 +5909,30 @@ function roundRect(
 }
 
 
+/* =========================================================
+   CLEANUP
+========================================================= */
+
 window.addEventListener(
   "beforeunload",
   ()=>{
 
-    if(readinessTimer)
+    if(readinessTimer){
+
       clearInterval(
         readinessTimer
       );
 
+    }
 
-    if(connectionRetryTimer)
+
+    if(connectionRetryTimer){
+
       clearTimeout(
         connectionRetryTimer
       );
+
+    }
 
 
     if(cameraStream){
@@ -4971,28 +5940,40 @@ window.addEventListener(
       cameraStream
       .getTracks()
       .forEach(
-        t=>t.stop()
+        track=>track.stop()
       );
 
     }
 
 
-    if(peerConnection)
+    if(peerConnection){
+
       peerConnection.close();
 
+    }
 
-    if(roomChannel)
+
+    if(roomChannel){
+
       roomChannel.unsubscribe();
 
+    }
 
-    if(signalChannel)
+
+    if(signalChannel){
+
       signalChannel.unsubscribe();
 
+    }
 
-    if(finalBlobUrl)
+
+    if(finalBlobUrl){
+
       URL.revokeObjectURL(
         finalBlobUrl
       );
+
+    }
 
   }
 );
